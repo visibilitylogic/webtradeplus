@@ -1,0 +1,77 @@
+.AutoTrading_wrapper {
+    max-width: 400px;
+    display: flex;
+    margin: 10px auto;
+    flex-direction: column;
+
+}
+
+
+.AutoTrading_add{
+    background-color: white;
+    flex: 1;
+    margin: 20px 0 ;
+}
+
+.loading {
+    text-align: center;
+    margin: auto;
+}
+.AutoTrading_add form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 15px;
+    /* margin: auto; */
+}
+
+.AutoTrading_add form div {
+    /* min-height: 75px; */
+    margin-bottom: 10px;
+    /* padding: 60px; */
+    /* padding-bottom: 90px; */
+    color: black;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid rgb(226, 224, 224);
+    
+}
+
+.AutoTrading_add form div:nth-child(4){
+    border-bottom: none;
+    justify-items: flex-end;
+    justify-self: flex-end;
+}
+
+.AutoTrading_add form div h3{
+    font-size: 25px;
+    color: rgb(54, 54, 54);
+    flex-basis: 50%;
+    margin-top: -15px;
+    
+  
+}
+
+.AutoTrading_add form div > input{
+    flex-basis: 50%;
+    /* width: 70%; */
+    padding: 14px;
+    border: 1px solid rgb(233, 227, 227);
+}
+
+.AutoTrading_display{
+    background-color: white;
+    flex: 1;
+}
+
+
+
+
+.add{
+    padding: 14px 50px !important;
+    font-size: 16px !important;
+    letter-spacing: 2px !important;
+}

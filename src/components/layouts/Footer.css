@@ -1,0 +1,51 @@
+.footer a {
+    text-transform: uppercase;
+    font-size: 13px;
+    color: #4786ff;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+.footer a:hover {
+    text-decoration: underline;
+}
+.footer img {
+    height: 20px;
+}
+.footer span {
+    font-weight: 600;
+    color: #252525;
+    font-size: 15px;
+}
+.form__footer {
+    background-color: #343a40 !important;
+    color: #fff;
+    width: 100%;
+}
+.form__footer a, 
+.form__footer p {
+    font-size: 13px;
+    color: #fff;
+}
+.form__footer .separator {
+    width: 1px;
+    height: 10px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 5px;
+    margin-top: 3px;
+    background: #ffffff;
+    outline: transparent 1px solid;
+}
+.sponsor img {
+    width: 60px;
+}
+
+@media screen and (max-width: 768px) {
+    .sponsor {
+        display: block!important;
+    }
+    .sponsor img {
+        margin: 10px 0;
+    }
+}
