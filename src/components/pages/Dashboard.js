@@ -33,7 +33,7 @@ const Dashboard = () => {
   const myRef3 = useRef("");
 
   // Action creators
-  const { getWebData, setIsTrading } = useActions();
+  const { getWebData, setIsTrading, setDefaultSelectedStock } = useActions();
 
   // Redux state data
   const { webData } = useSelector((state) => state.web);
@@ -148,6 +148,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     getWebData();
+  }, []);
+
+  useEffect(() => {
+    setDefaultSelectedStock();
   }, []);
 
   // useEffect(() => {

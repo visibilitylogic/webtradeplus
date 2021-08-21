@@ -45,7 +45,7 @@ const DashboardHeader = ({
 
   const { logout, setCurrentSelectedStock } = useActions();
 
-  const [selectedStock, setSelectedStock] = useState(0);
+  const [selectedStock, setSelectedStock] = useState(1);
   const [personalData, setPersonalData] = useState(false);
   const [support, setSupport] = useState(false);
   const [withdraw, setWithdraw] = useState(false);

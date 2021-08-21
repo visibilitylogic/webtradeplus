@@ -131,9 +131,29 @@ export const getExchangeTradedFund = () => async (dispatch) => {
 //     });
 // };
 
+export const setDefaultSelectedStock = () => async (dispatch) => {
+  const { data } = await axios.get(
+    `https://financialmodelingprep.com/api/v3/quotes/crypto?apikey=6e39eba411ee51caced6ab2be49f987b`
+  );
+
+  const btcData = data.filter((data) => data.symbol === "BTCUSD");
+
+  dispatch({
+    type: actionTypes.SET_DEFAULT_STOCK_SELECTED,
+    payload: btcData[0],
+  });
+};
+
 export const setCurrentSelectedStock = (stock) => (dispatch) => {
   dispatch({
     type: actionTypes.SET_CURRENT_STOCK_SELECTED,
+    payload: stock,
+  });
+};
+
+export const addStockToList = (stock) => (dispatch) => {
+  dispatch({
+    type: actionTypes.ADD_STOCK_TO_LIST,
     payload: stock,
   });
 };

@@ -10,18 +10,18 @@ const WithdrawalSettings = ({
   handleCryptoSettings,
 }) => {
   return (
-    <div className="withdraw-modal support-modal">
-      <div className="header">Withdraw Settings</div>
+    <div className="withdraw-modal support-modal withdrawal-settings-modal">
+      <div className="header">Withdrawal Settings</div>
       <span className="close" onClick={() => setWithdrawalSettings(false)}>
         <svg id="lnr-cross " viewBox="0 0 1024 1024">
-          <title>cross</title>
+          <title>close</title>
           <path
             className="path1"
             d="M548.203 537.6l289.099-289.098c9.998-9.998 9.998-26.206 0-36.205-9.997-9.997-26.206-9.997-36.203 0l-289.099 289.099-289.098-289.099c-9.998-9.997-26.206-9.997-36.205 0-9.997 9.998-9.997 26.206 0 36.205l289.099 289.098-289.099 289.099c-9.997 9.997-9.997 26.206 0 36.203 5 4.998 11.55 7.498 18.102 7.498s13.102-2.499 18.102-7.499l289.098-289.098 289.099 289.099c4.998 4.998 11.549 7.498 18.101 7.498s13.102-2.499 18.101-7.499c9.998-9.997 9.998-26.206 0-36.203l-289.098-289.098z"
           />
         </svg>
       </span>{" "}
-      <Container fluid className="pt-5">
+      <Container fluid className="pt-5 h-100">
         <div className="withdraw-settings d-flex">
           <div>
             <button onClick={handleBankTransfer}>

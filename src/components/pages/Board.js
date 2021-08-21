@@ -8,6 +8,7 @@ import TradingViewWidget, { Themes } from "react-tradingview-widget";
 import BuyStockModal from "../utils/modals/trading/BuyStock";
 import { useActions } from "../hooks/useActions";
 import SellStockModal from "../utils/modals/trading/SellStock";
+import { getRate } from "../../helpers/getRate";
 
 const Board = (props) => {
   const [assetQuantity, setAssetQuantity] = useState(1);
@@ -20,7 +21,6 @@ const Board = (props) => {
 
   const {
     view,
-    getRate,
     setLevIsh,
     levIsh,
     closeSetlevIsh,
@@ -36,7 +36,21 @@ const Board = (props) => {
 
   const { user, loading } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.profile);
-  const { currentSelectedStock } = useSelector((state) => state.stock);
+  const { currentSelectedStock, defaultSelectedStock } = useSelector(
+    (state) => state.stock
+  );
+
+  const getRate = () => {
+    if (Object.keys(defaultSelectedStock).length > 0) {
+      return ((assetQuantity / defaultSelectedStock.price) * 10)
+        .toString()
+        .slice(0, 8);
+    } else {
+      return ((assetQuantity / currentSelectedStock.price) * 10)
+        .toString()
+        .slice(0, 8);
+    }
+  };
 
   // Action creators
   const { purchaseStockAsset } = useActions();
@@ -237,17 +251,17 @@ const Board = (props) => {
 
                 <div className="cad">
                   <span className="text">
-                    {currentSelectedStock.symbol
-                      ? currentSelectedStock.symbol
-                      : "BITUSD"}{" "}
+                    {Object.keys(defaultSelectedStock).length > 0
+                      ? defaultSelectedStock.symbol
+                      : currentSelectedStock.symbol}{" "}
                     quantity
                   </span>
                   <span className="amount">
-                    {currentSelectedStock.price
-                      ? ((assetQuantity / currentSelectedStock.price) * 10)
-                          .toString()
-                          .slice(0, 8)
-                      : ""}
+                    {getRate(
+                      defaultSelectedStock,
+                      currentSelectedStock,
+                      assetQuantity
+                    )}
                   </span>
                 </div>
                 {user &&

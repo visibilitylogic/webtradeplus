@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
+import { getRate } from "../../../../helpers/getRate";
 
 const SellStockModal = (props) => {
   const {
@@ -16,7 +17,9 @@ const SellStockModal = (props) => {
     stopLossAmount,
   } = props;
 
-  const { currentSelectedStock } = useSelector((state) => state.stock);
+  const { currentSelectedStock, defaultSelectedStock } = useSelector(
+    (state) => state.stock
+  );
   return (
     <form
       // onMouseEnter={() => {
@@ -45,7 +48,12 @@ const SellStockModal = (props) => {
           <span>Unit price</span>
         </div>
         <div className="split moved">
-          <span>{currentSelectedStock.price} $</span>
+          <span>
+            {Object.keys(defaultSelectedStock).length > 0
+              ? defaultSelectedStock.price
+              : currentSelectedStock.price}{" "}
+            $
+          </span>
         </div>
       </div>
       <div className="dash-row dash-row-centralized">
@@ -54,22 +62,21 @@ const SellStockModal = (props) => {
         </div>
         <div className="split moved">
           <span>
-            {currentSelectedStock.price
-              ? ((assetQuantity / currentSelectedStock.price) * 10)
-                  .toString()
-                  .slice(0, 8)
-              : ""}{" "}
-            {currentSelectedStock.symbol}
-            {/* {currentSelectedStock.price
-              ? currentSelectedStock.price.toString().slice(0, 8)
-              : ""}{" "}
-            {currentSelectedStock.symbol} */}
+            {getRate(defaultSelectedStock, currentSelectedStock, assetQuantity)}
+            {Object.keys(defaultSelectedStock).length > 0
+              ? defaultSelectedStock.symbol
+              : currentSelectedStock.symbol}
           </span>
         </div>
       </div>
       <div className="dash-row dash-row-centralized">
         <div className="split">
-          <span>{currentSelectedStock.symbol} Quantity</span>
+          <span>
+            {Object.keys(defaultSelectedStock).length > 0
+              ? defaultSelectedStock.symbol
+              : currentSelectedStock.symbol}{" "}
+            Quantity
+          </span>
         </div>
         <div className="split moved">
           <span>{assetQuantity}</span>
@@ -89,10 +96,15 @@ const SellStockModal = (props) => {
         </div>
         <div className="split moved">
           <span>
-            {currentSelectedStock.price
+            {Object.keys(defaultSelectedStock).length > 0
+              ? defaultSelectedStock.price.toString().slice(0, 8)
+              : Object.keys(currentSelectedStock).length > 0
               ? currentSelectedStock.price.toString().slice(0, 8)
-              : ""}{" "}
-            {currentSelectedStock.symbol}
+              : ""}
+
+            {Object.keys(defaultSelectedStock).length > 0
+              ? defaultSelectedStock.symbol
+              : currentSelectedStock.symbol}
           </span>
         </div>
       </div>
@@ -174,10 +186,14 @@ const SellStockModal = (props) => {
         <div className="split moved">
           <span>
             2.00% ={" "}
-            {currentSelectedStock.price
+            {Object.keys(defaultSelectedStock).length > 0
+              ? defaultSelectedStock.price.toString().slice(0, 8)
+              : Object.keys(currentSelectedStock).length > 0
               ? currentSelectedStock.price.toString().slice(0, 8)
               : ""}{" "}
-            {currentSelectedStock.symbol}
+            {Object.keys(defaultSelectedStock).length > 0
+              ? defaultSelectedStock.symbol
+              : currentSelectedStock.symbol}
           </span>
         </div>
       </div>
@@ -187,7 +203,9 @@ const SellStockModal = (props) => {
         </div>
         <div className="split moved">
           <span>
-            {currentSelectedStock.price
+            {Object.keys(defaultSelectedStock).length > 0
+              ? defaultSelectedStock.price.toString().slice(0, 8)
+              : Object.keys(currentSelectedStock).length > 0
               ? currentSelectedStock.price.toString().slice(0, 8)
               : ""}{" "}
             USD

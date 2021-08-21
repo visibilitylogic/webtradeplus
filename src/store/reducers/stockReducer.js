@@ -7,7 +7,10 @@ const initialState = {
   commodities: [],
   forex: [],
   etf: [],
+  defaultSelectedStock: {},
   currentSelectedStock: {},
+  stocksSelected: [],
+  // stocksSelected: JSON.parse(localStorage.getItem("stocksSelected")) || [],
   error: null,
 };
 
@@ -58,6 +61,24 @@ export default function stockReducer(state = initialState, action) {
         ...state,
         loading: false,
         currentSelectedStock: action.payload,
+        defaultSelectedStock: {},
+      };
+    case actionTypes.SET_DEFAULT_STOCK_SELECTED:
+      return {
+        ...state,
+        loading: false,
+        defaultSelectedStock: action.payload,
+      };
+    case actionTypes.ADD_STOCK_TO_LIST:
+      // localStorage.setItem(
+      //   "stocksSelected",
+      //   JSON.stringify([action.payload, ...state.stocksSelected])
+      // );
+      return {
+        ...state,
+        stocksSelected: [action.payload, ...state.stocksSelected],
+        // ...action.payload,
+        loading: false,
       };
     case actionTypes.STOCK_ERROR:
       return {

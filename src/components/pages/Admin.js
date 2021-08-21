@@ -1,6 +1,6 @@
 import AdminSidebar from "../layouts/AdminAside";
-import {useLocation, useParams} from "react-router-dom";
-import {useState, useEffect} from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import AutoTrading from "../layouts/Auto-Trading";
 import AdminDashboard from "../layouts/AdminDashboard";
 import General_appearance from "../layouts/General_appearance";
@@ -19,7 +19,7 @@ import LoginPage from "../layouts/LoginPage";
 import { useActions } from "../hooks/useActions";
 const Admin = (props) => {
   const location = useLocation();
-  const {get_admin_data} = useActions();
+  const { get_admin_data } = useActions();
   const pathname = location.pathname.split("/")[2];
   console.log(pathname);
   const { allUsers } = props;
@@ -27,93 +27,62 @@ const Admin = (props) => {
   console.log(url);
 
   useEffect(() => {
-     get_admin_data()
-    
-  }, [])
+    get_admin_data();
+  }, []);
   useEffect(() => {
-     setUrl(pathname)
-  }, [pathname])
+    setUrl(pathname);
+  }, [pathname]);
 
-  const display = (link)=>{
+  const display = (link) => {
     switch (link) {
       case "admin":
-        return (
-          <AdminDashboard/>
-        )
+        return <AdminDashboard />;
         break;
       case "auto-trading":
-        return (
-          <AutoTrading/>
-        )
+        return <AutoTrading />;
         break;
       case "general_settings":
-        return(
-          <General_setting/>
-        )
+        return <General_setting />;
         break;
       case "general_appearance":
-        return (
-          <General_appearance/>
-        )
+        return <General_appearance />;
         break;
       case "mail":
-        return (
-          <Mail/>
-        )
+        return <Mail />;
         break;
       case "payment":
-        return (
-          <Payment/>
-        );
-        case "template":
-          return (
-            <Template/>
-          )
+        return <Payment />;
+      case "template":
+        return <Template />;
         break;
-        case "loginsignup":
-          return (
-            <LoginSignup/>
-          )
-        case "additional":
-          return (
-            <Additional/>
-          )
-          break;
-        case "trading":
-          return (
-            <Trading/>
-          )
+      case "loginsignup":
+        return <LoginSignup />;
+      case "additional":
+        return <Additional />;
         break;
-        case "search":
-          return (
-            <Search/>
-          )
+      case "trading":
+        return <Trading />;
         break;
-        case "bankaccounts":
-          return(
-            <Bank/>
-          )
+      case "search":
+        return <Search />;
         break;
-        case "identity":
-          return(
-            <Identity/>
-          )
+      case "bankaccounts":
+        return <Bank />;
         break;
-        case "subscriptions":
-          return(
-            <Subscription/>
-          )
+      case "identity":
+        return <Identity />;
         break;
-        case "loginpage":
-          return(
-            <LoginPage/>
-          )
+      case "subscriptions":
+        return <Subscription />;
         break;
-        default:
-        return null
+      case "loginpage":
+        return <LoginPage />;
+        break;
+      default:
+        return null;
         break;
     }
-  }
+  };
   return (
     <div
       className="full-width dash-row"
@@ -121,18 +90,14 @@ const Admin = (props) => {
         paddingLeft: 0,
         paddingBottom: 35,
         overflow: "hidden",
-        paddingTop:0,
-        marginTop:-6
+        paddingTop: 0,
+        marginTop: -6,
       }}
     >
       <AdminSidebar />
       {/* <AdminAside /> */}
 
-      <div className="admin-content">
-        {
-          url && display(url)
-        }
-      </div>
+      <div className="admin-content">{url && display(url)}</div>
     </div>
   );
 };

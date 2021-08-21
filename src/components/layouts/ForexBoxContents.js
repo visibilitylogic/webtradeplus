@@ -9,11 +9,10 @@ const ForexBoxContents = ({
   setSelectedStock,
   setOpenForex,
 }) => {
-  const { crypto, commodities, forex, iex, etf, loading } = useSelector(
-    (state) => state.stock
-  );
+  const { crypto, commodities, forex, iex, etf, loading, stocksSelected } =
+    useSelector((state) => state.stock);
 
-  const { setCurrentSelectedStock } = useActions();
+  const { setCurrentSelectedStock, addStockToList } = useActions();
 
   const [showIbox, setShowIbox] = useState(false);
   const [currentItem, setCurrentItem] = useState({});
@@ -23,6 +22,16 @@ const ForexBoxContents = ({
   const handleCurrentItem = (item) => {
     setShowIbox(true);
     setCurrentItem(item);
+  };
+
+  const handleAddStockToList = (item) => {
+    if (stocksSelected.length === 5) {
+      stocksSelected.splice(-1, 1, item);
+    } else if (stocksSelected.some((stock) => stock.symbol === item.symbol)) {
+      return stocksSelected;
+    } else {
+      addStockToList(item);
+    }
   };
 
   return (
@@ -63,6 +72,7 @@ const ForexBoxContents = ({
                   onMouseLeave={() => setShowIbox(false)}
                   onClick={() => {
                     setCurrentSelectedStock(item);
+                    handleAddStockToList(item);
                     setOpenForex(false);
                   }}
                   className="childIsh"
@@ -99,6 +109,7 @@ const ForexBoxContents = ({
                   onMouseLeave={() => setShowIbox(false)}
                   onClick={() => {
                     setCurrentSelectedStock(item);
+                    handleAddStockToList(item);
                     setOpenForex(false);
                   }}
                   className="childIsh"
@@ -134,6 +145,7 @@ const ForexBoxContents = ({
                   onMouseLeave={() => setShowIbox(false)}
                   onClick={() => {
                     setCurrentSelectedStock(item);
+                    handleAddStockToList(item);
                     setOpenForex(false);
                   }}
                   className="childIsh"
@@ -169,6 +181,7 @@ const ForexBoxContents = ({
                   onMouseLeave={() => setShowIbox(false)}
                   onClick={() => {
                     setCurrentSelectedStock(item);
+                    handleAddStockToList(item);
                     setOpenForex(false);
                   }}
                   className="childIsh"
@@ -203,6 +216,7 @@ const ForexBoxContents = ({
                   onMouseLeave={() => setShowIbox(false)}
                   onClick={() => {
                     setCurrentSelectedStock(item);
+                    handleAddStockToList(item);
                     setOpenForex(false);
                   }}
                   className="childIsh"
@@ -254,6 +268,7 @@ const ForexBoxContents = ({
                     onMouseLeave={() => setShowIbox(false)}
                     onClick={() => {
                       setCurrentSelectedStock(item);
+                      handleAddStockToList(item);
                       setOpenForex(false);
                     }}
                     className="childIsh"

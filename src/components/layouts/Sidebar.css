@@ -46,11 +46,18 @@
   padding-bottom: 5px;
 }
 
+.sidebar-wrapper #stock-list-display {
+  list-style: none !important;
+  margin: 0 !important;
+  width: 100%;
+}
+
 .sidebar-wrapper #watching-list-item {
-  list-style-type: none;
+  width: 100%;
   display: flex;
-  align-items: center;
+  justify-content: space-between !important;
   padding: 0;
+  cursor: pointer;
 }
 
 .green {
