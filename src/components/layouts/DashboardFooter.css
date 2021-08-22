@@ -1,0 +1,78 @@
+.dash-footer {
+  background: #151a25;
+  padding: 0 10px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+  overflow: hidden;
+  align-items: center;
+  height: 45px;
+  z-index: 1000;
+}
+.dash-footer p {
+  margin-bottom: 0 !important;
+  font-size: 0.75rem;
+}
+
+.footer-left-side {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.admin-text-wrapper {
+  display: flex;
+  align-items: center;
+  background: rgb(0, 124, 239);
+  padding: 3px;
+  border-radius: 2px;
+}
+
+.theme-wrapper {
+  display: flex;
+  position: relative;
+  font-size: 0.6rem;
+  height: 100%;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.accounting-area {
+  display: flex;
+  align-items: center;
+}
+
+.accounting-area p {
+  font-size: 0.75rem;
+}
+
+.footer-right-side {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.footer-right-side button {
+  display: block;
+  height: 100%;
+  border: none;
+  background: #20283a;
+  padding: 0 15px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.footer-right-side button:active {
+  outline: none;
+}
+
+.footer-right-side button:hover {
+  background: #2f3a53;
+}

@@ -4,7 +4,7 @@ import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { stockAssets as stocks } from "../../helpers/dataset/stocks";
 import useFormInput from "../hooks/useFormInput";
-import { message, notification } from "antd";
+import { message } from "antd";
 import PropTypes from "prop-types";
 import "./DashboardHeader.css";
 import Notification from "../utils/Notification";
@@ -32,22 +32,15 @@ import AutoTrade from "../utils/modals/AutoTrade";
 import { useActions } from "../hooks/useActions";
 import Withdrawals from "../utils/modals/withdrawal/Withdrawals";
 
-const DashboardHeader = ({
-  data,
-  bitP,
-  tslaP,
-  ethP,
-  aaplP,
-  handleViewUpdate,
-}) => {
+const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
   const history = useHistory();
   const { user, loading } = useSelector((state) => state.auth);
+  const { isDarkMode } = useSelector((state) => state.theme);
 
   const { logout, setCurrentSelectedStock } = useActions();
 
   const [selectedStock, setSelectedStock] = useState(1);
   const [personalData, setPersonalData] = useState(false);
-  const [support, setSupport] = useState(false);
   const [withdraw, setWithdraw] = useState(false);
   const [withdrawalSettings, setWithdrawalSettings] = useState(false);
   const [bankTransferSelected, setBankTransferSelected] = useState(false);
@@ -103,7 +96,10 @@ const DashboardHeader = ({
   return (
     !loading && (
       <Fragment>
-        <Navbar variant="dark">
+        <Navbar
+          variant={isDarkMode ? "dark" : "light"}
+          style={{ background: isDarkMode ? "#1a202d" : "#f3f3f3" }}
+        >
           <Navbar.Brand>
             <img
               style={{ width: " 100%", height: "4.5ch" }}
@@ -121,6 +117,7 @@ const DashboardHeader = ({
             <ul className="stock-nav-list mb-0">
               {stocks.map((stock) => (
                 <li
+                  style={{ color: isDarkMode ? "#fff" : "#000" }}
                   onClick={() => {
                     setSelectedStock(stock.id);
                     setOpenForex(true);
@@ -455,10 +452,8 @@ const DashboardHeader = ({
 
 DashboardHeader.propTypes = {
   data: PropTypes.object.isRequired,
-  bitP: PropTypes.object.isRequired,
-  tslaP: PropTypes.object.isRequired,
-  ethP: PropTypes.object.isRequired,
-  aaplP: PropTypes.object.isRequired,
+  support: PropTypes.bool.isRequired,
+  setSupport: PropTypes.func.isRequired,
   handleViewUpdate: PropTypes.func.isRequired,
 };
 

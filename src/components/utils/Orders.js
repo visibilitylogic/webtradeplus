@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import { useActions } from "../hooks/useActions";
 
 const Orders = (props) => {
   const { buysell, orders, getRate, closeOrder, delOrder, setBuysell } = props;
+  const { allTrades } = useSelector((state) => state.profile);
 
   const [intervalId, setIntervalId] = useState(null);
 

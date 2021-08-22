@@ -10,6 +10,7 @@ import Board from "./Board";
 import Manager from "./Manager";
 import Admin from "./Admin";
 import BuyStockModal from "../utils/modals/trading/BuyStock";
+import DashboardFooter from "../layouts/DashboardFooter";
 
 const Dashboard = () => {
   const token = "pk_135c1daf1b8d4130b9318fd5e8ab0e5e";
@@ -29,6 +30,7 @@ const Dashboard = () => {
   const [buysell, setBuysell] = useState(false);
   const [data, setData] = useState({});
   const [orderIsh, setOrderIsh] = useState({});
+  const [support, setSupport] = useState(false);
 
   const myRef3 = useRef("");
 
@@ -38,7 +40,7 @@ const Dashboard = () => {
   // Redux state data
   const { webData } = useSelector((state) => state.web);
 
-  const { isAuthenticated, userId, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   // const {
   //   profile: { isTrading },
@@ -152,6 +154,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     setDefaultSelectedStock();
+    // getAllOrders(user && user._id);
   }, []);
 
   // useEffect(() => {
@@ -187,8 +190,20 @@ const Dashboard = () => {
   if (!isAuthenticated) return <Redirect to="/" />;
 
   return (
-    <div ref={myRef3} style={{ minHeight: "100vh", background: "#131722" }}>
-      <DashboardHeader data={webData} handleViewUpdate={handleViewUpdate} />
+    <div
+      ref={myRef3}
+      style={{
+        minHeight: "100vh",
+        background: "#131722",
+        position: "relative",
+      }}
+    >
+      <DashboardHeader
+        data={webData}
+        handleViewUpdate={handleViewUpdate}
+        support={support}
+        setSupport={setSupport}
+      />
       <section className="dash-contents">
         <div className="dash-row">
           <DashboardAside
@@ -241,6 +256,7 @@ const Dashboard = () => {
           )}
         </div>
       </section>
+      <DashboardFooter setSupport={setSupport} />
     </div>
   );
 };

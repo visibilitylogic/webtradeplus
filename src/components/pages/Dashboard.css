@@ -226,7 +226,6 @@ body {
 }
 
 .dash-contents .sidebar {
-  background-color: #131722;
   width: 6%;
   height: 100vh;
   overflow-y: auto;
@@ -1790,6 +1789,10 @@ body {
   background-color: #1d2435;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.dash-contents .manager-section {
+  display: block;
 }
 
 .dash-contents .full-width h2 {
