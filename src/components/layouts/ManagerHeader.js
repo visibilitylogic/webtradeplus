@@ -1,15 +1,16 @@
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-const ManagerHeader = (props) => {
+const ManagerHeader = ({ setDisplayC }) => {
   const {
-    allBankTransfers,
+    bankTransfers,
     allDeposits,
     allWithdrawals,
-    allVerify,
+    allVerifiedUsers,
+    allOrders,
     allUsers,
-    orders,
-    setDisplayC,
-  } = props;
+  } = useSelector((state) => state.profile);
+
   return (
     <div className="tabs manager-tabs">
       <div manager-tab="statistics" className="tab active">
@@ -18,17 +19,16 @@ const ManagerHeader = (props) => {
       <div manager-tab="bank-transfers" className="tab">
         <span>Bank Transfers</span>
         <span className="notify">
-          <small>{allBankTransfers.length}</small>
+          <small>{bankTransfers.length}</small>
         </span>
       </div>
       <div manager-tab="payments" className="tab">
-        <span>Payments</span>
+        <span>Deposits</span>
         <span className="notify">
           <small>
-            {
+            {allDeposits.length > 0 &&
               allDeposits.filter((deposit) => deposit.status === "Pending")
-                .length
-            }
+                .length}
           </small>
         </span>
       </div>
@@ -36,10 +36,12 @@ const ManagerHeader = (props) => {
         <span>Subscriptions</span>
       </div>
       <div manager-tab="identity" className="tab">
-        <span>Identity</span>
+        <span>KYC</span>
         <span className="notify">
           <small>
-            {allVerify.filter((verify) => verify.status === "Pending").length}
+            {allVerifiedUsers.length > 0 &&
+              allVerifiedUsers.filter((verify) => verify.status === "Pending")
+                .length}
           </small>
         </span>
       </div>
@@ -56,11 +58,11 @@ const ManagerHeader = (props) => {
       <div manager-tab="orders" className="tab">
         <span>Orders</span>
         <span className="notify">
-          <small>{orders.length}</small>
+          <small>{allOrders.length}</small>
         </span>
       </div>
       <div manager-tab="withdraw" className="tab">
-        <span>Withdraw</span>
+        <span>Withdrawals</span>
         <span className="notify">
           <small>
             {allWithdrawals.length > 0 &&
@@ -78,12 +80,6 @@ const ManagerHeader = (props) => {
 };
 
 ManagerHeader.propTypes = {
-  allBankTransfers: PropTypes.array.isRequired,
-  allDeposits: PropTypes.array.isRequired,
-  allWithdrawals: PropTypes.array.isRequired,
-  allVerify: PropTypes.array.isRequired,
-  allUsers: PropTypes.array.isRequired,
-  orders: PropTypes.array.isRequired,
   setDisplayC: PropTypes.func.isRequired,
 };
 

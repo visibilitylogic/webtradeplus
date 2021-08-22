@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Card, Form, Row, Col, Table } from "react-bootstrap";
 import { Button, Tag, DatePicker, message } from "antd";
@@ -16,22 +16,17 @@ import WithdrawDetailsModal from "../utils/modals/WithdrawalDetailsPopOver";
 
 const ManagerContents = (props) => {
   const history = useHistory();
+  const { displayC, setDisplayC, setEditProfile } = props;
   const {
+    error,
     allDeposits,
     allWithdrawals,
-    allVerify,
-    allUsers,
+    allVerifiedUsers,
+    bankTransfers,
     allTrades,
-    allBankTransfers,
-    numVerified,
-    savedAllWithdrawals,
-    savedAllusers,
-    savedAlltrades,
-    displayC,
-    setDisplayC,
-    setEditProfile,
-  } = props;
-  const { error } = useSelector((state) => state.profile);
+    allUsers,
+    userAutoCopyTrade,
+  } = useSelector((state) => state.profile);
 
   const { user } = useSelector((state) => state.auth);
 
@@ -50,10 +45,12 @@ const ManagerContents = (props) => {
     removeAdmin,
     removeManager,
     deleteUser,
+    getUserAutoCopyTrade,
+    addUserAutoCopyTrade,
+    deleteUserAutoCopyTrade,
   } = useActions();
 
   const [loading, setLoading] = useState(false);
-  const [userAutoCopyTradeData, setUserAutoCopyTradeData] = useState([]);
   const [profitLoss, setProfitLoss] = useState(false);
   const [market, setMarket] = useState("");
   const [amount, setAmount] = useState(0);
@@ -76,59 +73,33 @@ const ManagerContents = (props) => {
   const [userLevel, setUserLevel] = useState("");
   const [currentDeposit, setCurrentDeposit] = useState([]);
 
-  const callBackAutoTrade = () => {
-    (async () => {
-      const { data } = await axios(
-        `https://trade-backend-daari.ondigitalocean.app/api/autocopytrade/${user._id}`
-      );
-      setUserAutoCopyTradeData(data);
-    })();
-  };
-
   const deleteAutoCopyTrade = async () => {
     setLoading(true);
 
-    try {
-      await axios.delete(
-        `https://trade-backend-daari.ondigitalocean.app/api/autocopytrade/${user._id}`
-      );
-      callBackAutoTrade();
-      message.success("Successfully Deleted Auto-trade");
-    } catch (error) {
-      console.log(error);
+    if (error) {
       message.error("Error Deleting Auto-trade");
+    } else {
+      deleteUserAutoCopyTrade(user._id);
+      message.success("Successfully Deleted Auto-trade");
     }
+
     setLoading(false);
   };
 
   const submitAutoCopyTrade = async (payload) => {
     setLoading(true);
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    const body = JSON.stringify(payload);
-
-    try {
-      await axios.post(
-        `https://trade-backend-daari.ondigitalocean.app/api/autocopytrade`,
-        body,
-        config
-      );
-      callBackAutoTrade();
+    if (error) {
+      message.error("Error Adding Auto-Trade");
+    } else {
+      addUserAutoCopyTrade(payload);
       setProfitLoss(false);
       setMarket("");
       setAmount(0);
       setAsset("");
       setScheduledTime("");
       message.success("Successfully Added Auto-trade");
-    } catch (error) {
-      console.log(error);
-      message.error("error adding auto-trade");
     }
+
     setLoading(false);
   };
 
@@ -161,7 +132,7 @@ const ManagerContents = (props) => {
 
     (async () => {
       const { data } = await axios(
-        `https://trade-backend-daari.ondigitalocean.app/api/trade/desposit/${user._id}`
+        `https://trade-backend-daari.ondigitalocean.app/api/trade/deposit/${user._id}`
       );
       setCurrentDeposit(data);
     })();
@@ -273,7 +244,7 @@ const ManagerContents = (props) => {
 
   const handleDeclineVerify = (id) => {
     if (error) {
-      message.error("Identity Decline Was not Wuccessfull");
+      message.error("Identity Decline Was not Successfull");
     } else {
       declineVerify({
         id,
@@ -367,6 +338,10 @@ const ManagerContents = (props) => {
     }
   };
 
+  useEffect(() => {
+    getUserAutoCopyTrade(user._id);
+  }, []);
+
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
@@ -382,38 +357,23 @@ const ManagerContents = (props) => {
         <div className="dash-row" style={{ margin: "15px 0" }}>
           <div className="into-6">
             <h5 className="text-uppercase">New user</h5>
-            <h2>
-              {savedAllusers.allUsers ? savedAllusers.allUsers.length : 0}
-            </h2>
+            <h2>{allUsers.length}</h2>
           </div>
           <div className="into-6">
             <h5 className="text-uppercase">Deposit</h5>
-            <h2>{allDeposits ? allDeposits.length : 0}</h2>
+            <h2>{allDeposits.length}</h2>
           </div>
           <div className="into-6">
             <h5 className="text-uppercase">Withdraw</h5>
-            <h2>
-              {savedAllWithdrawals.allWithdrawals
-                ? savedAllWithdrawals.allWithdrawals.length
-                : 0}
-            </h2>
+            <h2>{allWithdrawals.length}</h2>
           </div>
           <div className="into-6">
             <h5 className="text-uppercase">Identity verification</h5>
-            <h2>
-              {/* {this.savedAllver.savedAllver
-                              ? this.savedAllver.allVerify.length
-                              : 0} */}
-              {numVerified}
-            </h2>
+            <h2>{allVerifiedUsers.length}</h2>
           </div>
           <div className="into-6">
             <h5 className="text-uppercase">Order passed</h5>
-            <h2>
-              {savedAlltrades.savedAlltrades
-                ? savedAlltrades.allTrades.length
-                : 0}
-            </h2>
+            <h2>{allTrades.length}</h2>
           </div>
           <div className="into-6">
             <h5 className="text-uppercase">New subscription</h5>
@@ -481,56 +441,57 @@ const ManagerContents = (props) => {
               <th>Proof recieved</th>
               <th />
             </tr>
-            {allBankTransfers.map((transfer, index) => (
-              <tr>
-                <td>
-                  #{index + 1}- {transfer.name}
-                </td>
-                <td className="font-weight-bold">{transfer.Ref}</td>
-                <td> {transfer.time}</td>
-                <td>
-                  {transfer.status === "Pending" ? (
-                    <span className="pending">Pending</span>
-                  ) : transfer.status === "Approved" ? (
-                    <span className="validate">Approved</span>
-                  ) : transfer.status === "Declined" ? (
-                    <span className="btn-danger">Declined</span>
-                  ) : null}
-                </td>
-                <td>
-                  {transfer.status === "Pending" ? (
-                    <span className="not-processed">Not Processed</span>
-                  ) : (
-                    <span className="processed">Processed</span>
-                  )}
-                </td>
-                <td>
-                  {transfer.currency} {transfer.amount}
-                </td>
-                <td>-</td>
-                <td>No proof received</td>
-                <td>
-                  <div
-                    className="validate"
-                    onClick={() => handleApproveWithdrawal(transfer._id)}
-                    style={{
-                      display: transfer.status !== "Pending" && "none",
-                    }}
-                  >
-                    Validate
-                  </div>
-                  <div
-                    style={{
-                      display: transfer.status !== "Pending" && "none",
-                    }}
-                    className="cancel"
-                    onClick={() => handleDeclineWithdrawal(transfer._id)}
-                  >
-                    Cancel
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {bankTransfers.length > 0 &&
+              bankTransfers.map((transfer, index) => (
+                <tr key={index}>
+                  <td>
+                    #{index + 1}- {transfer.name}
+                  </td>
+                  <td className="font-weight-bold">{transfer.Ref}</td>
+                  <td> {transfer.time}</td>
+                  <td>
+                    {transfer.status === "Pending" ? (
+                      <span className="pending">Pending</span>
+                    ) : transfer.status === "Approved" ? (
+                      <span className="validate">Approved</span>
+                    ) : transfer.status === "Declined" ? (
+                      <span className="btn-danger">Declined</span>
+                    ) : null}
+                  </td>
+                  <td>
+                    {transfer.status === "Pending" ? (
+                      <span className="not-processed">Not Processed</span>
+                    ) : (
+                      <span className="processed">Processed</span>
+                    )}
+                  </td>
+                  <td>
+                    {transfer.currency} {transfer.amount}
+                  </td>
+                  <td>-</td>
+                  <td>No proof received</td>
+                  <td>
+                    <div
+                      className="validate"
+                      onClick={() => handleApproveWithdrawal(transfer._id)}
+                      style={{
+                        display: transfer.status !== "Pending" && "none",
+                      }}
+                    >
+                      Validate
+                    </div>
+                    <div
+                      style={{
+                        display: transfer.status !== "Pending" && "none",
+                      }}
+                      className="cancel"
+                      onClick={() => handleDeclineWithdrawal(transfer._id)}
+                    >
+                      Cancel
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
@@ -550,59 +511,60 @@ const ManagerContents = (props) => {
               <th>Payment Details</th>
               <th />
             </tr>
-            {allDeposits.map((deposit, index) => (
-              <tr key={index}>
-                <td>
-                  #{index + 1} - {deposit.name}
-                </td>
-                <td className="font-weight-bold">{deposit.Ref}</td>
-                <td>{deposit.time}</td>
-                <td>
-                  {deposit.status === "Pending" ? (
-                    <span className="pending">Not Proccesed</span>
-                  ) : deposit.status === "Approved" ? (
-                    <span className="validate">Paid</span>
-                  ) : deposit.status === "Declined" ? (
-                    <span className="cancel">Declined</span>
-                  ) : null}
-                </td>
-                <td>
-                  {deposit.amount
-                    ? new Intl.NumberFormat("en-US").format(deposit.amount)
-                    : ""}
-                  USD
-                </td>
-                <td>{deposit.fee}USD</td>
-                <td>USD</td>
-                <td className="font-weight-bold">{deposit.amount} USD</td>
-                <td>{deposit.method}</td>
-                <td>
-                  <PaymentDetailsPopOver details={deposit} />
-                </td>
-                <td>
-                  <div
-                    className="validate"
-                    onClick={() => handleApproveDeposit(deposit._id)}
-                    style={{
-                      display: deposit.status !== "Pending" && "none",
-                    }}
-                  >
-                    Validate
-                  </div>
-                  <div
-                    className="cancel"
-                    onClick={() => {
-                      handleDeclineDeposit(deposit._id);
-                    }}
-                    style={{
-                      display: deposit.status !== "Pending" && "none",
-                    }}
-                  >
-                    Cancel
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {allDeposits.length > 0 &&
+              allDeposits.map((deposit, index) => (
+                <tr key={index}>
+                  <td>
+                    #{index + 1} - {deposit.name}
+                  </td>
+                  <td className="font-weight-bold">{deposit.Ref}</td>
+                  <td>{deposit.time}</td>
+                  <td>
+                    {deposit.status === "Pending" ? (
+                      <span className="pending">Not Proccesed</span>
+                    ) : deposit.status === "Approved" ? (
+                      <span className="validate">Paid</span>
+                    ) : deposit.status === "Declined" ? (
+                      <span className="cancel">Declined</span>
+                    ) : null}
+                  </td>
+                  <td>
+                    {deposit.amount
+                      ? new Intl.NumberFormat("en-US").format(deposit.amount)
+                      : ""}
+                    USD
+                  </td>
+                  <td>{deposit.fee}USD</td>
+                  <td>USD</td>
+                  <td className="font-weight-bold">{deposit.amount} USD</td>
+                  <td>{deposit.method}</td>
+                  <td>
+                    <PaymentDetailsPopOver details={deposit} />
+                  </td>
+                  <td>
+                    <div
+                      className="validate"
+                      onClick={() => handleApproveDeposit(deposit._id)}
+                      style={{
+                        display: deposit.status !== "Pending" && "none",
+                      }}
+                    >
+                      Validate
+                    </div>
+                    <div
+                      className="cancel"
+                      onClick={() => {
+                        handleDeclineDeposit(deposit._id);
+                      }}
+                      style={{
+                        display: deposit.status !== "Pending" && "none",
+                      }}
+                    >
+                      Cancel
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
@@ -641,108 +603,114 @@ const ManagerContents = (props) => {
               <th>Documents</th>
               <th />
             </tr>
-            {allVerify.map((verify, index) => (
-              <tr key={index}>
-                {decline && (
-                  <section
-                    className="withdraw-modal-box"
-                    style={{ display: "block" }}
-                  >
-                    <div
-                      className="withdraw-modal support-modal pb-5"
-                      style={{ maxWidth: "500px" }}
+            {allVerifiedUsers.length > 0 &&
+              allVerifiedUsers.map((verify, index) => (
+                <tr key={index}>
+                  {decline && (
+                    <section
+                      className="withdraw-modal-box"
+                      style={{ display: "block" }}
                     >
-                      <div className="header">Decline Identity</div>
-                      <span className="close" onClick={() => setDecline(false)}>
-                        <svg id="lnr-cross " viewBox="0 0 1024 1024">
-                          <title>cross</title>
-                          <path
-                            className="path1"
-                            d="M548.203 537.6l289.099-289.098c9.998-9.998 9.998-26.206 0-36.205-9.997-9.997-26.206-9.997-36.203 0l-289.099 289.099-289.098-289.099c-9.998-9.997-26.206-9.997-36.205 0-9.997 9.998-9.997 26.206 0 36.205l289.099 289.098-289.099 289.099c-9.997 9.997-9.997 26.206 0 36.203 5 4.998 11.55 7.498 18.102 7.498s13.102-2.499 18.102-7.499l289.098-289.098 289.099 289.099c4.998 4.998 11.549 7.498 18.101 7.498s13.102-2.499 18.101-7.499c9.998-9.997 9.998-26.206 0-36.203l-289.098-289.098z"
-                          />
-                        </svg>
-                      </span>{" "}
-                      <Container fluid>
-                        <Form className="text-left">
-                          <Form.Group controlId="exampleForm.ControlTextarea1">
-                            <Form.Label
-                              className="py-4"
-                              style={{ color: "#fff" }}
-                            >
-                              Write below the reason for rejection
-                            </Form.Label>
-                            <Form.Control
-                              value={declinedMessage}
-                              onChange={(event) =>
-                                setDeclinedMessage(event.target.value)
-                              }
-                              as="textarea"
-                              rows={5}
+                      <div
+                        className="withdraw-modal support-modal pb-5"
+                        style={{ maxWidth: "500px" }}
+                      >
+                        <div className="header">Decline Identity</div>
+                        <span
+                          className="close"
+                          onClick={() => setDecline(false)}
+                        >
+                          <svg id="lnr-cross " viewBox="0 0 1024 1024">
+                            <title>cross</title>
+                            <path
+                              className="path1"
+                              d="M548.203 537.6l289.099-289.098c9.998-9.998 9.998-26.206 0-36.205-9.997-9.997-26.206-9.997-36.203 0l-289.099 289.099-289.098-289.099c-9.998-9.997-26.206-9.997-36.205 0-9.997 9.998-9.997 26.206 0 36.205l289.099 289.098-289.099 289.099c-9.997 9.997-9.997 26.206 0 36.203 5 4.998 11.55 7.498 18.102 7.498s13.102-2.499 18.102-7.499l289.098-289.098 289.099 289.099c4.998 4.998 11.549 7.498 18.101 7.498s13.102-2.499 18.101-7.499c9.998-9.997 9.998-26.206 0-36.203l-289.098-289.098z"
                             />
-                          </Form.Group>
-                          <div className="text-right">
-                            <Button
-                              variant="primary mt-3"
-                              onClick={() => handleDeclineVerify(verify.userId)}
-                            >
-                              Confirm
-                            </Button>
-                          </div>
-                        </Form>
-                      </Container>
+                          </svg>
+                        </span>{" "}
+                        <Container fluid>
+                          <Form className="text-left">
+                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                              <Form.Label
+                                className="py-4"
+                                style={{ color: "#fff" }}
+                              >
+                                Write below the reason for rejection
+                              </Form.Label>
+                              <Form.Control
+                                value={declinedMessage}
+                                onChange={(event) =>
+                                  setDeclinedMessage(event.target.value)
+                                }
+                                as="textarea"
+                                rows={5}
+                              />
+                            </Form.Group>
+                            <div className="text-right">
+                              <Button
+                                variant="primary mt-3"
+                                onClick={() =>
+                                  handleDeclineVerify(verify.userId)
+                                }
+                              >
+                                Confirm
+                              </Button>
+                            </div>
+                          </Form>
+                        </Container>
+                      </div>
+                    </section>
+                  )}
+                  <td>
+                    #{index + 1}- {verify.name}
+                  </td>
+                  <td>
+                    <Moment format="DD/MM/YYYY">{verify.time}</Moment>
+                  </td>
+                  <td>
+                    {verify.status === "Pending" ? (
+                      <span className="pending">Not Proccesed</span>
+                    ) : verify.status === "Approved" ? (
+                      <span className="validate">Approved</span>
+                    ) : verify.status === "Declined" ? (
+                      <span className="pending">Declined</span>
+                    ) : null}
+                  </td>
+                  <td>{<VerifyDetailsPopOver details={verify} />}</td>
+                  <td>
+                    <a href="#!" className="sec-bt">
+                      {/* Step 1: Identity */}
+                      <VerifyDocModal
+                        text={verify.documentName}
+                        title={verify.documentName}
+                        file={verify.documentFile}
+                        img={verify.Img}
+                        proofDocument={verify.proofDocument}
+                      />
+                    </a>
+                  </td>
+                  <td>
+                    <div
+                      style={{
+                        display: verify.status === "Approved" && "none",
+                      }}
+                      className="validate "
+                      onClick={() => handleApproveVerify(verify.userId)}
+                    >
+                      Accept
                     </div>
-                  </section>
-                )}
-                <td>
-                  #{index + 1}- {verify.name}
-                </td>
-                <td>
-                  <Moment format="DD/MM/YYYY">{verify.time}</Moment>
-                </td>
-                <td>
-                  {verify.status === "Pending" ? (
-                    <span className="pending">Not Proccesed</span>
-                  ) : verify.status === "Approved" ? (
-                    <span className="validate">Approved</span>
-                  ) : verify.status === "Declined" ? (
-                    <span className="pending">Declined</span>
-                  ) : null}
-                </td>
-                <td>{<VerifyDetailsPopOver details={verify} />}</td>
-                <td>
-                  <a href="#!" className="sec-bt">
-                    {/* Step 1: Identity */}
-                    <VerifyDocModal
-                      text={verify.documentName}
-                      title={verify.documentName}
-                      file={verify.documentFile}
-                      img={verify.Img}
-                      proofDocument={verify.proofDocument}
-                    />
-                  </a>
-                </td>
-                <td>
-                  <div
-                    style={{
-                      display: verify.status === "Approved" && "none",
-                    }}
-                    className="validate "
-                    onClick={() => handleApproveVerify(verify.userId)}
-                  >
-                    Accept
-                  </div>
-                  <div
-                    className="cancel"
-                    style={{
-                      display: verify.status === "Declined" && "none",
-                    }}
-                    onClick={() => setDecline(true)}
-                  >
-                    Decline
-                  </div>
-                </td>
-              </tr>
-            ))}
+                    <div
+                      className="cancel"
+                      style={{
+                        display: verify.status === "Declined" && "none",
+                      }}
+                      onClick={() => setDecline(true)}
+                    >
+                      Decline
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
@@ -760,13 +728,13 @@ const ManagerContents = (props) => {
                   <th>Currency</th>
                   <th>Auto Trade</th>
                 </tr>
-                {allUsers &&
-                  allUsers.length > 0 &&
-                  allUsers.map((user) => (
+                {allUsers.length > 0 &&
+                  allUsers.map((user, index) => (
                     <tr
+                      key={index}
                       onClick={() => {
                         setDisplayC(true);
-                        callBackAutoTrade();
+                        // getUserAutoCopyTrade(user._id);
                         setUserLevel(
                           user.isAdmin
                             ? "isAdmin"
@@ -1115,8 +1083,8 @@ const ManagerContents = (props) => {
                       <table>
                         <tbody>
                           {currentDeposit.length > 0 &&
-                            currentDeposit.map((item) => (
-                              <tr>
+                            currentDeposit.map((item, index) => (
+                              <tr key={index}>
                                 <td>{item._id}</td>
                                 <td>{item.time}</td>
                                 <td></td>
@@ -1130,7 +1098,7 @@ const ManagerContents = (props) => {
                   </div>
                 </div>
               )}
-              {bal ? (
+              {bal && (
                 <div
                   dash-user-dtls-tab-dtls="balances"
                   style={{ display: "block" }}
@@ -1345,8 +1313,6 @@ const ManagerContents = (props) => {
                     </div>
                   </div>
                 </div>
-              ) : (
-                ""
               )}
               {execution && (
                 <Row className="px-3" style={{ marginBottom: "10%" }}>
@@ -1481,7 +1447,7 @@ const ManagerContents = (props) => {
                               </Col>
                             </Row>
                           </Form.Group>
-                          {schedule ? (
+                          {schedule && (
                             <Form.Group>
                               <Row>
                                 <span className="autoTSpan">Calender</span>
@@ -1492,8 +1458,6 @@ const ManagerContents = (props) => {
                                 />
                               </Row>
                             </Form.Group>
-                          ) : (
-                            ""
                           )}
                           <div className="text-right">
                             <Button
@@ -1564,8 +1528,8 @@ const ManagerContents = (props) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {userAutoCopyTradeData.length > 0 &&
-                          userAutoCopyTradeData.map((data, index) => (
+                        {userAutoCopyTrade.length > 0 &&
+                          userAutoCopyTrade.map((data, index) => (
                             <tr key={index}>
                               <td>{index + 1}</td>
                               <td>{data.market}</td>
@@ -1585,7 +1549,9 @@ const ManagerContents = (props) => {
                               <td>
                                 <EditAutoCopyTrade
                                   id={data._id}
-                                  callback={() => callBackAutoTrade()}
+                                  callback={() =>
+                                    getUserAutoCopyTrade(user._id)
+                                  }
                                 >
                                   <Tag
                                     color="blue"
@@ -2092,9 +2058,9 @@ const ManagerContents = (props) => {
               <th>Open Rate </th>
             </tr>
             {allTrades.length > 0 &&
-              allTrades.map((item, i) => (
-                <tr>
-                  <td className="font-weight-bold">ORDR-00{i + 1}</td>
+              allTrades.map((item, index) => (
+                <tr key={index}>
+                  <td className="font-weight-bold">ORDR-00{index + 1}</td>
                   <td>{item.time}</td>
                   <td>{item.stockName}</td>
                   <td>
@@ -2213,16 +2179,6 @@ ManagerContents.propTypes = {
   displayC: PropTypes.bool,
   setDisplayC: PropTypes.func.isRequired,
   setEditProfile: PropTypes.func.isRequired,
-  savedAllWithdrawals: PropTypes.array.isRequired,
-  savedAllusers: PropTypes.array.isRequired,
-  savedAlltrades: PropTypes.array.isRequired,
-  allDeposits: PropTypes.array.isRequired,
-  allWithdrawals: PropTypes.array.isRequired,
-  allVerify: PropTypes.array.isRequired,
-  allUsers: PropTypes.array.isRequired,
-  allTrades: PropTypes.array.isRequired,
-  allBankTransfers: PropTypes.array.isRequired,
-  numVerified: PropTypes.number.isRequired,
 };
 
 export default ManagerContents;

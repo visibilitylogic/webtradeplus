@@ -56,9 +56,29 @@
   width: 100%;
   display: flex;
   justify-content: space-between !important;
+  align-items: center;
   padding: 0;
   cursor: pointer;
+  position: relative;
 }
+
+.sidebar-wrapper #watching-list-item:hover {
+  background: #171b29;
+}
+
+/* sidebar-wrapper #watching-list-item > span:hover {
+  background: transparent !important;
+}
+
+.sidebar-wrapper .delete-stock {
+  display: none;
+}
+
+.sidebar-wrapper #watching-list-item:hover > .delete-stock {
+  display: block;
+  position: absolute;
+  right: 5px;
+} */
 
 .green {
   color: #1f7a2d !important;

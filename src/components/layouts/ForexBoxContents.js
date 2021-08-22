@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
 import Ibox from "../utils/Ibox";
+import { message } from "antd";
 
 const ForexBoxContents = ({
   selectedStock,
@@ -25,8 +26,9 @@ const ForexBoxContents = ({
   };
 
   const handleAddStockToList = (item) => {
-    if (stocksSelected.length === 5) {
-      stocksSelected.splice(-1, 1, item);
+    if (stocksSelected.length >= 5) {
+      message.error("You cannot add more than 5 stocks to the delete");
+      // stocksSelected.splice(-1, 1, item);
     } else if (stocksSelected.some((stock) => stock.symbol === item.symbol)) {
       return stocksSelected;
     } else {
