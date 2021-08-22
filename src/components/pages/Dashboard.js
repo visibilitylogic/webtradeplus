@@ -154,7 +154,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     setDefaultSelectedStock();
-    // getAllOrders(user && user._id);
   }, []);
 
   // useEffect(() => {
