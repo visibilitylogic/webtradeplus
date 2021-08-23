@@ -1,8 +1,14 @@
 import { bindActionCreators } from "redux";
 import { useDispatch } from "react-redux";
-import { webActions, authActions, profileActions,
+import {
+  webActions,
+  authActions,
+  profileActions,
   AdminAutoTradingActions,
-  AdminActions, stockActions } from "../../store/action-creators";
+  AdminActions,
+  stockActions,
+  themeActions,
+} from "../../store/action-creators";
 
 export const useActions = () => {
   const dispatch = useDispatch();
@@ -15,6 +21,7 @@ export const useActions = () => {
       ...AdminAutoTradingActions,
       ...AdminActions,
       ...stockActions,
+      ...themeActions,
     },
     dispatch
   );

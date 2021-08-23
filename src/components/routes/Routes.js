@@ -8,8 +8,9 @@ import Footer from "../layouts/Footer";
 import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
 import Dashboard from "../pages/Dashboard";
+import DashboardFooter from "../layouts/DashboardFooter";
 import Admin from "../pages/Admin";
- 
+
 import PrivateRoute from "./PrivateRoute";
 
 const Routes = () => {
@@ -60,6 +61,8 @@ const Routes = () => {
           />
           <PrivateRoute path={`/dashboard`} component={Dashboard}/>
           <PrivateRoute path={`/dashboard/:slug`} exact component={Admin}/>
+          <PrivateRoute path={`/dashboard`} component={Dashboard} />
+          <PrivateRoute path={`/dashboard/admin/:slug`} component={Admin} />
         </Switch>
       </div>
       {!isAuthenticated && <Footer data={webData} />}

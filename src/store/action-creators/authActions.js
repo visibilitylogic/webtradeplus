@@ -2,7 +2,7 @@ import * as actionTypes from "../action-types";
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 
-const BASE_URL = "https://trade-backend-daari.ondigitalocean.app/api";
+// const BASE_URL = "https://trade-backend-daari.ondigitalocean.app/api";
 // AUTHENTICATIONS
 export const loadUser = (userId) => async (dispatch) => {
   dispatch({
@@ -12,7 +12,7 @@ export const loadUser = (userId) => async (dispatch) => {
     setAuthToken(localStorage.token);
   }
   try {
-    const { data } = await axios.get(`${BASE_URL}/profile/single/${userId}`);
+    const { data } = await axios.get(`/api/profile/single/${userId}`);
     dispatch({
       type: actionTypes.USER_LOADED,
       payload: data,
@@ -38,7 +38,7 @@ export const registerUser = (profile) => async (dispatch) => {
 
   const body = JSON.stringify(profile);
   try {
-    const { data } = await axios.post(`${BASE_URL}/registration`, body, config);
+    const { data } = await axios.post(`/api/registration`, body, config);
 
     dispatch({
       type: actionTypes.REGISTER_SUCCESS,
@@ -66,11 +66,7 @@ export const loginUser = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
 
   try {
-    const { data } = await axios.post(
-      `${BASE_URL}/registration/login`,
-      body,
-      config
-    );
+    const { data } = await axios.post(`/api/registration/login`, body, config);
 
     dispatch({
       type: actionTypes.LOGIN_SUCCESS,
@@ -79,6 +75,7 @@ export const loginUser = (email, password) => async (dispatch) => {
 
     dispatch(loadUser(data._id));
   } catch (error) {
+    console.log(error);
     dispatch({
       type: actionTypes.LOGIN_FAILED,
       payload: error.message,

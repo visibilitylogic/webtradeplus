@@ -3,6 +3,7 @@ import { Form, FormControl } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
+import { RiDeleteBinFill } from "react-icons/ri";
 import "./Sidebar.css";
 
 const SubSidebar = ({ view, getRate }) => {
@@ -16,7 +17,7 @@ const SubSidebar = ({ view, getRate }) => {
   } = useSelector((state) => state.stock);
 
   // Action Creators
-  const { setCurrentSelectedStock } = useActions();
+  const { setCurrentSelectedStock, deleteStock } = useActions();
 
   return (
     <div className="sidebar-wrapper">
@@ -30,7 +31,7 @@ const SubSidebar = ({ view, getRate }) => {
           />
         </Form>
       </header>
-      <nav>
+      <nav style={{ height: 350 }}>
         <ul id="watching-list" className="mb-0">
           <li>Symbol</li>
           <li className="ml-auto">Last</li>
@@ -55,23 +56,28 @@ const SubSidebar = ({ view, getRate }) => {
             </li>
           ) : (
             stocksSelected.map((stock, index) => (
-              <li
-                id="watching-list-item"
-                key={index}
-                onClick={() => setCurrentSelectedStock(stock)}
-              >
-                <span style={{ flex: 3 }}>{stock.symbol}</span>
+              <li id="watching-list-item" key={index}>
+                <span
+                  style={{ flex: 3 }}
+                  onClick={() => setCurrentSelectedStock(stock)}
+                >
+                  {stock.symbol}
+                </span>
                 <span style={{ flex: 2 }}>
                   {stock.price.toString().slice(0, 8)}
                 </span>
                 <span
-                  style={{ flex: 1 }}
+                  style={{ flex: 1, justifySelf: "center" }}
                   className={`${stock.changesPercentage < 0 ? "red" : "green"}`}
                 >
                   {stock.changesPercentage
                     ? stock.changesPercentage.toFixed(2)
                     : ""}
                 </span>
+                <RiDeleteBinFill
+                  className="ml-2 text-danger"
+                  onClick={() => deleteStock(stock.symbol)}
+                />
               </li>
             ))
           )}
@@ -87,9 +93,9 @@ const SubSidebar = ({ view, getRate }) => {
           </Fragment>
         )}
       </nav>
-      <ul className="watchlist-details"></ul>
+      {/* <ul className="watchlist-details"></ul> */}
 
-      <div className="infocurrency-wrapper p-2">
+      <div className="infocurrency-wrapper p-2 h-100">
         <header
           className="details-wrapper d-flex align-items-center justify-content-between"
           style={{ margin: " 0 0 5%" }}

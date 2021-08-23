@@ -21,9 +21,14 @@ const DashboardAside = ({
   const [calc, setCalc] = useState(false);
   const {setOpen} = useActions();
   const { user } = useSelector((state) => state.auth);
+  const { isDarkMode } = useSelector((state) => state.theme);
+
   return (
     <Fragment>
-      <div className="sidebar">
+      <div
+        className="sidebar"
+        style={{ backgroundColor: isDarkMode ? "#131722" : "#f2f2f2" }}
+      >
         <ul>
           {asideList.map((aside) => (
             <li
@@ -63,6 +68,7 @@ const DashboardAside = ({
           )}
           {/* removed this code user.isAdmin && to test my admin page */}
           {user && user.isAdmin &&   (
+          
             <li
               onClick={() => {
                 setAdminSelected(true);

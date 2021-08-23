@@ -18,6 +18,8 @@ import Calc from "./Calc";
 import Calculator from "../layouts/Calculator";
 import News from "../pages/News";
 import LeaderBoard from "./LeaderBoard";
+import DashboardFooter from "../layouts/DashboardFooter";
+import { asideList } from "./../../helpers/dataset/asideNavList";
 
 const Dashboard = () => {
   const token = "pk_135c1daf1b8d4130b9318fd5e8ab0e5e";
@@ -38,6 +40,7 @@ const Dashboard = () => {
   const [buysell, setBuysell] = useState(false);
   const [data, setData] = useState({});
   const [orderIsh, setOrderIsh] = useState({});
+  const [support, setSupport] = useState(false);
 
   const myRef3 = useRef("");
 
@@ -47,7 +50,7 @@ const Dashboard = () => {
   // Redux state data
   const { webData } = useSelector((state) => state.web);
 
-  const { isAuthenticated, userId, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   // const {
   //   profile: { isTrading },
@@ -163,41 +166,53 @@ const Dashboard = () => {
     setDefaultSelectedStock();
   }, []);
 
-  // useEffect(() => {
-  //   [...asideList].forEach((tab) => {
-  //     switch (window.location.pathname) {
-  //       case tab.path:
-  //         if (selectedTab !== tab.id) {
-  //           setSelectedTab(tab.id);
-  //           setAdminSelected(false);
-  //           setManagerSelected(false);
-  //         }
-  //         break;
-  //       case "/dashboard/manager":
-  //         if (!managerSelected) {
-  //           setManagerSelected(true);
-  //           setSelectedTab(null);
-  //           setAdminSelected(false);
-  //         }
-  //         break;
-  //       case "/dashboard/admin":
-  //         if (!adminSelected) {
-  //           setAdminSelected(true);
-  //           setSelectedTab(null);
-  //           setManagerSelected(false);
-  //         }
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //   });
-  // }, [selectedTab, adminSelected, managerSelected]);
+  useEffect(() => {
+    [...asideList].forEach((tab) => {
+      switch (window.location.pathname) {
+        case tab.path:
+          if (selectedTab !== tab.id) {
+            setSelectedTab(tab.id);
+            setAdminSelected(false);
+            setManagerSelected(false);
+          }
+          break;
+        case "/dashboard/manager":
+          if (!managerSelected) {
+            setManagerSelected(true);
+            setSelectedTab(null);
+            setAdminSelected(false);
+          }
+          break;
+        case "/dashboard/admin":
+          if (!adminSelected) {
+            setAdminSelected(true);
+            setSelectedTab(null);
+            setManagerSelected(false);
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  }, [selectedTab, adminSelected, managerSelected]);
 
   if (!isAuthenticated) return <Redirect to="/" />;
 
   return (
-    <div ref={myRef3} style={{ minHeight: "100vh", background: "#131722" }}>
-      <DashboardHeader data={webData} handleViewUpdate={handleViewUpdate} />
+    <div
+      ref={myRef3}
+      style={{
+        minHeight: "100vh",
+        background: "#131722",
+        position: "relative",
+      }}
+    >
+      <DashboardHeader
+        data={webData}
+        handleViewUpdate={handleViewUpdate}
+        support={support}
+        setSupport={setSupport}
+      />
       <section className="dash-contents">
         <div className="dash-row">
         
@@ -316,6 +331,7 @@ const Dashboard = () => {
        
       </section>
      
+      <DashboardFooter setSupport={setSupport} />
     </div>
   );
 };

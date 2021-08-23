@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState } from "react";
 import { message } from "antd";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
@@ -8,7 +8,6 @@ import TradingViewWidget, { Themes } from "react-tradingview-widget";
 import BuyStockModal from "../utils/modals/trading/BuyStock";
 import { useActions } from "../hooks/useActions";
 import SellStockModal from "../utils/modals/trading/SellStock";
-import { getRate } from "../../helpers/getRate";
 
 const Board = (props) => {
   const [assetQuantity, setAssetQuantity] = useState(1);
