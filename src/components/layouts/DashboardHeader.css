@@ -117,13 +117,20 @@
 }
 .profile-wrapper {
   width: 60%;
-  background: rgb(39, 45, 59);
   padding: 30px 20px;
 }
+
+.profile-wrapper--dark {
+  background: rgb(39, 45, 59);
+}
+
+.profile-wrapper--light {
+  background: #ddd;
+}
+
 .profile-wrapper h6 {
   font-size: 18px;
   font-weight: bold;
-  color: #fff;
 }
 .profile-wrapper p {
   color: rgba(255, 255, 255, 0.5);
@@ -138,17 +145,34 @@
 }
 .features-wrapper {
   width: 40%;
+}
+
+.features-wrapper--dark {
   background: rgb(29, 33, 48);
 }
+
+.features-wrapper--light {
+  background: #bbb;
+}
+
 .features-wrapper {
   padding: 15px 0;
 }
 .features-wrapper a {
-  color: #fff;
   font-size: 14px;
   display: flex;
   align-items: center;
 }
+
+.features-wrapper .nav--dark {
+  color: #fff;
+}
+
+.features-wrapper .nav--light {
+  color: #4c5268;
+  font-weight: 600;
+}
+
 .features-wrapper a svg {
   color: rgba(255, 255, 255, 0.5);
 }
@@ -193,25 +217,34 @@
   padding: 7px 40px;
 }
 .btn.btn-secondary.btn-deposit {
-  background: rgb(55, 60, 70);
   border: 0;
   text-transform: capitalize;
   font-weight: normal;
   font-size: 12px;
 }
-.practice-account .btn.btn-secondary.btn-deposit {
-  background: rgb(68, 74, 95);
+.btn-deposit--dark {
+  background: rgb(76, 82, 104);
+}
+.btn-deposit--light {
+  background: rgb(134, 134, 134);
 }
 .btn.btn-primary.btn-enable {
   background: #f07001;
   border: 1px solid #f07001;
   font-size: 14px;
 }
-.features-wrapper .real-account:hover {
+.features-wrapper .real-account--dark:hover {
   background: rgba(55, 60, 79, 0.5);
 }
-.features-wrapper .practice-account {
+
+.features-wrapper .real-account--light:hover {
+  background: #ddd;
+}
+.features-wrapper .practice-account--dark {
   background: rgb(55, 60, 79);
+}
+.features-wrapper .practice-account--light {
+  background: #eee;
 }
 .practice-account .amount,
 .btn.watch-video {
@@ -709,7 +742,6 @@
   height: 50px;
   border-radius: 5px;
   cursor: pointer;
-  border: 1px solid #555;
   display: flex;
   text-align: center;
   display: flex;
@@ -724,11 +756,29 @@
   margin-right: 15px;
 }
 
-.stock-nav .stock-nav-item:hover {
+.stock-nav .stock-nav-item--dark {
+  border: 1px solid #555;
+}
+
+.stock-nav .stock-nav-item--dark:hover {
   background: #343b4c;
 }
 
-.active-stock {
+.stock-nav .stock-nav-item--light {
+  border: 1px solid #ccc;
+}
+
+.stock-nav .stock-nav-item--light:hover {
+  background: #ddd;
+}
+
+.active-stock--dark {
   background: #343b4c !important;
   border-bottom: 2px solid #2727c1 !important;
+}
+
+.active-stock--light {
+  background: #b3b6b9 !important;
+  color: #fff !important;
+  border-bottom: 2px solid rgb(82, 82, 82) !important;
 }

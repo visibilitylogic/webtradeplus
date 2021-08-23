@@ -59,6 +59,8 @@ const Routes = () => {
             path="/signup"
             render={(props) => <Register {...props} data={webData} />}
           />
+          <PrivateRoute path={`/dashboard`} component={Dashboard}/>
+          <PrivateRoute path={`/dashboard/:slug`} exact component={Admin}/>
           <PrivateRoute path={`/dashboard`} component={Dashboard} />
           <PrivateRoute path={`/dashboard/admin/:slug`} component={Admin} />
         </Switch>

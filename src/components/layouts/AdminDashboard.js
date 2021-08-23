@@ -1,6 +1,6 @@
 import React from 'react'
-
-function AdminDashboard() {
+import {  useParams } from 'react-router'
+function AdminDashboard() { 
     return (
         <div className="dash-row">
         <div className="users card">

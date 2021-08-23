@@ -75,6 +75,7 @@ export const loginUser = (email, password) => async (dispatch) => {
 
     dispatch(loadUser(data._id));
   } catch (error) {
+    console.log(error);
     dispatch({
       type: actionTypes.LOGIN_FAILED,
       payload: error.message,

@@ -9,13 +9,23 @@ import "./Dashboard.css";
 import Board from "./Board";
 import Manager from "./Manager";
 import Admin from "./Admin";
+import OrderBook from "./OrderBook";
 import BuyStockModal from "../utils/modals/trading/BuyStock";
+import Market from "./Market";
+import AutoTrade from "../pages/AutoTrade";
+import Finaces from "./Finaces";
+import Calc from "./Calc";
+import Calculator from "../layouts/Calculator";
+import News from "../pages/News";
+import LeaderBoard from "./LeaderBoard";
 import DashboardFooter from "../layouts/DashboardFooter";
+import { asideList } from "./../../helpers/dataset/asideNavList";
 
 const Dashboard = () => {
   const token = "pk_135c1daf1b8d4130b9318fd5e8ab0e5e";
   const fetchOrder = () => JSON.parse(localStorage.getItem("orders")) || [];
-
+  const [calcDisplay, setCalcDisplay ] = useState(false)
+    const {open } = useSelector(state=> state.toggle)
   const [selectedTab, setSelectedTab] = useState(0);
   const [adminSelected, setAdminSelected] = useState(false);
   const [managerSelected, setManagerSelected] = useState(false);
@@ -156,35 +166,35 @@ const Dashboard = () => {
     setDefaultSelectedStock();
   }, []);
 
-  // useEffect(() => {
-  //   [...asideList].forEach((tab) => {
-  //     switch (window.location.pathname) {
-  //       case tab.path:
-  //         if (selectedTab !== tab.id) {
-  //           setSelectedTab(tab.id);
-  //           setAdminSelected(false);
-  //           setManagerSelected(false);
-  //         }
-  //         break;
-  //       case "/dashboard/manager":
-  //         if (!managerSelected) {
-  //           setManagerSelected(true);
-  //           setSelectedTab(null);
-  //           setAdminSelected(false);
-  //         }
-  //         break;
-  //       case "/dashboard/admin":
-  //         if (!adminSelected) {
-  //           setAdminSelected(true);
-  //           setSelectedTab(null);
-  //           setManagerSelected(false);
-  //         }
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //   });
-  // }, [selectedTab, adminSelected, managerSelected]);
+  useEffect(() => {
+    [...asideList].forEach((tab) => {
+      switch (window.location.pathname) {
+        case tab.path:
+          if (selectedTab !== tab.id) {
+            setSelectedTab(tab.id);
+            setAdminSelected(false);
+            setManagerSelected(false);
+          }
+          break;
+        case "/dashboard/manager":
+          if (!managerSelected) {
+            setManagerSelected(true);
+            setSelectedTab(null);
+            setAdminSelected(false);
+          }
+          break;
+        case "/dashboard/admin":
+          if (!adminSelected) {
+            setAdminSelected(true);
+            setSelectedTab(null);
+            setManagerSelected(false);
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  }, [selectedTab, adminSelected, managerSelected]);
 
   if (!isAuthenticated) return <Redirect to="/" />;
 
@@ -205,6 +215,7 @@ const Dashboard = () => {
       />
       <section className="dash-contents">
         <div className="dash-row">
+        
           <DashboardAside
             selectedTab={selectedTab}
             setSelectedTab={setSelectedTab}
@@ -213,8 +224,8 @@ const Dashboard = () => {
             managerSelected={managerSelected}
             adminSelected={adminSelected}
           />
-
-          {selectedTab === 0 && (
+         
+          {selectedTab === 0  && (
             <Board
               orders={orders}
               view={view}
@@ -230,13 +241,74 @@ const Dashboard = () => {
             />
           )}
 
+        
+
           {/* Renders the  order book page*/}
           {selectedTab === 1 && (
             <div
               className="order-book-section orderBookComponent"
               style={{ display: "block" }}
             >
-              Order Book
+              <OrderBook orders={orders} />
+        
+            </div>
+          )}
+
+           {/* Renders the  order book page*/}
+           {selectedTab === 3 && (
+            <div
+              className="order-book-section orderBookComponent"
+              style={{ display: "block" }}
+            >
+              <Market/>
+            </div>
+          )}
+
+      {selectedTab === 2 && (
+            <div
+              className="order-book-section orderBookComponent"
+              style={{ display: "block" }}
+            >
+              <Finaces/>
+            </div>
+          )}
+
+          {selectedTab === 4 && (
+            <div
+              className="order-book-section orderBookComponent"
+              style={{ display: "block" }}
+            >
+              <AutoTrade/>
+            </div>
+          )}
+
+          {
+            selectedTab === 5 && (
+              <div
+                className="order-book-section orderBookComponent"
+                style={{ display: "block" }}
+              >
+                <Calculator/>
+              </div>
+            )}
+
+            
+          {
+            selectedTab === 6 && (
+              <div
+                className="order-book-section orderBookComponent"
+                style={{ display: "block" }}
+              >
+                <News/>
+              </div>
+            )}
+          
+          {selectedTab === 7 && (
+            <div
+              className="order-book-section orderBookComponent"
+              style={{ display: "block" }}
+            >
+              <LeaderBoard/>
             </div>
           )}
 
@@ -253,8 +325,12 @@ const Dashboard = () => {
               <Admin />
             </Fragment>
           )}
+          
+        
         </div>
+       
       </section>
+     
       <DashboardFooter setSupport={setSupport} />
     </div>
   );
