@@ -8,7 +8,7 @@ const initialState = {
   isAuthenticated: localStorage.getItem("isAuthenticated"),
   authError: null,
 };
-export default function authReducer(state = initialState, action) {
+export function authReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.GET_CREDENTIALS:
     case actionTypes.GET_USER:
@@ -67,5 +67,24 @@ export default function authReducer(state = initialState, action) {
       };
     default:
       return state;
+  }
+}
+
+export const ToggleOpenReducer = (state = {open:false}, action)=>{
+  switch(action.type){
+    case actionTypes.SET_OPEN:
+      return {
+        ...state,
+        open:true
+      }
+    break;
+    case actionTypes.SET_CLOSE:
+      return {
+        ...state,
+        open:false
+      }
+      break;
+    default:
+      return state
   }
 }

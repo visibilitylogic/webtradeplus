@@ -1,8 +1,16 @@
+import { message } from 'antd';
 import React, {useState, useEffect} from 'react';
+import { WindowSidebar } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
+// import { get_admin_data } from '../../store/action-creators/AdminActions/Admin';
+import { useActions } from '../hooks/useActions';
  import "./Mail.css";
  function Mail() {
    const {adminData} = useSelector(state=> state.adminInfo); 
+   const {change_admin_data} = useActions();
+   const {success, error} = useSelector(state=> state.adminInfo)
+  const [suc, setSuc] = useState("")
+  const [e, setE] = useState("")
   const[smtp, setSMTP]=useState(true)
     const[mailEngine,setmailEngine]=useState("")
     const[mailForm,setmailForm]=useState("")
@@ -42,14 +50,43 @@ import { useSelector } from 'react-redux';
         setwelcomeMail(adminData.welcomeMail)
         setnewUserWelcomeMailTitle(adminData.newUserWelcomeMailTitle,)
     }},[])
-
-    const saveData = {
-      
+    const dataAll =   {
+      mailEngine :mailEngine,
+      SMTPServer:SMTPServer,
+      SMTPPort:SMTPPort,
+      SMTPMail:SMTPMail,
+      SMTPPassword:SMTPPassword,
+      EmailSenderName:EmailSenderName,
+      mailForm :mailForm,
+      emailSendName :emailSendName,
+      supportMail :supportMail,
+      supportPhone :supportPhone,
+      supportAddress :supportAddress,
+      DPOPhone :DPOPhone,
+      DPOEmail :DPOEmail,
+      sendWelcomeMail :sendWelcomeMail,
+      welcomeMail :welcomeMail,
+      newUserWelcomeMailTitle :newUserWelcomeMailTitle,
+     }
+     const url = "https://trade-backend-daari.ondigitalocean.app/api/site/mailsettings";
+    const saveData = ()=>{
+      if(window.confirm("Are you to update the data")){
+        change_admin_data(url, dataAll);
+        if(success && success.length > 0){
+          setSuc(success)
+        }else if (error && error.length> 0){
+          setE(error)
+        }
+      }
     }
      return (
 
          <div>
             <div>
+              {
+                  suc && message.success(suc, ()=> setSuc("")),
+                  e && message.error(e, ()=> setE(""))
+              }
                     <div className="public-card">
                       <div className="each-row dash-row">
                         <div className="dtls">
@@ -318,7 +355,7 @@ import { useSelector } from 'react-redux';
                       </div>
                     </div>
                     <div className="save-btn">
-                      <button disabled={submitLoading} onClick={saveData}>Save</button>
+                      <button  onClick={saveData}>Save</button>
                     </div>
                   </div>
                 </div>

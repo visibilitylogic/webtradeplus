@@ -1,7 +1,25 @@
-import React, {useState} from 'react'
-import { Switch as AntSwitch } from "antd";
+import React, {useState, useEffect} from 'react'
+import { message, Switch as AntSwitch } from "antd";
+import { useActions } from '../hooks/useActions';
+import { useSelector } from 'react-redux'; 
+
 function Trading() {
+    const {get_Live_Trade, update_Live_Trade} = useActions();
+    const {liveTrades, success, error} = useSelector(state =>state.liveTrade)
     const [liveTrade, setLiveTrade] = useState(true);
+    useEffect(()=>{
+      get_Live_Trade();
+      setLiveTrade(liveTrades)
+    }, []);
+
+    const updateTrade = ()=>{
+      const data = {liveTrade:liveTrade}
+      update_Live_Trade(data);
+      if(success && success.length > 0){
+        message.success(success)
+      }
+      get_Live_Trade()
+    }
     return (
         <div>
            <div>
@@ -20,6 +38,7 @@ function Trading() {
                               name="native-trading"
                               checked={liveTrade}
                               onChange={()=>setLiveTrade(!liveTrade)}
+                              onClick={updateTrade}
                             />
                           </div>
 

@@ -59,7 +59,7 @@ const Routes = () => {
             render={(props) => <Register {...props} data={webData} />}
           />
           <PrivateRoute path={`/dashboard`} component={Dashboard}/>
-          <PrivateRoute path={`/dashboard/admin/:slug`} component={Admin}/>
+          <PrivateRoute path={`/dashboard/:slug`} exact component={Admin}/>
         </Switch>
       </div>
       {!isAuthenticated && <Footer data={webData} />}

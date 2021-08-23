@@ -1,8 +1,14 @@
+import { message } from 'antd';
 import React, {useState} from 'react'
 import { useSelector } from 'react-redux';
+import { useActions } from '../hooks/useActions';
 import "./Mail.css";
 function Template() {
-    const {adminData} = useSelector(state=> state.adminInfo); 
+  const {adminData} = useSelector(state=> state.adminInfo);  
+  const {change_admin_data} = useActions();
+  const {success, error} = useSelector(state=> state.adminInfo)
+  const [suc, setSuc] = useState("")
+  const [e, setE] = useState("")
     const[privacyPolicy,setprivacyPolicy]=useState("")
     const[termsOfServices,settermsOfServices]=useState("")
     const[newUserWelcomeMail,setnewUserWelcomeMail]=useState("")
@@ -30,9 +36,6 @@ function Template() {
           userSubscriptionEExpirationMail :userSubscriptionEExpirationMail,
           userNewIPDetectedMail :userNewIPDetectedMail
       };
-      const onSaved = {
-
-      }
       useState(()=>{
         if (adminData) {
           setprivacyPolicy(adminData.privacyPolicy);
@@ -50,8 +53,23 @@ function Template() {
           
         }
       })
+      const url = "https://trade-backend-daari.ondigitalocean.app/api/site/mailtemplates"
+      const onSaved = ()=>{
+        if(window.confirm("Are you to update the data")){
+            change_admin_data(url, dataAll);
+            if(success && success.length > 0){
+              setSuc(success)
+            }else if (error && error.length> 0){
+              setE(error)
+            }
+          }
+      }
     return (
         <div style={{width:"100%"}}>
+          {
+                  suc && message.success(suc, ()=> setSuc("")),
+                  e && message.error(e, ()=> setE(""))
+              }
             <div>
                     <h3>Page configuration</h3>
                     <div className="public-card">
