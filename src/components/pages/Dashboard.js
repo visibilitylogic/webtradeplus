@@ -11,6 +11,7 @@ import Manager from "./Manager";
 import Admin from "./Admin";
 import BuyStockModal from "../utils/modals/trading/BuyStock";
 import DashboardFooter from "../layouts/DashboardFooter";
+import { asideList } from "./../../helpers/dataset/asideNavList";
 
 const Dashboard = () => {
   const token = "pk_135c1daf1b8d4130b9318fd5e8ab0e5e";
@@ -156,35 +157,35 @@ const Dashboard = () => {
     setDefaultSelectedStock();
   }, []);
 
-  // useEffect(() => {
-  //   [...asideList].forEach((tab) => {
-  //     switch (window.location.pathname) {
-  //       case tab.path:
-  //         if (selectedTab !== tab.id) {
-  //           setSelectedTab(tab.id);
-  //           setAdminSelected(false);
-  //           setManagerSelected(false);
-  //         }
-  //         break;
-  //       case "/dashboard/manager":
-  //         if (!managerSelected) {
-  //           setManagerSelected(true);
-  //           setSelectedTab(null);
-  //           setAdminSelected(false);
-  //         }
-  //         break;
-  //       case "/dashboard/admin":
-  //         if (!adminSelected) {
-  //           setAdminSelected(true);
-  //           setSelectedTab(null);
-  //           setManagerSelected(false);
-  //         }
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //   });
-  // }, [selectedTab, adminSelected, managerSelected]);
+  useEffect(() => {
+    [...asideList].forEach((tab) => {
+      switch (window.location.pathname) {
+        case tab.path:
+          if (selectedTab !== tab.id) {
+            setSelectedTab(tab.id);
+            setAdminSelected(false);
+            setManagerSelected(false);
+          }
+          break;
+        case "/dashboard/manager":
+          if (!managerSelected) {
+            setManagerSelected(true);
+            setSelectedTab(null);
+            setAdminSelected(false);
+          }
+          break;
+        case "/dashboard/admin":
+          if (!adminSelected) {
+            setAdminSelected(true);
+            setSelectedTab(null);
+            setManagerSelected(false);
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  }, [selectedTab, adminSelected, managerSelected]);
 
   if (!isAuthenticated) return <Redirect to="/" />;
 
