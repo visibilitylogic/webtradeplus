@@ -5,10 +5,12 @@ import { useActions } from '../hooks/useActions';
 import SuccessModal from '../Modals/SuccessModal';
 import {Alert, Button, Spinner, Table} from "react-bootstrap";
 import EditTrade from './EditTrade';
+import { useHistory } from 'react-router-dom';
 function AutoTrading() {
     const {success, loading, trades, specificTrade} = useSelector(state=> state.adminData);
+    const history = useHistory();
     console.log(specificTrade);
-    const {get_specific_trade} = useActions()
+    const {add_auto_trade, get_all_auto_trades, get_specific_trade, delete_auto_trade} = useActions();
     const [input, setInput] = useState({
         userName:"",
         profitPercentage:0,
@@ -23,16 +25,12 @@ function AutoTrading() {
     const handleInput = (e)=>{
         setInput({...input, [e.target.name]:e.target.value });
     }
-    const {add_auto_trade, get_all_auto_trades} = useActions();
-
     useEffect(() => {
          get_all_auto_trades()
     }, [])
     
     const handleSubmit = (e)=>{
-        
-        e.preventDefault();
-        console.log(input.userName);
+        e.preventDefault()
         const data = {
             userName:input.userName,
             subscriptionFee:input.subscriptionFee,
@@ -44,14 +42,23 @@ function AutoTrading() {
             profitPercentage:"",
             subscriptionFee:""
         })
+        get_all_auto_trades()
     }
-    const HandleAlert = ()=>{
-        setAlert(false);
-    }
+  
     const editTrade = (id)=>{
         get_specific_trade(id);
         setisOpen(true)
         setTradeId(id)
+    }
+
+    const handleDelete = (id)=>{
+        if(window.confirm("Are you sure you want to delete this trade ??")){
+            delete_auto_trade(id);
+        }
+        get_all_auto_trades();
+
+        
+       
     }
     
     return (
@@ -73,9 +80,6 @@ function AutoTrading() {
                     <div>
                         <Button className ="add" type="submit" size="lg">Add</Button>
                     </div>
-                    {
-                         success && <Alert variant="success"dismissible onClose={setAlert(false)}><p>{success}</p></Alert>
-                    }
                 </form>
                 
             </div>
@@ -104,13 +108,13 @@ function AutoTrading() {
                   <td>{trade.profitPercentage}</td>
                   <td>{trade.subscriptionFee}</td>
                   <td>{trade.date.split("T")[0]}</td>
-                  <td><Button onClick={()=> editTrade(trade._id) }>Edit</Button> <Button variant="danger">Delete</Button></td>
+                  <td><Button onClick={()=> editTrade(trade._id) }>Edit</Button> <Button variant="danger" onClick={()=> handleDelete(trade._id)}>Delete</Button></td>
               </tr>
           ))
       }
 
       {
-          specificTrade && <EditTrade isOpen={isOpen} id={tradeId} trade ={specificTrade} toggle={toggleOpen}/>
+          specificTrade && <EditTrade isOpen={isOpen} id={tradeId} trade ={specificTrade} setisOpen={setisOpen} toggle={toggleOpen}/>
       }
   
   </tbody>

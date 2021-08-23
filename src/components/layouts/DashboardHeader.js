@@ -4,7 +4,7 @@ import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { stockAssets as stocks } from "../../helpers/dataset/stocks";
 import useFormInput from "../hooks/useFormInput";
-import { message, notification } from "antd";
+import { message } from "antd";
 import PropTypes from "prop-types";
 import "./DashboardHeader.css";
 import Notification from "../utils/Notification";
@@ -32,22 +32,15 @@ import AutoTrade from "../utils/modals/AutoTrade";
 import { useActions } from "../hooks/useActions";
 import Withdrawals from "../utils/modals/withdrawal/Withdrawals";
 
-const DashboardHeader = ({
-  data,
-  bitP,
-  tslaP,
-  ethP,
-  aaplP,
-  handleViewUpdate,
-}) => {
+const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
   const history = useHistory();
   const { user, loading } = useSelector((state) => state.auth);
+  const { isDarkMode } = useSelector((state) => state.theme);
 
   const { logout, setCurrentSelectedStock } = useActions();
 
   const [selectedStock, setSelectedStock] = useState(1);
   const [personalData, setPersonalData] = useState(false);
-  const [support, setSupport] = useState(false);
   const [withdraw, setWithdraw] = useState(false);
   const [withdrawalSettings, setWithdrawalSettings] = useState(false);
   const [bankTransferSelected, setBankTransferSelected] = useState(false);
@@ -103,7 +96,10 @@ const DashboardHeader = ({
   return (
     !loading && (
       <Fragment>
-        <Navbar variant="dark">
+        <Navbar
+          variant={isDarkMode ? "dark" : "light"}
+          style={{ background: isDarkMode ? "#1a202d" : "#f3f3f3" }}
+        >
           <Navbar.Brand>
             <img
               style={{ width: " 100%", height: "4.5ch" }}
@@ -121,13 +117,20 @@ const DashboardHeader = ({
             <ul className="stock-nav-list mb-0">
               {stocks.map((stock) => (
                 <li
+                  style={{ color: isDarkMode ? "#fff" : "#000" }}
                   onClick={() => {
                     setSelectedStock(stock.id);
                     setOpenForex(true);
                   }}
                   className={`stock-nav-item ${
-                    selectedStock === stock.id
-                      ? "active-stock"
+                    isDarkMode
+                      ? "stock-nav-item--dark"
+                      : "stock-nav-item--light"
+                  } ${
+                    selectedStock === stock.id && isDarkMode
+                      ? "active-stock--dark"
+                      : selectedStock === stock.id && !isDarkMode
+                      ? "active-stock--light"
                       : "stock-nav-item"
                   }`}
                   key={stock.id}
@@ -163,11 +166,20 @@ const DashboardHeader = ({
               }
               id="collasible-nav-dropdown"
             >
-              <div className="profile-wrapper">
-                <h6 className="mb-1">{`${user && user.name} ${
-                  user && user.lastname
-                }`}</h6>
-                <p>{user && user.email}</p>
+              <div
+                className={`profile-wrapper ${
+                  isDarkMode
+                    ? "profile-wrapper--dark"
+                    : "profile-wrapper--light"
+                }`}
+              >
+                <h6
+                  className="mb-1"
+                  style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
+                >{`${user && user.name} ${user && user.lastname}`}</h6>
+                <p style={{ color: isDarkMode ? "#fff" : "#777" }}>
+                  {user && user.email}
+                </p>
                 <div className="tour-wrapper">
                   <div className="d-flex">
                     <div></div>
@@ -186,12 +198,20 @@ const DashboardHeader = ({
                 <br />
                 <div className="date-wrapper d-flex justify-content-between">
                   <div>
-                    <span>Date Registered</span>
-                    <p>14 Feb 2021</p>
+                    <span style={{ color: isDarkMode ? "#fff" : "#777" }}>
+                      Date Registered
+                    </span>
+                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                      14 Feb 2021
+                    </p>
                   </div>
                   <div>
-                    <span>User ID</span>
-                    <p>93220945</p>
+                    <span style={{ color: isDarkMode ? "#fff" : "#777" }}>
+                      User ID
+                    </span>
+                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                      93220945
+                    </p>
                   </div>
                 </div>
 
@@ -209,31 +229,80 @@ const DashboardHeader = ({
                   </a>
                 </div>
               </div>
-              <div className="features-wrapper">
-                <NavDropdown.Item onClick={() => setPersonalData(true)}>
-                  <Pen className="mr-2" />
+              <div
+                className={`features-wrapper ${
+                  isDarkMode
+                    ? "features-wrapper--dark"
+                    : "features-wrapper--light"
+                }`}
+              >
+                <NavDropdown.Item
+                  onClick={() => setPersonalData(true)}
+                  className={`${isDarkMode ? "nav--dark" : "nav--light"}`}
+                >
+                  <Pen
+                    className={`mr-2 ${
+                      isDarkMode ? "nav--dark" : "nav--light"
+                    }`}
+                  />
                   Personal Data
                 </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => setShowCredit(true)}>
-                  <PlusCircle className="mr-2" />
+                <NavDropdown.Item
+                  onClick={() => setShowCredit(true)}
+                  className={`${isDarkMode ? "nav--dark" : "nav--light"}`}
+                >
+                  <PlusCircle
+                    className={`mr-2 ${
+                      isDarkMode ? "nav--dark" : "nav--light"
+                    }`}
+                  />
                   Deposit
                 </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => setWithdraw(true)}>
-                  <WalletFill className="mr-2" />
+                <NavDropdown.Item
+                  onClick={() => setWithdraw(true)}
+                  className={`${isDarkMode ? "nav--dark" : "nav--light"}`}
+                >
+                  <WalletFill
+                    className={`mr-2 ${
+                      isDarkMode ? "nav--dark" : "nav--light"
+                    }`}
+                  />
                   Withdraw Funds
                 </NavDropdown.Item>
 
-                <NavDropdown.Item onClick={() => setWithdrawalSettings(true)}>
-                  <GearFill className="mr-2" style={{ width: "6rem" }} />
+                <NavDropdown.Item
+                  onClick={() => setWithdrawalSettings(true)}
+                  className={`${isDarkMode ? "nav--dark" : "nav--light"}`}
+                >
+                  <GearFill
+                    className={`mr-2 ${
+                      isDarkMode ? "nav--dark" : "nav--light"
+                    }`}
+                    style={{ width: "6rem" }}
+                  />
                   Withdraw Settings
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item onClick={() => setSupport(true)}>
-                  <QuestionCircleFill className="mr-2" />
+                <NavDropdown.Item
+                  onClick={() => setSupport(true)}
+                  className={`${isDarkMode ? "nav--dark" : "nav--light"}`}
+                >
+                  <QuestionCircleFill
+                    className={`mr-2 ${
+                      isDarkMode ? "nav--dark" : "nav--light"
+                    }`}
+                  />
                   Contact Support
                 </NavDropdown.Item>
-                <NavDropdown.Item onClick={handleLogout}>
-                  <BoxArrowDownRight className="mr-2" />
+                <NavDropdown.Item
+                  onClick={handleLogout}
+                  className={`${isDarkMode ? "nav--dark" : "nav--light"}`}
+                >
+                  <BoxArrowDownRight
+                    className={`mr-2 ${
+                      isDarkMode ? "nav--dark" : "nav--light"
+                    }`}
+                  />
                   Logout
                 </NavDropdown.Item>
               </div>
@@ -254,44 +323,74 @@ const DashboardHeader = ({
               id="collasible-nav-dropdown"
               className="ml-2 balance-wrapper"
             >
-              <div className="profile-wrapper">
-                <h6 className="mb-1">{user && user.name}</h6>
-                <p>{user && user.email}</p>
-                {/* <div className="tour-wrapper">
-                <div className="d-flex">
-                  <div></div>
-                  <div>
-                    <p className="mb-0">
-                      Finish the guided tour to your first real trade
-                    </p>
-                  </div>
-                </div>
-              </div> */}
+              <div
+                className={`profile-wrapper ${
+                  isDarkMode
+                    ? "profile-wrapper--dark"
+                    : "profile-wrapper--light"
+                }`}
+              >
+                <h6
+                  className="mb-1"
+                  style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
+                >
+                  {user && user.name}
+                </h6>
+                <p style={{ color: isDarkMode ? "#fff" : "#777" }}>
+                  {user && user.email}
+                </p>
                 <NavDropdown.Divider className="mt-3" />
                 <br />
                 <div className="date-wrapper d-flex justify-content-between">
                   <div>
-                    <span>Date Registered</span>
-                    <p>14 Feb 2021</p>
+                    <span style={{ color: isDarkMode ? "#fff" : "#777" }}>
+                      Date Registered
+                    </span>
+                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                      14 Feb 2021
+                    </p>
                   </div>
                   <div>
-                    <span>User ID</span>
-                    <p>93220945</p>
+                    <span style={{ color: isDarkMode ? "#fff" : "#777" }}>
+                      User ID
+                    </span>
+                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                      93220945
+                    </p>
                   </div>
                 </div>
               </div>
-              <div className="features-wrapper p-2 pt-3">
+              <div
+                className={`features-wrapper p-2 pt-3 ${
+                  isDarkMode
+                    ? "features-wrapper--dark"
+                    : "features-wrapper--light"
+                }`}
+              >
                 <div className="d-flex justify-content-between mb-1">
                   <div>
-                    <h6 className="pl-2">MY BALANCES</h6>
+                    <h6
+                      className="pl-2"
+                      style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
+                    >
+                      MY BALANCES
+                    </h6>
                   </div>
                   <div>
-                    <p>Always show the "Total" amount</p>
+                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                      Always show the "Total" amount
+                    </p>
                   </div>
                 </div>
-                <div className="d-flex align-items-center justify-content-between p-3 real-account">
+                <div
+                  className={`d-flex align-items-center justify-content-between p-3 ${
+                    isDarkMode ? "real-account--dark" : "real-account--light"
+                  }`}
+                >
                   <div>
-                    <h6>REAL ACCOUNT</h6>
+                    <h6 style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                      REAL ACCOUNT
+                    </h6>
                     <p className="amount mb-0">
                       {user && user.currency}
                       {new Intl.NumberFormat("en-US").format(0)
@@ -302,18 +401,26 @@ const DashboardHeader = ({
                   <div>
                     <Button
                       variant="secondary"
-                      className="btn-deposit"
+                      className={`btn-deposit ${
+                        isDarkMode ? "btn-deposit--dark" : "btn-deposit--light"
+                      }`}
                       onClick={() => setShowCredit(true)}
                     >
                       Deposit
                     </Button>
                   </div>
                 </div>
-                <div className="d-flex align-items-center justify-content-between p-3 practice-account">
+                <div
+                  className={`d-flex align-items-center justify-content-between p-3 practice-account ${
+                    isDarkMode
+                      ? "practice-account--dark"
+                      : "practice-account--light"
+                  }`}
+                >
                   <div>
-                    <h6>
+                    <h6 style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                       Total ACCOUNT{" "}
-                      <span>
+                      <span style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                         = {user && user.currency}
                         {new Intl.NumberFormat("en-US").format(
                           user && user.wallet
@@ -326,7 +433,10 @@ const DashboardHeader = ({
                             )}
                       </span>
                     </h6>
-                    <p className="amount mb-0">
+                    <p
+                      className="amount mb-0"
+                      style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
+                    >
                       {user && user.currency}
                       {new Intl.NumberFormat("en-US").format(
                         user && user.wallet
@@ -342,7 +452,9 @@ const DashboardHeader = ({
                   <div>
                     <Button
                       variant="secondary"
-                      className="btn-deposit"
+                      className={`btn-deposit ${
+                        isDarkMode ? "btn-deposit--dark" : "btn-deposit--light"
+                      }`}
                       onClick={() => setWithdraw(true)}
                     >
                       Withdraw
@@ -455,10 +567,8 @@ const DashboardHeader = ({
 
 DashboardHeader.propTypes = {
   data: PropTypes.object.isRequired,
-  bitP: PropTypes.object.isRequired,
-  tslaP: PropTypes.object.isRequired,
-  ethP: PropTypes.object.isRequired,
-  aaplP: PropTypes.object.isRequired,
+  support: PropTypes.bool.isRequired,
+  setSupport: PropTypes.func.isRequired,
   handleViewUpdate: PropTypes.func.isRequired,
 };
 

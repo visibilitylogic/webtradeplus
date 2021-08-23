@@ -1,0 +1,46 @@
+.toggle-wrapper {
+  position: relative;
+}
+
+.checkbox {
+  position: absolute;
+  opacity: 0;
+}
+
+.checkbox:checked + .checkbox__label {
+  background: #000;
+}
+
+.checkbox:checked + .checkbox__label .ball {
+  transform: translateX(2.45em);
+}
+
+.checkbox__label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25em;
+  width: 4.5em;
+  cursor: pointer;
+  border-radius: 5em;
+  background: #000;
+  position: relative;
+}
+
+.checkbox__icon--moon {
+  color: goldenrod;
+}
+
+.checkbox__icon--sun {
+  color: goldenrod;
+}
+
+.checkbox__label .checkbox__ball {
+  width: 1.7em;
+  height: 1.7em;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  left: 0.2em;
+  transition: all 0.2s linear;
+}

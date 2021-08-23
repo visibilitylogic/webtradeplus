@@ -1,12 +1,14 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { asideList } from "../../helpers/dataset/asideNavList";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { AiOutlinePieChart } from "react-icons/ai";
+import { AiOutlineCalculator, AiOutlinePieChart } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
 import Calc from "../pages/Calc";
 import News from "../pages/News";
+import Calculator from "./Calculator";
+import { useActions } from "../hooks/useActions";
 
 const DashboardAside = ({
   selectedTab,
@@ -16,11 +18,17 @@ const DashboardAside = ({
   managerSelected,
   adminSelected,
 }) => {
+  const [calc, setCalc] = useState(false);
+  const {setOpen} = useActions();
   const { user } = useSelector((state) => state.auth);
+  const { isDarkMode } = useSelector((state) => state.theme);
 
   return (
     <Fragment>
-      <div className="sidebar">
+      <div
+        className="sidebar"
+        style={{ backgroundColor: isDarkMode ? "#131722" : "#f2f2f2" }}
+      >
         <ul>
           {asideList.map((aside) => (
             <li
@@ -40,6 +48,7 @@ const DashboardAside = ({
               </NavLink>
             </li>
           ))}
+           
           {user && (user.isManager || user.isAdmin) && (
             <li
               onClick={() => {
@@ -58,7 +67,8 @@ const DashboardAside = ({
             </li>
           )}
           {/* removed this code user.isAdmin && to test my admin page */}
-          {user &&  (
+          {user && user.isAdmin &&   (
+          
             <li
               onClick={() => {
                 setAdminSelected(true);
@@ -77,8 +87,7 @@ const DashboardAside = ({
           )}
         </ul>
       </div>
-      <Calc />
-      <News />
+             
     </Fragment>
   );
 };

@@ -2,8 +2,14 @@ import React, {useState, useEffect} from 'react';
 import "./Mail.css";
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { message } from 'antd';
+import { useActions } from '../hooks/useActions';
 function Payment() {
-    const {adminData} = useSelector(state=> state.adminInfo); 
+  const {adminData} = useSelector(state=> state.adminInfo); 
+  const {change_admin_data} = useActions();
+  const {success, error} = useSelector(state=> state.adminInfo)
+  const [suc, setSuc] = useState("")
+  const [e, setE] = useState("")
   const [paymentSuccessText, setpaymentSuccessText] = useState("");
   const [paymentRefPattern, setpaymentRefPattern] = useState("");
   const [paymentMinDeposit, setPaymentMinDeposit] = useState("");
@@ -48,13 +54,24 @@ function Payment() {
     }
   }, []);
 
-  const onSaved = {
-      
+  const url = "https://trade-backend-daari.ondigitalocean.app/api/site/paymentsettings";
+  const onSaved = ()=>{
+    if(window.confirm("Are you to update the data")){
+        change_admin_data(url, dataAll);
+        if(success && success.length > 0){
+          setSuc(success)
+        }else if (error && error.length> 0){
+          setE(error)
+        }
+      }
   }
     return (
+        <div>        
         <div>
-            
-        <div>
+        {
+                  suc && message.success(suc, ()=> setSuc("")),
+                  e && message.error(e, ()=> setE(""))
+              }
         <div
           className="public-card"
           style={{ paddingLeft: 0, paddingRight: 0 }}
@@ -85,7 +102,7 @@ function Payment() {
                 </span>
               )}
 
-              <NavLink to="/mastercard" className="configure">
+              <NavLink to="/dashboard/mastercard" className="configure">
                 Configure
               </NavLink>
             </div>
@@ -118,7 +135,7 @@ function Payment() {
                   Disabled
                 </span>
               )}
-              <NavLink to="/bitcoin" className="configure">
+              <NavLink to="/dashboard/bitcoin" className="configure">
                 Configure
               </NavLink>
             </div>

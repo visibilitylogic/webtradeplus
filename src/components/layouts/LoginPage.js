@@ -1,6 +1,14 @@
-import React, {useState} from 'react'
-
+import { message } from 'antd'
+import React, {useEffect, useState} from 'react'
+import { useSelector } from 'react-redux'
+import { useActions } from '../hooks/useActions';
 function LoginPage() {
+    
+  const {adminData} = useSelector(state=> state.adminInfo)
+  const {change_admin_data} = useActions();
+  const {success, error} = useSelector(state=> state.adminInfo)
+  const [suc, setSuc] = useState("")
+  const [e, setE] = useState("")
     const[loginBackgroundImage,setLoginBackgroundImage] = useState("")
     const[loginCarouselImage1, setLoginCarouselImage1]=useState("")
     const[loginCarouselImage2, setLoginCarouselImage2]=useState("")
@@ -12,9 +20,14 @@ function LoginPage() {
         loginCarouselImage2:loginCarouselImage2,
         loginCarouselImage3:loginCarouselImage3
       }
-      const onSaved = {
-
-      }
+      useEffect(()=>{
+        if(adminData){
+          setLoginBackgroundImage(adminData.loginBackgroundImage);
+          setLoginCarouselImage1(adminData.loginCarouselImage1);
+          setLoginCarouselImage2(adminData.loginCarouselImage2);
+          setLoginCarouselImage3(adminData.loginCarouselImage3);
+        }
+      }, [])
     const LoginCarouselImage1 = (e) => {
         e.preventDefault();
         if (e) {
@@ -55,9 +68,25 @@ function LoginPage() {
           };
         }
       };
+
+      const url = "https://trade-backend-daari.ondigitalocean.app/api/site/loginlayout"
+      const onSaved = ()=>{
+        if(window.confirm("Are you to update the data")){
+            change_admin_data(url, dataAll);
+            if(success && success.length > 0){
+              setSuc(success)
+            }else if (error && error.length> 0){
+              setE(error)
+            }
+          }
+      }
     return (
         <div>
            <div>
+           {
+                  suc && message.success(suc, ()=> setSuc("")),
+                  e && message.error(e, ()=> setE(""))
+              }
                     <div className="public-card">
                       <div className="each-row dash-row">
                         <div className="dtls">

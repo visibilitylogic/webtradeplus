@@ -80,6 +80,14 @@ export default function stockReducer(state = initialState, action) {
         // ...action.payload,
         loading: false,
       };
+    case actionTypes.DELETE_STOCK:
+      return {
+        ...state,
+        loading: false,
+        stocksSelected: state.stocksSelected.filter(
+          (stock) => stock.symbol !== action.payload
+        ),
+      };
     case actionTypes.STOCK_ERROR:
       return {
         ...state,

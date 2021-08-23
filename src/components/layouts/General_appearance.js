@@ -1,18 +1,24 @@
+import { message } from 'antd';
 import React, {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
+import { useActions } from '../hooks/useActions';
 import "./Admin_side.css";
 
 function General_appearance() {
-    const {adminData} = useSelector(state=> state.adminInfo)
-    const [yourMainColor, setYourMainColor] = useState("");
-    const [siteMenuType, setsiteMenuType] = useState("");
-    const [showFooterBar, setShowFooterBar] = useState(null);
-    const [defaultThemeColor, setdefaultThemeColor] = useState("");
-    const [userCanChangeTheme, setuserCanChangeTheme] = useState(null);
-    const [showTimeInFooter, setshowTimeInFooter] = useState(null);
-    const [showContactInFooter, setshowContactInFooter] = useState(null);
-    const [showCalcaulator, setshowCalcaulator] = useState(null);
-    const [submitLoading, setSubmitLoading] = useState(false);
+  const {adminData} = useSelector(state=> state.adminInfo);
+  const {change_admin_data} = useActions();
+  const {success, error} = useSelector(state=> state.adminInfo)
+  const [suc, setSuc] = useState("")
+  const [e, setE] = useState("")
+  const [yourMainColor, setYourMainColor] = useState("");
+  const [siteMenuType, setsiteMenuType] = useState("");
+  const [showFooterBar, setShowFooterBar] = useState(null);
+  const [defaultThemeColor, setdefaultThemeColor] = useState("");
+  const [userCanChangeTheme, setuserCanChangeTheme] = useState(null);
+  const [showTimeInFooter, setshowTimeInFooter] = useState(null);
+  const [showContactInFooter, setshowContactInFooter] = useState(null);
+  const [showCalcaulator, setshowCalcaulator] = useState(null);
+  const [submitLoading, setSubmitLoading] = useState(false);
   
 
     useEffect(() => {
@@ -37,12 +43,24 @@ function General_appearance() {
         showContactInFooter: showContactInFooter,
         showCalcaulator: showCalcaulator,
       };
-      const  onSaved = {
-
+      const url = "https://trade-backend-daari.ondigitalocean.app/api/site/generalappearance"
+      const onSaved = ()=>{
+        if(window.confirm("Are you to update the data")){
+            change_admin_data(url, dataAll);
+            if(success && success.length > 0){
+              setSuc(success)
+            }else if (error && error.length> 0){
+              setE(error)
+            }
+          }
       }
     return (
         <div>
             <div>
+            {
+                  suc && message.success(suc, ()=> setSuc("")),
+                  e && message.error(e, ()=> setE(""))
+              }
                   <div className="public-card">
                     <div className="each-row dash-row">
                       <div className="dtls">

@@ -157,3 +157,10 @@ export const addStockToList = (stock) => (dispatch) => {
     payload: stock,
   });
 };
+
+export const deleteStock = (stockSymbol) => (dispatch) => {
+  dispatch({
+    type: actionTypes.DELETE_STOCK,
+    payload: stockSymbol,
+  });
+};
