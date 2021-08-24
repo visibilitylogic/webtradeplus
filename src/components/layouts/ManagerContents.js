@@ -109,9 +109,17 @@ const ManagerContents = (props) => {
   })
 
   // // toggle for live trade
+  // const [currentPage, setCurrentPage] = useState(1)
+  // const [postPerPage] = useState(5)
+  // const [numUsers, setNumUsers] = useState([])
+  // // get current  posts
+  // const indexOfLastPost = currentPage * postPerPage
+  // const indexOfFirstPost = indexOfLastPost - postPerPage
+  // const currentPosts = numUsers.slice(indexOfFirstPost, indexOfLastPost)
 
-  console.log(user)
+  //  // paginate function
 
+  //  const paginate = (num) => setCurrentPage(num)
   const setToggles = useCallback(() => {
     setToggle(!toggle.liveTrade)
     setLiveTrade({
@@ -775,7 +783,13 @@ const ManagerContents = (props) => {
       </div>
       {/* Table */}
 
-      <TableContainer>
+      <TableContainer
+        style={{
+          background: 'white',
+          margin: '  1.2rem auto 0 auto',
+          width: '96%',
+        }}
+      >
         {!displayC && allUsers.length > 0 && (
           <BasicTable
             allUsers={allUsers}
@@ -1483,8 +1497,6 @@ const ManagerContents = (props) => {
                             <Form.Label className="mr-3 mb-0">Time</Form.Label>
                             <Row>
                               <Col md={6}>
-          
-
                                 <Form.Check
                                   type="radio"
                                   label="Schedule"
@@ -2339,31 +2351,43 @@ export default React.memo(ManagerContents)
 
 const TableContainer = styled.div`
   table {
-    font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    color: black;
+    padding: 0 10px;
   }
 
   table td,
   table th {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: center;
+    text-align: left;
   }
 
-  table tr:nth-child(even) {
-    background-color: blue;
+  table tr,
+  table td,
+  table th {
+    border: 0;
   }
-
-  table tr:hover {
-    background-color: green;
+  table tr {
+    padding-left: 20px;
   }
 
   table th {
     padding-top: 12px;
     padding-bottom: 12px;
-    text-align: center;
-    background-color: #04aa6d;
-    color: white;
+    text-align: left;
+    background: #e9ecf2;
+    color: black;
+  }
+
+  // table tr:nth-child(even) {
+  //   background-color: #f2f2f2;
+  // }
+
+  table tr:hover {
+    background-color: #ddd;
   }
 `
