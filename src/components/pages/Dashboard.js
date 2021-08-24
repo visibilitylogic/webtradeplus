@@ -25,7 +25,7 @@ const Dashboard = () => {
   const token = "pk_135c1daf1b8d4130b9318fd5e8ab0e5e";
   const fetchOrder = () => JSON.parse(localStorage.getItem("orders")) || [];
   const [calcDisplay, setCalcDisplay ] = useState(false)
-    const {open } = useSelector(state=> state.toggle)
+    // const {open } = useSelector(state=> state.toggle)
   const [selectedTab, setSelectedTab] = useState(0);
   const [adminSelected, setAdminSelected] = useState(false);
   const [managerSelected, setManagerSelected] = useState(false);

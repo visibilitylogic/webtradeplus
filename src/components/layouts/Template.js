@@ -6,7 +6,7 @@ import "./Mail.css";
 function Template() {
   const {adminData} = useSelector(state=> state.adminInfo);  
   const {change_admin_data} = useActions();
-  const {success, error} = useSelector(state=> state.adminInfo)
+  const {loading,success, error} = useSelector(state=> state.adminInfo)
   const [suc, setSuc] = useState("")
   const [e, setE] = useState("")
     const[privacyPolicy,setprivacyPolicy]=useState("")
@@ -83,7 +83,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                        <button disabled={submitLoading} onClick={onSaved}>Save</button>
+                        <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
                       </div>
                     </div>
 
@@ -98,7 +98,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>Save</button>
+                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
                       </div>
                     </div>
 
@@ -115,7 +115,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>Save</button>
+                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
                       </div>
                     </div>
 
@@ -130,7 +130,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>Save</button>
+                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
                       </div>
                     </div>
 
@@ -145,7 +145,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>Save</button>
+                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
                       </div>
                     </div>
 
@@ -160,7 +160,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>Save</button>
+                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
                       </div>
                     </div>
 
@@ -175,7 +175,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>Save</button>
+                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
                       </div>
                     </div>
 
@@ -190,7 +190,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>Save</button>
+                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
                       </div>
                     </div>
 
@@ -205,7 +205,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>Save</button>
+                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
                       </div>
                     </div>
 
@@ -220,7 +220,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>Save</button>
+                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
                       </div>
                     </div>
 
@@ -235,7 +235,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>Save</button>
+                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
                       </div>
                     </div>
                   </div>

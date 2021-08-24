@@ -5,9 +5,9 @@ import { NavLink } from 'react-router-dom';
 import { message } from 'antd';
 import { useActions } from '../hooks/useActions';
 function Payment() {
-  const {adminData} = useSelector(state=> state.adminInfo); 
+  const { adminData} = useSelector(state=> state.adminInfo); 
   const {change_admin_data} = useActions();
-  const {success, error} = useSelector(state=> state.adminInfo)
+  const {success, error, loading} = useSelector(state=> state.adminInfo)
   const [suc, setSuc] = useState("")
   const [e, setE] = useState("")
   const [paymentSuccessText, setpaymentSuccessText] = useState("");
@@ -280,7 +280,7 @@ function Payment() {
         </div>
         <div className="save-btn">
           <button disabled={submitLoading} onClick={onSaved}>
-            Save
+            {loading ? "Saving..." : "Save"}
           </button>
         </div>
       </div>
