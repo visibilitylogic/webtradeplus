@@ -212,12 +212,17 @@ body {
   width: 6%;
   height: 100vh;
   overflow-y: auto;
+  -ms-overflow-style: none; 
 }
 
 .dash-contents .sidebar ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+.dash-contents.sidebar::-webkit-scrollbar { 
+  width: 0 !important;
+  display: none; 
 }
 
 .dash-contents .sidebar ul li,
@@ -506,13 +511,13 @@ body {
 }
 
 .dash-contents .calc-section {
-  width: 18%;
-  height: 100vh;
+  width: 90%;
   position: relative;
   background-color: #20283a;
   overflow-x: hidden;
   overflow-y: auto;
   padding: 10px 10px;
+  margin: auto;
 }
 
 .dash-contents .calc-section .heading {
@@ -530,11 +535,11 @@ body {
   margin: 10px 0;
 }
 
-.dash-contents .calc-section .calc-instrument.active {
+.dash-contents .calc-sections .calc-instrument.active {
   background-color: #27a54e;
 }
 
-.dash-contents .calc-section .calc-instrument.active .input {
+.dash-contents .calc-sections .calc-instrument.active .input {
   border-bottom: 1px solid #197535;
 }
 
@@ -1796,11 +1801,21 @@ body {
 }
 
 .dash-contents .tabled {
-  width: 100%;
+  width: 60%;
+  margin:0 auto;
   margin-top: 20px;
   border: 1px solid #151a25;
+  overflow-y: scroll;
+
+}
+.dash-contents .tabled tr{
+  text-align: center;
+  padding: 20px 0px;
 }
 
+.dash-contents .tabled td{
+  text-align: center;
+}
 .dash-contents .tabled tr:nth-child(even) {
   background-color: #1b222e;
 }
@@ -1821,7 +1836,7 @@ body {
   font-size: 13px;
   font-weight: normal;
   background-color: #151a25;
-  padding: 15px 10px;
+  /* padding: 15px 10px; */
 }
 
 .dash-contents .tabled td {

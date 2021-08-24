@@ -12,7 +12,6 @@ const initialState = {
 const adminInitialState = {
     adminData : {},
     loading:false,
-    success:"",
     error:""
 }
 
