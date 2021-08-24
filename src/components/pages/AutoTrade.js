@@ -6,7 +6,9 @@ import { Card, message } from "antd";
 import { userDetails, userId } from '../../store/utils/getUserDetails';
 import axios from 'axios';
 function AutoTrade() {
-    const idArray = userDetails().subcriptionPlan;
+    const {user, userId  } = useSelector(state => state.auth);
+    const idArray = user ? user.subcriptionPlan:null;
+    console.log(idArray);
     const {loading , trades} = useSelector(state=> state.adminData);
     const [singleTrade, setSingleTrade] = useState({});
     const [singleTradeLoading, setSingleTradeLoading] = useState(false);
@@ -20,14 +22,16 @@ function AutoTrade() {
         axios
         .get(`https://trade-backend-daari.ondigitalocean.app/api/copytrade/${id}`)
         .then((response) => {
-          if (userDetails().wallet < response.data.subscriptionFee) {
+          console.log(user.wallet, response.data.subscriptionFee);
+          if (user.wallet < response.data.subscriptionFee) {
+            message.warning(
+              "Insufficient funds, kindly fund your wallet and try again"
+            ); 
+           
+          } else {
             setSub(true);
             setSingleTrade(response.data)
            
-          } else {
-            message.warning(
-              "Insufficient funds, kindly fund your wallet and try again"
-            );
           }
         });
     
@@ -37,15 +41,15 @@ function AutoTrade() {
       axios
         .put(
           `https://trade-backend-daari.ondigitalocean.app/api/copytrade/unsubscribe/${id}`,
-          { userId: userDetails()._id }
+          { userId: user ?  user._id : null }
         )
         .then((response) => {
           const res = axios.put(
             `https://trade-backend-daari.ondigitalocean.app/api/profile/autoTrade`,
             {
-              id: userDetails()._id,
-              autoTrade: true,
-              isTrading: false,
+              id: user ?  user._id : null,
+              autoTrade: false,
+              isTrading: true,
             }
           );
           if (res) {
@@ -61,24 +65,23 @@ function AutoTrade() {
       axios
         .put(
           `https://trade-backend-daari.ondigitalocean.app/api/copytrade/subscribe/${id}`,
-          { userId: userDetails()._id }
+          { userId: user ?  user._id : null }
         )
         .then(async(response) => {
           const res = await axios.put(
             `https://trade-backend-daari.ondigitalocean.app/api/profile/autoTrade`,
             {
-              id:userDetails()._id,
+              id:user ? user._id : null,
               autoTrade: true,
               isTrading: false,
             }
           );
-          console.log("singleTrade", res);
           if (res) {
             message.success("auto trade has been enabled");
           }
           setSub(false)
           setSingleTradeLoading(true)
-          message.success("subscription was successful");
+          message.success("subscription was successful", ()=> window.location.reload());
         });
     };
     return (
@@ -103,7 +106,8 @@ function AutoTrade() {
                             {new Intl.NumberFormat('en-US').format(data.subscriptionFee)}
                           </p>
                           <div className="text-center mt-3">
-                            {idArray.includes(data._id) ? (
+                           
+                            {idArray.some(subPlan => subPlan._id === data._id) ? (
                               <Button
                                 onClick={() =>
                                     

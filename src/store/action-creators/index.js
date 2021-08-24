@@ -5,3 +5,4 @@ export * as AdminAutoTradingActions from "./AdminActions/Auto-trading";
 export * as AdminActions from "./AdminActions/Admin";
 export * as stockActions from "./stockActions";
 export * as themeActions from "./themeActions";
+export * as marketActions from "./MarketAction";
