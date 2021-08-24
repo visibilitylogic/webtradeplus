@@ -8,7 +8,8 @@ export const Columns = [
     id: 'name',
     Header: 'First Name',
     accessor: 'name',
-    // () => <OnlineUser name={name} />,
+    // ) => <OnlineUser name={name} />,
+    // ,
   },
   {
     Header: 'Last Name',
