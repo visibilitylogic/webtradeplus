@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import Switch from 'react-switch'
 
-function ChangeAutoTrade({ autoTrade }) {
-  const [checkButton, setcheckButton] = useState(autoTrade)
+const ChangeAutoTrade = ({ autoTrade }) => {
+  const [checkButton, setcheckButton] = useState(autoTrade.autoTrade)
 
   const handleClick = (e) => {
-    e.stopPropagation()
     setcheckButton(!checkButton)
   }
   return (
@@ -17,8 +16,6 @@ function ChangeAutoTrade({ autoTrade }) {
       uncheckedIcon={false}
       checkedIcon={false}
       offColor="#000000"
-      //   key={row.id}
-      //   id={row.id}
     />
   )
 }

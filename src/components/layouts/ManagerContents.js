@@ -16,6 +16,12 @@ import VerifyDocModal from '../utils/modals/VerifyDocModal'
 import EditAutoCopyTrade from '../utils/EditAutoCopyTrade'
 import WithdrawDetailsModal from '../utils/modals/WithdrawalDetailsPopOver'
 import BasicTable from './BasicTable'
+import { Columns } from './TableHeader'
+import { depositHeader } from './depositHeader'
+import { withdrawalHeader } from './withdrawalHeader'
+import { allTradesHeader } from './allTradesHeader'
+import { allVerifiedUsersHeader } from './allVerifiedUsersHeader'
+import { bankTransferHeader } from './bankTransferHeader'
 
 const ManagerContents = (props) => {
   const history = useHistory()
@@ -93,7 +99,7 @@ const ManagerContents = (props) => {
   })
 
   // auth
-
+  console.log(bankTransfers)
   const setAuth0 = useCallback(() => {
     setAuth(!auth)
     // setAuthEnabled({
@@ -107,17 +113,6 @@ const ManagerContents = (props) => {
     id: user._id,
     notificationEnabled: user.isTrading,
   })
-
-  // // toggle for live trade
-  // const [currentPage, setCurrentPage] = useState(1)
-  // const [postPerPage] = useState(5)
-  // const [numUsers, setNumUsers] = useState([])
-  // // get current  posts
-  // const indexOfLastPost = currentPage * postPerPage
-  // const indexOfFirstPost = indexOfLastPost - postPerPage
-  // const currentPosts = numUsers.slice(indexOfFirstPost, indexOfLastPost)
-
-  //  // paginate function
 
   //  const paginate = (num) => setCurrentPage(num)
   const setToggles = useCallback(() => {
@@ -495,75 +490,29 @@ const ManagerContents = (props) => {
         </table>
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="bank-transfers">
-        <table>
-          <tbody>
-            <tr>
-              <th>User</th>
-              <th>Ref.</th>
-              <th>Created date</th>
-              <th>Status</th>
-              <th>Processed</th>
-              <th>Amount</th>
-              <th>Bank Ref.</th>
-              <th>Proof recieved</th>
-              <th />
-            </tr>
-            {bankTransfers.length > 0 &&
-              bankTransfers.map((transfer, index) => (
-                <tr key={index}>
-                  <td>
-                    #{index + 1}- {transfer.name}
-                  </td>
-                  <td className="font-weight-bold">{transfer.Ref}</td>
-                  <td> {transfer.time}</td>
-                  <td>
-                    {transfer.status === 'Pending' ? (
-                      <span className="pending">Pending</span>
-                    ) : transfer.status === 'Approved' ? (
-                      <span className="validate">Approved</span>
-                    ) : transfer.status === 'Declined' ? (
-                      <span className="btn-danger">Declined</span>
-                    ) : null}
-                  </td>
-                  <td>
-                    {transfer.status === 'Pending' ? (
-                      <span className="not-processed">Not Processed</span>
-                    ) : (
-                      <span className="processed">Processed</span>
-                    )}
-                  </td>
-                  <td>
-                    {transfer.currency} {transfer.amount}
-                  </td>
-                  <td>-</td>
-                  <td>No proof received</td>
-                  <td>
-                    <div
-                      className="validate"
-                      onClick={() => handleApproveWithdrawal(transfer._id)}
-                      style={{
-                        display: transfer.status !== 'Pending' && 'none',
-                      }}
-                    >
-                      Validate
-                    </div>
-                    <div
-                      style={{
-                        display: transfer.status !== 'Pending' && 'none',
-                      }}
-                      className="cancel"
-                      onClick={() => handleDeclineWithdrawal(transfer._id)}
-                    >
-                      Cancel
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        {console.log()}
+
+        {bankTransfers && bankTransfers.length > 0 && (
+          <BasicTable
+            allUsers={bankTransfers}
+            user={user}
+            column={bankTransferHeader}
+            type="deposit"
+          />
+        )}
       </div>
+
       <div className="manager-tab-dtls" manager-tab-dtls="payments">
-        <table>
+        {allDeposits && allDeposits.length > 0 && (
+          <BasicTable
+            allUsers={allDeposits}
+            user={user}
+            column={depositHeader}
+            type="deposit"
+          />
+        )}
+
+        {/* <table>
           <tbody>
             <tr>
               <th>User</th>
@@ -577,8 +526,8 @@ const ManagerContents = (props) => {
               <th>Payment gateway</th>
               <th>Payment Details</th>
               <th />
-            </tr>
-            {allDeposits.length > 0 &&
+            </tr> */}
+        {/* { &&
               allDeposits.map((deposit, index) => (
                 <tr key={index}>
                   <td>
@@ -601,7 +550,7 @@ const ManagerContents = (props) => {
                       : ''}
                     USD
                   </td>
-                  <td>{deposit.fee}USD</td>
+                  "<td>{deposit.fee}USD</td>
                   <td>USD</td>
                   <td className="font-weight-bold">{deposit.amount} USD</td>
                   <td>{deposit.method}</td>
@@ -633,8 +582,9 @@ const ManagerContents = (props) => {
                 </tr>
               ))}
           </tbody>
-        </table>
+        </table>*/}
       </div>
+
       <div className="manager-tab-dtls" manager-tab-dtls="subscriptions">
         <table>
           <tbody>
@@ -660,7 +610,7 @@ const ManagerContents = (props) => {
         </table>
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="identity">
-        <table>
+        {/* <table>
           <tbody>
             <tr>
               <th>User</th>
@@ -669,12 +619,23 @@ const ManagerContents = (props) => {
               <th>Identity Info</th>
               <th>Documents</th>
               <th />
-            </tr>
-            {allVerifiedUsers.length > 0 &&
-              allVerifiedUsers.map((verify, index) => (
-                <tr key={index}>
-                  {decline && (
-                    <section
+            </tr> */}
+
+        {console.log(allVerifiedUsers)}
+
+        {allVerifiedUsers && allVerifiedUsers.length > 0 && (
+          <BasicTable
+            allUsers={allVerifiedUsers}
+            user={user}
+            column={allVerifiedUsersHeader}
+            type="verifiedUsers"
+          />
+        )}
+
+        {/* {allVerifiedUsers.map((verify, index) => (
+                 <tr key={index}>
+                  {decline && 
+                    <section 
                       className="withdraw-modal-box"
                       style={{ display: 'block' }}
                     >
@@ -727,8 +688,9 @@ const ManagerContents = (props) => {
                         </Container>
                       </div>
                     </section>
-                  )}
-                  <td>
+                  )} */}
+
+        {/* <td>
                     #{index + 1}- {verify.name}
                   </td>
                   <td>
@@ -746,7 +708,7 @@ const ManagerContents = (props) => {
                   <td>{<VerifyDetailsPopOver details={verify} />}</td>
                   <td>
                     <a href="#!" className="sec-bt">
-                      {/* Step 1: Identity */}
+                      { Step 1: Identity  
                       <VerifyDocModal
                         text={verify.documentName}
                         title={verify.documentName}
@@ -777,10 +739,11 @@ const ManagerContents = (props) => {
                     </div>
                   </td>
                 </tr>
-              ))}
+              )
           </tbody>
-        </table>
+        </table> */}
       </div>
+
       {/* Table */}
 
       <TableContainer
@@ -796,91 +759,13 @@ const ManagerContents = (props) => {
             setDisplayC={setDisplayC}
             setUserLevel={setUserLevel}
             user={user}
+            column={Columns}
+            type="EveryUser"
           />
         )}
       </TableContainer>
 
       <div className="manager-tab-dtls" manager-tab-dtls="users">
-        {/* {!displayC && (
-          <div className="first-sec">
-            <table>
-              <tbody>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Signin method</th>
-                  <th>Last login</th>
-                  <th>Notifications enabled</th>
-                  <th>Currency</th>
-                  <th>Auto Trade</th>
-                </tr> */}
-
-        {/* {allUsers.length > 0 &&
-                  allUsers.map((user, index) => (
-                    <tr
-                      key={index}
-                      onClick={() => {
-                        setDisplayC(true)
-                        // getUserAutoCopyTrade(user._id);
-                        setUserLevel(
-                          user.isAdmin
-                            ? 'isAdmin'
-                            : user.isManager
-                            ? 'isManager'
-                            : 'none',
-                        )
-                      }}
-                    >
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          <div className="dash-row dash-row-centralized">
-                            <div className="profile" />
-                            <div className="name">
-                              <span>{user.name}</span>
-                            </div>
-                            <div className="active" />
-                          </div>
-                        </a>
-                      </td>
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          {user.email}
-                        </a>
-                      </td>
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          Standard
-                        </a>
-                      </td>
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          <Moment fromNow ago>
-                            {user.time}
-                          </Moment>
-                        </a>
-                      </td>
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          {user.notificationsEnabled ? 'Yes' : 'No'}
-                        </a>
-                      </td>
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          {user.currency}
-                        </a>
-                      </td>
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          {user.isTrading ? 'ON' : 'Off'}
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        )} */}
-
         {displayC && (
           <div className="second-sec" style={{ display: 'block' }}>
             <div className="user-dtls-tab" style={{ display: 'block' }}>
@@ -1166,6 +1051,16 @@ const ManagerContents = (props) => {
                           Deposit History
                         </span>
                       </div>
+
+                      {/* 
+                      {currentDeposit && currentDeposit.length > 0 && (
+                              <BasicTable
+                                allUsers={currentDeposit}
+                                user={user}
+                                column={currentDeposit}
+                                type="currentDeposit"
+                              />
+                            )} */}
                       <table>
                         <tbody>
                           {currentDeposit.length > 0 &&
@@ -1858,6 +1753,15 @@ const ManagerContents = (props) => {
                 </div>
               )}
 
+              {/* {withd && (
+          <BasicTable
+            allUsers={withd}
+          user={user}
+            column={withdrawalHeader}
+            type="withdrawal"
+          />
+        )} */}
+
               {withd && (
                 <div
                   dash-user-dtls-tab-dtls="withdraw"
@@ -1913,28 +1817,6 @@ const ManagerContents = (props) => {
                             width: '30%',
                           }}
                         >
-                          {/* {user.liveTrade ? (
-                            <button
-                              className="autotrader"
-                              style={{
-                                backgroundColor: 'green',
-                              }}
-                              onClick={handleLiveTrade}
-                            >
-                              Turn off Live Trade
-                            </button>
-                          ) : (
-                            <button
-                              className="autotrader"
-                              style={{
-                                backgroundColor: 'red',
-                              }}
-                              onClick={handleLiveTrade}
-                            >
-                              Turn on Live Trade
-                            </button> 
-                           )} */}
-
                           <div className="d-flex justify-content-center align-items-center">
                             <div>
                               <h5>Live Trade</h5>
@@ -1969,6 +1851,7 @@ const ManagerContents = (props) => {
                   </div>
                 </div>
               )}
+
               {orderT && (
                 <div
                   dash-user-dtls-tab-dtls="orders"
@@ -2209,47 +2092,17 @@ const ManagerContents = (props) => {
         )}
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="orders">
-        <table>
-          <tbody>
-            <tr>
-              <th>Ref</th>
-              <th>Order date</th>
-              <th>Exchange</th>
-              <th>Type</th>
-              <th>Amount</th>
-
-              <th>Total deducted</th>
-              <th>Total received</th>
-              <th>Profit/Loss</th>
-              <th>Open Rate </th>
-            </tr>
-            {allTrades.length > 0 &&
-              allTrades.map((item, index) => (
-                <tr key={index}>
-                  <td className="font-weight-bold">ORDR-00{index + 1}</td>
-                  <td>{item.time}</td>
-                  <td>{item.stockName}</td>
-                  <td>
-                    <span className="validate">{item.tag}</span>
-                  </td>
-                  <td>
-                    {item.stockAmount}. {item.stockName}
-                  </td>
-                  <td>
-                    <span className="pending">- 4.53748 USD</span>
-                  </td>
-                  <td>
-                    <span className="validate">+ 0.98 {item.stockName}</span>
-                  </td>
-                  <td>0.40899999999988</td>
-                  <td>{item.buyW}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        {allTrades && allTrades.length > 0 && (
+          <BasicTable
+            allUsers={allTrades}
+            user={user}
+            column={allTradesHeader}
+            type="trades"
+          />
+        )}
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="withdraw">
-        <table>
+        {/* <table>
           <tbody>
             <tr>
               <th>Ref.</th>
@@ -2263,55 +2116,16 @@ const ManagerContents = (props) => {
               <th>Total</th>
               <th>Status</th>
               <th>Actions</th>
-            </tr>
+            </tr> */}
 
-            {allWithdrawals.length > 0 &&
-              allWithdrawals.map((withdrawal) => (
-                <tr key={withdrawal.Ref}>
-                  <td>{withdrawal.Ref}</td>
-                  <td>{withdrawal.name}</td>
-                  <td>{withdrawal.email}</td>
-                  <td>{withdrawal.tag}</td>
-                  <td>
-                    <WithdrawDetailsModal details={withdrawal.methodDetails} />
-                  </td>
-                  <td>{withdrawal.time}</td>
-                  <td>{withdrawal.amount}</td>
-                  <td>{withdrawal.fees}</td>
-                  <td>{withdrawal.total}</td>
-                  <td>
-                    {withdrawal.status === 'Pending' ? (
-                      <div className="btn-warning">{withdrawal.status}</div>
-                    ) : withdrawal.status === 'Approved' ? (
-                      <div className="btn-success">{withdrawal.status}</div>
-                    ) : withdrawal.status === 'Declined' ? (
-                      <div className="btn-danger">{withdrawal.status}</div>
-                    ) : null}
-                  </td>
-                  <td>
-                    <div
-                      className="validate"
-                      onClick={(a) => handleApproveWithdrawal(withdrawal._id)}
-                      style={{
-                        display: withdrawal.status !== 'Pending' && 'none',
-                      }}
-                    >
-                      Validate
-                    </div>
-                    <div
-                      style={{
-                        display: withdrawal.status !== 'Pending' && 'none',
-                      }}
-                      className="cancel"
-                      onClick={(a) => handleDeclineWithdrawal(withdrawal._id)}
-                    >
-                      Cancel
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        {allWithdrawals && allWithdrawals.length > 0 && (
+          <BasicTable
+            allUsers={allWithdrawals}
+            user={user}
+            column={withdrawalHeader}
+            type="withdrawal"
+          />
+        )}
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="traders-approval">
         <table>
