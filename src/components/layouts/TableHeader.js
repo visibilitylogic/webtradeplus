@@ -1,9 +1,14 @@
 //import { format } from 'date-fns'
 import Moment from 'react-moment'
+import ChangeAutoTrade from './ChangeAutoTrade'
+import OnlineUser from './OnlineUser'
+
 export const Columns = [
   {
+    id: 'name',
     Header: 'First Name',
     accessor: 'name',
+    // () => <OnlineUser name={name} />,
   },
   {
     Header: 'Last Name',
@@ -24,7 +29,7 @@ export const Columns = [
   {
     id: 'autoTrade',
     Header: 'Auto Trade',
-    accessor: (autoTrade) => (autoTrade.toString() ? 'Yes' : 'No'),
+    accessor: (autoTrade) => <ChangeAutoTrade autoTrade={autoTrade} />,
   },
   {
     id: 'updatedAt',
@@ -36,19 +41,9 @@ export const Columns = [
       </Moment>
     ),
   },
-  {
-    id: 'notification',
-    Header: 'Notifications Enabled',
-    accessor: (notification) =>
-      notification.isTrading.toString() ? 'Yes' : 'No',
-  },
+
   {
     Header: 'Currency',
     accessor: 'currency',
-  },
-  {
-    id: 'trading',
-    Header: 'IsTrading',
-    accessor: (d) => d.isTrading.toString(),
   },
 ]
