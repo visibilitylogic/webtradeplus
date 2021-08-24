@@ -6,7 +6,7 @@ import usd from "../../assets/images/USD.svg";
 import "./dasn.css"
 function Calculator() {
     return (
-        <div className="dashcontents">        
+        <div className="dashcontents calc_contain">        
         <div className="calc-sections">
         <div className="heading">
           <span style={{fontSize:"20px", letterSpacing:"1px", fontFamily:"arial"}}>CONVERTER</span>

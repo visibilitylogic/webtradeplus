@@ -166,6 +166,10 @@
   margin: 0 auto;
 }
 
+.leader_container{
+  overflow: hidden;
+}
+
 
 .wrapper {
   /* display: flex;
@@ -177,9 +181,14 @@
   height:500px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   padding: 25px 10PX;
-  overflow-y: scroll;
+  overflow-y: scroll; 
+  -ms-overflow-style: none; 
 }
  
+.wrapper::-webkit-scrollbar { 
+  width: 0 !important;
+  display: none; 
+}
 .content{
   margin: 20px auto;
   
@@ -197,17 +206,16 @@
 .content > div > span {
   color:white;
   font-size: 20px;
-  font-style: italic;
   margin-top:-15px;
 }
 
 .content > div > div {
-  width: 80px;
+  width: 90px;
   clip-path: circle(35% at 50% 50%);
   /* z-index: 100; */
   position: relative;
-  top: -45px;
-  left:80px
+  top: -58px;
+  left:100px
 
 }
 
@@ -219,3 +227,16 @@
   color: #197535;
   display: block;
 }
+
+.calc_contain{
+  width:45%;
+  height: 70%;
+  margin:70px auto;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.calc-sections {
+  text-align: center;
+  margin: auto;
+}
+
