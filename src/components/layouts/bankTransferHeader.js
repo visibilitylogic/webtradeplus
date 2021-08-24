@@ -1,4 +1,6 @@
-const bankTransferHeader = [
+import { format } from "date-fns";
+
+export const bankTransferHeader = [
   {
     Header: 'Name',
     accessor: 'name',
@@ -16,7 +18,7 @@ const bankTransferHeader = [
   },
 
   {
-    Header: 'Currency',
+    Header: 'Curry7ency',
     accessor: 'currency',
   },
   {
