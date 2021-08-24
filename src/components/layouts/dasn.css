@@ -209,7 +209,7 @@
   margin-top:-15px;
 }
 
-.content > div > div {
+.leaderboardDiv{
   width: 90px;
   clip-path: circle(35% at 50% 50%);
   /* z-index: 100; */
@@ -219,7 +219,7 @@
 
 }
 
-.content > div > div > img {
+.leaderboardDiv img {
   width: 100%;
 }
 
