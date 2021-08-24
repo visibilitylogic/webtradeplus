@@ -6288,3 +6288,10 @@ admin-sidebar ul li a {
   overflow-y: auto;
   padding: 10px 10px;
 }
+.yes{
+
+background-color: green;
+}
+.no{
+  background-color: red;
+}
