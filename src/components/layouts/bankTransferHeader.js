@@ -1,13 +1,13 @@
-import { format } from 'date-fns'
+import { format } from "date-fns";
+
 export const bankTransferHeader = [
   {
     Header: 'Name',
     accessor: 'name',
   },
   {
-    id: 'Ref',
     Header: 'Ref',
-    accessor: ({ Ref }) => <strong> {Ref}</strong>,
+    accessor: 'Ref',
   },
   {
     Header: 'Created Date',
@@ -18,7 +18,7 @@ export const bankTransferHeader = [
   },
 
   {
-    Header: 'Currency',
+    Header: 'Curry7ency',
     accessor: 'currency',
   },
   {
@@ -26,24 +26,19 @@ export const bankTransferHeader = [
     accessor: 'amount',
   },
   {
-    id: 'status',
     Header: 'Status',
-    accessor: ({ status }) => (
-      <p
-        className={
-          status === 'Declined' ? 'text text-danger' : 'text text-success'
-        }
-      >
-        {status}
-      </p>
-    ),
+    accessor: 'status',
   },
   {
     Header: 'Bank Ref',
-    accessor: '',
+    accessor: 'status',
   },
   {
     Header: 'Proof Received',
-    accessor: '',
+    accessor: 'status',
+  },
+  {
+    Header: 'Processed',
+    accessor: 'status',
   },
 ]

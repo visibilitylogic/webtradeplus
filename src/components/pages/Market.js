@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useActions } from '../hooks/useActions'
 
@@ -23,7 +24,7 @@ function Market() {
                       /> */}
                       {/* <button onClick={handleSearch}>Search</button> */}
                     </div>
-             <table className="tabled">
+             <Table striped bordered hover variant="dark">
                     <thead>
                       <tr>
                         <th>Market</th>
@@ -53,7 +54,7 @@ function Market() {
                           ))
                         }
                       </tbody>
-                </table>
+                </Table>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import { format } from 'date-fns'
+//import { format } from 'date-fns'
 import Moment from 'react-moment'
 import ChangeAutoTrade from './ChangeAutoTrade'
 import OnlineUser from './OnlineUser'
@@ -8,6 +8,8 @@ export const Columns = [
     id: 'name',
     Header: 'First Name',
     accessor: 'name',
+    // ) => <OnlineUser name={name} />,
+    // ,
   },
   {
     Header: 'Last Name',

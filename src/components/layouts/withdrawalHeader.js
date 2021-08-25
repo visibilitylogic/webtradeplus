@@ -1,12 +1,14 @@
-import Witdrawal from './Witdrawal'
-import { format } from 'date-fns'
 export const withdrawalHeader = [
   {
     id: 'Ref',
     Header: 'Ref',
     accessor: 'Ref',
   },
-
+  {
+    id: 'Currency',
+    Header: 'Currency',
+    accessor: 'currency',
+  },
   {
     Header: 'Name',
     accessor: 'name',
@@ -15,22 +17,17 @@ export const withdrawalHeader = [
     Header: 'Email',
     accessor: 'email',
   },
-  {
-    Header: 'Withdrawal Method',
-    accessor: '',
-  },
+  //   {
+  //     Header: 'Withdrawal Method',
+  //     accessor: 'methodDetails',
+  //   },
   {
     Header: 'Withdrawal Info',
     accessor: 'withdrawInfo',
-    accessor: ({ withdrawInfo }) => <Witdrawal withdrawInfo={withdrawInfo} />,
   },
   {
     id: 'Date',
     Header: 'time',
-    accessor: 'time',
-    Cell: ({ value }) => {
-      return format(new Date(value), 'dd/MM/yyyy')
-    },
   },
   {
     id: 'Amount',
@@ -41,5 +38,17 @@ export const withdrawalHeader = [
   {
     Header: 'Fees',
     accessor: 'fees',
+  },
+  {
+    Header: 'Total',
+    accessor: 'total',
+  },
+  {
+    Header: 'Status',
+    accessor: 'status',
+  },
+  {
+    Header: 'Action',
+    accessor: '',
   },
 ]

@@ -1,20 +1,19 @@
+import { DepositStatus, DepositCancel } from './DepositStatus'
 import { format } from 'date-fns'
-import PaymentModal from './PaymentModal'
 export const depositHeader = [
   {
-    id: 'name',
+    id: '',
     Header: 'User',
     accessor: 'name',
   },
 
   {
-    id: 'Ref',
     Header: 'Ref',
-    accessor: ({ Ref }) => <strong> {Ref}</strong>,
+    accessor: 'Ref',
   },
   {
     //id: 'time',
-    Header: 'Created date',
+    Header: 'Created Date',
     accessor: 'time',
     Cell: ({ value }) => {
       return format(new Date(value), 'dd/MM/yyyy')
@@ -22,21 +21,11 @@ export const depositHeader = [
   },
   {
     Header: 'Status',
-    accessor: ({ status }) => (
-      <p
-        className={
-          status === 'Declined'
-            ? ' bg-danger text-light p-2 text-center'
-            : 'bg-success text-light p-2 text-center'
-        }
-      >
-        {status}
-      </p>
-    ),
+    accessor: 'status',
   },
   {
     Header: 'Amount Paid',
-    accessor: ({ amount }) => <strong>{amount}</strong>,
+    accessor: 'amount',
   },
   {
     id: 'Fee',
@@ -52,26 +41,24 @@ export const depositHeader = [
 
   {
     Header: 'Amount Received',
-    accessor: 'amount',
+    accessor: '_id',
   },
   {
     Header: 'Payment Gateway',
     accessor: 'method',
   },
   {
-    id: 'cryptoAddress',
     Header: 'Payment Details',
-    // accessor: 'cryptoAddress',
-    accessor: (cryptoAddress) => <PaymentModal cryptoAddress={cryptoAddress} />,
+    accessor: 'cryptoAddress',
   },
-  // {
-  //   Header: 'Validate',
-  //   accessor: 'status',
-  //   accessor: (status) => <DepositStatus status={status} />,
-  // },
-  // {
-  //   Header: 'Cancel',
-  //   accessor: 'status',
-  //   accessor: (status) => <DepositCancel status={status} />,
-  // },
+  {
+    Header: 'Validate',
+    accessor: 'status',
+    accessor: (status) => <DepositStatus status={status} />,
+  },
+  {
+    Header: 'Cancel',
+    accessor: 'status',
+    accessor: (status) => <DepositCancel status={status} />,
+  },
 ]
