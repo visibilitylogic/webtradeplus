@@ -29,7 +29,7 @@ function LeaderBoard() {
   }
   return (
     <div className="leader_container">
-      <h1> Leader Board </h1>
+      <h1  style={{textAlign:"center", color:"white", marginBottom:"25px", fontFamily:"arial", marginTop:"20px"}}> Leader Board </h1>
       <div className="wrapper">
         <div className="content ">
           {loading && <Spinner animation="grow">loading...</Spinner>}

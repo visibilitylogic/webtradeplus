@@ -56,19 +56,9 @@
     color:white
 }
 
-.flex_row1 > div > .h11 {
+.flex_row1 > div > h1 {
     color:white
 }
-
-
-/* 
-.h11{
-    font-family:Arial, Helvetica, sans-serif;
-    text-align: center;
-    margin-bottom: 30px;
-    padding: 10px;
-    color:white;
-} */
 
 .special{
     background-color: red;
