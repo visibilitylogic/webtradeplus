@@ -24,7 +24,7 @@ const FooterComponent = ({
               onClick={() => previousPage()}
               disabled={!canPreviousPage}
             >
-              {'<'}
+              ◀
             </div>
             <div>
               <strong className="strong">
@@ -39,7 +39,7 @@ const FooterComponent = ({
               disabled={!canNextPage}
               style={{ cursor: 'pointer' }}
             >
-              ➤
+              ▶
             </div>
           </div>
         </FooterStyle>

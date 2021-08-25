@@ -33,174 +33,213 @@ function OrderBook() {
   useEffect(() => {
     getOrder()
   }, [])
-  const bodyDisplay = () => {
-    switch (display) {
-      case 'order-book':
-        return (
-          <Table>
-            <tbody style={{ textAlign: 'left' }}>
-              {DummyData.map((data) => (
-                <tr
-                  style={{
-                    borderBottom: '.1px solid wheat',
-                    marginBottom: '-30px',
-                  }}
-                  className="tableRoww"
-                  key={data.id}
-                >
-                  <td>
-                    <span className="order_span">{Date.now()} </span>
-                    <p style={{ color: 'wheat' }}>Date</p>
-                  </td>
-                  <td>
-                    <span className="order_span">{data.nameOfAsset} </span>
-                    <p style={{ color: 'wheat' }}>TypeofAsset </p>
-                  </td>
-                  <td>
-                    <span className="order_span">{data.openRateOfAsset} </span>
-                    <p style={{ color: 'wheat' }}>amount</p>
-                  </td>
-                  <td>
-                    <span
-                      className="order_span"
-                      style={{ color: data.tag === 'Buy' ? 'green' : 'red' }}
-                    >
-                      {data.tag}{' '}
-                    </span>
-                    <p style={{ color: 'wheat' }}>tag</p>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        )
-        break
-
-      case 'open_position':
-        return (
-          <Table>
-            <tbody style={{ textAlign: 'left' }}>
-              {openData.map((data) => (
-                <tr
-                  style={{
-                    borderBottom: '.1px solid wheat',
-                    marginBottom: '-30px',
-                  }}
-                  className="tableRoww"
-                  key={data.id}
-                >
-                  <td>
-                    <span className="order_span">{Date.now()} </span>
-                    <p style={{ color: 'wheat' }}>Date</p>
-                  </td>
-                  <td>
-                    <span className="order_span">{data.nameOfAsset} </span>
-                    <p style={{ color: 'wheat' }}>TypeofAsset </p>
-                  </td>
-                  <td>
-                    <span className="order_span">{data.openRateOfAsset} </span>
-                    <p style={{ color: 'wheat' }}>amount</p>
-                  </td>
-                  <td>
-                    <span
-                      className="order_span"
-                      style={{ color: data.tag === 'Buy' ? 'green' : 'red' }}
-                    >
-                      {data.tag}{' '}
-                    </span>
-                    <p style={{ color: 'wheat' }}>tag</p>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        )
-        break
-      case 'auto_trades':
-        return (
-          <Table>
-            <tbody style={{ textAlign: 'left' }}>
-              {DummyData.map((data) => (
-                <tr
-                  style={{ borderBottom: '.1px solid wheat' }}
-                  className="tableRoww"
-                  key={data.id}
-                >
-                  <td>
-                    <span className="order_span">{Date.now()} </span>
-                    <p style={{ color: 'wheat' }}>Date</p>
-                  </td>
-                  <td>
-                    <span className="order_span">{data.nameOfAsset} </span>
-                    <p style={{ color: 'wheat' }}>TypeofAsset </p>
-                  </td>
-                  <td>
-                    <span className="order_span">{data.openRateOfAsset} </span>
-                    <p style={{ color: 'wheat' }}>amount</p>
-                  </td>
-                  <td>
-                    <span
-                      className="order_span"
-                      style={{ color: data.tag === 'Buy' ? 'green' : 'red' }}
-                    >
-                      {data.tag}{' '}
-                    </span>
-                    <p style={{ color: 'wheat' }}>tag</p>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        )
-        break
-      default:
-        return ' '
-    }
-  }
   return (
     <div>
-      <div
-        className="order-book-section orderBookComponent"
-        style={{ display: 'block' }}
-      >
-        <div className="order-book-sec">
-          <h2
-            id="order-header"
-            style={{
-              textAlign: 'center',
-              marginBottom: '25px',
-              fontFamily: 'arial',
-              marginTop: '20px',
-            }}
-          >
-            Order Book
-          </h2>
-          <div className="tabs" style={{ borderBottom: '1px solid #4a4a4d' }}>
-            <a
-              className={display === 'order-book' ? 'active' : ' '}
-              dash-tab="order-book"
-              onClick={() => setDisplay('order-book')}
-            >
-              Trading History
-            </a>
-            <a
-              className={display === 'open_position' ? 'active' : ' '}
-              onClick={() => setDisplay('open_position')}
-            >
-              {' '}
-              Opened Positions
-            </a>
-            <a
-              className={display === 'auto_trades' ? 'active' : ' '}
-              onClick={() => setDisplay('auto_trades')}
-            >
-              {' '}
-              Auto Trades
-            </a>
-          </div>
-          <div>{bodyDisplay()}</div>
-        </div>
-      </div>
+      {/* <section className="dash-contents">
+            <div className="dash-row">
+              {this.state.orderBook ? (
+                // <div className="full-width orderTabComponent">
+                <div
+                  className="order-book-section orderBookComponent"
+                  style={{ display: "block" }}
+                >
+                  <div className="order-book-sec">
+                    <h2 id="order-header">Order Book</h2>
+                    <div
+                      className="tabs"
+                      style={{ borderBottom: "1px solid #4a4a4d" }}
+                    >
+                      <a className="active" dash-tab="order-book">
+                        Trading History
+                      </a>
+                      <a dash-tab="opened-position"> Opened Positions</a>
+
+                      <a dash-tab="opened-pos"> Auto Trades</a>
+                    </div>
+                    <div className="dash-tab-sec" dash-tab-sec="order-book"> */}
+      {/* {this.state.orders.length > 0 ? (
+                        this.state.orders.map((item, i) =>
+                          item.active ? (
+                            <div className="dash-row">
+                              <div className="date">
+                                <p className="time">
+                                  {" "}
+                                  {item.time
+                                    ? item.time.slice(10).slice(1, 6)
+                                    : ""}
+                                </p>
+                                <p className="day-month">
+                                  {item.time ? item.time.slice(0, 10) : ""}
+                                </p>
+                              </div>
+                              <div className="currency">
+                                <p className="currency-type">
+                                  {item.stockName}
+                                </p>
+                                <p className="cad">
+                                  {item.stockAmount && item.buyW
+                                    ? (item.stockAmount * item.buyW)
+                                        .toString()
+                                        .slice(0, 4) + "$"
+                                    : ""}
+                                </p>
+                              </div>
+                              <div className="rate">
+                                <p
+                                  className={
+                                    item.tag.toLowerCase() === "buy"
+                                      ? "rate-no"
+                                      : "rate-no red"
+                                  }
+                                >
+                                  {item.stockAmount
+                                    ? new Intl.NumberFormat('en-US').format(item.stockAmount)
+                                        .slice(0, 8)
+                                    : ""}
+                                </p>
+                                <p className="currency">
+                                  {item.profitLoss ? "profit" : "loss"}
+                                </p>
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )
+                        )
+                      ) : (
+                        <h3
+                          style={{
+                            fontWeight: "bold",
+                            color: "#9E9E9E",
+                            marginTop: " 25%",
+                          }}
+                        >
+                          no trade
+                        </h3>
+                      )}
+                    </div>
+
+                    <div
+                      className="dash-tab-sec"
+                      dash-tab-sec="opened-position"
+                    >
+                      {this.state.history.length > 0 ? (
+                        this.state.history.map((item, i) => (
+                          <div className="dash-row">
+                            <div className="date">
+                              <p className="time">
+                                {" "}
+                                {item.scheduledTime
+                                  ? item.scheduledTime.slice(10).slice(1, 6)
+                                  : ""}
+                              </p>
+                              <p className="day-month">
+                                {item.scheduledTime
+                                  ? item.scheduledTime.slice(0, 10)
+                                  : ""}
+                              </p>
+                            </div>
+                            <div className="currency">
+                              <p className="currency-type">{item.market}</p>
+                              <p className="cad">
+                                {" "}
+                                {item.assets ? item.assets : ""}
+                              </p>
+                            </div>
+                            <div className="rate">
+                              <p
+                                className="currency-type"
+                                style={{
+                                  margin: 0,
+                                  color: "white",
+                                  fontSize: "11px",
+                                }}
+                              >
+                                {item.amount
+                                  ? new Intl.NumberFormat('en-US').format(item.amount)
+                                      .slice(0, 8)
+                                  : ""}
+                              </p>{" "}
+                              <p className="currency">
+                                {item.profitLoss ? "profit" : "loss"}
+                              </p>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <h3
+                          style={{
+                            color: "#9E9E9E",
+                            marginTop: " 25%",
+                          }}
+                        >
+                          no trade
+                        </h3>
+                      )}
+                    </div>
+
+                    <div className="dash-tab-sec" dash-tab-sec="opened-pos">
+                      {this.state.history.length > 0 ? (
+                        this.state.history.map((item, i) => (
+                          <div className="dash-row">
+                            <div className="date">
+                              <p className="time">
+                                {" "}
+                                {item.scheduledTime
+                                  ? item.scheduledTime.slice(10).slice(1, 6)
+                                  : ""}
+                              </p>
+                              <p className="day-month">
+                                {item.scheduledTime
+                                  ? item.scheduledTime.slice(0, 10)
+                                  : ""}
+                              </p>
+                            </div>
+                            <div className="currency">
+                              <p className="currency-type">{item.market}</p>
+                              <p className="cad">
+                                {" "}
+                                {item.assets ? item.assets : ""}
+                              </p>
+                            </div>
+                            <div className="rate">
+                              <p
+                                className="currency-type"
+                                style={{
+                                  margin: 0,
+                                  color: "white",
+                                  fontSize: "11px",
+                                }}
+                              >
+                                {item.amount
+                                  ? new Intl.NumberFormat('en-US').format(item.amount)
+                                      .slice(0, 8)
+                                  : ""}
+                              </p>{" "}
+                              <p className="currency">
+                                {item.profitLoss ? "profit" : "loss"}
+                              </p>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <h3
+                          style={{
+                            color: "#9E9E9E",
+                            marginTop: " 25%",
+                          }}
+                        >
+                          no trade
+                        </h3>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+            </div> */}
+      {/* </section> */}
     </div>
   )
 }
