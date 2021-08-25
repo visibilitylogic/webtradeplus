@@ -18,7 +18,7 @@ export const bankTransferHeader = [
   },
 
   {
-    Header: 'Curry7ency',
+    Header: 'Currency',
     accessor: 'currency',
   },
   {
