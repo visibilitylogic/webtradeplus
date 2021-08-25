@@ -32,8 +32,6 @@ const DummyData =
 ]
 
 const openData = DummyData && DummyData.filter(data=> data.isOpen === true)
-console.log(openData);
-
 function OrderBook() {
   const {getOrder} = useActions();
   const {user} = useSelector(state=> state.auth);
@@ -42,38 +40,37 @@ function OrderBook() {
   useEffect(()=>{
     getOrder(user && user._id)
   }, [])
-  console.log(trade_orders)
   const bodyDisplay = ()=>{
     switch(display){
       case "order-book":
         return (
           <Table>
-              <tbody style={{textAlign:"left"}}>
-              {
-                DummyData.map(data=>(
-                  <tr key={data.id}>
-                  <td>
-                    <h4>22-12-2018</h4>
-                    <p style={{color:"black", fontSize:"19px"}} >Date</p>
-                  </td>
-                  <td>
-                    <h4>{data.nameOfAsset}</h4>
-                    <p style={{color:"black", fontSize:"19px"}} >TypeofAsset </p>
-                  </td>
-                  <td>
-                    <h4>{data.openRateOfAsset}</h4>
-                    <p style={{color:"black" , fontSize:"19px"}} >amount</p>
-                  </td>
-                  <td>
-                    <h4 style={{color: data.tag === "Buy" ? "green" : "red"}}>{data.tag}</h4>
-                    <p style={{color:"black" , fontSize:"19px"}} >tag</p>
-                  </td>
-                </tr>
-                ))
-              }
-
-              </tbody>
-          </Table>
+          <tbody style={{textAlign:"left"}}>
+          {
+            DummyData.map(data=>(
+              <tr style={{borderBottom:".1px solid wheat", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
+              <td>
+                <span className="order_span">{Date.now()} </span>
+                <p style={{color:"wheat"}} >Date</p>
+              </td>
+              <td>
+                <span className="order_span">{data.nameOfAsset} </span>
+                <p style={{color:"wheat"}} >TypeofAsset </p>
+              </td>
+              <td>
+                <span className="order_span">{data.openRateOfAsset} </span>
+                <p style={{color:"wheat"}} >amount</p>
+              </td>
+              <td>
+                <span className="order_span" style={{color: data.tag === "Buy" ? "green" : "red"}}>{data.tag} </span>
+                <p style={{color:"wheat"}} >tag</p>
+              </td>
+            </tr>
+            ))
+          }
+  
+          </tbody>
+      </Table>
         )
       break;
     
@@ -83,24 +80,24 @@ function OrderBook() {
         <tbody style={{textAlign:"left"}}>
         {
           openData.map(data=>(
-            <tr key={data.id}>
-            <td>
-              <h4>{Date.now()}</h4>
-              <p style={{color:"black" , fontSize:"19px"}} >Date</p>
-            </td>
-            <td>
-              <h4>{data.nameOfAsset}</h4>
-              <p style={{color:"black" , fontSize:"19px"}} >TypeofAsset </p>
-            </td>
-            <td>
-              <h4>{data.openRateOfAsset}</h4>
-              <p style={{color:"black" , fontSize:"19px"}} >amount</p>
-            </td>
-            <td>
-              <h4 style={{color: data.tag === "Buy" ? "green" : "red"}}>{data.tag}</h4>
-              <p style={{color:"black" , fontSize:"19px"}} >tag</p>
-            </td>
-          </tr>
+            <tr style={{borderBottom:".1px solid wheat", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
+              <td>
+                <span className="order_span">{Date.now()} </span>
+                <p style={{color:"wheat"}} >Date</p>
+              </td>
+              <td>
+                <span className="order_span">{data.nameOfAsset} </span>
+                <p style={{color:"wheat"}} >TypeofAsset </p>
+              </td>
+              <td>
+                <span className="order_span">{data.openRateOfAsset} </span>
+                <p style={{color:"wheat"}} >amount</p>
+              </td>
+              <td>
+                <span className="order_span" style={{color: data.tag === "Buy" ? "green" : "red"}}>{data.tag} </span>
+                <p style={{color:"wheat"}} >tag</p>
+              </td>
+            </tr>
           ))
         }
 
@@ -114,22 +111,22 @@ function OrderBook() {
         <tbody style={{textAlign:"left"}}>
         {
           DummyData.map(data=>(
-            <tr key={data.id}>
+            <tr  style={{borderBottom:".1px solid wheat"}} className="tableRoww" key={data.id}>
             <td>
-              <h4>{Date.now()}</h4>
-              <p style={{color:"black"}} >Date</p>
+              <span className="order_span">{Date.now()} </span>
+              <p style={{color:"wheat"}} >Date</p>
             </td>
             <td>
-              <h4>{data.nameOfAsset}</h4>
-              <p style={{color:"black"}} >TypeofAsset </p>
+              <span className="order_span">{data.nameOfAsset} </span>
+              <p style={{color:"wheat"}} >TypeofAsset </p>
             </td>
             <td>
-              <h4>{data.openRateOfAsset}</h4>
-              <p style={{color:"black"}} >amount</p>
+              <span className="order_span">{data.openRateOfAsset} </span>
+              <p style={{color:"wheat"}} >amount</p>
             </td>
             <td>
-              <h4 style={{color: data.tag === "Buy" ? "green" : "red"}}>{data.tag}</h4>
-              <p style={{color:"black"}} >tag</p>
+              <span className="order_span" style={{color: data.tag === "Buy" ? "green" : "red"}}>{data.tag} </span>
+              <p style={{color:"wheat"}} >tag</p>
             </td>
           </tr>
           ))
@@ -149,7 +146,7 @@ function OrderBook() {
             style={{ display: "block" }}
           >
             <div className="order-book-sec">
-              <h2 id="order-header">Order Book</h2>
+              <h2 id="order-header" style={{textAlign:"center", marginBottom:"25px", fontFamily:"arial", marginTop:"20px"}}>Order Book</h2>
               <div
                 className="tabs"
                 style={{ borderBottom: "1px solid #4a4a4d" }}
@@ -162,34 +159,7 @@ function OrderBook() {
               {
                 bodyDisplay()
               }
-              {/* {
-                display === "order-book" &&
-                <div className="dash-tab-sec" dash-tab-sec="order-book">
-                  <h1>Order Book</h1>
-                </div> 
-              }
-              {
-                display === "open_position" &&
-                 <div  className="dash-tab-sec"dash-tab-sec="opened-position">
-                  <h1>Opened Position</h1> 
-                </div>
-              }
-              { display === "autotrades" &&
-                <div className="dash-tab-sec" dash-tab-sec="opened-pos">
-                  <h1>Opened pos</h1>
               </div>
-              } */}
-
-            </div>
-              {/* <div className="dash-tab-sec" dash-tab-sec="order-book">
-                <h1>Order Book</h1>
-              </div>
-              <div  className="dash-tab-sec"dash-tab-sec="opened-position">
-                <h1>Opened Position</h1> 
-              </div>
-              <div className="dash-tab-sec" dash-tab-sec="opened-pos">
-                <h1>Opened pos</h1>
-              </div>  */}
             </div>
           </div>
         </div>

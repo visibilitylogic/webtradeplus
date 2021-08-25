@@ -56,14 +56,14 @@ function Payment() {
 
   const url = "https://trade-backend-daari.ondigitalocean.app/api/site/paymentsettings";
   const onSaved = ()=>{
-    if(window.confirm("Are you to update the data")){
+  
         change_admin_data(url, dataAll);
         if(success && success.length > 0){
           setSuc(success)
         }else if (error && error.length> 0){
           setE(error)
         }
-      }
+      
   }
     return (
         <div>        
