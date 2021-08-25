@@ -6,6 +6,7 @@ import { adminReducer, adminDataReducer, admin_live_trade,   } from "./adminRedu
 import stockReducer from "./stockReducer";
 import darkThemeReducer from "./themeReducer";
 import { marketReducer } from "./matketReducer";
+import { orderReducer } from "./OrderReducer";
 const reducers = combineReducers({
   web: webReducer,
   auth: authReducer,
@@ -15,7 +16,8 @@ const reducers = combineReducers({
   liveTrade : admin_live_trade,
   stock: stockReducer,
   theme: darkThemeReducer,
-  markets: marketReducer
+  markets: marketReducer,
+  orders:orderReducer,
 });
 
 export default reducers;

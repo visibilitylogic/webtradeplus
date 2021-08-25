@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
+import { Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
 
 function LeaderBoard() {
   const { get_all_auto_trades } = useActions();
-  const { trades } = useSelector((state) => state.adminData);
+  const { trades, loading } = useSelector((state) => state.adminData);
   const compare = (a, b) =>
     a.profitPercentage > b.profitPercentage
       ? -1
@@ -31,6 +32,7 @@ function LeaderBoard() {
       <h1> Leader Board </h1>
       <div className="wrapper">
         <div className="content ">
+          {loading && <Spinner animation="grow">loading...</Spinner>}
           {sortedTrades &&
             sortedTrades.map((sorted) => (
               <div key={sorted._id}>
