@@ -24,11 +24,21 @@ export const getmarket = ()=> async( dispatch ) => {
     }
 }
 
-export const getOrder = ()=> async(dispatch)=> {
+export const getOrder = (id)=> async(dispatch)=> {
+    dispatch({
+        type:actionTypes.ORDER_LOADING
+    })
     try {
-        const {data} = await axios.get("https://trade-backend-daari.ondigitalocean.app/api/trade/60c34abf230a4e0015f1d0b3", getToken());
+        const {data} = await axios.get(`https://trade-backend-daari.ondigitalocean.app/api/trade/${id}`, getToken());
         console.log(data);
+        dispatch({
+            type:actionTypes.GET_ORDERS,
+            payload:data
+        })
     } catch (error) {
-        
+        dispatch({
+            type:actionTypes.GET_ORDER_ERROR,
+            payload:error.message
+        })
     }
 }
