@@ -202,7 +202,7 @@ const Dashboard = () => {
   // A custom hook for rerendering the dashboard component after 10 secondays
   // To keep track of asset changes
 
-  // useInterval(setDefaultSelectedStock, 10000);
+  useInterval(setDefaultSelectedStock, 10000);
 
   useEffect(() => {
     setDefaultSelectedStock();
