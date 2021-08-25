@@ -12,11 +12,20 @@ import Admin from "./Admin";
 import useInterval from "../hooks/useInterval";
 import DashboardFooter from "../layouts/DashboardFooter";
 import { asideList } from "./../../helpers/dataset/asideNavList";
+import OrderBook from "./OrderBook";
+import Market from "./Market";
+import AutoTrade from "../pages/AutoTrade";
+import Finaces from "./Finaces";
+// import Calc from "./Calc";
+import Calculator from "../layouts/Calculator";
+import News from "../pages/News";
+import LeaderBoard from "./LeaderBoard";
 
 const Dashboard = () => {
   const token = "pk_135c1daf1b8d4130b9318fd5e8ab0e5e";
   const fetchOrder = () => JSON.parse(localStorage.getItem("orders")) || [];
-
+  const [calcDisplay, setCalcDisplay] = useState(false);
+  // const {open } = useSelector(state=> state.toggle)
   const [selectedTab, setSelectedTab] = useState(0);
   const [adminSelected, setAdminSelected] = useState(false);
   const [managerSelected, setManagerSelected] = useState(false);
@@ -34,6 +43,27 @@ const Dashboard = () => {
   const [support, setSupport] = useState(false);
 
   const myRef3 = useRef("");
+  // const token = 'pk_135c1daf1b8d4130b9318fd5e8ab0e5e'
+  // const fetchOrder = () => JSON.parse(localStorage.getItem('orders')) || []
+  // const [calcDisplay, setCalcDisplay] = useState(false)
+  // // const {open } = useSelector(state=> state.toggle)
+  // const [selectedTab, setSelectedTab] = useState(0)
+  // const [adminSelected, setAdminSelected] = useState(false)
+  // const [managerSelected, setManagerSelected] = useState(false)
+  // const [view, setView] = useState({})
+  // const [intervalId, setIntervalId] = useState(null)
+  // const [intervalId1, setIntervalId1] = useState(null)
+  // const [totalUp, setTotalUp] = useState(0)
+  // const [levIsh, setLevIsh] = useState(false)
+  // const [order, setOrder] = useState(fetchOrder)
+  // const [orders, setOrders] = useState([])
+  // const [history, setHistory] = useState([])
+  // const [buysell, setBuysell] = useState(false)
+  // const [data, setData] = useState({})
+  // const [orderIsh, setOrderIsh] = useState({})
+  // const [support, setSupport] = useState(false)
+
+  // const myRef3 = useRef('')
 
   // Action creators
   const {
@@ -258,7 +288,62 @@ const Dashboard = () => {
               className="order-book-section orderBookComponent"
               style={{ display: "block" }}
             >
-              Order Book
+              <OrderBook orders={orders} />
+            </div>
+          )}
+
+          {/* Renders the  order book page*/}
+          {selectedTab === 3 && (
+            <div
+              className="order-book-section orderBookComponent"
+              style={{ display: "block" }}
+            >
+              <Market />
+            </div>
+          )}
+
+          {selectedTab === 2 && (
+            <div
+              className="order-book-section orderBookComponent"
+              style={{ display: "block" }}
+            >
+              <Finaces />
+            </div>
+          )}
+
+          {selectedTab === 4 && (
+            <div
+              className="order-book-section orderBookComponent"
+              style={{ display: "block" }}
+            >
+              <AutoTrade />
+            </div>
+          )}
+
+          {selectedTab === 5 && (
+            <div
+              className="order-book-section orderBookComponent"
+              style={{ display: "block" }}
+            >
+              <Calculator />
+            </div>
+          )}
+
+          {selectedTab === 6 && (
+            <div
+              className="order-book-section orderBookComponent"
+              style={{ display: "block" }}
+            >
+              <News />
+            </div>
+          )}
+
+          {selectedTab === 7 && (
+            <div
+              className="order-book-section orderBookComponent"
+              style={{ display: "block" }}
+            >
+              <LeaderBoard />
             </div>
           )}
 
@@ -277,6 +362,7 @@ const Dashboard = () => {
           )}
         </div>
       </section>
+
       <DashboardFooter setSupport={setSupport} />
     </div>
   );

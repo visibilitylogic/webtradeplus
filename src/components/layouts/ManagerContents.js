@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Card, Form, Row, Col, Table } from "react-bootstrap";
 import { Button, Tag, DatePicker, message } from "antd";
@@ -7,12 +7,21 @@ import { useActions } from "../hooks/useActions";
 import PropTypes from "prop-types";
 import axios from "axios";
 import Moment from "react-moment";
+import Switch from "react-switch";
+import styled from "styled-components";
 import "moment-timezone";
 import PaymentDetailsPopOver from "../utils/modals/PaymentDetailsPopOver";
 import VerifyDetailsPopOver from "../utils/modals/VerifyDetailsPopOver";
 import VerifyDocModal from "../utils/modals/VerifyDocModal";
 import EditAutoCopyTrade from "../utils/EditAutoCopyTrade";
 import WithdrawDetailsModal from "../utils/modals/WithdrawalDetailsPopOver";
+import BasicTable from "./BasicTable";
+import { Columns } from "./TableHeader";
+import { depositHeader } from "./depositHeader";
+import { withdrawalHeader } from "./withdrawalHeader";
+import { allTradesHeader } from "./allTradesHeader";
+import { allVerifiedUsersHeader } from "./allVerifiedUsersHeader";
+import { bankTransferHeader } from "./bankTransferHeader";
 
 const ManagerContents = (props) => {
   const history = useHistory();
@@ -34,6 +43,8 @@ const ManagerContents = (props) => {
   const {
     updateWalletBalance,
     setLiveTrade,
+    setIsTrading,
+    setNotificationEnabled, // expecting end point
     approveDeposit,
     declineVerify,
     approveVerify,
@@ -72,6 +83,58 @@ const ManagerContents = (props) => {
   const [declinedMessage, setDeclinedMessage] = useState("");
   const [userLevel, setUserLevel] = useState("");
   const [currentDeposit, setCurrentDeposit] = useState([]);
+
+  const [toggle, setToggle] = useState({
+    id: user._id,
+    liveTrade: user.liveTrade,
+  });
+  const [notification, setNotification] = useState({
+    id: user._id,
+    notificationEnabled: user.notificationsEnabled,
+  });
+  const [auth, setAuth] = useState({
+    id: user._id,
+    authEnabled: false,
+    // user.notificationsEnabled,
+  });
+
+  // auth
+  console.log(bankTransfers);
+  const setAuth0 = useCallback(() => {
+    setAuth(!auth);
+    // setAuthEnabled({
+    //   id: user._id,
+    //   notificationEnabled: !user.notificationsEnabled,
+    // })
+  }, [auth]);
+
+  // istrading
+  const [trading, setTrading] = useState({
+    id: user._id,
+    notificationEnabled: user.isTrading,
+  });
+
+  //  const paginate = (num) => setCurrentPage(num)
+  const setToggles = useCallback(() => {
+    setToggle(!toggle.liveTrade);
+    setLiveTrade({
+      id: user._id,
+      liveTrade: !user.liveTrade,
+    });
+  }, [toggle]);
+
+  // notification
+  const setNotifications = useCallback(() => {
+    setNotification(!notification);
+    setNotificationEnabled({
+      id: user._id,
+      notificationEnabled: !user.notificationsEnabled,
+    });
+  }, [notification]);
+
+  // isTrading
+
+  // const setTrading = useCallback(() => {}, [])
 
   const deleteAutoCopyTrade = async () => {
     setLoading(true);
@@ -129,7 +192,6 @@ const ManagerContents = (props) => {
     setPayments(false);
     setSecu(false);
     setOrderT(false);
-
     (async () => {
       const { data } = await axios(
         `https://trade-backend-daari.ondigitalocean.app/api/trade/deposit/${user._id}`
@@ -428,75 +490,29 @@ const ManagerContents = (props) => {
         </table>
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="bank-transfers">
-        <table>
-          <tbody>
-            <tr>
-              <th>User</th>
-              <th>Ref.</th>
-              <th>Created date</th>
-              <th>Status</th>
-              <th>Processed</th>
-              <th>Amount</th>
-              <th>Bank Ref.</th>
-              <th>Proof recieved</th>
-              <th />
-            </tr>
-            {bankTransfers.length > 0 &&
-              bankTransfers.map((transfer, index) => (
-                <tr key={index}>
-                  <td>
-                    #{index + 1}- {transfer.name}
-                  </td>
-                  <td className="font-weight-bold">{transfer.Ref}</td>
-                  <td> {transfer.time}</td>
-                  <td>
-                    {transfer.status === "Pending" ? (
-                      <span className="pending">Pending</span>
-                    ) : transfer.status === "Approved" ? (
-                      <span className="validate">Approved</span>
-                    ) : transfer.status === "Declined" ? (
-                      <span className="btn-danger">Declined</span>
-                    ) : null}
-                  </td>
-                  <td>
-                    {transfer.status === "Pending" ? (
-                      <span className="not-processed">Not Processed</span>
-                    ) : (
-                      <span className="processed">Processed</span>
-                    )}
-                  </td>
-                  <td>
-                    {transfer.currency} {transfer.amount}
-                  </td>
-                  <td>-</td>
-                  <td>No proof received</td>
-                  <td>
-                    <div
-                      className="validate"
-                      onClick={() => handleApproveWithdrawal(transfer._id)}
-                      style={{
-                        display: transfer.status !== "Pending" && "none",
-                      }}
-                    >
-                      Validate
-                    </div>
-                    <div
-                      style={{
-                        display: transfer.status !== "Pending" && "none",
-                      }}
-                      className="cancel"
-                      onClick={() => handleDeclineWithdrawal(transfer._id)}
-                    >
-                      Cancel
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        {console.log()}
+
+        {bankTransfers && bankTransfers.length > 0 && (
+          <BasicTable
+            allUsers={bankTransfers}
+            user={user}
+            column={bankTransferHeader}
+            type="deposit"
+          />
+        )}
       </div>
+
       <div className="manager-tab-dtls" manager-tab-dtls="payments">
-        <table>
+        {allDeposits && allDeposits.length > 0 && (
+          <BasicTable
+            allUsers={allDeposits}
+            user={user}
+            column={depositHeader}
+            type="deposit"
+          />
+        )}
+
+        {/* <table>
           <tbody>
             <tr>
               <th>User</th>
@@ -510,8 +526,8 @@ const ManagerContents = (props) => {
               <th>Payment gateway</th>
               <th>Payment Details</th>
               <th />
-            </tr>
-            {allDeposits.length > 0 &&
+            </tr> */}
+        {/* { &&
               allDeposits.map((deposit, index) => (
                 <tr key={index}>
                   <td>
@@ -520,21 +536,21 @@ const ManagerContents = (props) => {
                   <td className="font-weight-bold">{deposit.Ref}</td>
                   <td>{deposit.time}</td>
                   <td>
-                    {deposit.status === "Pending" ? (
+                    {deposit.status === 'Pending' ? (
                       <span className="pending">Not Proccesed</span>
-                    ) : deposit.status === "Approved" ? (
+                    ) : deposit.status === 'Approved' ? (
                       <span className="validate">Paid</span>
-                    ) : deposit.status === "Declined" ? (
+                    ) : deposit.status === 'Declined' ? (
                       <span className="cancel">Declined</span>
                     ) : null}
                   </td>
                   <td>
                     {deposit.amount
-                      ? new Intl.NumberFormat("en-US").format(deposit.amount)
-                      : ""}
+                      ? new Intl.NumberFormat('en-US').format(deposit.amount)
+                      : ''}
                     USD
                   </td>
-                  <td>{deposit.fee}USD</td>
+                  "<td>{deposit.fee}USD</td>
                   <td>USD</td>
                   <td className="font-weight-bold">{deposit.amount} USD</td>
                   <td>{deposit.method}</td>
@@ -546,7 +562,7 @@ const ManagerContents = (props) => {
                       className="validate"
                       onClick={() => handleApproveDeposit(deposit._id)}
                       style={{
-                        display: deposit.status !== "Pending" && "none",
+                        display: deposit.status !== 'Pending' && 'none',
                       }}
                     >
                       Validate
@@ -554,10 +570,10 @@ const ManagerContents = (props) => {
                     <div
                       className="cancel"
                       onClick={() => {
-                        handleDeclineDeposit(deposit._id);
+                        handleDeclineDeposit(deposit._id)
                       }}
                       style={{
-                        display: deposit.status !== "Pending" && "none",
+                        display: deposit.status !== 'Pending' && 'none',
                       }}
                     >
                       Cancel
@@ -566,8 +582,9 @@ const ManagerContents = (props) => {
                 </tr>
               ))}
           </tbody>
-        </table>
+        </table>*/}
       </div>
+
       <div className="manager-tab-dtls" manager-tab-dtls="subscriptions">
         <table>
           <tbody>
@@ -593,7 +610,7 @@ const ManagerContents = (props) => {
         </table>
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="identity">
-        <table>
+        {/* <table>
           <tbody>
             <tr>
               <th>User</th>
@@ -602,18 +619,29 @@ const ManagerContents = (props) => {
               <th>Identity Info</th>
               <th>Documents</th>
               <th />
-            </tr>
-            {allVerifiedUsers.length > 0 &&
-              allVerifiedUsers.map((verify, index) => (
-                <tr key={index}>
-                  {decline && (
-                    <section
+            </tr> */}
+
+        {console.log(allVerifiedUsers)}
+
+        {allVerifiedUsers && allVerifiedUsers.length > 0 && (
+          <BasicTable
+            allUsers={allVerifiedUsers}
+            user={user}
+            column={allVerifiedUsersHeader}
+            type="verifiedUsers"
+          />
+        )}
+
+        {/* {allVerifiedUsers.map((verify, index) => (
+                 <tr key={index}>
+                  {decline && 
+                    <section 
                       className="withdraw-modal-box"
-                      style={{ display: "block" }}
+                      style={{ display: 'block' }}
                     >
                       <div
                         className="withdraw-modal support-modal pb-5"
-                        style={{ maxWidth: "500px" }}
+                        style={{ maxWidth: '500px' }}
                       >
                         <div className="header">Decline Identity</div>
                         <span
@@ -627,13 +655,13 @@ const ManagerContents = (props) => {
                               d="M548.203 537.6l289.099-289.098c9.998-9.998 9.998-26.206 0-36.205-9.997-9.997-26.206-9.997-36.203 0l-289.099 289.099-289.098-289.099c-9.998-9.997-26.206-9.997-36.205 0-9.997 9.998-9.997 26.206 0 36.205l289.099 289.098-289.099 289.099c-9.997 9.997-9.997 26.206 0 36.203 5 4.998 11.55 7.498 18.102 7.498s13.102-2.499 18.102-7.499l289.098-289.098 289.099 289.099c4.998 4.998 11.549 7.498 18.101 7.498s13.102-2.499 18.101-7.499c9.998-9.997 9.998-26.206 0-36.203l-289.098-289.098z"
                             />
                           </svg>
-                        </span>{" "}
+                        </span>{' '}
                         <Container fluid>
                           <Form className="text-left">
                             <Form.Group controlId="exampleForm.ControlTextarea1">
                               <Form.Label
                                 className="py-4"
-                                style={{ color: "#fff" }}
+                                style={{ color: '#fff' }}
                               >
                                 Write below the reason for rejection
                               </Form.Label>
@@ -660,26 +688,27 @@ const ManagerContents = (props) => {
                         </Container>
                       </div>
                     </section>
-                  )}
-                  <td>
+                  )} */}
+
+        {/* <td>
                     #{index + 1}- {verify.name}
                   </td>
                   <td>
                     <Moment format="DD/MM/YYYY">{verify.time}</Moment>
                   </td>
                   <td>
-                    {verify.status === "Pending" ? (
+                    {verify.status === 'Pending' ? (
                       <span className="pending">Not Proccesed</span>
-                    ) : verify.status === "Approved" ? (
+                    ) : verify.status === 'Approved' ? (
                       <span className="validate">Approved</span>
-                    ) : verify.status === "Declined" ? (
+                    ) : verify.status === 'Declined' ? (
                       <span className="pending">Declined</span>
                     ) : null}
                   </td>
                   <td>{<VerifyDetailsPopOver details={verify} />}</td>
                   <td>
                     <a href="#!" className="sec-bt">
-                      {/* Step 1: Identity */}
+                      { Step 1: Identity  
                       <VerifyDocModal
                         text={verify.documentName}
                         title={verify.documentName}
@@ -692,7 +721,7 @@ const ManagerContents = (props) => {
                   <td>
                     <div
                       style={{
-                        display: verify.status === "Approved" && "none",
+                        display: verify.status === 'Approved' && 'none',
                       }}
                       className="validate "
                       onClick={() => handleApproveVerify(verify.userId)}
@@ -702,7 +731,7 @@ const ManagerContents = (props) => {
                     <div
                       className="cancel"
                       style={{
-                        display: verify.status === "Declined" && "none",
+                        display: verify.status === 'Declined' && 'none',
                       }}
                       onClick={() => setDecline(true)}
                     >
@@ -710,90 +739,33 @@ const ManagerContents = (props) => {
                     </div>
                   </td>
                 </tr>
-              ))}
+              )
           </tbody>
-        </table>
+        </table> */}
       </div>
-      <div className="manager-tab-dtls" manager-tab-dtls="users">
-        {!displayC && (
-          <div className="first-sec">
-            <table>
-              <tbody>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Signin method</th>
-                  <th>Last login</th>
-                  <th>Notifications enabled</th>
-                  <th>Currency</th>
-                  <th>Auto Trade</th>
-                </tr>
-                {allUsers.length > 0 &&
-                  allUsers.map((user, index) => (
-                    <tr
-                      key={index}
-                      onClick={() => {
-                        setDisplayC(true);
-                        // getUserAutoCopyTrade(user._id);
-                        setUserLevel(
-                          user.isAdmin
-                            ? "isAdmin"
-                            : user.isManager
-                            ? "isManager"
-                            : "none"
-                        );
-                      }}
-                    >
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          <div className="dash-row dash-row-centralized">
-                            <div className="profile" />
-                            <div className="name">
-                              <span>{user.name}</span>
-                            </div>
-                            <div className="active" />
-                          </div>
-                        </a>
-                      </td>
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          {user.email}
-                        </a>
-                      </td>
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          Standard
-                        </a>
-                      </td>
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          <Moment fromNow ago>
-                            {user.time}
-                          </Moment>
-                        </a>
-                      </td>
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          {user.notificationsEnabled ? "Yes" : "No"}
-                        </a>
-                      </td>
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          {user.currency}
-                        </a>
-                      </td>
-                      <td>
-                        <a dash-action="show-users-details" href="#!">
-                          {user.isTrading ? "ON" : "Off"}
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        )}
 
+      {/* Table */}
+
+      <TableContainer
+        style={{
+          background: "white",
+          margin: "  1.2rem auto 0 auto",
+          width: "96%",
+        }}
+      >
+        {!displayC && allUsers.length > 0 && (
+          <BasicTable
+            allUsers={allUsers}
+            setDisplayC={setDisplayC}
+            setUserLevel={setUserLevel}
+            user={user}
+            column={Columns}
+            type="EveryUser"
+          />
+        )}
+      </TableContainer>
+
+      <div className="manager-tab-dtls" manager-tab-dtls="users">
         {displayC && (
           <div className="second-sec" style={{ display: "block" }}>
             <div className="user-dtls-tab" style={{ display: "block" }}>
@@ -802,7 +774,7 @@ const ManagerContents = (props) => {
                 onClick={handleSetCard}
                 dash-user-dtls-tab="card"
               >
-                Card
+                Profile
               </div>
               <div
                 dash-user-dtls-tab="balances"
@@ -900,37 +872,36 @@ const ManagerContents = (props) => {
                             width: "30%",
                           }}
                         >
-                          {user.liveTrade ? (
-                            <button
-                              className="autotrader"
-                              style={{
-                                backgroundColor: "green",
-                              }}
-                              onClick={handleLiveTrade}
-                            >
-                              Turn off Live Trade
-                            </button>
-                          ) : (
-                            <button
-                              className="autotrader"
-                              style={{
-                                backgroundColor: "red",
-                              }}
-                              onClick={handleLiveTrade}
-                            >
-                              Turn on Live Trade
-                            </button>
-                          )}
+                          <div className="d-flex justify-content-center align-items-center">
+                            <label>
+                              <h4>Live Trade</h4>
+                              <Switch
+                                onChange={setToggles}
+                                checked={toggle.liveTrade}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#000000"
+                              />
+                            </label>
+                          </div>
 
                           <button
                             className="edit-profile"
-                            style={{ backgroundColor: "#363c4f" }}
+                            style={{
+                              backgroundColor: "#363c4f",
+                              borderRadius: "4px",
+                            }}
                             onClick={() => setEditProfile(true)}
                           >
                             Edit profile
                           </button>
                           <button
-                            style={{ backgroundColor: "#e30f0f" }}
+                            style={{
+                              backgroundColor: "#e30f0f",
+                              borderRadius: "4px",
+                            }}
                             className="delete-profile"
                             onClick={() => handleDeleteUser(user._id)}
                           >
@@ -994,31 +965,31 @@ const ManagerContents = (props) => {
                         <div className="dash-row dash-row-centralized">
                           <div className="th">Notification</div>
                           <div className="td">
-                            <span
-                              style={{
-                                backgroundColor: "#ef3131",
-                                color: "#fff",
-                                display: "block",
-                                padding: "2px 5px",
-                              }}
-                            >
-                              DISABLED
-                            </span>
+                            <label>
+                              <Switch
+                                onChange={setNotifications}
+                                checked={notification.notificationsEnabled}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#F14700"
+                              />
+                            </label>
                           </div>
                         </div>
                         <div className="dash-row dash-row-centralized">
                           <div className="th">2 Step Authentification</div>
                           <div className="td">
-                            <span
-                              style={{
-                                backgroundColor: "#ef3131",
-                                color: "#fff",
-                                display: "block",
-                                padding: "2px 5px",
-                              }}
-                            >
-                              DISABLED
-                            </span>
+                            <Switch
+                              onChange={setAuth0}
+                              checked={auth.authEnabled}
+                              className="react-switch"
+                              onColor="#54AC40"
+                              uncheckedIcon={false}
+                              checkedIcon={false}
+                              offColor="#F14700"
+                            />
                           </div>
                         </div>
                         <div className="dash-row dash-row-centralized">
@@ -1080,6 +1051,16 @@ const ManagerContents = (props) => {
                           Deposit History
                         </span>
                       </div>
+
+                      {/* 
+                      {currentDeposit && currentDeposit.length > 0 && (
+                              <BasicTable
+                                allUsers={currentDeposit}
+                                user={user}
+                                column={currentDeposit}
+                                type="currentDeposit"
+                              />
+                            )} */}
                       <table>
                         <tbody>
                           {currentDeposit.length > 0 &&
@@ -1152,40 +1133,44 @@ const ManagerContents = (props) => {
                             paddingLeft: "20px",
                             width: "30%",
                           }}
+                          className="d-flex justify-content-center  flex-column align-items-center"
                         >
-                          {user.liveTrade ? (
+                          <div className="d-flex justify-content-center align-items-center">
+                            <div>
+                              <h5>Live Trade</h5>
+                            </div>
+                            <div>
+                              <Switch
+                                onChange={setToggles}
+                                checked={toggle.liveTrade}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#000000"
+                              />
+                            </div>
+                          </div>
+                          <div className="d-flex  align-items-center justify-content-space-between">
                             <button
-                              className="autotrader"
+                              className="edit-profile"
                               style={{
-                                backgroundColor: "green",
+                                backgroundColor: "#363c4f",
+                                borderRadius: "4px",
                               }}
-                              onClick={handleLiveTrade}
                             >
-                              Turn off Live Trade
+                              Edit profile
                             </button>
-                          ) : (
                             <button
-                              className="autotrader"
                               style={{
-                                backgroundColor: "red",
+                                backgroundColor: "#e30f0f",
+                                borderRadius: "4px",
                               }}
-                              onClick={handleLiveTrade}
+                              className="delete-profile"
                             >
-                              Turn on Live Trade
+                              Delete profile
                             </button>
-                          )}
-                          <button
-                            className="edit-profile"
-                            style={{ backgroundColor: "#363c4f" }}
-                          >
-                            Edit profile
-                          </button>
-                          <button
-                            style={{ backgroundColor: "#e30f0f" }}
-                            className="delete-profile"
-                          >
-                            Delete profile
-                          </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1360,9 +1345,6 @@ const ManagerContents = (props) => {
                                 label="Profit"
                                 id="default-radio"
                                 name="profitloss"
-
-                                //   onChange={e=>this.setState({ profit:e.target.checked})}
-                                //  checked={this.state.profit}
                               />
                             </Col>
                             <Col md={6}>
@@ -1410,13 +1392,6 @@ const ManagerContents = (props) => {
                             <Form.Label className="mr-3 mb-0">Time</Form.Label>
                             <Row>
                               <Col md={6}>
-                                {/* <Form.Check
-                                                type="radio"
-                                                label="Schedule"
-                                                id="default-radio"
-                                                name="time"
-                                              /> */}
-
                                 <Form.Check
                                   type="radio"
                                   label="Schedule"
@@ -1635,11 +1610,11 @@ const ManagerContents = (props) => {
                             width: "30%",
                           }}
                         >
-                          {user.liveTrade ? (
+                          {/* {user.liveTrade ? (
                             <button
                               className="autotrader"
                               style={{
-                                backgroundColor: "green",
+                                backgroundColor: 'green',
                               }}
                               onClick={handleLiveTrade}
                             >
@@ -1649,21 +1624,44 @@ const ManagerContents = (props) => {
                             <button
                               className="autotrader"
                               style={{
-                                backgroundColor: "red",
+                                backgroundColor: 'red',
                               }}
                               onClick={handleLiveTrade}
                             >
                               Turn on Live Trade
                             </button>
-                          )}
+                          )} */}
+
+                          <div className="d-flex justify-content-center align-items-center">
+                            <div>
+                              <h5>Live Trade</h5>
+                            </div>
+                            <div>
+                              <Switch
+                                onChange={setToggles}
+                                checked={toggle.liveTrade}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#000000"
+                              />
+                            </div>
+                          </div>
                           <button
                             className="edit-profile"
-                            style={{ backgroundColor: "#363c4f" }}
+                            style={{
+                              backgroundColor: "#363c4f",
+                              borderRadius: "4px",
+                            }}
                           >
                             Edit profile
                           </button>
                           <button
-                            style={{ backgroundColor: "#e30f0f" }}
+                            style={{
+                              backgroundColor: "#e30f0f",
+                              borderRadius: "4px",
+                            }}
                             className="delete-profile"
                           >
                             Delete profile
@@ -1755,6 +1753,15 @@ const ManagerContents = (props) => {
                 </div>
               )}
 
+              {/* {withd && (
+          <BasicTable
+            allUsers={withd}
+          user={user}
+            column={withdrawalHeader}
+            type="withdrawal"
+          />
+        )} */}
+
               {withd && (
                 <div
                   dash-user-dtls-tab-dtls="withdraw"
@@ -1810,27 +1817,22 @@ const ManagerContents = (props) => {
                             width: "30%",
                           }}
                         >
-                          {user.liveTrade ? (
-                            <button
-                              className="autotrader"
-                              style={{
-                                backgroundColor: "green",
-                              }}
-                              onClick={handleLiveTrade}
-                            >
-                              Turn off Live Trade
-                            </button>
-                          ) : (
-                            <button
-                              className="autotrader"
-                              style={{
-                                backgroundColor: "red",
-                              }}
-                              onClick={handleLiveTrade}
-                            >
-                              Turn on Live Trade
-                            </button>
-                          )}
+                          <div className="d-flex justify-content-center align-items-center">
+                            <div>
+                              <h5>Live Trade</h5>
+                            </div>
+                            <div>
+                              <Switch
+                                onChange={setToggles}
+                                checked={toggle.liveTrade}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#000000"
+                              />
+                            </div>
+                          </div>
                           <button
                             className="edit-profile"
                             style={{ backgroundColor: "#363c4f" }}
@@ -1849,6 +1851,7 @@ const ManagerContents = (props) => {
                   </div>
                 </div>
               )}
+
               {orderT && (
                 <div
                   dash-user-dtls-tab-dtls="orders"
@@ -1904,11 +1907,11 @@ const ManagerContents = (props) => {
                             width: "30%",
                           }}
                         >
-                          {user.liveTrade ? (
+                          {/* {user.liveTrade ? (
                             <button
                               className="autotrader"
                               style={{
-                                backgroundColor: "green",
+                                backgroundColor: 'green',
                               }}
                               onClick={handleLiveTrade}
                             >
@@ -1918,21 +1921,44 @@ const ManagerContents = (props) => {
                             <button
                               className="autotrader"
                               style={{
-                                backgroundColor: "red",
+                                backgroundColor: 'red',
                               }}
                               onClick={handleLiveTrade}
                             >
                               Turn on Live Trade
                             </button>
-                          )}
+                          )} */}
+
+                          <div className="d-flex justify-content-center align-items-center">
+                            <div>
+                              <h5>Live Trade</h5>
+                            </div>
+                            <div>
+                              <Switch
+                                onChange={setToggles}
+                                checked={toggle.liveTrade}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#000000"
+                              />
+                            </div>
+                          </div>
                           <button
                             className="edit-profile"
-                            style={{ backgroundColor: "#363c4f" }}
+                            style={{
+                              backgroundColor: "#363c4f",
+                              borderRadius: "4px",
+                            }}
                           >
                             Edit profile
                           </button>
                           <button
-                            style={{ backgroundColor: "#e30f0f" }}
+                            style={{
+                              backgroundColor: "#e30f0f",
+                              borderRadius: "4px",
+                            }}
                             className="delete-profile"
                           >
                             Delete profile
@@ -1999,11 +2025,11 @@ const ManagerContents = (props) => {
                             width: "30%",
                           }}
                         >
-                          {user.liveTrade ? (
+                          {/* {user.liveTrade ? (
                             <button
                               className="autotrader"
                               style={{
-                                backgroundColor: "green",
+                                backgroundColor: 'green',
                               }}
                               onClick={handleLiveTrade}
                             >
@@ -2013,21 +2039,44 @@ const ManagerContents = (props) => {
                             <button
                               className="autotrader"
                               style={{
-                                backgroundColor: "red",
+                                backgroundColor: 'red',
                               }}
                               onClick={handleLiveTrade}
                             >
                               Turn on Live Trade
                             </button>
-                          )}
+                          )} */}
+
+                          <div className="d-flex justify-content-center align-items-center">
+                            <div>
+                              <h5>Live Trade</h5>
+                            </div>
+                            <div>
+                              <Switch
+                                onChange={setToggles}
+                                checked={toggle.liveTrade}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#000000"
+                              />
+                            </div>
+                          </div>
                           <button
                             className="edit-profile"
-                            style={{ backgroundColor: "#363c4f" }}
+                            style={{
+                              backgroundColor: "#363c4f",
+                              borderRadius: "4px",
+                            }}
                           >
                             Edit profile
                           </button>
                           <button
-                            style={{ backgroundColor: "#e30f0f" }}
+                            style={{
+                              backgroundColor: "#e30f0f",
+                              borderRadius: "4px",
+                            }}
                             className="delete-profile"
                           >
                             Delete profile
@@ -2081,9 +2130,17 @@ const ManagerContents = (props) => {
               ))}
           </tbody>
         </table>
+        {allTrades && allTrades.length > 0 && (
+          <BasicTable
+            allUsers={allTrades}
+            user={user}
+            column={allTradesHeader}
+            type="trades"
+          />
+        )}
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="withdraw">
-        <table>
+        {/* <table>
           <tbody>
             <tr>
               <th>Ref.</th>
@@ -2097,55 +2154,16 @@ const ManagerContents = (props) => {
               <th>Total</th>
               <th>Status</th>
               <th>Actions</th>
-            </tr>
+            </tr> */}
 
-            {allWithdrawals.length > 0 &&
-              allWithdrawals.map((withdrawal) => (
-                <tr key={withdrawal.Ref}>
-                  <td>{withdrawal.Ref}</td>
-                  <td>{withdrawal.name}</td>
-                  <td>{withdrawal.email}</td>
-                  <td>{withdrawal.tag}</td>
-                  <td>
-                    <WithdrawDetailsModal details={withdrawal.methodDetails} />
-                  </td>
-                  <td>{withdrawal.time}</td>
-                  <td>{withdrawal.amount}</td>
-                  <td>{withdrawal.fees}</td>
-                  <td>{withdrawal.total}</td>
-                  <td>
-                    {withdrawal.status === "Pending" ? (
-                      <div className="btn-warning">{withdrawal.status}</div>
-                    ) : withdrawal.status === "Approved" ? (
-                      <div className="btn-success">{withdrawal.status}</div>
-                    ) : withdrawal.status === "Declined" ? (
-                      <div className="btn-danger">{withdrawal.status}</div>
-                    ) : null}
-                  </td>
-                  <td>
-                    <div
-                      className="validate"
-                      onClick={(a) => handleApproveWithdrawal(withdrawal._id)}
-                      style={{
-                        display: withdrawal.status !== "Pending" && "none",
-                      }}
-                    >
-                      Validate
-                    </div>
-                    <div
-                      style={{
-                        display: withdrawal.status !== "Pending" && "none",
-                      }}
-                      className="cancel"
-                      onClick={(a) => handleDeclineWithdrawal(withdrawal._id)}
-                    >
-                      Cancel
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        {allWithdrawals && allWithdrawals.length > 0 && (
+          <BasicTable
+            allUsers={allWithdrawals}
+            user={user}
+            column={withdrawalHeader}
+            type="withdrawal"
+          />
+        )}
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="traders-approval">
         <table>
@@ -2181,4 +2199,47 @@ ManagerContents.propTypes = {
   setEditProfile: PropTypes.func.isRequired,
 };
 
-export default ManagerContents;
+export default React.memo(ManagerContents);
+
+const TableContainer = styled.div`
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    color: black;
+    padding: 0 10px;
+  }
+
+  table td,
+  table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  table tr,
+  table td,
+  table th {
+    border: 0;
+  }
+  table tr {
+    padding-left: 20px;
+  }
+
+  table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background: #e9ecf2;
+    color: black;
+  }
+
+  // table tr:nth-child(even) {
+  //   background-color: #f2f2f2;
+  // }
+
+  table tr:hover {
+    background-color: #ddd;
+  }
+`;

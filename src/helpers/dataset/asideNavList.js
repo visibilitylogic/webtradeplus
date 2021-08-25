@@ -5,7 +5,7 @@ import {
   IoPlanetOutline,
 } from "react-icons/io5";
 import { AiOutlineCalculator } from "react-icons/ai";
-
+ import { FaMoneyCheckAlt  } from "react-icons/fa"
 export const asideList = [
   { id: 0, title: "board", path: "/dashboard/board", icon: RiBarChartBoxLine },
   {
@@ -14,13 +14,20 @@ export const asideList = [
     path: "/dashboard/order-book",
     icon: IoHammerOutline,
   },
-  { id: 2, title: "market", path: "/dashboard/market", icon: RiHeartPulseLine },
   {
-    id: 3,
+    id: 2,
+    title: "Finances",
+    path: "/dashboard/finances",
+    icon: FaMoneyCheckAlt,
+  },
+  { id: 3, title: "market", path: "/dashboard/market", icon: RiHeartPulseLine },
+  {
+    id: 4,
     title: "auto copy trader",
     path: "/dashboard/auto_copy_trader",
     icon: IoPeopleOutline,
   },
-  { id: 4, title: "calc", path: "/dashboard/calc", icon: AiOutlineCalculator },
-  { id: 5, title: "news", path: "/dashboard/news", icon: IoPlanetOutline },
+  { id: 5, title: "calc", path:"/dashboard/calc", icon: AiOutlineCalculator },
+  // { id: 6, title: "news", path: "/dashboard/news", icon: IoPlanetOutline },
+  { id: 7, title: "Leader Board", path: "/dashboard/leaderboard", icon: IoPlanetOutline },
 ];

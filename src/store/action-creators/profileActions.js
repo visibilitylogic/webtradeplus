@@ -192,6 +192,27 @@ export const setLiveTrade = (details) => async (dispatch) => {
     });
   }
 };
+export const setNotificationEnabled = (details) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify(details);
+  try {
+    await axios.put(`/api/profile/notificationsEnabled`, body, config);
+
+    dispatch({
+      type: actionTypes.SET_IS_NOTIFICATION,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
 
 export const addBankPaymentMethod = (bankDetails) => async (dispatch) => {
   const config = {

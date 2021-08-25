@@ -3,42 +3,55 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import "./AutoTrading.css"
 import { useActions } from '../hooks/useActions';
-function EditTrade({isOpen, id,  toggle, trade}) {
-    const [userName, setUserName] = useState(trade.userName);
-    const [profitPercentage, setProfitPercentage] = useState(trade.profitPercentage);
-    const [subscriptionFee, setSubscriptionFee] = useState(trade.subscriptionFee);
-    const {update_auto_trade} = useActions();
+import axios from 'axios';
+function EditTrade({isOpen, id,  toggle, trade, setisOpen}) {
+  const [userName, setuserName] = useState("");
+  const [profitPercentage, setprofitPercentage] = useState("");
+  const [subscriptionFee, setsubscriptionFee] = useState("");
+    const {update_auto_trade, get_all_auto_trades} = useActions();
     const [open, setOpen] = useState(false)
     const {specificTrade} = useSelector(state=> state.adminData)
     // useEffect(() => { 
          
     // }, []);
+    const getsingleTrade = (_id) => {
+      axios
+        .get(`https://trade-backend-daari.ondigitalocean.app/api/copytrade/${_id}`)
+        .then(
+          (response) => {
+            console.log(response.data);
+            setuserName(response.data.userName);
+            setprofitPercentage(response.data.profitPercentage);
+            setsubscriptionFee(response.data.subscriptionFee);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    };
+   useEffect(()=>{
+      getsingleTrade(id)
+   }, [])
     
     const handleUpdate = (e)=>{
       e.preventDefault();
       const data = { userName, subscriptionFee, profitPercentage };
       console.log("update", data);
-      update_auto_trade(id, data)
+      update_auto_trade(id, data);
+      setisOpen(false)
+      get_all_auto_trades()
     }
-    const handleClose = ()=>{
-      toggle()
-      setSubscriptionFee(null)
-      setProfitPercentage(null)
-      setUserName("")
-    }
-
-    
-      // if(isOpen){
-      // setSubscriptionFee(trade.subscriptionFee)
-      // setUserName(trade.userName)
-      // setProfitPercentage(trade.profitPercentage)
-      // }
-    
+    // const handleClose = ()=>{
+    //   setisOpen(false)
+    //   setSubscriptionFee(null)
+    //   setProfitPercentage(null)
+    //   setUserName("")
+    // }  
     return (
         <div>
         <Modal
         show={isOpen}
-        onHide={handleClose}
+        onHide={()=> setisOpen(false)}
         backdrop="static"
         keyboard={false}
       >
@@ -51,19 +64,19 @@ function EditTrade({isOpen, id,  toggle, trade}) {
                 <Form onSubmit={handleUpdate}>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Username</Form.Label>
-                  <Form.Control type="text" name="userName" value={userName} onChange = {(e)=> setUserName(e.target.value)}/>
+                  <Form.Control type="text" name="userName" value={userName} onChange = {(e)=> setuserName(e.target.value)}/>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Profit</Form.Label>
-                  <Form.Control type="number" name="profitPercentage" value={profitPercentage} onChange = {(e)=> setProfitPercentage(e.target.value)}/>
+                  <Form.Control type="number" name="profitPercentage" value={profitPercentage} onChange = {(e)=> setprofitPercentage(e.target.value)}/>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Subscription</Form.Label>
-                  <Form.Control type="number" name="subscriptionFee" value={subscriptionFee} onChange = {(e)=> setSubscriptionFee(e.target.value)}/>
+                  <Form.Control type="number" name="subscriptionFee" value={subscriptionFee} onChange = {(e)=> setsubscriptionFee(e.target.value)}/>
                 </Form.Group>
                 <Modal.Footer>
                        
-                       <Button type="submit" variant="primary" disabled>Update</Button>
+                       <Button type="submit" variant="primary">Update</Button>
                      </Modal.Footer>
               </Form>
             }

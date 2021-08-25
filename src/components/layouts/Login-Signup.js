@@ -1,7 +1,13 @@
+import { message } from 'antd';
 import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
+import { useActions } from '../hooks/useActions';
 function LoginSignup() {
     const {adminData} = useSelector(state=> state.adminInfo)
+    const {change_admin_data} = useActions();
+    const {success, error} = useSelector(state=> state.adminInfo)
+    const [suc, setSuc] = useState("")
+    const [e, setE] = useState("")
     const[allowsignup,setAlowSignup] = useState()
     const[phoneNumberRequired, setPhoneNumberRequired]= useState() 
     const[userNeedVerifyAccount, setUserVerifiedAccount] = useState()
@@ -37,7 +43,7 @@ function LoginSignup() {
     setURIOauthValid(adminData.URIOauthValid)
     }
     }, [])
-    const data =  {
+    const dataAll =  {
         allowsignup :allowsignup,
         phoneNumberRequired :phoneNumberRequired,
         userNeedVerifyAccount :userNeedVerifyAccount,
@@ -53,12 +59,24 @@ function LoginSignup() {
         facebookAppSecret :facebookAppSecret,
         URIOauthValid :URIOauthValid
        }
-       const saveData = {
-
+       const url = "https://trade-backend-daari.ondigitalocean.app/api/site/loginAppearance"
+       const onSaved = ()=>{
+         if(window.confirm("Are you to update the data")){
+             change_admin_data(url, dataAll);
+             if(success && success.length > 0){
+               setSuc(success)
+             }else if (error && error.length> 0){
+               setE(error)
+             }
+           }
        }
     return (
         <div>
            <div>
+           {
+                  suc && message.success(suc, ()=> setSuc("")),
+                  e && message.error(e, ()=> setE(""))
+              }
                     <div className="public-card">
                       <div className="each-row dash-row">
                         <div className="dtls">
@@ -295,7 +313,7 @@ function LoginSignup() {
                       </div>
                     </div>
                     <div className="save-btn">
-                      <button onClick={saveData}>Save</button>
+                      <button onClick={onSaved}>Save</button>
                     </div>
                   </div>
                 </div> 
