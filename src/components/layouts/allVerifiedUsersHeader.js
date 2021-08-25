@@ -1,4 +1,6 @@
 import { format } from 'date-fns'
+import AllUser from './AllUser.js'
+import DocumentFile from './DocumentFile.js'
 export const allVerifiedUsersHeader = [
   {
     Header: 'User',
@@ -14,27 +16,36 @@ export const allVerifiedUsersHeader = [
 
   {
     Header: 'Status',
-    accessor: 'status',
+
+    accessor: ({ status }) => (
+      <p
+        className={
+          status === 'Pending'
+            ? 'bg-danger text-light p-2 text-center'
+            : 'bg-success text-light p-2 text-center '
+        }
+      >
+        {status}
+      </p>
+    ),
   },
-  //   {
-  //     Header: 'Verify User',
-  //     accessor: 'status',
-  //   },
-  //   {
-  //     Header: 'Decline',
-  //     accessor: 'status',
-  //   },
+
   {
-    //id: 'time',
-    Header: 'document File',
-    accessor: 'documentFile',
+    id: 'documentFile',
+    Header: 'Identity Info',
+    accessor: ({ documentFile }) => (
+      <DocumentFile documentFile={documentFile} />
+    ),
   },
   {
     Header: 'Documents',
-    accessor: 'proofDocument',
+    accessor: (proofDocument) => (
+      <AllUser proofDocument={proofDocument} />
+      // <div className="d-flex justify-content-center align-items-center"></div>
+    ),
   },
   {
-    Header: 'Document Name',
-    accessor: 'documentName',
+    Header: 'Approval',
+    accessor: '',
   },
 ]

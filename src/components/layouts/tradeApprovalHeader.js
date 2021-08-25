@@ -1,16 +1,18 @@
+
+import React from 'react'
 import { format } from 'date-fns'
-export const bankTransferHeader = [
+export const tradeApprovalHeader = [
   {
     Header: 'Name',
     accessor: 'name',
   },
   {
-    id: 'Ref',
-    Header: 'Ref',
-    accessor: ({ Ref }) => <strong> {Ref}</strong>,
-  },
+    id: 'Email',
+    Header: 'email',
+    accessor: "email"
+},
   {
-    Header: 'Created Date',
+    Header: 'Asking Date',
     accessor: 'time',
     Cell: ({ value }) => {
       return format(new Date(value), 'dd/MM/yyyy')
@@ -18,12 +20,12 @@ export const bankTransferHeader = [
   },
 
   {
-    Header: 'Currency',
-    accessor: 'currency',
+    Header: 'Trades',
+    accessor: 'trades',
   },
   {
-    Header: 'Amount',
-    accessor: 'amount',
+    Header: 'Rebalance',
+    accessor: 'rebalance',
   },
   {
     id: 'status',
@@ -38,12 +40,5 @@ export const bankTransferHeader = [
       </p>
     ),
   },
-  {
-    Header: 'Bank Ref',
-    accessor: '',
-  },
-  {
-    Header: 'Proof Received',
-    accessor: '',
-  },
+  
 ]
