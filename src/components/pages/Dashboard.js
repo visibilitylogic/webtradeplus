@@ -80,72 +80,6 @@ const Dashboard = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const { currentSelectedStock } = useSelector((state) => state.stock);
 
-  // const {
-  //   profile: { isTrading },
-  // } = useSelector((state) => state.profile);
-
-  const handleAFx = (item) => () => {
-    setView({ ...item, tag: "Forex" });
-    // this.setState({
-    //   hideIbox: false,
-    //   forexShow: false,
-
-    //   addCurrentItemFx: [
-    //     ...this.state.addCurrentItemFx,
-    //     ...[{ price: item.rate, symbol: item.symbol, tag: "Forex" }],
-    //   ],
-    //   setView: { ...item, tag: "Forex" },
-    //   setViewM: item.current_price,
-    //   activeS: item.symbol,
-    // });
-  };
-
-  const handleAIex = (item) => () => {
-    setView({ ...item, tag: "Stock" });
-    // this.setState({
-    //   hideIbox: false,
-    //   forexShow: false,
-
-    //   addCurrentItemIex: [
-    //     ...this.state.addCurrentItemIex,
-    //     ...[{ price: item.current_price, symbol: item.symbol, tag: "Stock" }],
-    //   ],
-    //   setView: { ...item, tag: "Stock" },
-    //   setViewM: item.current_price,
-    //   activeS: item.symbol,
-    // });
-  };
-
-  const handleACum = (item) => () => {
-    setView({ ...item, tag: "Commodity" });
-    // this.setState({
-    //   hideIbox: false,
-    //   forexShow: false,
-
-    //   addCurrentItemCum: [
-    //     ...this.state.addCurrentItemCum,
-    //     ...[
-    //       { price: item.current_price, symbol: item.symbol, tag: "Commodity" },
-    //     ],
-    //   ],
-    //   setView: { ...item, tag: "Commodity" },
-    //   setViewM: item.current_price,
-    //   activeS: item.symbol,
-    // });
-  };
-
-  const handleViewUpdate = (item) => () => {
-    setView(item);
-    setOrderIsh(item.current_price);
-    // setViewM(item.current_price)
-    // this.setState({
-    //   setView: item,
-    //   setViewM: item.current_price,
-    //   orderIsh: item.current_price,
-    //   activeS: item.symbol,
-    // });
-  };
-
   const closeSetlevIsh = () => {
     if (!user.liveTrade) {
       message.warning("Live trade turned off. Contact admin");
@@ -190,19 +124,10 @@ const Dashboard = () => {
     getWebData();
   }, []);
 
-  // useEffect(() => {
-  //   setDefaultSelectedStock();
-
-  //   const intervalId = setInterval(setDefaultSelectedStock, 10000);
-  //   setIntervalId(intervalId);
-
-  //   return () => clearInterval(intervalId);
-  // }, []);
-
   // A custom hook for rerendering the dashboard component after 10 secondays
   // To keep track of asset changes
 
-  // useInterval(setDefaultSelectedStock, 10000);
+  useInterval(setDefaultSelectedStock, 10000);
 
   useEffect(() => {
     setDefaultSelectedStock();
