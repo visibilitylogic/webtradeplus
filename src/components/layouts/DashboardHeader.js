@@ -8,7 +8,6 @@ import { message } from "antd";
 import PropTypes from "prop-types";
 import "./DashboardHeader.css";
 import Notification from "../utils/Notification";
-import CryptoStepFive from "../utils/modals/deposit/crypto-steps/CryptoStepFive";
 import VerificationModal from "../utils/modals/kyc/VerificationModal";
 import ForexBox from "../layouts/ForexBox";
 
@@ -31,6 +30,7 @@ import CryptoPaymentForm from "../utils/modals/withdrawal/CryptoPaymentForm";
 import AutoTrade from "../utils/modals/AutoTrade";
 import { useActions } from "../hooks/useActions";
 import Withdrawals from "../utils/modals/withdrawal/Withdrawals";
+import CryptoStepSix from "../utils/modals/deposit/crypto-steps/CryptoStepSix";
 
 const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
   const history = useHistory();
@@ -45,7 +45,7 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
   const [withdrawalSettings, setWithdrawalSettings] = useState(false);
   const [bankTransferSelected, setBankTransferSelected] = useState(false);
   const [cryptoCurrencySelected, setCryptoCurrencySelected] = useState(false);
-  const [cryptoStepFive, setCryptoStepFive] = useState(false);
+  const [cryptoStepSix, setCryptoStepSix] = useState(false);
   const [openVerification, setOpenVerification] = useState(false);
   const [openForex, setOpenForex] = useState(false);
 
@@ -485,7 +485,7 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
             <CreditModalContents
               web={data}
               setShowCredit={setShowCredit}
-              setCryptoStepFive={setCryptoStepFive}
+              setCryptoStepSix={setCryptoStepSix}
             />
           </section>
         )}
@@ -540,9 +540,9 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
             <AutoTrade />
           </div>
         )}
-        <CryptoStepFive
-          cryptoStepFive={cryptoStepFive}
-          setCryptoStepFive={setCryptoStepFive}
+        <CryptoStepSix
+          cryptoStepSix={cryptoStepSix}
+          setCryptoStepSix={setCryptoStepSix}
         />
         {openVerification && (
           <section

@@ -4,6 +4,7 @@ import { message } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Button, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { IoCopy } from "react-icons/io5";
 
 const CryptoStepTwo = (props) => {
   const { web, cryptoStepTwo, goBackToCryptoStepOne, handleCryptoStepTwo } =
@@ -55,22 +56,20 @@ const CryptoStepTwo = (props) => {
               }}
             />
             <CopyToClipboard text={web.btcAddress} onCopy={handleCopied}>
-              <Button
-                variant="primary"
+              <IoCopy
+                size={25}
+                color="#1c2030"
                 style={{
-                  //   background: web.yourMainColor,
-                  height: "55px",
+                  height: 55,
                   marginLeft: "-2px",
                   background: "#fff",
                   borderTopLeftRadius: "0",
                   borderBottomRightRadius: "0",
-                  color: "#1c2030",
                   width: "auto",
                   padding: "15px 30px",
+                  cursor: "pointer",
                 }}
-              >
-                {copied ? "COPIED" : "COPY"}
-              </Button>
+              />
             </CopyToClipboard>
           </div>
           <br />

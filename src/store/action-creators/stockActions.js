@@ -164,3 +164,7 @@ export const deleteStock = (stockSymbol) => (dispatch) => {
     payload: stockSymbol,
   });
 };
+
+// export const getCurrentStockPrice = () => dispatch => {
+//   const {data} = axios.get(``)
+// }

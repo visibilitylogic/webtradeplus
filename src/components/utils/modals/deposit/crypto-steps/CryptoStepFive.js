@@ -1,40 +1,68 @@
 import PropTypes from "prop-types";
+import { Button } from "antd";
 
-const CryptoStepFive = ({ cryptoStepFive, setCryptoStepFive }) => {
+const CryptoStepFive = ({
+  cryptoStepFive,
+  handleCryptoStepFive,
+  goBackToCryptoStepFour,
+}) => {
   return (
     cryptoStepFive && (
-      <div id="step-three">
+      <div>
+        <div className="text-left">
+          <Button onClick={goBackToCryptoStepFour} className="back-button">
+            &#8592;&nbsp; Previous
+          </Button>
+        </div>
         <div
-          className="levC1"
           style={{
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: "10%",
-            left: 0,
-            right: 0,
+            textAlign: "center",
+            width: "100%",
+            margin: "5%",
           }}
         >
-          <div className="levHeader" style={{ padding: "3%" }}>
-            Completed
-            <span
-              className="close"
-              onClick={() => setCryptoStepFive(false)}
-              style={{
-                top: "30px",
-                right: "15px",
-              }}
-            >
-              <svg id="lnr-cross " viewBox="0 0 1024 1024">
-                <title>cross</title>
-                <path
-                  className="path1"
-                  d="M548.203 537.6l289.099-289.098c9.998-9.998 9.998-26.206 0-36.205-9.997-9.997-26.206-9.997-36.203 0l-289.099 289.099-289.098-289.099c-9.998-9.997-26.206-9.997-36.205 0-9.997 9.998-9.997 26.206 0 36.205l289.099 289.098-289.099 289.099c-9.997 9.997-9.997 26.206 0 36.203 5 4.998 11.55 7.498 18.102 7.498s13.102-2.499 18.102-7.499l289.098-289.098 289.099 289.099c4.998 4.998 11.549 7.498 18.101 7.498s13.102-2.499 18.101-7.499c9.998-9.997 9.998-26.206 0-36.203l-289.098-289.098z"
-                />
-              </svg>
-            </span>{" "}
+          <img
+            alt="spinner gif"
+            style={{
+              textAlign: "center",
+              width: "30%",
+              marginTop: "5%",
+            }}
+            src="https://i.pinimg.com/originals/06/ae/07/06ae072fb343a704ee80c2c55d2da80a.gif"
+          />
+        </div>
+        <div
+          style={{
+            textAlign: "left",
+            margin: "10px 0",
+            color: "#fff",
+          }}
+        >
+          <div className="d-flex">
+            <div>
+              <p>
+                Your account will be credited Once your Bitcoin Transfer has
+                been confirmed
+              </p>
+            </div>
           </div>
-          Your deposit will be made once the transaction is confirmed by the
-          accounting department. Thanks
+        </div>
+        <p className="mt-4" style={{ color: "#aaa" }}>
+          It might take up to an hour for funds to become available in your
+          account. On rare occasions, it may take up to 24 hours for the amount
+          to be credited.
+        </p>
+        <div className="text-center">
+          <Button
+            className="mb-4"
+            style={{
+              width: "39%",
+              padding: "15px 30px",
+            }}
+            onClick={handleCryptoStepFive}
+          >
+            Exit
+          </Button>
         </div>
       </div>
     )
@@ -43,7 +71,8 @@ const CryptoStepFive = ({ cryptoStepFive, setCryptoStepFive }) => {
 
 CryptoStepFive.propTypes = {
   cryptoStepFive: PropTypes.bool.isRequired,
-  setCryptoStepFive: PropTypes.func.isRequired,
+  goBackToCryptoStepFour: PropTypes.func.isRequired,
+  handleCryptoStepFive: PropTypes.func.isRequired,
 };
 
 export default CryptoStepFive;
