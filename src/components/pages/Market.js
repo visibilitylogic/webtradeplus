@@ -13,7 +13,7 @@ function Market() {
   
     return (
         <div>
-            <h1 style={{color:"white", fontSize:"35px", textAlign:"center"}}>Market List</h1>
+            <h1  style={{textAlign:"center", color:"white", marginBottom:"25px", fontFamily:"arial", marginTop:"20px"}}>Market List</h1>
             <div style={{ width: "100%", textAlign: "right"  }}>
                       {/* <input
                         type="search"

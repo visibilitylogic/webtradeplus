@@ -21,7 +21,7 @@ const FooterComponent = ({
             <div
               className="btn-container"
               id="prev-page"
-              onClick={() => previousPage}
+              onClick={() => previousPage()}
               disabled={!canPreviousPage}
             >
               {'<'}
@@ -35,11 +35,11 @@ const FooterComponent = ({
             <div
               className="btn-container"
               id="next-page"
-              onClick={() => nextPage}
+              onClick={() => nextPage()}
               disabled={!canNextPage}
               style={{ cursor: 'pointer' }}
             >
-              {'>'}
+              ➤
             </div>
           </div>
         </FooterStyle>
