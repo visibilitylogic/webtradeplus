@@ -6,7 +6,6 @@ export function DepositStatus({ status }) {
     id: status._id,
     status: status.status,
   })
-  console.log(depositState)
 
   const handleApproveDeposit = async (depositState) => {
     try {
