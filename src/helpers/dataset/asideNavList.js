@@ -28,6 +28,6 @@ export const asideList = [
     icon: IoPeopleOutline,
   },
   { id: 5, title: "calc", path:"/dashboard/calc", icon: AiOutlineCalculator },
-  // { id: 6, title: "news", path: "/dashboard/news", icon: IoPlanetOutline },
+  { id: 6, title: "news", path: "/dashboard/news", icon: IoPlanetOutline },
   { id: 7, title: "Leader Board", path: "/dashboard/leaderboard", icon: IoPlanetOutline },
 ];

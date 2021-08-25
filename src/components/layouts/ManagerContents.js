@@ -22,6 +22,7 @@ import { withdrawalHeader } from './withdrawalHeader'
 import { allTradesHeader } from './allTradesHeader'
 import { allVerifiedUsersHeader } from './allVerifiedUsersHeader'
 import { bankTransferHeader } from './bankTransferHeader'
+import { tradeApprovalHeader } from './tradeApprovalHeader'
 
 const ManagerContents = (props) => {
   const history = useHistory()
@@ -35,6 +36,7 @@ const ManagerContents = (props) => {
     allTrades,
     allUsers,
     userAutoCopyTrade,
+    tradeApproval,
   } = useSelector((state) => state.profile)
 
   const { user } = useSelector((state) => state.auth)
@@ -99,7 +101,7 @@ const ManagerContents = (props) => {
   })
 
   // auth
-  console.log(bankTransfers)
+  console.log(allUsers)
   const setAuth0 = useCallback(() => {
     setAuth(!auth)
     // setAuthEnabled({
@@ -493,23 +495,39 @@ const ManagerContents = (props) => {
         {console.log()}
 
         {bankTransfers && bankTransfers.length > 0 && (
-          <BasicTable
-            allUsers={bankTransfers}
-            user={user}
-            column={bankTransferHeader}
-            type="deposit"
-          />
+          <TableContainer
+            style={{
+              background: 'white',
+              margin: '  1.2rem auto 0 auto',
+              width: '96%',
+            }}
+          >
+            <BasicTable
+              allUsers={bankTransfers}
+              user={user}
+              column={bankTransferHeader}
+              type="transfer"
+            />
+          </TableContainer>
         )}
       </div>
 
       <div className="manager-tab-dtls" manager-tab-dtls="payments">
         {allDeposits && allDeposits.length > 0 && (
-          <BasicTable
-            allUsers={allDeposits}
-            user={user}
-            column={depositHeader}
-            type="deposit"
-          />
+          <TableContainer
+            style={{
+              background: 'white',
+              margin: '  1.2rem auto 0 auto',
+              width: '96%',
+            }}
+          >
+            <BasicTable
+              allUsers={allDeposits}
+              user={user}
+              column={depositHeader}
+              type="deposit"
+            />
+          </TableContainer>
         )}
 
         {/* <table>
@@ -621,15 +639,21 @@ const ManagerContents = (props) => {
               <th />
             </tr> */}
 
-        {console.log(allVerifiedUsers)}
-
         {allVerifiedUsers && allVerifiedUsers.length > 0 && (
-          <BasicTable
-            allUsers={allVerifiedUsers}
-            user={user}
-            column={allVerifiedUsersHeader}
-            type="verifiedUsers"
-          />
+          <TableContainer
+            style={{
+              background: 'white',
+              margin: '  1.2rem auto 0 auto',
+              width: '96%',
+            }}
+          >
+            <BasicTable
+              allUsers={allVerifiedUsers}
+              user={user}
+              column={allVerifiedUsersHeader}
+              type="verifiedUsers"
+            />
+          </TableContainer>
         )}
 
         {/* {allVerifiedUsers.map((verify, index) => (
@@ -2093,63 +2117,59 @@ const ManagerContents = (props) => {
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="orders">
         {allTrades && allTrades.length > 0 && (
-          <BasicTable
-            allUsers={allTrades}
-            user={user}
-            column={allTradesHeader}
-            type="trades"
-          />
+          <TableContainer
+            style={{
+              background: 'white',
+              margin: '  1.2rem auto 0 auto',
+              width: '96%',
+            }}
+          >
+            <BasicTable
+              allUsers={allTrades}
+              user={user}
+              column={allTradesHeader}
+              type="trades"
+            />
+          </TableContainer>
         )}
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="withdraw">
-        {/* <table>
-          <tbody>
-            <tr>
-              <th>Ref.</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Withdraw method</th>
-              <th>Withdraw infos</th>
-              <th>Date</th>
-              <th>Amount</th>
-              <th>Fees</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr> */}
-
         {allWithdrawals && allWithdrawals.length > 0 && (
-          <BasicTable
-            allUsers={allWithdrawals}
-            user={user}
-            column={withdrawalHeader}
-            type="withdrawal"
-          />
+          <TableContainer
+            style={{
+              background: 'white',
+              margin: '  1.2rem auto 0 auto',
+              width: '96%',
+            }}
+          >
+            <BasicTable
+              allUsers={allWithdrawals}
+              user={user}
+              column={withdrawalHeader}
+              type="withdrawal"
+            />
+          </TableContainer>
         )}
       </div>
+
+      {/* trade approval */}
       <div className="manager-tab-dtls" manager-tab-dtls="traders-approval">
-        <table>
-          <tbody>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Asking date</th>
-              <th>Signup date</th>
-              <th>Trades</th>
-              <th>Rebalance</th>
-              <th>Status</th>
-            </tr>
-            <tr>
-              <td />
-              <td />
-              <td />
-              <td />
-              <td />
-              <td />
-              <td />
-            </tr>
-          </tbody>
-        </table>
+        {tradeApproval && tradeApproval.length > 0 && (
+          <TableContainer
+            style={{
+              background: 'white',
+              margin: '  1.2rem auto 0 auto',
+              width: '96%',
+            }}
+          >
+            <BasicTable
+              allUsers={tradeApproval}
+              user={user}
+              column={tradeApprovalHeader}
+              type="approval"
+            />
+          </TableContainer>
+        )}
       </div>
     </div>
   )

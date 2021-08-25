@@ -6,39 +6,39 @@ function Finaces() {
     
     return (
         <div>
-            <h1>  Finances Tab</h1>
+            <h1 className="h1"> Finances Tab</h1>
             <div className="first_div" style={{display:"flex", flexDirection:"column", maxWidth:"1200px", margin:"auto"}}> 
                 <div className="flex_row1">
                     <div>
-                        <h2 className="h2P">Deposits</h2>
-                        <h1 classname="h11">{user.deposit}</h1>
+                        <h2>Deposits</h2>
+                        <h1>{user.deposit}</h1>
                     </div>
                     <div>
-                    <h2 className="h2P">Bonus</h2>
-                        <h1 classname="h11">{user.bonus}</h1>
+                    <h2>Bonus</h2>
+                        <h1>{user.bonus}</h1>
                     </div>
                     <div>
-                    <h2 className="h2P">Equity</h2>
-                        <h1 classname="h11">{user.equity}</h1>
+                    <h2>Equity</h2>
+                        <h1>{user.equity}</h1>
                     </div>
                 </div>
                 <div className="flex_row1">
                 <div>
-                <h2 className="h2P">Margin</h2>
-                        <h1 classname="h11" >{user.margin}</h1>
+                <h2>Margin</h2>
+                        <h1>{user.margin}</h1>
                 </div>
                     <div>  
-                        <h2 className="h2P">    Free Margin</h2>
-                        <h1 classname="h11" >{user.freeMargin}</h1>
+                        <h2>Free Margin</h2>
+                        <h1>{user.freeMargin}</h1>
                     </div>
-                    <div> 
-                        <div style={{borderBottom:"1px solid white"}}>
-                            <h2 className="h2P">Profit</h2>
-                            <h1 classname="h11"  style={{fontSize:"16px"}} >{user.profit}</h1>
+                    <div style={{height:"400px", padding:"15px 0px"}}> 
+                        <div style={{borderBottom:"1px solid white", padding:"-5px", height:"200px" }}>
+                            <h2>Profit</h2>
+                            <h1>{user.profit}</h1>
                         </div> 
-                        <div>
-                            <h2 >Loss</h2>
-                            <h1 classname="h11"  style={{fontSize:"16px"}}>{user.profit}</h1>
+                        <div style={{marginTop:"10px", height:"200px"}}>
+                            <h2>Loss</h2>
+                            <h1>{user.loss}</h1>
                         </div>  
                        
                     </div>
