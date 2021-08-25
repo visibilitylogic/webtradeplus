@@ -14,22 +14,10 @@ import Admin from "../pages/Admin";
 import PrivateRoute from "./PrivateRoute";
 
 const Routes = () => {
-  const { getWebData } = useActions();
   const { webData } = useSelector((state) => state.web);
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   const [toggleRegister, setToggleRegister] = useState(false);
-
-  useEffect(() => {
-    getWebData();
-
-    let fav = document.querySelector("#favicon");
-    let title = document.getElementById("title");
-    if (fav) {
-      fav.href = webData && webData.siteFav;
-    }
-    title.innerHTML = webData && webData.siteTitle;
-  }, []);
 
   return (
     <Fragment>

@@ -2061,8 +2061,8 @@ const ManagerContents = (props) => {
               allTrades.map((item, index) => (
                 <tr key={index}>
                   <td className="font-weight-bold">ORDR-00{index + 1}</td>
-                  <td>{item.time}</td>
-                  <td>{item.stockName}</td>
+                  <td>{item.time.slice(0, 19)}</td>
+                  <td>{item.nameOfAsset}</td>
                   <td>
                     <span className="validate">{item.tag}</span>
                   </td>

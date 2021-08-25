@@ -12,11 +12,11 @@ const initialState = {
   bankTransfers: [],
   allOrders: [],
   allUsers: [],
-  verifiedUsersNum: 0,
   allDeposits: [],
   allTrades: [],
   allVerifiedUsers: [],
   userAutoCopyTrade: [],
+  userTrades: [],
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -58,6 +58,7 @@ export default function profileReducer(state = initialState, action) {
         bankTransfers: state.allWithdrawals.filter(
           (withdrawal) => withdrawal.method === "Bank Transfer"
         ),
+        error: null,
       };
 
     case actionTypes.GET_ALL_ORDERS:
@@ -65,6 +66,7 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         loading: false,
         allOrders: action.payload,
+        error: null,
       };
 
     case actionTypes.GET_ALL_USERS:
@@ -72,13 +74,14 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         loading: false,
         allUsers: action.payload,
-        verifiedUsersNum: state.allUsers.filter((user) => user.verified).length,
+        error: null,
       };
     case actionTypes.GET_ALL_DEPOSITS:
       return {
         ...state,
         loading: false,
         allDeposits: action.payload,
+        error: null,
       };
 
     case actionTypes.GET_ALL_TRADES:
@@ -86,6 +89,7 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         loading: false,
         allTrades: action.payload,
+        error: null,
       };
 
     case actionTypes.GET_ALL_VERIFIED_USERS:
@@ -93,12 +97,21 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         loading: false,
         allVerifiedUsers: action.payload,
+        error: null,
       };
     case actionTypes.USER_AUTO_COPY_TRADE:
       return {
         ...state,
         loading: false,
         userAutoCopyTrade: action.payload,
+        error: null,
+      };
+    case actionTypes.GET_ALL_USER_TRADES:
+      return {
+        ...state,
+        loading: false,
+        userTrades: action.payload,
+        error: null,
       };
 
     case actionTypes.PROFILE_ERROR:

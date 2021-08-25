@@ -9,7 +9,7 @@ import "./Dashboard.css";
 import Board from "./Board";
 import Manager from "./Manager";
 import Admin from "./Admin";
-import BuyStockModal from "../utils/modals/trading/BuyStock";
+import useInterval from "../hooks/useInterval";
 import DashboardFooter from "../layouts/DashboardFooter";
 import { asideList } from "./../../helpers/dataset/asideNavList";
 
@@ -36,12 +36,19 @@ const Dashboard = () => {
   const myRef3 = useRef("");
 
   // Action creators
-  const { getWebData, setIsTrading, setDefaultSelectedStock } = useActions();
+  const {
+    getWebData,
+    setIsTrading,
+    setDefaultSelectedStock,
+    setCurrentSelectedStock,
+    getAllUserTrades,
+  } = useActions();
 
   // Redux state data
   const { webData } = useSelector((state) => state.web);
 
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { currentSelectedStock } = useSelector((state) => state.stock);
 
   // const {
   //   profile: { isTrading },
@@ -152,6 +159,20 @@ const Dashboard = () => {
   useEffect(() => {
     getWebData();
   }, []);
+
+  // useEffect(() => {
+  //   setDefaultSelectedStock();
+
+  //   const intervalId = setInterval(setDefaultSelectedStock, 10000);
+  //   setIntervalId(intervalId);
+
+  //   return () => clearInterval(intervalId);
+  // }, []);
+
+  // A custom hook for rerendering the dashboard component after 10 secondays
+  // To keep track of asset changes
+
+  // useInterval(setDefaultSelectedStock, 10000);
 
   useEffect(() => {
     setDefaultSelectedStock();

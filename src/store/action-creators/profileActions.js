@@ -545,7 +545,7 @@ export const purchaseStockAsset = (userId, data) => async (dispatch) => {
   const body = JSON.stringify(data);
 
   try {
-    await axios.post(`/api/trade/${userId}`, body, config);
+    await axios.post(`/api/trade/buy/${userId}`, body, config);
 
     dispatch({
       type: actionTypes.PURCHASE_STOCK,
@@ -568,7 +568,7 @@ export const sellStockAsset = (userId, data) => async (dispatch) => {
   const body = JSON.stringify(data);
 
   try {
-    await axios.post(`/api/trade/${userId}`, body, config);
+    await axios.post(`/api/trade/sell/${userId}`, body, config);
 
     dispatch({
       type: actionTypes.SELL_STOCK,
@@ -576,6 +576,20 @@ export const sellStockAsset = (userId, data) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: actionTypes.SET_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const deleteUserTrade = (stockId) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/trade/${stockId}`);
+    dispatch({
+      type: actionTypes.DELETE_STOCK,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
       payload: error.message,
     });
   }
@@ -596,21 +610,21 @@ export const getAllWithdrawals = () => async (dispatch) => {
   }
 };
 
-export const getAllOrders = (userId) => async (dispatch) => {
-  try {
-    const { data } = await axios.get(`/api/trade/${userId}`);
+// export const getAllOrders = () => async (dispatch) => {
+//   try {
+//     const { data } = await axios.get(`/api/trade/buy/allTrade`);
 
-    dispatch({
-      type: actionTypes.GET_ALL_ORDERS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: actionTypes.PROFILE_ERROR,
-      payload: error.message,
-    });
-  }
-};
+//     dispatch({
+//       type: actionTypes.GET_ALL_ORDERS,
+//       payload: data,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: actionTypes.PROFILE_ERROR,
+//       payload: error.message,
+//     });
+//   }
+// };
 
 export const getAllUsers = () => async (dispatch) => {
   try {
@@ -646,7 +660,7 @@ export const getAllDeposits = () => async (dispatch) => {
 
 export const getAllTrades = () => async (dispatch) => {
   try {
-    const { data } = await axios.get("/allTrade");
+    const { data } = await axios.get("/api/trade/buy/allTrade");
 
     dispatch({
       type: actionTypes.GET_ALL_TRADES,
@@ -719,6 +733,22 @@ export const deleteUserAutoCopyTrade = (userId) => async (dispatch) => {
     await axios.delete(`/api/autocopytrade/${userId}`);
     dispatch({
       type: actionTypes.DELETE_USER_AUTO_COPY_TRADE,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const getAllUserTrades = (userId) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`/api/trade/${userId}`);
+
+    dispatch({
+      type: actionTypes.GET_ALL_USER_TRADES,
+      payload: data,
     });
   } catch (error) {
     dispatch({
