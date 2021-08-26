@@ -88,6 +88,7 @@ export const adminDataReducer =  (state=adminInitialState, action)=>{
             return {
                 ...state,
                 loading:false,
+                success:"",
                 adminData: action.payload
             }
         break;
