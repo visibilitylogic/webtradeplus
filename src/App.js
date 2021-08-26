@@ -10,7 +10,10 @@ import { store } from "./store";
 
 function App() {
   const { userId } = useSelector((state) => state.auth);
-  const { loadUser } = useActions();
+  const { webData } = useSelector((state) => state.web);
+
+  const { loadUser, getWebData } = useActions();
+
   useEffect(() => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
@@ -21,6 +24,17 @@ function App() {
     window.addEventListener("storage", () => {
       if (!localStorage.token) store.dispatch({ type: LOGOUT });
     });
+  }, []);
+
+  useEffect(() => {
+    getWebData();
+
+    let fav = document.querySelector("#favicon");
+    let title = document.getElementById("title");
+    if (fav) {
+      fav.href = webData && webData.siteFav;
+    }
+    title.innerHTML = webData && webData.siteTitle;
   }, []);
 
   return (

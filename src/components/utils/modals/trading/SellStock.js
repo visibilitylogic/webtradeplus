@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
+import { useActions } from "../../../hooks/useActions";
 import { getRate } from "../../../../helpers/getRate";
+import { message } from "antd";
 
 const SellStockModal = (props) => {
   const {
@@ -13,35 +15,56 @@ const SellStockModal = (props) => {
     setStopLossAmount,
     setSellStock,
     profitAmount,
-    handleStockSale,
     stopLossAmount,
   } = props;
 
+  const { user } = useSelector((state) => state.auth);
+  const { error } = useSelector((state) => state.profile);
   const { currentSelectedStock, defaultSelectedStock } = useSelector(
     (state) => state.stock
   );
+
+  const { sellStockAsset } = useActions();
+
+  const handleStockSale = (event) => {
+    event.preventDefault();
+
+    if (error) {
+      message.error("Error processing your stock Sale");
+    } else {
+      sellStockAsset(user._id, {
+        userId: user._id,
+        tag: "sell",
+        margin: parseInt(assetQuantity),
+        stockAmount:
+          Object.keys(currentSelectedStock).length > 0
+            ? currentSelectedStock.price
+            : defaultSelectedStock.price,
+        nameOfAsset:
+          Object.keys(currentSelectedStock).length > 0
+            ? currentSelectedStock.symbol
+            : defaultSelectedStock.symbol,
+        typeOfAsset:
+          Object.keys(currentSelectedStock).length > 0
+            ? currentSelectedStock.exchange
+            : defaultSelectedStock.exchange,
+        openRateOfAsset:
+          Object.keys(currentSelectedStock).length > 0
+            ? currentSelectedStock.price
+            : defaultSelectedStock.price,
+        closeRateOfAsset: 0,
+        takeProfit: profitAmount && parseFloat(profitAmount),
+        takeLoss: stopLossAmount && parseFloat(stopLossAmount),
+        profit: 0,
+        loss: 0,
+      });
+      message.success("Your stock has been successfully sold");
+    }
+    setSellStock(false);
+  };
+
   return (
-    <form
-      // onMouseEnter={() => {
-      //   this.setState({
-      //     data: {
-      //       ...this.state.data,
-      //       ...{ tag: "buy" },
-      //       ...{ stockName: this.state.setView.symbol },
-      //       ...{
-      //         stockAmount: this.state.num / this.state.setView.price,
-      //         ...{
-      //           buyW: this.getRate(
-      //             this.state.setView.symbol ? this.state.setView.symbol : ""
-      //           ),
-      //         },
-      //         ...{ unit: this.state.unitP },
-      //       },
-      //     },
-      //   });
-      // }}
-      onSubmit={handleStockSale}
-    >
+    <form onSubmit={handleStockSale}>
       <h6>CONFIRMATION</h6>
       <div className="dash-row dash-row-centralized">
         <div className="split">
@@ -87,7 +110,7 @@ const SellStockModal = (props) => {
           <span>Leverage</span>
         </div>
         <div className="split moved">
-          <span>1:10</span>
+          <span>10</span>
         </div>
       </div>
       <div className="dash-row dash-row-centralized">
@@ -96,7 +119,7 @@ const SellStockModal = (props) => {
         </div>
         <div className="split moved">
           <span>
-            {Object.keys(defaultSelectedStock).length > 0
+            {/* {Object.keys(defaultSelectedStock).length > 0
               ? defaultSelectedStock.price.toString().slice(0, 8)
               : Object.keys(currentSelectedStock).length > 0
               ? currentSelectedStock.price.toString().slice(0, 8)
@@ -104,7 +127,8 @@ const SellStockModal = (props) => {
 
             {Object.keys(defaultSelectedStock).length > 0
               ? defaultSelectedStock.symbol
-              : currentSelectedStock.symbol}
+              : currentSelectedStock.symbol} */}
+            {assetQuantity}
           </span>
         </div>
       </div>
@@ -122,7 +146,10 @@ const SellStockModal = (props) => {
                 <input
                   type="checkbox"
                   checked={!disableTakeProfit}
-                  onChange={() => setDisableTakeProfit((prev) => !prev)}
+                  onChange={() => {
+                    setDisableTakeProfit((prev) => !prev);
+                    setProfitAmount("");
+                  }}
                 />
                 <span className="slider round" />
               </label>
@@ -158,7 +185,10 @@ const SellStockModal = (props) => {
                 <input
                   type="checkbox"
                   checked={!disableStopLoss}
-                  onChange={() => setDisableStopLoss((prev) => !prev)}
+                  onChange={() => {
+                    setDisableStopLoss((prev) => !prev);
+                    setStopLossAmount("");
+                  }}
                 />
                 <span className="slider round" />
               </label>{" "}
@@ -237,7 +267,6 @@ SellStockModal.propTypes = {
   disableStopLoss: PropTypes.bool.isRequired,
   setStopLossAmount: PropTypes.func.isRequired,
   setSellStock: PropTypes.func.isRequired,
-  handleStockSale: PropTypes.func.isRequired,
   profitAmount: PropTypes.string.isRequired,
   stopLossAmount: PropTypes.string.isRequired,
 };

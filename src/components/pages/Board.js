@@ -144,6 +144,9 @@ const Board = (props) => {
     }
   };
 
+  console.log(defaultSelectedStock);
+  console.log(currentSelectedStock);
+
   return (
     !loading && (
       <Fragment>
@@ -168,14 +171,17 @@ const Board = (props) => {
                       target="_blank"
                     >
                       <span className="blue-text">
-                        {currentSelectedStock.symbol} Chart
+                        {Object.keys(defaultSelectedStock).length > 0
+                          ? defaultSelectedStock.symbol
+                          : currentSelectedStock.symbol}{" "}
+                        Chart
                       </span>
                     </a>{" "}
                     <TradingViewWidget
                       symbol={
-                        currentSelectedStock.symbol
-                          ? currentSelectedStock.symbol
-                          : "BTCUSD"
+                        Object.keys(defaultSelectedStock).length > 0
+                          ? defaultSelectedStock.symbol
+                          : currentSelectedStock.symbol
                       }
                       theme={Themes.DARK}
                       autosize
@@ -213,6 +219,9 @@ const Board = (props) => {
                   <div className="dash-row">
                     <div
                       className="trade-amount-minus"
+                      style={{
+                        pointerEvents: assetQuantity === 1 ? "none" : "auto",
+                      }}
                       onClick={() => setAssetQuantity(assetQuantity - 1)}
                     >
                       <span>-</span>

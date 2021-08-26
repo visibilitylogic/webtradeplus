@@ -1,29 +1,41 @@
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import { Upload, Button as ButtonAnt, message as messageAnt } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { message as messageAnt } from "antd";
+// import { UploadOutlined } from "@ant-design/icons";
 
 const CryptoStepFour = ({
   cryptoStepFour,
   goBackToCryptoStepThree,
-  handleCryptoStepFour,
+  handleSubmitDeposit,
+  setCryptoDepositProof,
 }) => {
-  const properties = {
-    name: "file",
-    action: "",
-    headers: {
-      authorization: "authorization-text",
-    },
-    onChange(info) {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
-      }
-      if (info.file.status === "done") {
-        messageAnt.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        messageAnt.error(`${info.file.name} file upload failed.`);
-      }
-    },
+  // const properties = {
+  //   name: "file",
+  //   action: "",
+  //   headers: {
+  //     authorization: "authorization-text",
+  //   },
+  //   onChange(info) {
+  //     if (info.file.status !== "uploading") {
+  //       console.log(info.file, info.fileList);
+  //     }
+  //     if (info.file.status === "done") {
+  //       messageAnt.success(`${info.file.name} file uploaded successfully`);
+  //     } else if (info.file.status === "error") {
+  //       messageAnt.error(`${info.file.name} file upload failed.`);
+  //     }
+  //   },
+  // };
+
+  const handleCryptoDepositProof = (e) => {
+    e.preventDefault();
+    if (e) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onloadend = () => {
+        setCryptoDepositProof(reader.result);
+      };
+    }
   };
   return (
     cryptoStepFour && (
@@ -38,9 +50,17 @@ const CryptoStepFour = ({
           Upload proof of payment
         </p>
         <br />
-        <Upload {...properties}>
+        {/* <Upload {...properties}>
           <ButtonAnt icon={<UploadOutlined />}>Click to Upload</ButtonAnt>
-        </Upload>
+        </Upload> */}
+        <form className="form-file-upload">
+          <input
+            type="file"
+            name="photo"
+            id="upload-photo"
+            onChange={handleCryptoDepositProof}
+          />
+        </form>
         <br />
         <small
           style={{
@@ -56,7 +76,7 @@ const CryptoStepFour = ({
           <br />
           <Button
             className="mb-4"
-            onClick={handleCryptoStepFour}
+            onClick={handleSubmitDeposit}
             style={{
               width: "39%",
               padding: "15px 30px",
@@ -72,8 +92,9 @@ const CryptoStepFour = ({
 
 CryptoStepFour.propTypes = {
   cryptoStepFour: PropTypes.bool.isRequired,
-  handleCryptoStepFour: PropTypes.func.isRequired,
+  handleSubmitDeposit: PropTypes.func.isRequired,
   goBackToCryptoStepThree: PropTypes.func.isRequired,
+  setCryptoDepositProof: PropTypes.string.isRequired,
 };
 
 export default CryptoStepFour;

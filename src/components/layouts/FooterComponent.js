@@ -14,17 +14,17 @@ const FooterComponent = ({
     <>
       <div
         className="d-flex justify-content-between"
-        style={{ width: '100%', margin: 'auto' }}
+        style={{ width: '100%', margin: 'auto', background: 'white' }}
       >
         <FooterStyle style={{ width: '50%', margin: 'auto' }}>
           <div className="list-footer">
             <div
               className="btn-container"
               id="prev-page"
-              onClick={() => previousPage}
+              onClick={() => previousPage()}
               disabled={!canPreviousPage}
             >
-              {'<'}
+             ◀
             </div>
             <div>
               <strong className="strong">
@@ -35,11 +35,10 @@ const FooterComponent = ({
             <div
               className="btn-container"
               id="next-page"
-              onClick={() => nextPage}
+              onClick={() => nextPage()}
               disabled={!canNextPage}
-              style={{}}
             >
-              {'>'}
+              ▶
             </div>
           </div>
         </FooterStyle>
