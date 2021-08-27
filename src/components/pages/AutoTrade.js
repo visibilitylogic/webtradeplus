@@ -7,22 +7,19 @@ import { userDetails, userId } from '../../store/utils/getUserDetails';
 import axios from 'axios';
 function AutoTrade() {
     const {user, userId  } = useSelector(state => state.auth);
-    const idArray = user ? user.subcriptionPlan:null;
-    console.log(idArray);
+    const idArray = user && user.subcriptionPlan;
     const {loading , trades} = useSelector(state=> state.adminData);
     const [singleTrade, setSingleTrade] = useState({});
     const [singleTradeLoading, setSingleTradeLoading] = useState(false);
     const [sub, setSub] = useState(false);
     const [isAgree, setISAgree] = useState(false)
     const {get_all_auto_trades} = useActions()
-    useEffect(()=>{
-        get_all_auto_trades()  
-    }, [])
+   
     const subscribeTrade = (id) =>{
         axios
         .get(`https://trade-backend-daari.ondigitalocean.app/api/copytrade/${id}`)
         .then((response) => {
-          console.log(user.wallet, response.data.subscriptionFee);
+          // console.log(user.wallet, response.data.subscriptionFee);
           if (user.wallet < response.data.subscriptionFee) {
             message.warning(
               "Insufficient funds, kindly fund your wallet and try again"
@@ -60,6 +57,10 @@ function AutoTrade() {
           message.success("subscription was ended");
         });
     };
+
+    useEffect(()=>{
+      get_all_auto_trades()  
+  }, [])
     const subscribeAutotrade = (id) => {
       setSingleTradeLoading(true);
       axios
@@ -88,15 +89,15 @@ function AutoTrade() {
         <div className="dash-contents">
         <div className="dash-row">
             {loading &&   <Spinner style={{display:"flex", justifyContent:"center", alignItems:"center"}} animation="grow" />}
-                          {(trades && !loading )? (
-                <div>
+                      
+                <div className="center_orders">
                   <div className="text-center">
                     <h4 className="my-4" style={{ color: "#fff", textAlign:"center" }}>
                       Subscribe Now to Auto Copy our Top Performing Traders
                     </h4>
                   </div>
                   <Row style={{ marginBottom: "10%" }}>
-                    {trades.map((data, index) => (
+                    {trades && trades.map((data, index) => (
                       <Col md={4} className="mt-3" key={index}>
                         <Card className="card_style">
                           <p>Username: {data.userName}</p>
@@ -131,7 +132,7 @@ function AutoTrade() {
                     ))}
                   </Row>
                 </div>
-              ) :""}
+              
 
               {
                 sub ? (

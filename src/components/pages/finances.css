@@ -16,6 +16,19 @@
     margin-top: 30px;
 }
 
+.center_order {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.margin_auto{
+    /* margin-right: -80px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .Heading11 {
    color:white;
     text-align: center;

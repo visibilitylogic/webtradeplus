@@ -17,6 +17,7 @@ const BuyStockModal = (props) => {
     setBuyStock,
     profitAmount,
     stopLossAmount,
+    setBuysell,
   } = props;
 
   const [currentPrice, setCurrentPrice] = useState("");
@@ -67,6 +68,7 @@ const BuyStockModal = (props) => {
         loss: 0,
       });
       message.success("Your stock has been successfully purchased");
+      setBuysell(true);
     }
     setBuyStock(false);
   };
@@ -276,6 +278,7 @@ BuyStockModal.propTypes = {
   setBuyStock: PropTypes.func.isRequired,
   profitAmount: PropTypes.string.isRequired,
   stopLossAmount: PropTypes.string.isRequired,
+  setBuysell: PropTypes.func.isRequired,
 };
 
 export default BuyStockModal;

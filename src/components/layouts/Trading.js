@@ -1,48 +1,56 @@
 import React, { useState, useEffect } from "react";
 import { message, Switch as AntSwitch } from "antd";
-import { useActions } from "../hooks/useActions";
-import { useSelector } from "react-redux";
+import { useActions } from '../hooks/useActions';
+import { useSelector } from 'react-redux'; 
+import { Button } from 'react-bootstrap';
 
 function Trading() {
-  const { get_Live_Trade, update_Live_Trade } = useActions();
-  const { liveTrades, success, error } = useSelector(
-    (state) => state.liveTrade
-  );
-  const [liveTrade, setLiveTrade] = useState(true);
-  useEffect(() => {
-    get_Live_Trade();
-    setLiveTrade(liveTrades);
-  }, []);
-
-  const updateTrade = () => {
-    const data = { liveTrade: liveTrade };
-    update_Live_Trade(data);
-    if (success && success.length > 0) {
-      message.success(success);
+    const {get_Live_Trade, update_Live_Trade, setNewLeverage} = useActions();
+    // const {} = useSelector((state)=> state.liveTrades)
+    const {liveTrades, success, error} = useSelector(state =>state.liveTrade)
+    const {liveTrade} = useSelector(state =>state.adminInfo)
+    const [liveTrader, setLiveTrade] = useState(false);
+    console.log(liveTrade);
+    const [Leverage, setLeverage] = useState(null)
+    useEffect(()=>{
+      get_Live_Trade();
+      setLiveTrade(liveTrades)
+    }, []);
+    const updateLeverage = ()=>{
+      setNewLeverage(Leverage)
+      setLeverage("")
     }
-    get_Live_Trade();
-  };
-  return (
-    <div>
-      <div>
-        <div className="public-card">
-          <div className="each-row dash-row">
-            <div className="dtls">
-              <h4>Enable live trading</h4>
-            </div>
-            <div className="actions switch-field">
-              <div className="switch-field-round">
-                <AntSwitch
-                  className="ant-switch"
-                  checkedChildren="ON"
-                  unCheckedChildren="OFF"
-                  id="native-trading-one"
-                  name="native-trading"
-                  checked={liveTrade}
-                  onChange={() => setLiveTrade(!liveTrade)}
-                  onClick={updateTrade}
-                />
-              </div>
+    const updateTrade = ()=>{
+      update_Live_Trade(liveTrader);
+      if(success && success.length > 0){
+        message.success(success)
+      }
+      get_Live_Trade()
+    }
+    return (
+        <div>
+          {
+            (success && success.length > 0) ?  message.success(success) : " "
+          }
+           <div>
+                    <div className="public-card">
+                      <div className="each-row dash-row">
+                        <div className="dtls">
+                          <h4>Enable live trading</h4>
+                        </div>
+                        <div className="actions switch-field">
+                          <div className="switch-field-round">
+                            <AntSwitch
+                              className="ant-switch"
+                              checkedChildren="ON"
+                              unCheckedChildren="OFF"
+                              id="native-trading-one"
+                              name="native-trading"
+                              checked={liveTrade}
+                              onChange={()=>setLiveTrade(!liveTrade)}
+                              onClick={updateTrade}
+                            />
+                          </div>
 
               {/* <div className="switch-field-round">
                             <input
@@ -63,33 +71,34 @@ function Trading() {
                             />
                             <label htmlFor="native-trading-two">OFF</label>
                           </div> */}
-            </div>
-          </div>
-          <div className="each-row dash-row">
-            <div className="each-row dash-row">
-              <div className="dtls">
-                <h4>Trading Leverage</h4>
-              </div>
-              <div className="actions">
-                <input className="dash-input" type="number" name="text" />
-              </div>
-            </div>
-            <div className="save-btn">
-              <button>Save</button>
-            </div>
-          </div>
-          <div className="each-row dash-row">
-            <div className="dtls">
-              <h4>User can choose between live trading and no-live trading</h4>
-            </div>
-            <div className="actions switch-field">
-              <div className="switch-field-round">
-                <AntSwitch
-                  className="ant-switch"
-                  checkedChildren="ON"
-                  unCheckedChildren="OFF"
-                  defaultChecked
-                />
+                        </div>
+                      </div>
+                      <div className="each-row dash-row">
+                        <div className="dtls" style={{display:"flex", justifyContent:"space-between"}}>
+                          <h4>
+                            Trading Leverage
+                          </h4>
+                        <div style={{display:"flex", marginRight:"14px", justifyContent:"space-between"}}>
+                          <input type="number" style={{padding:"0px 18px"}} onChange={(e)=> setLeverage(e.target.value)}/>
+                          <Button variant="primary" style={{marginLeft:"6px"}} onClick={updateLeverage}>Save</Button>
+                        </div>
+                        </div>
+                      </div>
+                      <div className="each-row dash-row">
+                        <div className="dtls">
+                          <h4>
+                            User can choose between live trading and no-live
+                            trading
+                          </h4>
+                        </div>
+                        <div className="actions switch-field">
+                          <div className="switch-field-round">
+                            <AntSwitch
+                              className="ant-switch"
+                              checkedChildren="ON"
+                              unCheckedChildren="OFF"
+                              defaultChecked
+                            />
 
                 {/* <input
                               type="radio"

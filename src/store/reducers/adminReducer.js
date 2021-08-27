@@ -16,7 +16,8 @@ const adminInitialState = {
 }
 
 const LiveTradeInitial = {
-    liveTrades:null,
+    liveTrades:false,
+    leverage:{},
     success:"",
     error:""
 }
@@ -39,7 +40,7 @@ export function adminReducer(state = initialState, action){
         case actionTypes.AUTO_TRADE_UPDATE:
             return {
                 ...state,
-                success:"Tade Updated Successfully"
+                success:"Trade Updated Successfully"
             }
         break;
         case actionTypes.AUTO_TRADE_DELETE:
@@ -88,6 +89,7 @@ export const adminDataReducer =  (state=adminInitialState, action)=>{
             return {
                 ...state,
                 loading:false,
+                success:"",
                 adminData: action.payload
             }
         break;
@@ -124,6 +126,18 @@ export function admin_live_trade(state=LiveTradeInitial, action){
                 success:action.payload
             }
         break;
+        case actionTypes.SET_LEVERAGE:
+            return {
+                ...state,
+                leverage:action.payload,
+                success:"Leverage updated successfully"
+            }
+        break;
+        case actionTypes.SET_LEVERAGE_ERROR:
+            return {
+                ...state,
+                leverage_error: action.payload
+            }
         case actionTypes.LIVE_TRADE_ERROR:
             return {
                 ...state,
