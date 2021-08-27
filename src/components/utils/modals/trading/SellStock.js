@@ -16,6 +16,7 @@ const SellStockModal = (props) => {
     setSellStock,
     profitAmount,
     stopLossAmount,
+    setBuysell,
   } = props;
 
   const { user } = useSelector((state) => state.auth);
@@ -59,6 +60,7 @@ const SellStockModal = (props) => {
         loss: 0,
       });
       message.success("Your stock has been successfully sold");
+      setBuysell(true);
     }
     setSellStock(false);
   };
@@ -269,6 +271,7 @@ SellStockModal.propTypes = {
   setSellStock: PropTypes.func.isRequired,
   profitAmount: PropTypes.string.isRequired,
   stopLossAmount: PropTypes.string.isRequired,
+  setBuysell: PropTypes.func.isRequired,
 };
 
 export default SellStockModal;
