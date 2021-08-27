@@ -1,11 +1,9 @@
 import { format } from 'date-fns'
 import Moment from 'react-moment'
 import ChangeAutoTrade from './ChangeAutoTrade'
-import OnlineUser from './OnlineUser'
 
 export const Columns = [
   {
-    id: 'name',
     Header: 'First Name',
     accessor: 'name',
   },
@@ -21,6 +19,7 @@ export const Columns = [
     Header: 'Phone Number',
     accessor: 'phoneNumber',
   },
+
   {
     Header: 'Balance',
     accessor: 'estimatedBalance',
@@ -40,9 +39,15 @@ export const Columns = [
       </Moment>
     ),
   },
-
   {
     Header: 'Currency',
     accessor: 'currency',
+  },
+  {
+    Header: 'Last Login',
+    accessor: 'time',
+    Cell: ({ value }) => {
+      return format(new Date(value), 'dd/MM/yyyy')
+    },
   },
 ]
