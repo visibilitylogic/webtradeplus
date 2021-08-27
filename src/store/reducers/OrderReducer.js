@@ -3,9 +3,11 @@ import { GET_ORDERS, GET_ORDER_ERROR, ORDER_LOADING } from '../action-types'
 const initialState = {
   loading: false,
   trade_orders: [],
+  openData: [],
 }
 
 export const orderReducer = (state = initialState, action) => {
+  console.log(action)
   switch (action.type) {
     case ORDER_LOADING:
       return {
@@ -18,6 +20,7 @@ export const orderReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         trade_orders: action.payload,
+        openData: action.payload.filter((data) => data.isOpen == true),
       }
       break
     case GET_ORDER_ERROR:

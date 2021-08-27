@@ -3,99 +3,102 @@ import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useActions } from '../hooks/useActions'
 
-const DummyData = 
-[
-  {
-    id:1,
-    isOpen:true,
-    nameOfAsset: "Bitcoin",
-    tag:"Buy",
-    openRateOfAsset: 2000
-  },
+// const trade_orders = 
+// [
+//   {
+//     id:1,
+//     isOpen:true,
+//     nameOfAsset: "Bitcoin",
+//     tag:"buy",
+//     openRateOfAsset: 2000
+//   },
 
-  {
-    id:2,
-    isOpen:false,
-    nameOfAsset: "Ethereum",
-    tag:"Sell",
-    openRateOfAsset: 2000
-  },
+//   {
+//     id:2,
+//     isOpen:false,
+//     nameOfAsset: "Ethereum",
+//     tag:"Sell",
+//     openRateOfAsset: 2000
+//   },
 
-  {
-    id:3,
-    isOpen:true,
-    nameOfAsset: "Bitcoin",
-    tag:"Buy",
-    openRateOfAsset: 5000
-  }
+//   {
+//     id:3,
+//     isOpen:true,
+//     nameOfAsset: "Bitcoin",
+//     tag:"buy",
+//     openRateOfAsset: 5000
+//   }
 
-]
-
-const openData = DummyData && DummyData.filter(data=> data.isOpen === true)
+// ]
 function OrderBook() {
   const {getOrder} = useActions();
   const {user} = useSelector(state=> state.auth);
-  const {trade_orders} = useSelector(state=> state.orders)
+  const {loading, trade_orders} = useSelector(state=> state.orders)
   const [display,setDisplay] = useState("order-book");
+  const openData = trade_orders && trade_orders.filter(data=> data.isOpen === true)
   useEffect(()=>{
     getOrder(user && user._id)
   }, [])
   const bodyDisplay = ()=>{
     switch(display){
       case "order-book":
+       if (  trade_orders.length > 0 ){
         return (
           <Table>
           <tbody style={{textAlign:"left"}}>
           {
-            DummyData.map(data=>(
-              <tr style={{borderBottom:".1px solid wheat", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
+            trade_orders && trade_orders.map(data=>(
+              <tr style={{borderBottom:".1px solid white", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
               <td>
-                <span className="order_span">{Date.now()} </span>
-                <p style={{color:"wheat"}} >Date</p>
+                <span className="order_span"> {data.time && data.time.split("T")[1].slice(0,8)} </span>
+                <p style={{color:"white"}} >{data.time && data.time.split("T")[0]}</p>
               </td>
               <td>
                 <span className="order_span">{data.nameOfAsset} </span>
-                <p style={{color:"wheat"}} >TypeofAsset </p>
+                <p style={{color:"white"}} >TypeofAsset </p>
               </td>
               <td>
                 <span className="order_span">{data.openRateOfAsset} </span>
-                <p style={{color:"wheat"}} >amount</p>
+                <p style={{color:"white"}} >amount</p>
               </td>
               <td>
-                <span className="order_span" style={{color: data.tag === "Buy" ? "green" : "red"}}>{data.tag} </span>
-                <p style={{color:"wheat"}} >tag</p>
+                <span className="order_span" style={{color: data.tag === "buy" ? "green" : "red"}}>{data.tag} </span>
+                <p style={{color:"white"}} >tag</p>
               </td>
             </tr>
             ))
           }
-  
           </tbody>
       </Table>
         )
+       }else{
+         return  (<div><h1> No Trade History</h1></div>)
+       }
       break;
     
     case "open_position":
+     if(openData.length > 0){
       return (
         <Table>
         <tbody style={{textAlign:"left"}}>
         {
           openData.map(data=>(
-            <tr style={{borderBottom:".1px solid wheat", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
-              <td>
-                <span className="order_span">{Date.now()} </span>
-                <p style={{color:"wheat"}} >Date</p>
+            <tr style={{borderBottom:".1px solid white", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
+               <td>
+                <span className="order_span"> {data.time && data.time.split("T")[1].slice(0,8)} </span>
+                <p style={{color:"white"}} >{data.time && data.time.split("T")[0]}</p>
               </td>
               <td>
                 <span className="order_span">{data.nameOfAsset} </span>
-                <p style={{color:"wheat"}} >TypeofAsset </p>
+                <p style={{color:"white"}} >TypeofAsset </p>
               </td>
               <td>
                 <span className="order_span">{data.openRateOfAsset} </span>
-                <p style={{color:"wheat"}} >amount</p>
+                <p style={{color:"white"}} >amount</p>
               </td>
               <td>
-                <span className="order_span" style={{color: data.tag === "Buy" ? "green" : "red"}}>{data.tag} </span>
-                <p style={{color:"wheat"}} >tag</p>
+                <span className="order_span" style={{color: data.tag === "buy" ? "green" : "red"}}>{data.tag} </span>
+                <p style={{color:"white"}} >tag</p>
               </td>
             </tr>
           ))
@@ -104,40 +107,47 @@ function OrderBook() {
         </tbody>
     </Table>
       )
+    }else{
+      return (
+        <div><h1>No Open Position</h1></div>
+      )
+    }
     break;
     case "auto_trades":
-      return (
-        <Table>
-        <tbody style={{textAlign:"left"}}>
-        {
-          DummyData.map(data=>(
-            <tr  style={{borderBottom:".1px solid wheat"}} className="tableRoww" key={data.id}>
-            <td>
-              <span className="order_span">{Date.now()} </span>
-              <p style={{color:"wheat"}} >Date</p>
-            </td>
-            <td>
-              <span className="order_span">{data.nameOfAsset} </span>
-              <p style={{color:"wheat"}} >TypeofAsset </p>
-            </td>
-            <td>
-              <span className="order_span">{data.openRateOfAsset} </span>
-              <p style={{color:"wheat"}} >amount</p>
-            </td>
-            <td>
-              <span className="order_span" style={{color: data.tag === "Buy" ? "green" : "red"}}>{data.tag} </span>
-              <p style={{color:"wheat"}} >tag</p>
-            </td>
-          </tr>
-          ))
-        }
-
-        </tbody>
-    </Table>
-      )
-    break;
-    default: return  " "
-    }
+    
+      if (  trade_orders.length > 0 ){
+        return (
+          <Table>
+          <tbody style={{textAlign:"left"}}>
+          {
+            trade_orders && trade_orders.map(data=>(
+              <tr style={{borderBottom:".1px solid white", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
+             <td>
+                <span className="order_span"> {data.time && data.time.split("T")[1].slice(0,8)} </span>
+                <p style={{color:"white"}} >{data.time && data.time.split("T")[0]}</p>
+              </td>
+              <td>
+                <span className="order_span">{data.nameOfAsset} </span>
+                <p style={{color:"white"}} >TypeofAsset </p>
+              </td>
+              <td>
+                <span className="order_span">{data.openRateOfAsset} </span>
+                <p style={{color:"white"}} >amount</p>
+              </td>
+              <td>
+                <span className="order_span" style={{color: data.tag === "buy" ? "green" : "red"}}>{data.tag} </span>
+                <p style={{color:"white"}} >tag</p>
+              </td>
+            </tr>
+            ))
+          }
+          </tbody>
+      </Table>
+        )
+       }else{
+         return  (<div><h1> No Autorade History</h1></div>)
+       }
+      }
   }
   return (
         <div>
@@ -155,7 +165,8 @@ function OrderBook() {
                 <a className={display === "open_position" ? "active" : " "} onClick ={ () => setDisplay("open_position") }> Opened Positions</a>
                 <a className={display === "auto_trades" ? "active" : " "} onClick ={ () => setDisplay("auto_trades")}> Auto Trades</a>
             </div>
-            <div>
+            {loading && <div>Loading...</div>}
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
               {
                 bodyDisplay()
               }

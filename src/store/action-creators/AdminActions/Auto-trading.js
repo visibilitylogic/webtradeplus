@@ -10,6 +10,7 @@ const instance = axios.create({
 export const add_auto_trade = (datas)=> async (dispatch)=>{
     try {
       const {data} = await instance.post("/", datas, getToken());  
+      console.log(data);
       dispatch({
         type:actionTypes.AUTO_TRADE_ADD_SUCCESS,
         payload:data
