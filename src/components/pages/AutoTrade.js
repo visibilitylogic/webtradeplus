@@ -90,7 +90,7 @@ function AutoTrade() {
         <div className="dash-row">
             {loading &&   <Spinner style={{display:"flex", justifyContent:"center", alignItems:"center"}} animation="grow" />}
                       
-                <div className="center_orders">
+                <div className="center_orders" style={{width:"90%", margin:"0 auto"}}> 
                   <div className="text-center">
                     <h4 className="my-4" style={{ color: "#fff", textAlign:"center" }}>
                       Subscribe Now to Auto Copy our Top Performing Traders

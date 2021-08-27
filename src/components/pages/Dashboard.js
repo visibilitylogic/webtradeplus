@@ -134,7 +134,7 @@ const Dashboard = () => {
       getExchangeTradedFund();
       getForexStocks();
     } else {
-      setDefaultSelectedStock();
+      // setDefaultSelectedStock();
     }
   }, 10000);
 

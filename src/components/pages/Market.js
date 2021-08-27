@@ -13,7 +13,7 @@ function Market() {
   // market && setsearchMarket(market)
   
     return (
-        <div className="margin_auto">
+        <div style={{marginLeft:"55px"}}>
             <h1  style={{textAlign:"center", color:"white", marginBottom:"25px", fontFamily:"arial", marginTop:"20px"}}>Market List</h1>
             <div style={{ width: "100%", textAlign: "right"  }}>
                       {/* <input
