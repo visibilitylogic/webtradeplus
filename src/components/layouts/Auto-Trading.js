@@ -56,10 +56,7 @@ function AutoTrading() {
             delete_auto_trade(id);
         }
         get_all_auto_trades();
-
-        
-       
-    }
+     }
     
     return (
         <div classname="AutoTrading_Wrapper">

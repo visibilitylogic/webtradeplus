@@ -55,6 +55,7 @@ export const get_Live_Trade = () => async(dispatch)=>{
 }
 
 export const update_Live_Trade = (LT) => async(dispatch)=>{
+    console.log(LT)
     const datas = {liveTrade:LT}
     try {
         const {data} = await axios.put("https://trade-backend-daari.ondigitalocean.app/api/profile/users/liveTrade",datas, getToken());

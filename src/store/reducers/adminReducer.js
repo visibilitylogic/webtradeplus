@@ -33,6 +33,7 @@ export function adminReducer(state = initialState, action){
         case actionTypes.AUTO_TRADE_ADD_SUCCESS:
             return {
                 ...state,
+                loading:false,
                 trades:[{...action.payload}, ...state.trades],
                 success:"Successfull added auto trade"
             }
@@ -46,7 +47,9 @@ export function adminReducer(state = initialState, action){
         case actionTypes.AUTO_TRADE_DELETE:
             return {
                 ...state,
-                success:action.payload
+                loading:false,
+                success:action.payload,
+                trades: state.trades.filter((trade)=> trade.id !== action.payload)
             }
         break;
         case actionTypes.AUTO_TRADE_ERROR:
@@ -61,6 +64,8 @@ export function adminReducer(state = initialState, action){
                 loading:false,
                 trades:action.payload
             }
+            console.log(state.trades);
+            
         break;
         case actionTypes.SPECIFIC_TRADE:
             return {
@@ -122,7 +127,6 @@ export function admin_live_trade(state=LiveTradeInitial, action){
         case actionTypes.UPDATE_LIVE_TRADE:
             return{
                 ...state,
-                liveTrades:!state.liveTrades,
                 success:action.payload
             }
         break;
