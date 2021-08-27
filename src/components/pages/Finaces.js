@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import "./finances.css"
 function Finaces() {
     const {user} = useSelector(state=> state.auth); 
-    
     return (
         <div>
             <h1 style={{textAlign:"center", color:"white", marginBottom:"25px", fontFamily:"arial", marginTop:"20px"}}>  Finances Tab</h1>

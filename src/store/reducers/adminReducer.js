@@ -39,7 +39,7 @@ export function adminReducer(state = initialState, action){
         case actionTypes.AUTO_TRADE_UPDATE:
             return {
                 ...state,
-                success:"Tade Updated Successfully"
+                success:"Trade Updated Successfully"
             }
         break;
         case actionTypes.AUTO_TRADE_DELETE:

@@ -3,51 +3,51 @@ import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useActions } from '../hooks/useActions'
 
-const DummyData = 
-[
-  {
-    id:1,
-    isOpen:true,
-    nameOfAsset: "Bitcoin",
-    tag:"Buy",
-    openRateOfAsset: 2000
-  },
+// const trade_orders = 
+// [
+//   {
+//     id:1,
+//     isOpen:true,
+//     nameOfAsset: "Bitcoin",
+//     tag:"Buy",
+//     openRateOfAsset: 2000
+//   },
 
-  {
-    id:2,
-    isOpen:false,
-    nameOfAsset: "Ethereum",
-    tag:"Sell",
-    openRateOfAsset: 2000
-  },
+//   {
+//     id:2,
+//     isOpen:false,
+//     nameOfAsset: "Ethereum",
+//     tag:"Sell",
+//     openRateOfAsset: 2000
+//   },
 
-  {
-    id:3,
-    isOpen:true,
-    nameOfAsset: "Bitcoin",
-    tag:"Buy",
-    openRateOfAsset: 5000
-  }
+//   {
+//     id:3,
+//     isOpen:true,
+//     nameOfAsset: "Bitcoin",
+//     tag:"Buy",
+//     openRateOfAsset: 5000
+//   }
 
-]
-
-const openData = DummyData && DummyData.filter(data=> data.isOpen === true)
+// ]
 function OrderBook() {
   const {getOrder} = useActions();
   const {user} = useSelector(state=> state.auth);
   const {trade_orders} = useSelector(state=> state.orders)
   const [display,setDisplay] = useState("order-book");
+  const openData = trade_orders && trade_orders.filter(data=> data.isOpen === true)
   useEffect(()=>{
     getOrder(user && user._id)
   }, [])
   const bodyDisplay = ()=>{
     switch(display){
       case "order-book":
+       if (  trade_orders.length > 0 ){
         return (
           <Table>
           <tbody style={{textAlign:"left"}}>
           {
-            DummyData.map(data=>(
+            trade_orders && trade_orders.map(data=>(
               <tr style={{borderBottom:".1px solid wheat", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
               <td>
                 <span className="order_span">{Date.now()} </span>
@@ -68,13 +68,16 @@ function OrderBook() {
             </tr>
             ))
           }
-  
           </tbody>
       </Table>
         )
+       }else{
+         return  (<div><h1> No Trade History</h1></div>)
+       }
       break;
     
     case "open_position":
+     if(openData.length > 0){
       return (
         <Table>
         <tbody style={{textAlign:"left"}}>
@@ -104,40 +107,47 @@ function OrderBook() {
         </tbody>
     </Table>
       )
+    }else{
+      return (
+        <div><h1>No Open Position</h1></div>
+      )
+    }
     break;
     case "auto_trades":
-      return (
-        <Table>
-        <tbody style={{textAlign:"left"}}>
-        {
-          DummyData.map(data=>(
-            <tr  style={{borderBottom:".1px solid wheat"}} className="tableRoww" key={data.id}>
-            <td>
-              <span className="order_span">{Date.now()} </span>
-              <p style={{color:"wheat"}} >Date</p>
-            </td>
-            <td>
-              <span className="order_span">{data.nameOfAsset} </span>
-              <p style={{color:"wheat"}} >TypeofAsset </p>
-            </td>
-            <td>
-              <span className="order_span">{data.openRateOfAsset} </span>
-              <p style={{color:"wheat"}} >amount</p>
-            </td>
-            <td>
-              <span className="order_span" style={{color: data.tag === "Buy" ? "green" : "red"}}>{data.tag} </span>
-              <p style={{color:"wheat"}} >tag</p>
-            </td>
-          </tr>
-          ))
-        }
-
-        </tbody>
-    </Table>
-      )
-    break;
-    default: return  " "
-    }
+    
+      if (  trade_orders.length > 0 ){
+        return (
+          <Table>
+          <tbody style={{textAlign:"left"}}>
+          {
+            trade_orders && trade_orders.map(data=>(
+              <tr style={{borderBottom:".1px solid wheat", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
+              <td>
+                <span className="order_span">{Date.now()} </span>
+                <p style={{color:"wheat"}} >Date</p>
+              </td>
+              <td>
+                <span className="order_span">{data.nameOfAsset} </span>
+                <p style={{color:"wheat"}} >TypeofAsset </p>
+              </td>
+              <td>
+                <span className="order_span">{data.openRateOfAsset} </span>
+                <p style={{color:"wheat"}} >amount</p>
+              </td>
+              <td>
+                <span className="order_span" style={{color: data.tag === "Buy" ? "green" : "red"}}>{data.tag} </span>
+                <p style={{color:"wheat"}} >tag</p>
+              </td>
+            </tr>
+            ))
+          }
+          </tbody>
+      </Table>
+        )
+       }else{
+         return  (<div><h1> No Autorade History</h1></div>)
+       }
+      }
   }
   return (
         <div>
