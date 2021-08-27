@@ -16,7 +16,8 @@ const adminInitialState = {
 }
 
 const LiveTradeInitial = {
-    liveTrades:null,
+    liveTrades:false,
+    leverage:{},
     success:"",
     error:""
 }
@@ -125,6 +126,18 @@ export function admin_live_trade(state=LiveTradeInitial, action){
                 success:action.payload
             }
         break;
+        case actionTypes.SET_LEVERAGE:
+            return {
+                ...state,
+                leverage:action.payload,
+                success:"Leverage updated successfully"
+            }
+        break;
+        case actionTypes.SET_LEVERAGE_ERROR:
+            return {
+                ...state,
+                leverage_error: action.payload
+            }
         case actionTypes.LIVE_TRADE_ERROR:
             return {
                 ...state,
