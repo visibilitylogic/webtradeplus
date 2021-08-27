@@ -21,6 +21,15 @@ export const allTradesHeader = [
   {
     Header: 'type',
     accessor: 'tag',
+    accessor: ({ tag }) => (
+      <p
+        className={
+          tag === 'buy' ? ' bg-danger text-light' : ' bg-success text-light'
+        }
+      >
+        {tag}
+      </p>
+    ),
   },
   {
     Header: 'Amount',
