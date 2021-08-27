@@ -36,6 +36,7 @@ function OrderBook() {
   const {loading, trade_orders} = useSelector(state=> state.orders)
   const [display,setDisplay] = useState("order-book");
   const openData = trade_orders && trade_orders.filter(data=> data.isOpen === true)
+  console.log(trade_orders);
   useEffect(()=>{
     getOrder(user && user._id)
   }, [])
@@ -44,32 +45,32 @@ function OrderBook() {
       case "order-book":
        if (  trade_orders.length > 0 ){
         return (
-          <Table>
+          <table style={{width:"100%"}}>
           <tbody style={{textAlign:"left"}}>
           {
             trade_orders && trade_orders.map(data=>(
-              <tr style={{borderBottom:".1px solid white", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
+              <tr style={{paddingTop:"4px"}} style={{borderBottom:".1px solid wheat", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
               <td>
                 <span className="order_span"> {data.time && data.time.split("T")[1].slice(0,8)} </span>
-                <p style={{color:"white"}} >{data.time && data.time.split("T")[0]}</p>
+                <p style={{color:"rgb(255, 245, 227)", fontSize:"9px" }} >{data.time && data.time.split("T")[0]}</p>
               </td>
               <td>
                 <span className="order_span">{data.nameOfAsset} </span>
-                <p style={{color:"white"}} >TypeofAsset </p>
+                <p style={{color:"rgb(255, 245, 227)", fontSize:"9px" }} >TypeofAsset </p>
               </td>
               <td>
                 <span className="order_span">{data.openRateOfAsset} </span>
-                <p style={{color:"white"}} >amount</p>
+                <p style={{color:"rgb(255, 245, 227)", fontSize:"9px" }} >amount</p>
               </td>
               <td>
                 <span className="order_span" style={{color: data.tag === "buy" ? "green" : "red"}}>{data.tag} </span>
-                <p style={{color:"white"}} >tag</p>
+                <p style={{color:"rgb(255, 245, 227)", fontSize:"9px" }} >tag</p>
               </td>
             </tr>
             ))
           }
           </tbody>
-      </Table>
+      </table>
         )
        }else{
          return  (<div><h1> No Trade History</h1></div>)
@@ -79,33 +80,32 @@ function OrderBook() {
     case "open_position":
      if(openData.length > 0){
       return (
-        <Table>
+        <table style={{width:"100%"}}>
         <tbody style={{textAlign:"left"}}>
         {
-          openData.map(data=>(
-            <tr style={{borderBottom:".1px solid white", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
-               <td>
-                <span className="order_span"> {data.time && data.time.split("T")[1].slice(0,8)} </span>
-                <p style={{color:"white"}} >{data.time && data.time.split("T")[0]}</p>
-              </td>
-              <td>
-                <span className="order_span">{data.nameOfAsset} </span>
-                <p style={{color:"white"}} >TypeofAsset </p>
-              </td>
-              <td>
-                <span className="order_span">{data.openRateOfAsset} </span>
-                <p style={{color:"white"}} >amount</p>
-              </td>
-              <td>
-                <span className="order_span" style={{color: data.tag === "buy" ? "green" : "red"}}>{data.tag} </span>
-                <p style={{color:"white"}} >tag</p>
-              </td>
-            </tr>
+          openData && openData.map(data=>(
+            <tr style={{padding:"14px 0px"  }} style={{borderBottom:".1px solid wheat", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
+            <td>
+              <span className="order_span"> {data.time && data.time.split("T")[1].slice(0,8)} </span>
+              <p style={{color:"rgb(255, 245, 227)", fontSize:"9px" }} >{data.time && data.time.split("T")[0]}</p>
+            </td>
+            <td>
+              <span className="order_span">{data.nameOfAsset} </span>
+              <p style={{color:"rgb(255, 245, 227)", fontSize:"9px" }} >TypeofAsset </p>
+            </td>
+            <td>
+              <span className="order_span">{data.openRateOfAsset} </span>
+              <p style={{color:"rgb(255, 245, 227)", fontSize:"9px" }} >amount</p>
+            </td>
+            <td>
+              <span className="order_span" style={{color: data.tag === "buy" ? "green" : "red"}}>{data.tag} </span>
+              <p style={{color:"rgb(255, 245, 227)", fontSize:"9px" }} >tag</p>
+            </td>
+          </tr>
           ))
         }
-
         </tbody>
-    </Table>
+    </table>
       )
     }else{
       return (
@@ -115,34 +115,34 @@ function OrderBook() {
     break;
     case "auto_trades":
     
-      if (  trade_orders.length > 0 ){
+      if (  trade_orders.length > 0 && !loading ){
         return (
-          <Table>
+          <table style={{width:"100%"}}>
           <tbody style={{textAlign:"left"}}>
           {
             trade_orders && trade_orders.map(data=>(
-              <tr style={{borderBottom:".1px solid white", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
-             <td>
+              <tr style={{paddingTop:"4px"}} style={{borderBottom:".1px solid wheat", marginBottom:"-30px"}} className="tableRoww" key={data.id}>
+              <td>
                 <span className="order_span"> {data.time && data.time.split("T")[1].slice(0,8)} </span>
-                <p style={{color:"white"}} >{data.time && data.time.split("T")[0]}</p>
+                <p style={{color:"rgb(255, 245, 227)", fontSize:"9px" }} >{data.time && data.time.split("T")[0]}</p>
               </td>
               <td>
                 <span className="order_span">{data.nameOfAsset} </span>
-                <p style={{color:"white"}} >TypeofAsset </p>
+                <p style={{color:"rgb(255, 245, 227)", fontSize:"9px" }} >TypeofAsset </p>
               </td>
               <td>
                 <span className="order_span">{data.openRateOfAsset} </span>
-                <p style={{color:"white"}} >amount</p>
+                <p style={{color:"rgb(255, 245, 227)", fontSize:"9px" }} >amount</p>
               </td>
               <td>
                 <span className="order_span" style={{color: data.tag === "buy" ? "green" : "red"}}>{data.tag} </span>
-                <p style={{color:"white"}} >tag</p>
+                <p style={{color:"rgb(255, 245, 227)", fontSize:"9px" }} >tag</p>
               </td>
             </tr>
             ))
           }
           </tbody>
-      </Table>
+      </table>
         )
        }else{
          return  (<div><h1> No Autorade History</h1></div>)
@@ -150,7 +150,7 @@ function OrderBook() {
       }
   }
   return (
-        <div>
+        <div style={{marginLeft:"150px"}}>
           <div
             className="order-book-section orderBookComponent"
             style={{ display: "block" }}

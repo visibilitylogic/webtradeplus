@@ -3,34 +3,52 @@ import { message, Switch as AntSwitch } from "antd";
 import { useActions } from '../hooks/useActions';
 import { useSelector } from 'react-redux'; 
 import { Button } from 'react-bootstrap';
+import axios from "axios";
+import getToken from '../../store/utils/gettoken';
 
 function Trading() {
-    const {get_Live_Trade, update_Live_Trade, setNewLeverage} = useActions();
+    const {get_Live_Trade, update_Live_Trade, setNewLeverage, get_admin_data} = useActions();
     // const {} = useSelector((state)=> state.liveTrades)
     const {liveTrades, success, error} = useSelector(state =>state.liveTrade)
-    const {liveTrade} = useSelector(state =>state.adminInfo)
+    const {adminData} = useSelector(state =>state.adminInfo)
     const [liveTrader, setLiveTrade] = useState(false);
-    console.log(liveTrade);
-    const [Leverage, setLeverage] = useState(null)
-    useEffect(()=>{
-      get_Live_Trade();
-      setLiveTrade(liveTrades)
+    const [Leverage, setLeverage] = useState(null);
+    const [successs, setSuccesss] = useState("")
+    useEffect(async ()=>{
+      // get_Live_Trade();
+     const {data} = await axios.get("https://trade-backend-daari.ondigitalocean.app/api/site/livetrade", getToken());
+     console.log(data);
+     setLiveTrade(data)
     }, []);
     const updateLeverage = ()=>{
       setNewLeverage(Leverage)
-      setLeverage("")
+      setLeverage("");
+      get_admin_data()
     }
-    const updateTrade = ()=>{
-      update_Live_Trade(liveTrader);
-      if(success && success.length > 0){
-        message.success(success)
+    const updateTrade = async ()=>{
+      const datas  = { liveTrade:!liveTrader}
+      console.log(datas);
+      const {data} = await axios.put("https://trade-backend-daari.ondigitalocean.app/api/profile/users/liveTrade", datas, getToken() )
+      setSuccesss(data)
+      // update_Live_Trade(liveTrader);
+      // get_Live_Trade()
+      // if(success && success.length > 0){
+      //   message.success(success)
+      // }
+    }
+
+    useState(()=>{
+      if(adminData){
+        setLeverage(adminData.leverageAmount)
       }
-      get_Live_Trade()
-    }
+    })
     return (
         <div>
           {
             (success && success.length > 0) ?  message.success(success) : " "
+          }
+          {
+            (successs && successs.length > 0) ?  message.success(successs) : " "
           }
            <div>
                     <div className="public-card">
@@ -46,8 +64,8 @@ function Trading() {
                               unCheckedChildren="OFF"
                               id="native-trading-one"
                               name="native-trading"
-                              checked={liveTrade}
-                              onChange={()=>setLiveTrade(!liveTrade)}
+                              checked={liveTrader}
+                              onChange={()=>setLiveTrade(!liveTrader)}
                               onClick={updateTrade}
                             />
                           </div>
@@ -79,7 +97,7 @@ function Trading() {
                             Trading Leverage
                           </h4>
                         <div style={{display:"flex", marginRight:"14px", justifyContent:"space-between"}}>
-                          <input type="number" style={{padding:"0px 18px"}} onChange={(e)=> setLeverage(e.target.value)}/>
+                          <input type="number" value={Leverage? Leverage : " "}  style={{padding:"0px 18px"}} onChange={(e)=> setLeverage(e.target.value)}/>
                           <Button variant="primary" style={{marginLeft:"6px"}} onClick={updateLeverage}>Save</Button>
                         </div>
                         </div>
