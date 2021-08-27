@@ -283,6 +283,8 @@ a {
   margin-top: 5px;
   font-size: 85%;
   position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .dash-contents .order-book-section .order-book-sec .tabs a {
@@ -4271,3 +4273,14 @@ span.close svg:hover {
 .into-6 h2 {
   margin-top: -5px;
 }
+
+
+::-webkit-scrollbar{
+  width: 0px
+
+}
+::-webkit-scrollbar-track-piece{
+  background-color: transparent;
+  -webkit-border-radius: 6px
+}
+  
