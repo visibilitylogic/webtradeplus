@@ -113,7 +113,6 @@ export default function profileReducer(state = initialState, action) {
         userTrades: action.payload,
         error: null,
       };
-
     case actionTypes.PROFILE_ERROR:
       return {
         ...state,
