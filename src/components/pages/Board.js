@@ -8,6 +8,7 @@ import TradingViewWidget, { Themes } from "react-tradingview-widget";
 import BuyStockModal from "../utils/modals/trading/BuyStock";
 import { useActions } from "../hooks/useActions";
 import SellStockModal from "../utils/modals/trading/SellStock";
+import useInterval from "../hooks/useInterval";
 
 const Board = (props) => {
   const [assetQuantity, setAssetQuantity] = useState(1);
@@ -19,7 +20,6 @@ const Board = (props) => {
   const [buyStock, setBuyStock] = useState(false);
 
   const {
-    view,
     setLevIsh,
     levIsh,
     closeSetlevIsh,
@@ -35,9 +35,8 @@ const Board = (props) => {
 
   const { user, loading } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.profile);
-  const { currentSelectedStock, defaultSelectedStock } = useSelector(
-    (state) => state.stock
-  );
+  const { currentSelectedStock, defaultSelectedStock, allStockAssets } =
+    useSelector((state) => state.stock);
 
   const getRate = () => {
     if (Object.keys(defaultSelectedStock).length > 0) {
@@ -144,14 +143,11 @@ const Board = (props) => {
     }
   };
 
-  console.log(defaultSelectedStock);
-  console.log(currentSelectedStock);
-
   return (
     !loading && (
       <Fragment>
         <div className="details">
-          <SubSidebar view={view} getRate={getRate} />
+          <SubSidebar />
         </div>
         <div className="market">
           <div className="trade">
@@ -462,6 +458,7 @@ const Board = (props) => {
               handleStockPurchas={handleStockPurchase}
               setProfitAmount={setProfitAmount}
               stopLossAmount={stopLossAmount}
+              setBuysell={setBuysell}
             />
           </section>
         )}
@@ -480,6 +477,7 @@ const Board = (props) => {
               setProfitAmount={setProfitAmount}
               stopLossAmount={stopLossAmount}
               handleStockSale={handleStockSale}
+              setBuysell={setBuysell}
             />
           </section>
         )}

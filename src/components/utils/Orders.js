@@ -1,43 +1,71 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
+import { useEffect } from "react";
 import useInterval from "../hooks/useInterval";
 import { message } from "antd";
+import "./Orders.css";
 
 const Orders = (props) => {
+  const [currentStock, setCurrentStock] = useState({});
   const { buysell, orders, getRate, closeOrder, setBuysell } = props;
 
   const { user } = useSelector((state) => state.auth);
   const { userTrades, error } = useSelector((state) => state.profile);
+  const {
+    defaultSelectedStock,
+    currentSelectedStock,
+    crypto,
+    forex,
+    commodities,
+    iex,
+    etf,
+    allStockAssets,
+  } = useSelector((state) => state.stock);
 
   const { getAllUserTrades, deleteUserTrade } = useActions();
 
-  const getItem = () => {
-    let buy = orders.filter((item) => {
-      return (
-        item.tag === "buy" &&
-        parseInt(item.unit) / parseInt(getRate(item.stockName)) <
-          parseInt(item.stockAmount) &&
-        item.active
-      );
-    });
-
-    let sell = orders.filter((item) => {
-      return (
-        item.tag === "sell" &&
-        parseInt(item.unit) / parseInt(getRate(item.stockName)) >
-          parseInt(item.stockAmount) &&
-        item.active
-      );
-    });
-    let closeArr = [...buy, ...sell];
-
-    return closeArr;
+  const getStockPrice = (item) => {
+    allStockAssets.length > 0 &&
+      allStockAssets.filter((stock) => {
+        if (stock.symbol === item) {
+          // return stock.price;
+          setCurrentStock(stock);
+        }
+      });
   };
 
-  const closeTimer = () => {
-    let arr = getItem();
+  const getProfitAndLoss = (item) => {
+    return (defaultSelectedStock.price - item).toString().slice(0, 8);
+  };
 
+  // const getItem = () => {
+  //   let buy = orders.filter((item) => {
+  //     return (
+  //       item.tag === "buy" &&
+  //       parseInt(item.unit) / parseInt(getRate(item.stockName)) <
+  //         parseInt(item.stockAmount) &&
+  //       item.active
+  //     );
+  //   });
+
+  //   let sell = orders.filter((item) => {
+  //     return (
+  //       item.tag === "sell" &&
+  //       parseInt(item.unit) / parseInt(getRate(item.stockName)) >
+  //         parseInt(item.stockAmount) &&
+  //       item.active
+  //     );
+  //   });
+  //   let closeArr = [...buy, ...sell];
+
+  //   return closeArr;
+  // };
+
+  const closeTimer = () => {
+    // let arr = getItem();
+    let arr = [];
     arr.map((item) => {
       return closeOrder(
         item._id,
@@ -67,7 +95,7 @@ const Orders = (props) => {
 
   return (
     <div
-      className="order"
+      className="order orders-table"
       style={
         buysell
           ? { height: "65vh", overflow: "auto" }
@@ -98,12 +126,16 @@ const Orders = (props) => {
         </svg>
         <div
           className="all-tables tablesI"
-          style={buysell ? { display: "block" } : { display: "block" }}
+          style={{ display: buysell ? "block" : "" }}
         >
           <div
             className="tables tablesI"
             id="open-positions"
-            style={buysell ? { display: "block" } : { display: "block" }}
+            style={{
+              display: buysell ? "block" : "",
+              overflowX: "scroll",
+              overflowY: "scroll",
+            }}
           >
             <table>
               <tbody>
@@ -121,7 +153,7 @@ const Orders = (props) => {
                   <th>STATUS</th>
                 </tr>
                 {userTrades.length > 0
-                  ? userTrades.reverse().map((item, i) => (
+                  ? userTrades.map((item, i) => (
                       <tr key={item._id}>
                         <td>{item.time.slice(0, 10)}</td>
                         <td>00{i + 1}</td>
@@ -129,6 +161,7 @@ const Orders = (props) => {
 
                         <td>{item.margin}</td>
                         <td>
+                          $
                           {(
                             (parseInt(item.margin) /
                               parseFloat(item.stockAmount)) *
@@ -147,67 +180,24 @@ const Orders = (props) => {
                         >
                           {item.tag}
                         </td>
-                        <td>
-                          {/* {item.buyW
-                            ? "$" + item.buyW.toString().slice(0, 8)
-                            : ""} */}
+                        <td onClick={() => getStockPrice(item.nameOfAsset)}>
                           {item.openRateOfAsset.toString().slice(0, 8)}
                         </td>
                         <td>
-                          {/* {item.active ? "$" : ""}
-                          {item.active
-                            ? getRate(item.stockName)
-                              ? getRate(item.stockName).toString().slice(0, 8)
-                              : ""
-                            : "---"} */}
                           {item.isOpen ? "$" : ""}
-                          {item.openRateOfAsset.toString().slice(0, 8)}
+                          {Object.keys(currentSelectedStock).length > 0
+                            ? currentSelectedStock.price
+                            : defaultSelectedStock.price}
                         </td>
-                        <td className="fall">
-                          {/* {item.active
-                            ? item.tag === "buy"
-                              ? item.unit / getRate(item.stockName) >
-                                item.stockAmount
-                                ? (
-                                    "-" +
-                                    (item.unit / getRate(item.stockName) -
-                                      item.stockAmount) *
-                                      10 *
-                                      getRate(item.stockName)
-                                  )
-                                    .toString()
-                                    .slice(0, 8)
-                                : (
-                                    "+" +
-                                    (item.stockAmount -
-                                      item.unit / getRate(item.stockName)) *
-                                      10 *
-                                      getRate(item.stockName)
-                                  )
-                                    .toString()
-                                    .slice(0, 8)
-                              : //sell
-                              item.unit / getRate(item.stockName) <
-                                item.stockAmount
-                              ? (
-                                  (item.unit / getRate(item.stockName) -
-                                    item.stockAmount) *
-                                  10 *
-                                  getRate(item.stockName)
-                                )
-                                  .toString()
-                                  .slice(0, 8)
-                              : (
-                                  "+" +
-                                  (item.unit / getRate(item.stockName) -
-                                    item.stockAmount) *
-                                    10 *
-                                    getRate(item.stockName)
-                                )
-                                  .toString()
-                                  .slice(0, 8)
-                            : "---"} */}
-                          ---
+                        <td
+                          style={{
+                            color:
+                              getProfitAndLoss(item.openRateOfAsset) < 0
+                                ? "red"
+                                : "green",
+                          }}
+                        >
+                          {getProfitAndLoss(item.openRateOfAsset)}
                         </td>
                         <td>
                           {item.profit}/{item.loss}
@@ -254,51 +244,6 @@ const Orders = (props) => {
     </div>
   );
 };
-
-const dummyOrders = [
-  {
-    _id: 0,
-    time: new Date(),
-    stockName: "ADAUSD",
-    units: 5,
-    stockAmount: "0.909078",
-    tag: "buy",
-    openRate: "2.222032",
-    marketRate: "",
-    pandL: "",
-    profit: "0.77237",
-    loss: "0.23456",
-    isOpen: true,
-  },
-  {
-    _id: 1,
-    time: new Date(),
-    stockName: "MATICUSD",
-    units: 2,
-    stockAmount: "0.627212",
-    tag: "sell",
-    openRate: "1.6234571",
-    marketRate: "",
-    pandL: "",
-    profit: "0.77237",
-    loss: "0.23456",
-    isOpen: false,
-  },
-  {
-    _id: 2,
-    time: new Date(),
-    stockName: "TRXUSD",
-    units: 4,
-    stockAmount: "0.8783937",
-    tag: "buy",
-    openRate: "0.8563721",
-    marketRate: "",
-    pandL: "",
-    profit: "2.77237",
-    loss: "0.003456",
-    isOpen: true,
-  },
-];
 
 Orders.propTypes = {
   buysell: PropTypes.bool,

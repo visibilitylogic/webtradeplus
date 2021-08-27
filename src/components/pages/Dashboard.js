@@ -16,7 +16,6 @@ import OrderBook from "./OrderBook";
 import Market from "./Market";
 import AutoTrade from "../pages/AutoTrade";
 import Finaces from "./Finaces";
-// import Calc from "./Calc";
 import Calculator from "../layouts/Calculator";
 import News from "../pages/News";
 import LeaderBoard from "./LeaderBoard";
@@ -50,7 +49,12 @@ const Dashboard = () => {
     setIsTrading,
     setDefaultSelectedStock,
     setCurrentSelectedStock,
-    getAllUserTrades,
+    getCryptoAssets,
+    getCommodityStocks,
+    getInvestorsExchange,
+    getExchangeTradedFund,
+    getForexStocks,
+    getAllStockAssets,
   } = useActions();
 
   // Redux state data
@@ -106,7 +110,33 @@ const Dashboard = () => {
   // A custom hook for rerendering the dashboard component after 10 secondays
   // To keep track of asset changes
 
-  useInterval(setDefaultSelectedStock, 10000);
+  // useInterval(() => {
+  //
+  //     ?
+  //     :
+  // }, );
+
+  useEffect(() => {
+    getCryptoAssets();
+    getCommodityStocks();
+    getInvestorsExchange();
+    getExchangeTradedFund();
+    getForexStocks();
+    getAllStockAssets();
+  }, []);
+
+  useInterval(() => {
+    if (Object.keys(currentSelectedStock).length > 0) {
+      setCurrentSelectedStock(currentSelectedStock);
+      getCryptoAssets();
+      getCommodityStocks();
+      getInvestorsExchange();
+      getExchangeTradedFund();
+      getForexStocks();
+    } else {
+      setDefaultSelectedStock();
+    }
+  }, 10000);
 
   useEffect(() => {
     setDefaultSelectedStock();

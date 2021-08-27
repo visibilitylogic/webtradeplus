@@ -10,7 +10,7 @@ const initialState = {
   defaultSelectedStock: {},
   currentSelectedStock: {},
   stocksSelected: [],
-  // stocksSelected: JSON.parse(localStorage.getItem("stocksSelected")) || [],
+  allStockAssets: [],
   error: null,
 };
 
@@ -50,11 +50,12 @@ export default function stockReducer(state = initialState, action) {
         loading: false,
         etf: action.payload,
       };
-    case actionTypes.GET_ALL_ASSETS:
+    case actionTypes.GET_ALL_ASSETS_CURRENT_PRICE:
       return {
         ...state,
         loading: false,
-        allStocks: action.payload,
+        allStockAssets: action.payload,
+        error: null,
       };
     case actionTypes.SET_CURRENT_STOCK_SELECTED:
       return {

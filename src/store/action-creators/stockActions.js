@@ -165,6 +165,42 @@ export const deleteStock = (stockSymbol) => (dispatch) => {
   });
 };
 
-// export const getCurrentStockPrice = () => dispatch => {
-//   const {data} = axios.get(``)
-// }
+export const getAllStockAssets = () => async (dispatch) => {
+  Promise.all([
+    fetch(
+      "https://financialmodelingprep.com/api/v3/quotes/crypto?apikey=6e39eba411ee51caced6ab2be49f987b"
+    ),
+    fetch(
+      "https://financialmodelingprep.com/api/v3/quotes/forex?apikey=6e39eba411ee51caced6ab2be49f987b"
+    ),
+    fetch(
+      "https://financialmodelingprep.com/api/v3/stock/list?apikey=6e39eba411ee51caced6ab2be49f987b"
+    ),
+    fetch(
+      "https://financialmodelingprep.com/api/v3/quotes/commodity?apikey=6e39eba411ee51caced6ab2be49f987b"
+    ),
+    fetch(
+      "https://financialmodelingprep.com/api/v3/etf/list?apikey=6e39eba411ee51caced6ab2be49f987b"
+    ),
+  ])
+    .then((response) => Promise.all(response.map((result) => result.json())))
+    .then((result) => {
+      const data = result[0].concat(
+        result[1],
+        result[2].slice(0, 100),
+        result[3],
+        result[4].slice(0, 100)
+      );
+
+      dispatch({
+        type: actionTypes.GET_ALL_ASSETS_CURRENT_PRICE,
+        payload: data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: actionTypes.STOCK_ERROR,
+        payload: err.message,
+      });
+    });
+};
