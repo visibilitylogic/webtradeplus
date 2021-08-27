@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { format } from 'date-fns'
 export const tradeApprovalHeader = [
@@ -9,8 +8,8 @@ export const tradeApprovalHeader = [
   {
     id: 'Email',
     Header: 'email',
-    accessor: "email"
-},
+    accessor: 'email',
+  },
   {
     Header: 'Asking Date',
     accessor: 'time',
@@ -33,12 +32,13 @@ export const tradeApprovalHeader = [
     accessor: ({ status }) => (
       <p
         className={
-          status === 'Declined' ? 'text text-danger' : 'text text-success'
+          status === 'Declined'
+            ? 'text-center  bg-danger text-danger'
+            : 'text-center bg-success text-success'
         }
       >
         {status}
       </p>
     ),
   },
-  
 ]

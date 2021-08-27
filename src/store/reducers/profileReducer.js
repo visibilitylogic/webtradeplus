@@ -1,4 +1,4 @@
-import * as actionTypes from "../action-types";
+import * as actionTypes from '../action-types'
 
 const initialState = {
   profile: null,
@@ -17,7 +17,8 @@ const initialState = {
   allVerifiedUsers: [],
   userAutoCopyTrade: [],
   userTrades: [],
-};
+  singleUser: null,
+}
 
 export default function profileReducer(state = initialState, action) {
   switch (action.type) {
@@ -27,28 +28,28 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         bankPaymentMethods: action.payload,
         error: null,
-      };
+      }
     case actionTypes.GET_CRYPTO_PAYMENT_METHOD:
       return {
         ...state,
         loading: false,
         cryptoPaymentMethods: action.payload,
         error: null,
-      };
+      }
 
     case actionTypes.SET_DEPOSIT_AMOUNT:
       return {
         ...state,
         depositAmount: action.payload,
         error: null,
-      };
+      }
 
     case actionTypes.SET_WITHDRAWAL_AMOUNT:
       return {
         ...state,
         withdrawalAmount: action.payload,
         error: null,
-      };
+      }
 
     case actionTypes.GET_ALL_WITHDRAWALS:
       return {
@@ -56,18 +57,18 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         allWithdrawals: action.payload,
         bankTransfers: state.allWithdrawals.filter(
-          (withdrawal) => withdrawal.method === "Bank Transfer"
+          (withdrawal) => withdrawal.method === 'Bank Transfer',
         ),
         error: null,
-      };
+      }
 
     case actionTypes.GET_ALL_ORDERS:
       return {
         ...state,
         loading: false,
-        allOrders: action.payload,
+        user: action.payload,
         error: null,
-      };
+      }
 
     case actionTypes.GET_ALL_USERS:
       return {
@@ -75,14 +76,21 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         allUsers: action.payload,
         error: null,
-      };
+      }
+    case actionTypes.GET_CURRENT_PROFILE:
+      return {
+        ...state,
+        loading: false,
+        singleUser: action.payload,
+        error: null,
+      }
     case actionTypes.GET_ALL_DEPOSITS:
       return {
         ...state,
         loading: false,
         allDeposits: action.payload,
         error: null,
-      };
+      }
 
     case actionTypes.GET_ALL_TRADES:
       return {
@@ -90,7 +98,34 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         allTrades: action.payload,
         error: null,
-      };
+      }
+    // case actionTypes.SET_AUTO_TRADE:
+    //   const newUserState = state.singleUser
+    //   newUserState.autoTrade = action.payload
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     singleUser: newUserState,
+    //     error: null,
+    //   }
+    case actionTypes.APPROVE_VERIFY:
+      const approveState = state.singleUser
+      approveState.autoTrade = action.payload
+      return {
+        ...state,
+        loading: false,
+        singleUser: approveState,
+        error: null,
+      }
+    case actionTypes.SET_LIVE_TRADE:
+      const newLive_TRADE = state.singleUser
+      newLive_TRADE.liveTrade = action.payload
+      return {
+        ...state,
+        loading: false,
+        singleUser: newLive_TRADE,
+        error: null,
+      }
 
     case actionTypes.GET_ALL_VERIFIED_USERS:
       return {
@@ -98,28 +133,29 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         allVerifiedUsers: action.payload,
         error: null,
-      };
+      }
     case actionTypes.USER_AUTO_COPY_TRADE:
       return {
         ...state,
         loading: false,
         userAutoCopyTrade: action.payload,
         error: null,
-      };
+      }
     case actionTypes.GET_ALL_USER_TRADES:
       return {
         ...state,
         loading: false,
         userTrades: action.payload,
         error: null,
-      };
+      }
+
     case actionTypes.PROFILE_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
-      };
+      }
     default:
-      return state;
+      return state
   }
 }
