@@ -67,9 +67,12 @@ function Template() {
     return (
         <div style={{width:"100%"}}>
           {
+            (!loading && success ) && message.success(success)
+          }
+          {/* {
                   suc && message.success(suc, ()=> setSuc("")),
                   e && message.error(e, ()=> setE(""))
-              }
+              } */}
             <div>
                     <h3>Page configuration</h3>
                     <div className="public-card">

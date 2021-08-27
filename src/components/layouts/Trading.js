@@ -2,19 +2,26 @@ import React, {useState, useEffect} from 'react'
 import { message, Switch as AntSwitch } from "antd";
 import { useActions } from '../hooks/useActions';
 import { useSelector } from 'react-redux'; 
+import { Button } from 'react-bootstrap';
 
 function Trading() {
-    const {get_Live_Trade, update_Live_Trade} = useActions();
+    const {get_Live_Trade, update_Live_Trade, setNewLeverage} = useActions();
+    // const {} = useSelector((state)=> state.liveTrades)
     const {liveTrades, success, error} = useSelector(state =>state.liveTrade)
-    const [liveTrade, setLiveTrade] = useState(true);
+    const {liveTrade} = useSelector(state =>state.adminInfo)
+    const [liveTrader, setLiveTrade] = useState(false);
+    console.log(liveTrade);
+    const [Leverage, setLeverage] = useState(null)
     useEffect(()=>{
       get_Live_Trade();
       setLiveTrade(liveTrades)
     }, []);
-
+    const updateLeverage = ()=>{
+      setNewLeverage(Leverage)
+      setLeverage("")
+    }
     const updateTrade = ()=>{
-      const data = {liveTrade:liveTrade}
-      update_Live_Trade(data);
+      update_Live_Trade(liveTrader);
       if(success && success.length > 0){
         message.success(success)
       }
@@ -22,6 +29,9 @@ function Trading() {
     }
     return (
         <div>
+          {
+            (success && success.length > 0) ?  message.success(success) : " "
+          }
            <div>
                     <div className="public-card">
                       <div className="each-row dash-row">
@@ -61,6 +71,17 @@ function Trading() {
                             />
                             <label htmlFor="native-trading-two">OFF</label>
                           </div> */}
+                        </div>
+                      </div>
+                      <div className="each-row dash-row">
+                        <div className="dtls" style={{display:"flex", justifyContent:"space-between"}}>
+                          <h4>
+                            Trading Leverage
+                          </h4>
+                        <div style={{display:"flex", marginRight:"14px", justifyContent:"space-between"}}>
+                          <input type="number" style={{padding:"0px 18px"}} onChange={(e)=> setLeverage(e.target.value)}/>
+                          <Button variant="primary" style={{marginLeft:"6px"}} onClick={updateLeverage}>Save</Button>
+                        </div>
                         </div>
                       </div>
                       <div className="each-row dash-row">
