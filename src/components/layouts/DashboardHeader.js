@@ -467,7 +467,7 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
               variant="outline-success d-flex align-items-center deposit ml-3 "
               onClick={() => setShowCredit(true)}
             >
-              <ArrowRepeat className="mr-3" />
+              <ArrowRepeat className="mr-3 hideArrow" />
               Deposit
             </Button>
           </Nav>
