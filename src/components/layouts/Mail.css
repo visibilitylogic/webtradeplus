@@ -8241,5 +8241,22 @@ label.custom-control-label {
     height: 45px;
     z-index: 1000;
   }
+
+  .sell-option {
+    border-radius: 5px;
+    max-width: 300px;
+    width: 75%;
+    height: 536px;
+    background-color: #131722;
+    position: fixed;
+    z-index: 500;
+    top: 44%;
+    right: 160px;
+    transform: translateY(-50%);
+    border: 1px solid #fff;
+    padding: 10px 10px;
+    display: none;
+    overflow: hidden;
+}
   
 }
