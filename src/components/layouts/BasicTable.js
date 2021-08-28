@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useTable, useSortBy, usePagination } from 'react-table'
+import { useActions } from '../hooks/useActions'
 
 import FooterComponent from './FooterComponent'
-
 const BasicTable = ({
   allUsers,
   setUserLevel,
@@ -13,7 +13,7 @@ const BasicTable = ({
 }) => {
   const columns = useMemo(() => column, [])
   const data = useMemo(() => allUsers, [])
-
+  const { getCurrentProfile } = useActions()
   const tableInstance = useTable(
     {
       columns,
@@ -68,19 +68,27 @@ const BasicTable = ({
                 <tr
                   {...row.getRowProps()}
                   onClick={() => {
+                    console.log(row.original._id)
+                    getCurrentProfile(row.original._id)
                     setDisplayC(true)
-                    setUserLevel(
-                      user.isAdmin
-                        ? 'isAdmin'
-                        : user.isManager
-                        ? 'isManager'
-                        : 'none',
-                    )
                   }}
                 >
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      <td
+                        onClick={() => {
+                          setUserLevel(
+                            user.isAdmin
+                              ? 'isAdmin'
+                              : user.isManager
+                              ? 'isManager'
+                              : 'none',
+                          )
+                        }}
+                        {...cell.getCellProps()}
+                      >
+                        {cell.render('Cell')}
+                      </td>
                     )
                   })}
                 </tr>

@@ -42,3 +42,19 @@ export const getOrder = (id)=> async(dispatch)=> {
         })
     }
 }
+
+export const setNewLeverage = (num)=> async(dispatch)=>{
+    const datas = {leverageAmount : num}
+    try {
+        const {data} = await axios.put("https://trade-backend-daari.ondigitalocean.app/api/site/leverageAmount", datas, getToken());
+        dispatch({
+            type:actionTypes.SET_LEVERAGE,
+            payload:data
+        })
+    } catch (error) {
+        dispatch({
+            type:actionTypes.SET_LEVERAGE_ERROR,
+            payload:error.message
+        })
+    }
+}

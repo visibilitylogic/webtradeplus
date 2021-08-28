@@ -23,8 +23,6 @@ import { allTradesHeader } from './allTradesHeader'
 import { allVerifiedUsersHeader } from './allVerifiedUsersHeader'
 import { bankTransferHeader } from './bankTransferHeader'
 import { tradeApprovalHeader } from './tradeApprovalHeader'
-import UserArea from './UserArea'
-import SingleUser from './SingleUser'
 
 const ManagerContents = (props) => {
   const history = useHistory()
@@ -39,7 +37,6 @@ const ManagerContents = (props) => {
     allUsers,
     userAutoCopyTrade,
     tradeApproval,
-    singleUser,
   } = useSelector((state) => state.profile)
 
   const { user } = useSelector((state) => state.auth)
@@ -49,7 +46,6 @@ const ManagerContents = (props) => {
     updateWalletBalance,
     setLiveTrade,
     setIsTrading,
-    setAutoTrade,
     setNotificationEnabled, // expecting end point
     approveDeposit,
     declineVerify,
@@ -91,16 +87,9 @@ const ManagerContents = (props) => {
   const [userLevel, setUserLevel] = useState('')
   const [currentDeposit, setCurrentDeposit] = useState([])
 
-  // const [toggle, setToggle] = useState({
-  //   id: singleUser._id,
-  //   liveTrade: singleUser.liveTrade,
-  // })
-
-  //
-  //setAutoTrade
-  const [trade, setTrade] = useState({
+  const [toggle, setToggle] = useState({
     id: user._id,
-    authEnabled: false,
+    liveTrade: user.liveTrade,
   })
   const [notification, setNotification] = useState({
     id: user._id,
@@ -113,7 +102,7 @@ const ManagerContents = (props) => {
   })
 
   // auth
-  console.log(singleUser)
+  console.log(allUsers)
   const setAuth0 = useCallback(() => {
     setAuth(!auth)
     // setAuthEnabled({
@@ -129,13 +118,13 @@ const ManagerContents = (props) => {
   })
 
   //  const paginate = (num) => setCurrentPage(num)
-  // const setToggles = useCallback(() => {
-  //   setToggle(!toggle.liveTrade)
-  //   setLiveTrade({
-  //     id: user._id,
-  //     liveTrade: !user.liveTrade,
-  //   })
-  // }, [toggle])
+  const setToggles = useCallback(() => {
+    setToggle(!toggle.liveTrade)
+    setLiveTrade({
+      id: user._id,
+      liveTrade: !user.liveTrade,
+    })
+  }, [toggle])
 
   // notification
   const setNotifications = useCallback(() => {
@@ -147,7 +136,7 @@ const ManagerContents = (props) => {
   }, [notification])
 
   // isTrading
-  console.log(singleUser)
+
   // const setTrading = useCallback(() => {}, [])
 
   const deleteAutoCopyTrade = async () => {
@@ -417,7 +406,7 @@ const ManagerContents = (props) => {
   useEffect(() => {
     getUserAutoCopyTrade(user._id)
   }, [])
-  console.log(user)
+
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
@@ -456,32 +445,88 @@ const ManagerContents = (props) => {
             <h2>0</h2>
           </div>
         </div>
+        {/* <table>
+          <tbody>
+            <tr>
+              <th>Currency</th>
+              <th>Total Trade</th>
+              <th>Total Deposit</th>
+              <th>Total Withdraw</th>
+              <th>Fees</th>
+            </tr>
+            <tr>
+              <td>EUR</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
+            </tr>
+            <tr>
+              <td>EUR</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
+            </tr>
+            <tr>
+              <td>EUR</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
+            </tr>
+            <tr>
+              <td>EUR</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
+            </tr>
+            <tr>
+              <td>EUR</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
+            </tr>
+          </tbody>
+        </table> */}
       </div>
-      <div className="manager-tab-dtls" manager-tab-dtls="bank-transfers">
-        {bankTransfers && bankTransfers.length > 0 && (
-          <TableContainer>
-            <BasicTable
-              allUsers={bankTransfers}
-              user={user}
-              column={bankTransferHeader}
-              type="transfer"
-            />
-          </TableContainer>
-        )}
-      </div>
+      {/* bank Transfer */}
+      {bankTransfers && bankTransfers.length > 0 && (
+        <TableContainer
+          style={{
+            background: 'white',
+            margin: '  1.2rem auto 0 auto',
+            width: '96%',
+          }}
+        >
+          <BasicTable
+            allUsers={bankTransfers}
+            user={user}
+            column={bankTransferHeader}
+            type="transfer"
+          />
+        </TableContainer>
+      )}
 
-      <div className="manager-tab-dtls" manager-tab-dtls="payments">
-        {allDeposits && allDeposits.length > 0 && (
-          <TableContainer>
-            <BasicTable
-              allUsers={allDeposits}
-              user={user}
-              column={depositHeader}
-              type="deposit"
-            />
-          </TableContainer>
-        )}
-      </div>
+      {/* all deposit */}
+      {allDeposits && allDeposits.length > 0 && (
+        <TableContainer
+          style={{
+            background: 'white',
+            margin: '  1.2rem auto 0 auto',
+            width: '96%',
+          }}
+        >
+          <BasicTable
+            allUsers={allDeposits}
+            user={user}
+            column={depositHeader}
+            type="deposit"
+          />
+        </TableContainer>
+      )}
 
       <div className="manager-tab-dtls" manager-tab-dtls="subscriptions">
         <table>
@@ -507,22 +552,33 @@ const ManagerContents = (props) => {
           </tbody>
         </table>
       </div>
-      <div className="manager-tab-dtls" manager-tab-dtls="identity">
-        {allVerifiedUsers && allVerifiedUsers.length > 0 && (
-          <TableContainer>
-            <BasicTable
-              allUsers={allVerifiedUsers}
-              user={user}
-              column={allVerifiedUsersHeader}
-              type="verifiedUsers"
-            />
-          </TableContainer>
-        )}
-      </div>
+
+      {allVerifiedUsers && allVerifiedUsers.length > 0 && (
+        <TableContainer
+          style={{
+            background: 'white',
+            margin: '  1.2rem auto 0 auto',
+            width: '96%',
+          }}
+        >
+          <BasicTable
+            allUsers={allVerifiedUsers}
+            user={user}
+            column={allVerifiedUsersHeader}
+            type="verifiedUsers"
+          />
+        </TableContainer>
+      )}
 
       {/* Table */}
-      {/* <div className="manager-tab-dtls" manager-tab-dtls="users"> */}
-      <TableContainer>
+
+      <TableContainer
+        style={{
+          background: 'white',
+          margin: '  1.2rem auto 0 auto',
+          width: '96%',
+        }}
+      >
         {!displayC && allUsers.length > 0 && (
           <BasicTable
             allUsers={allUsers}
@@ -534,7 +590,7 @@ const ManagerContents = (props) => {
           />
         )}
       </TableContainer>
-      {/* </div> */}
+
       <div className="manager-tab-dtls" manager-tab-dtls="users">
         {displayC && (
           <div className="second-sec" style={{ display: 'block' }}>
@@ -637,31 +693,100 @@ const ManagerContents = (props) => {
                           </div>
                         </div>
 
-                        {/* userArea */}
-                        {singleUser && (
-                          <UserArea
-                            // toggle={toggle}
-                            singleUser={singleUser}
-                            setEditProfile={setEditProfile}
-                            handleDeleteUser={handleDeleteUser}
-                          />
-                        )}
+                        <div
+                          style={{
+                            paddingLeft: '20px',
+                            width: '30%',
+                          }}
+                          className="d-flex justify-content-center  flex-column align-items-center"
+                        >
+                          <h3 className="text-center">User</h3>
+                          <div className="d-flex justify-content-space-between align-items-center">
+                            <button
+                              className="edit-profile"
+                              style={{
+                                backgroundColor: '#363c4f',
+                                borderRadius: '4px',
+                              }}
+                              onClick={() => setEditProfile(true)}
+                            >
+                              Edit profile
+                            </button>
+                            <button
+                              style={{
+                                backgroundColor: '#e30f0f',
+                                borderRadius: '4px',
+                              }}
+                              className="delete-profile"
+                            >
+                              Delete user
+                            </button>
+                          </div>
+
+                          <div className="d-flex justify-content-center align-items-center">
+                            <div>
+                              <h5>Live Trade</h5>
+                            </div>
+                            <div>
+                              <Switch
+                                onChange={setToggles}
+                                checked={toggle.liveTrade}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#000000"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* <div
+                          style={{
+                            paddingLeft: '20px',
+                            width: '30%',
+                          }}
+                        >
+                          <div className="d-flex justify-content-center align-items-center">
+                            <label>
+                              <h4>Live Trade</h4>
+                              <Switch
+                                onChange={setToggles}
+                                checked={toggle.liveTrade}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#000000"
+                              />
+                            </label>
+                          </div>
+
+                          <button
+                            className="edit-profile"
+                            style={{
+                              backgroundColor: '#363c4f',
+                              borderRadius: '4px',
+                            }}
+                            onClick={() => setEditProfile(true)}
+                          >
+                            Edit profile
+                          </button>
+                          <button
+                            style={{
+                              backgroundColor: '#e30f0f',
+                              borderRadius: '4px',
+                            }}
+                            className="delete-profile"
+                            onClick={() => handleDeleteUser(user._id)}
+                          >
+                            Delete user
+                          </button>
+                        </div> */}
                       </div>
                       <div className="hr" />
                     </div>
-
-                    {/* left hand side of user profile */}
-                    {singleUser && (
-                      <SingleUser
-                        setNotifications={setNotifications}
-                        setAuth0={setAuth0}
-                        singleUser={singleUser}
-                        checked2={auth.authEnabled}
-                        setDisplayC={setDisplayC}
-                        checked={notification.notificationsEnabled}
-                      />
-                    )}
-                    {/* <div className="dash-row white-card">
+                    <div className="dash-row white-card">
                       <div className="table">
                         <div className="dash-row dash-row-centralized">
                           <div className="th">Name</div>
@@ -676,17 +801,10 @@ const ManagerContents = (props) => {
                         <div className="dash-row dash-row-centralized">
                           <div className="th">Phone</div>
                           <div className="td">
-                            {user.phone ? user.phone : ''}
+                            {user.phone ? user.phoneNumber : ''}
                           </div>
                         </div>
-                        <div className="dash-row dash-row-centralized">
-                          <div className="th">Last login</div>
-                          <div className="td">-</div>
-                        </div>
-                        <div className="dash-row dash-row-centralized">
-                          <div className="th">Language</div>
-                          <div className="td"> {user.language}</div>
-                        </div>
+
                         <div className="dash-row dash-row-centralized">
                           <div className="th">Currency use</div>
                           <div className="td"> {user.currency}</div>
@@ -764,13 +882,48 @@ const ManagerContents = (props) => {
                           </div>
                         </div>
                       </div>
-                    </div> */}
+                    </div>
                   </div>
                   <div className="dash-row">
+                    <div className="login-history">
+                      <div className="header">
+                        <span className="text-uppercase font-weight-bold font-size-14">
+                          Login History
+                        </span>
+                      </div>
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <div className="dash-row dash-row-centralized">
+                                <div
+                                  className="country-flag"
+                                  style={{
+                                    backgroundImage: 'url()',
+                                  }}
+                                />
+                                <div className="country-name">
+                                  Bucharest (Romania)
+                                </div>
+                              </div>
+                            </td>
+                            <td>86.105.9.12</td>
+                            <td>23/02/2021 14:07:49</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                     <div className="deposit-history">
+                      {/* <div className="header">
+                        <span className="text-uppercase font-weight-bold font-size-14">
+                          Deposit History
+                        </span>
+                      </div> */}
+
                       {currentDeposit && currentDeposit.length > 0 && (
                         <BasicTable
                           allUsers={currentDeposit}
+                          user={user}
                           column={currentDeposit}
                           type="currentDeposit"
                         />
@@ -828,14 +981,72 @@ const ManagerContents = (props) => {
                             </h2>
                           </div>
                         </div>
+                        <div
+                          style={{
+                            paddingLeft: '20px',
+                            width: '30%',
+                          }}
+                          className="d-flex justify-content-center  flex-column align-items-center"
+                        >
+                          <h3 className="text-center">User</h3>
+                          <div className="d-flex justify-content-space-between align-items-center">
+                            <button
+                              className="edit-profile"
+                              style={{
+                                backgroundColor: '#363c4f',
+                                borderRadius: '4px',
+                              }}
+                            >
+                              Edit profile
+                            </button>
+                            <button
+                              style={{
+                                backgroundColor: '#e30f0f',
+                                borderRadius: '4px',
+                              }}
+                              className="delete-profile"
+                            >
+                              Delete user
+                            </button>
+                          </div>
 
-                        {singleUser && (
-                          <UserArea
-                            singleUser={singleUser}
-                            setEditProfile={setEditProfile}
-                            handleDeleteUser={handleDeleteUser}
-                          />
-                        )}
+                          <div className="d-flex justify-content-center align-items-center">
+                            <div>
+                              <h5>Live Trade</h5>
+                            </div>
+                            <div>
+                              <Switch
+                                onChange={setToggles}
+                                checked={toggle.liveTrade}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#000000"
+                              />
+                            </div>
+                          </div>
+                          {/* <div className="d-flex  align-items-center justify-content-space-between">
+                            <button
+                              className="edit-profile"
+                              style={{
+                                backgroundColor: '#363c4f',
+                                borderRadius: '4px',
+                              }}
+                            >
+                              Edit profile
+                            </button>
+                            <button
+                              style={{
+                                backgroundColor: '#e30f0f',
+                                borderRadius: '4px',
+                              }}
+                              className="delete-profile"
+                            >
+                              Delete user
+                            </button>
+                          </div> */}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1268,13 +1479,47 @@ const ManagerContents = (props) => {
                             </h2>
                           </div>
                         </div>
-                        {singleUser && (
-                          <UserArea
-                            singleUser={singleUser}
-                            setEditProfile={setEditProfile}
-                            handleDeleteUser={handleDeleteUser}
-                          />
-                        )}
+                        <div
+                          style={{
+                            paddingLeft: '20px',
+                            width: '30%',
+                          }}
+                        >
+                          <div className="d-flex justify-content-center align-items-center">
+                            <div>
+                              <h5>Live Trade</h5>
+                            </div>
+                            <div>
+                              <Switch
+                                onChange={setToggles}
+                                checked={toggle.liveTrade}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#000000"
+                              />
+                            </div>
+                          </div>
+                          <button
+                            className="edit-profile"
+                            style={{
+                              backgroundColor: '#363c4f',
+                              borderRadius: '4px',
+                            }}
+                          >
+                            Edit profile
+                          </button>
+                          <button
+                            style={{
+                              backgroundColor: '#e30f0f',
+                              borderRadius: '4px',
+                            }}
+                            className="delete-profile"
+                          >
+                            Delete user
+                          </button>
+                        </div>
                       </div>
                     </div>
                     <table>
@@ -1419,13 +1664,41 @@ const ManagerContents = (props) => {
                             </h2>
                           </div>
                         </div>
-                        {singleUser && (
-                          <UserArea
-                            singleUser={singleUser}
-                            setEditProfile={setEditProfile}
-                            handleDeleteUser={handleDeleteUser}
-                          />
-                        )}
+                        <div
+                          style={{
+                            paddingLeft: '20px',
+                            width: '30%',
+                          }}
+                        >
+                          <div className="d-flex justify-content-center align-items-center">
+                            <div>
+                              <h5>Live Trade</h5>
+                            </div>
+                            <div>
+                              <Switch
+                                onChange={setToggles}
+                                checked={toggle.liveTrade}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#000000"
+                              />
+                            </div>
+                          </div>
+                          <button
+                            className="edit-profile"
+                            style={{ backgroundColor: '#363c4f' }}
+                          >
+                            Edit profile
+                          </button>
+                          <button
+                            style={{ backgroundColor: '#e30f0f' }}
+                            className="delete-profile"
+                          >
+                            Delete user
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1481,14 +1754,47 @@ const ManagerContents = (props) => {
                             </h2>
                           </div>
                         </div>
-
-                        {singleUser && (
-                          <UserArea
-                            singleUser={singleUser}
-                            setEditProfile={setEditProfile}
-                            handleDeleteUser={handleDeleteUser}
-                          />
-                        )}
+                        <div
+                          style={{
+                            paddingLeft: '20px',
+                            width: '30%',
+                          }}
+                        >
+                          <div className="d-flex justify-content-center align-items-center">
+                            <div>
+                              <h5>Live Trade</h5>
+                            </div>
+                            <div>
+                              <Switch
+                                onChange={setToggles}
+                                checked={toggle.liveTrade}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#000000"
+                              />
+                            </div>
+                          </div>
+                          <button
+                            className="edit-profile"
+                            style={{
+                              backgroundColor: '#363c4f',
+                              borderRadius: '4px',
+                            }}
+                          >
+                            Edit profile
+                          </button>
+                          <button
+                            style={{
+                              backgroundColor: '#e30f0f',
+                              borderRadius: '4px',
+                            }}
+                            className="delete-profile"
+                          >
+                            Delete user
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1544,13 +1850,47 @@ const ManagerContents = (props) => {
                             </h2>
                           </div>
                         </div>
-                        {singleUser && (
-                          <UserArea
-                            singleUser={singleUser}
-                            setEditProfile={setEditProfile}
-                            handleDeleteUser={handleDeleteUser}
-                          />
-                        )}
+                        <div
+                          style={{
+                            paddingLeft: '20px',
+                            width: '30%',
+                          }}
+                        >
+                          <div className="d-flex justify-content-center align-items-center">
+                            <div>
+                              <h5>Live Trade</h5>
+                            </div>
+                            <div>
+                              <Switch
+                                onChange={setToggles}
+                                checked={toggle.liveTrade}
+                                className="react-switch"
+                                onColor="#54AC40"
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                offColor="#000000"
+                              />
+                            </div>
+                          </div>
+                          <button
+                            className="edit-profile"
+                            style={{
+                              backgroundColor: '#363c4f',
+                              borderRadius: '4px',
+                            }}
+                          >
+                            Edit profile
+                          </button>
+                          <button
+                            style={{
+                              backgroundColor: '#e30f0f',
+                              borderRadius: '4px',
+                            }}
+                            className="delete-profile"
+                          >
+                            Delete user
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1562,7 +1902,13 @@ const ManagerContents = (props) => {
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="orders">
         {allTrades && allTrades.length > 0 && (
-          <TableContainer>
+          <TableContainer
+            style={{
+              background: 'white',
+              margin: '  1.2rem auto 0 auto',
+              width: '96%',
+            }}
+          >
             <BasicTable
               allUsers={allTrades}
               user={user}
@@ -1574,7 +1920,13 @@ const ManagerContents = (props) => {
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="withdraw">
         {allWithdrawals && allWithdrawals.length > 0 && (
-          <TableContainer>
+          <TableContainer
+            style={{
+              background: 'white',
+              margin: '  1.2rem auto 0 auto',
+              width: '96%',
+            }}
+          >
             <BasicTable
               allUsers={allWithdrawals}
               user={user}
@@ -1588,7 +1940,13 @@ const ManagerContents = (props) => {
       {/* trade approval */}
       <div className="manager-tab-dtls" manager-tab-dtls="traders-approval">
         {tradeApproval && tradeApproval.length > 0 && (
-          <TableContainer>
+          <TableContainer
+            style={{
+              background: 'white',
+              margin: '  1.2rem auto 0 auto',
+              width: '96%',
+            }}
+          >
             <BasicTable
               allUsers={tradeApproval}
               user={user}
@@ -1611,9 +1969,6 @@ ManagerContents.propTypes = {
 export default React.memo(ManagerContents)
 
 const TableContainer = styled.div`
-  background: white;
-  margin: 1.2rem auto 0 auto;
-  width: 96%;
   table {
     border-collapse: collapse;
     width: 100%;
@@ -1646,6 +2001,10 @@ const TableContainer = styled.div`
     background: #e9ecf2;
     color: black;
   }
+
+  // table tr:nth-child(even) {
+  //   background-color: #f2f2f2;
+  // }
 
   table tr:hover {
     background-color: #ddd;
