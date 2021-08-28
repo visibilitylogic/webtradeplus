@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 const Pagination = ({ postPerPage, totalPosts, paginate }) => {
-  const pageNumbers = []
+  const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalPosts / postPerPage); i++) {
-    pageNumbers.push(i)
+    pageNumbers.push(i);
   }
 
   return (
@@ -16,20 +16,19 @@ const Pagination = ({ postPerPage, totalPosts, paginate }) => {
               <a
                 href="!"
                 onClick={() => {
-                  paginate(num)
-                  this.className.add('active')
-                  console.log(this)
+                  paginate(num);
+                  this.className.add("active");
                 }}
                 className="page-link"
               >
                 {num}
               </a>
             </li>
-          )
+          );
         })}
       </ul>
     </nav>
-  )
-}
+  );
+};
 
-export default Pagination
+export default Pagination;

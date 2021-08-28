@@ -80,11 +80,11 @@
   right: 5px;
 } */
 
-.green {
+.profit-percentage {
   color: #1f7a2d !important;
 }
 
-.red {
+.loss-percentage {
   color: #c33722;
 }
 
@@ -377,7 +377,7 @@
   padding: 10px 10px;
 }
 
-@media screen and (max-width:[] 800px) {
+@media screen and (max-width: [] 800px) {
   .dash-contents .details {
     display: none !important;
   }

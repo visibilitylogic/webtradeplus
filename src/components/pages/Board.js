@@ -11,7 +11,6 @@ import SellStockModal from "../utils/modals/trading/SellStock";
 import useInterval from "../hooks/useInterval";
 
 const Board = (props) => {
-  const [assetQuantity, setAssetQuantity] = useState(1);
   const [sellStock, setSellStock] = useState(false);
   const [disableTakeProfit, setDisableTakeProfit] = useState(true);
   const [disableStopLoss, setDisableStopLoss] = useState(true);
@@ -35,24 +34,30 @@ const Board = (props) => {
   } = props;
 
   const { user, loading } = useSelector((state) => state.auth);
-  const { error } = useSelector((state) => state.profile);
+  const { error, userMargin } = useSelector((state) => state.profile);
   const { currentSelectedStock, defaultSelectedStock, allStockAssets } =
     useSelector((state) => state.stock);
 
   // Action creators
-  const { purchaseStockAsset, setDefaultSelectedStock, setCurrentSelectedStock, getAllStockAssets } = useActions();
+  const {
+    purchaseStockAsset,
+    setDefaultSelectedStock,
+    setCurrentSelectedStock,
+    getAllStockAssets,
+    setUserMargin,
+  } = useActions();
 
   const getRate = () => {
     if (Object.keys(defaultSelectedStock).length > 0) {
       return (
-        (assetQuantity / defaultSelectedStock.price) *
+        (userMargin / defaultSelectedStock.price) *
         (data && data.leverageAmount)
       )
         .toString()
         .slice(0, 8);
     } else {
       return (
-        (assetQuantity / currentSelectedStock.price) *
+        (userMargin / currentSelectedStock.price) *
         (data && data.leverageAmount)
       )
         .toString()
@@ -182,11 +187,11 @@ const Board = (props) => {
                         className="input"
                         type="number"
                         name="amount"
-                        defaultValue={assetQuantity}
-                        value={assetQuantity}
+                        defaultValue={userMargin}
+                        value={userMargin}
                         min={1}
                         max={50000}
-                        onChange={(e) => setAssetQuantity(e.target.value)}
+                        onChange={(e) => setUserMargin(e.target.value)}
                       />
                     </span>
                   </div>
@@ -194,15 +199,15 @@ const Board = (props) => {
                     <div
                       className="trade-amount-minus"
                       style={{
-                        pointerEvents: assetQuantity === 1 ? "none" : "auto",
+                        pointerEvents: userMargin === 1 ? "none" : "auto",
                       }}
-                      onClick={() => setAssetQuantity(assetQuantity - 1)}
+                      onClick={() => setUserMargin(userMargin - 1)}
                     >
                       <span>-</span>
                     </div>
                     <div
                       className="trade-amount-add"
-                      onClick={() => setAssetQuantity(assetQuantity + 1)}
+                      onClick={() => setUserMargin(userMargin + 1)}
                     >
                       <span>+</span>
                     </div>
@@ -247,7 +252,7 @@ const Board = (props) => {
                     {getRate(
                       defaultSelectedStock,
                       currentSelectedStock,
-                      assetQuantity
+                      userMargin
                     )}
                   </span>
                 </div>
@@ -435,7 +440,6 @@ const Board = (props) => {
               setDisableStopLoss={setDisableStopLoss}
               setDisableTakeProfit={setDisableTakeProfit}
               setStopLossAmount={setStopLossAmount}
-              assetQuantity={assetQuantity}
               profitAmount={profitAmount}
               setBuyStock={setBuyStock}
               setProfitAmount={setProfitAmount}
@@ -453,12 +457,10 @@ const Board = (props) => {
               setDisableStopLoss={setDisableStopLoss}
               setDisableTakeProfit={setDisableTakeProfit}
               setStopLossAmount={setStopLossAmount}
-              assetQuantity={assetQuantity}
               profitAmount={profitAmount}
               setSellStock={setSellStock}
               setProfitAmount={setProfitAmount}
               stopLossAmount={stopLossAmount}
-              // handleStockSale={handleStockSale}
               setBuysell={setBuysell}
             />
           </section>

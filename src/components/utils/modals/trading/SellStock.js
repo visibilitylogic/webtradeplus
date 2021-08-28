@@ -6,7 +6,6 @@ import { message } from "antd";
 
 const SellStockModal = (props) => {
   const {
-    assetQuantity,
     setProfitAmount,
     setDisableTakeProfit,
     disableTakeProfit,
@@ -20,13 +19,14 @@ const SellStockModal = (props) => {
   } = props;
 
   const { user } = useSelector((state) => state.auth);
-  const { error } = useSelector((state) => state.profile);
+  const { error, userMargin } = useSelector((state) => state.profile);
   const { currentSelectedStock, defaultSelectedStock } = useSelector(
     (state) => state.stock
   );
   const { webData } = useSelector((state) => state.web);
 
-  const { sellStockAsset } = useActions();
+  const { sellStockAsset, setCurrentlyActiveTrade, setUserMargin } =
+    useActions();
 
   const handleStockSale = (event) => {
     event.preventDefault();
@@ -37,7 +37,7 @@ const SellStockModal = (props) => {
       sellStockAsset(user._id, {
         userId: user._id,
         tag: "sell",
-        margin: parseInt(assetQuantity),
+        margin: parseInt(userMargin),
         stockAmount:
           Object.keys(currentSelectedStock).length > 0
             ? currentSelectedStock.price
@@ -61,9 +61,15 @@ const SellStockModal = (props) => {
         loss: 0,
       });
       message.success("Your stock has been successfully sold");
+      setCurrentlyActiveTrade(
+        Object.keys(currentSelectedStock).length > 0
+          ? { ...currentSelectedStock, margin: userMargin }
+          : { ...defaultSelectedStock, margin: userMargin }
+      );
       setBuysell(true);
     }
     setSellStock(false);
+    setUserMargin(1);
   };
 
   return (
@@ -91,7 +97,7 @@ const SellStockModal = (props) => {
             {getRate(
               defaultSelectedStock,
               currentSelectedStock,
-              assetQuantity,
+              userMargin,
               webData.leverageAmount
             )}{" "}
             {Object.keys(defaultSelectedStock).length > 0
@@ -110,7 +116,7 @@ const SellStockModal = (props) => {
           </span>
         </div>
         <div className="split moved">
-          <span>{assetQuantity}</span>
+          <span>{userMargin}</span>
         </div>
       </div>
       <div className="dash-row dash-row-centralized">
@@ -126,7 +132,7 @@ const SellStockModal = (props) => {
           <span>Margin Required</span>
         </div>
         <div className="split moved">
-          <span>{assetQuantity}</span>
+          <span>{userMargin}</span>
         </div>
       </div>
       <div
@@ -256,7 +262,6 @@ const SellStockModal = (props) => {
 };
 
 SellStockModal.propTypes = {
-  assetQuantity: PropTypes.number,
   setProfitAmount: PropTypes.func.isRequired,
   setDisableTakeProfit: PropTypes.func.isRequired,
   disableTakeProfit: PropTypes.bool.isRequired,

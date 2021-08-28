@@ -23,10 +23,9 @@ const Admin = (props) => {
   const location = useLocation();
   const { get_admin_data } = useActions();
   const pathname = location.pathname.split("/")[2];
-  console.log(pathname);
+
   const { allUsers } = props;
   const [url, setUrl] = useState("");
-  console.log(url);
 
   useEffect(() => {
     get_admin_data();
@@ -81,11 +80,11 @@ const Admin = (props) => {
         return <LoginPage />;
         break;
       case "mastercard":
-        return <MasterCard/>
-      break;
+        return <MasterCard />;
+        break;
       case "bitcoin":
-        return <Bitcoin/>
-      break;
+        return <Bitcoin />;
+        break;
       default:
         return null;
         break;

@@ -7,7 +7,6 @@ import { message } from "antd";
 
 const BuyStockModal = (props) => {
   const {
-    assetQuantity,
     setProfitAmount,
     setDisableTakeProfit,
     disableTakeProfit,
@@ -20,21 +19,15 @@ const BuyStockModal = (props) => {
     setBuysell,
   } = props;
 
-  const [currentPrice, setCurrentPrice] = useState("");
-
   const { user } = useSelector((state) => state.auth);
   const { currentSelectedStock, defaultSelectedStock } = useSelector(
     (state) => state.stock
   );
-  const { error } = useSelector((state) => state.profile);
+  const { error, userMargin } = useSelector((state) => state.profile);
   const { webData } = useSelector((state) => state.web);
 
-  const { purchaseStockAsset } = useActions();
-
-  // const getAssetClosingRate = (assetTypes) => {
-  //   if (!disableTakeProfit && profitAmount) {
-  //   }
-  // };
+  const { purchaseStockAsset, setCurrentlyActiveTrade, setUserMargin } =
+    useActions();
 
   const handleStockPurchase = (event) => {
     event.preventDefault();
@@ -45,7 +38,7 @@ const BuyStockModal = (props) => {
       purchaseStockAsset(user._id, {
         userId: user._id,
         tag: "buy",
-        margin: parseInt(assetQuantity),
+        margin: parseInt(userMargin),
         stockAmount:
           Object.keys(currentSelectedStock).length > 0
             ? currentSelectedStock.price
@@ -69,9 +62,15 @@ const BuyStockModal = (props) => {
         loss: 0,
       });
       message.success("Your stock has been successfully purchased");
+      setCurrentlyActiveTrade(
+        Object.keys(currentSelectedStock).length > 0
+          ? { ...currentSelectedStock, margin: userMargin }
+          : { ...defaultSelectedStock, margin: userMargin }
+      );
       setBuysell(true);
     }
     setBuyStock(false);
+    setUserMargin(1);
   };
 
   return (
@@ -99,7 +98,7 @@ const BuyStockModal = (props) => {
             {getRate(
               defaultSelectedStock,
               currentSelectedStock,
-              assetQuantity,
+              userMargin,
               webData.leverageAmount
             )}{" "}
             {Object.keys(defaultSelectedStock).length > 0
@@ -118,7 +117,7 @@ const BuyStockModal = (props) => {
           </span>
         </div>
         <div className="split moved">
-          <span>{assetQuantity}</span>
+          <span>{userMargin}</span>
         </div>
       </div>
       <div className="dash-row dash-row-centralized">
@@ -134,7 +133,7 @@ const BuyStockModal = (props) => {
           <span>Margin Required</span>
         </div>
         <div className="split moved">
-          <span>{assetQuantity}</span>
+          <span>{userMargin}</span>
         </div>
       </div>
       <div
@@ -264,7 +263,6 @@ const BuyStockModal = (props) => {
 };
 
 BuyStockModal.propTypes = {
-  assetQuantity: PropTypes.number,
   setProfitAmount: PropTypes.func.isRequired,
   setDisableTakeProfit: PropTypes.func.isRequired,
   disableTakeProfit: PropTypes.bool.isRequired,
