@@ -7840,3 +7840,14 @@ label.custom-control-label {
   background-color: #81ecec;
   border: 2px solid #00cec9;
 }
+
+
+.ChartPL{
+      position: absolute;
+    z-index: 99999;
+    background: transparent;
+    /* color: white; */
+    left: 65%;
+    top: 5%;
+
+}

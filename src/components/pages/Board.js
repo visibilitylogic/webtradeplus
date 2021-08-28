@@ -136,6 +136,9 @@ const Board = (props) => {
           <div className="trade">
             <div className="dash-row">
               <div className="chart">
+                <div className="ChartPL">
+                  <h1 style={{color:"#54ac40"}}>P/L = 0</h1>
+                </div>
                 {/* TradingView Widget BEGIN */}
                 <div className="tradingview-widget-container">
                   <div id="tradingview_65e38" />

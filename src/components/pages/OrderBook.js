@@ -58,7 +58,7 @@ function OrderBook() {
              <td style={{paddingTop:"2%"}}>
                 <span className="order_span">{data.nameOfAsset} </span>
                 <p style={{color: 'rgb(165 167 173)',
-    fontSize: '13px' }} >TypeofAsset </p>
+    fontSize: '13px' }} >Asset </p>
               </td>
              <td style={{paddingTop:"2%"}}>
                 <span className="order_span">{data.openRateOfAsset} </span>
@@ -97,7 +97,7 @@ function OrderBook() {
            <td style={{paddingTop:"2%"}}>
               <span className="order_span">{data.nameOfAsset} </span>
               <p style={{color: 'rgb(165 167 173)',
-    fontSize: '13px' }} >TypeofAsset </p>
+    fontSize: '13px' }} >Asset </p>
             </td>
            <td style={{paddingTop:"2%"}}>
               <span className="order_span">{data.openRateOfAsset} </span>
@@ -138,7 +138,7 @@ function OrderBook() {
              <td style={{paddingTop:"2%"}}>
                 <span className="order_span">{data.nameOfAsset} </span>
                 <p style={{color: 'rgb(165 167 173)',
-    fontSize: '13px' }} >TypeofAsset </p>
+    fontSize: '13px' }} >Asset </p>
               </td>
              <td style={{paddingTop:"2%"}}>
                 <span className="order_span">{data.openRateOfAsset} </span>
@@ -178,7 +178,7 @@ function OrderBook() {
                 <a className={display === "auto_trades" ? "active" : " "} onClick ={ () => setDisplay("auto_trades")}> Auto Trades</a>
             </div>
             {loading && <div>Loading...</div>}
-            <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginBottom:'13%'}}>
               {
                 bodyDisplay()
               }

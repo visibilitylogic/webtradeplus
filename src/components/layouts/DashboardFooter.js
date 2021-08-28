@@ -49,7 +49,7 @@ const DashboardFooter = ({ setSupport }) => {
                   : "red",
             }}
           >
-            &nbsp;Profit/loss: ${getProfitOrLoss()}&nbsp;
+            &nbsp;P/L: ${getProfitOrLoss()}&nbsp;
           </p>{" "}
           |
           <p>

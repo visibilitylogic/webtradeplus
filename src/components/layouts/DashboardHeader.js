@@ -102,7 +102,7 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
         >
           <Navbar.Brand>
             <img
-              style={{ width: " 100%", height: "4.5ch" }}
+              style={{ width: "100%"}}
               src={
                 data
                   ? data.useWhiteLogo

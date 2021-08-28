@@ -104,10 +104,10 @@ function AutoTrade() {
                 Subscribe Now to Auto Copy our Top Performing Traders
               </h4>
             </div>
-            <Row style={{ marginBottom: "10%" }}>
+            <Row style={{ marginBottom: "10%", marginLeft:'10%' }}>
               {trades.map((data, index) => (
                 <Col md={4} className="mt-3" key={index}>
-                  <Card className="card_style">
+                  <Card className="card_style" style={{padding:'75px'}}>
                     <p>Username: {data.userName}</p>
                     <p>Profit % = {data.profitPercentage}%</p>
                     <p>
