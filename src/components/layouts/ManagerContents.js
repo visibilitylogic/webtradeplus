@@ -101,7 +101,6 @@ const ManagerContents = (props) => {
   })
 
   // auth
-  console.log(allUsers)
   const setAuth0 = useCallback(() => {
     setAuth(!auth)
     // setAuthEnabled({

@@ -800,3 +800,13 @@ export const closeUserTrade = (tradeId) => async (dispatch) => {
     });
   }
 };
+
+export const setCurrentlyActiveTrade = (trade) => (dispatch) => {
+  dispatch({
+    type: actionTypes.CURRENTLY_ACTIVE_TRADE,
+    payload: trade,
+  });
+};
+
+export const setUserMargin = (margin) => (dispatch) =>
+  dispatch({ type: actionTypes.SET_USER_MARGIN, payload: margin });

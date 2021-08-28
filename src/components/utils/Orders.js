@@ -205,6 +205,8 @@ const Orders = (props) => {
                                         : "green",
                                   }}
                                 >
+                                  {asset.price - item.openRateOfAsset > 0 &&
+                                    "+"}
                                   {(asset.price - item.openRateOfAsset)
                                     .toString()
                                     .slice(0, 8)}

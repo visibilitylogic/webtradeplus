@@ -17,6 +17,8 @@ const initialState = {
   allVerifiedUsers: [],
   userAutoCopyTrade: [],
   userTrades: [],
+  activeTrade: {},
+  userMargin: 1,
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -112,6 +114,19 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         userTrades: action.payload,
         error: null,
+      };
+    case actionTypes.CURRENTLY_ACTIVE_TRADE:
+      return {
+        ...state,
+        loading: false,
+        activeTrade: action.payload,
+        error: null,
+      };
+    case actionTypes.SET_USER_MARGIN:
+      return {
+        ...state,
+        loading: false,
+        userMargin: action.payload,
       };
     case actionTypes.PROFILE_ERROR:
       return {
