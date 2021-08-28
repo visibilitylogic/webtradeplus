@@ -80,7 +80,7 @@
 
 
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
   .dash-contents .details {
     display: none !important;
   }
@@ -834,6 +834,10 @@
   width: calc(100% - 125px);
   width: -webkit-calc(100% - 72px) !important;
 }
-
+.dash-contents .trade .chart {
+  height: 94vh;
+  width: calc(100% - 125px);
+  width: -webkit-calc(100% - 90px) !important;
+}
   
 }
