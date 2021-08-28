@@ -13,31 +13,21 @@ const Orders = (props) => {
 
   const { user } = useSelector((state) => state.auth);
   const { userTrades, error } = useSelector((state) => state.profile);
-  const {
-    defaultSelectedStock,
-    currentSelectedStock,
-    crypto,
-    forex,
-    commodities,
-    iex,
-    etf,
-    allStockAssets,
-  } = useSelector((state) => state.stock);
+  const { defaultSelectedStock, allStockAssets } = useSelector(
+    (state) => state.stock
+  );
 
-  const { getAllUserTrades, deleteUserTrade } = useActions();
+  const { getAllUserTrades, deleteUserTrade, closeUserTrade } = useActions();
 
   const getStockPrice = (item) => {
     allStockAssets.length > 0 &&
       allStockAssets.filter((stock) => {
         if (stock.symbol === item) {
-          // return stock.price;
           setCurrentStock(stock);
+        } else {
+          return false;
         }
       });
-  };
-
-  const getProfitAndLoss = (item) => {
-    return (defaultSelectedStock.price - item).toString().slice(0, 8);
   };
 
   // const getItem = () => {
@@ -85,7 +75,19 @@ const Orders = (props) => {
       message.error("Trade could not be deleted");
     } else {
       deleteUserTrade(tradeId);
-      message.success("Trade deleted succesfully");
+      setTimeout(() => message.success("Trade deleted succesfully"), 5000);
+    }
+  };
+
+  const handleCloseUserTrade = (tradeId) => {
+    if (error) {
+      message.error("Trade could not be closed");
+    } else {
+      closeUserTrade(tradeId);
+      setTimeout(
+        () => message.success("Trade has been closed successfully"),
+        5000
+      );
     }
   };
 
@@ -180,27 +182,39 @@ const Orders = (props) => {
                         >
                           {item.tag}
                         </td>
-                        <td onClick={() => getStockPrice(item.nameOfAsset)}>
-                          {item.openRateOfAsset.toString().slice(0, 8)}
-                        </td>
+                        <td>${item.openRateOfAsset.toString().slice(0, 8)}</td>
+                        {allStockAssets.length > 0 &&
+                          allStockAssets
+                            .filter((stock) => {
+                              if (stock.symbol === item.nameOfAsset) {
+                                return true;
+                              } else {
+                                return false;
+                              }
+                            })
+                            .map((asset, index) => (
+                              <>
+                                <td key={index}>
+                                  ${asset.price.toString().slice(0, 8)}
+                                </td>
+                                <td
+                                  style={{
+                                    color:
+                                      asset.price - item.openRateOfAsset < 0
+                                        ? "red"
+                                        : "green",
+                                  }}
+                                >
+                                  {(asset.price - item.openRateOfAsset)
+                                    .toString()
+                                    .slice(0, 8)}
+                                </td>
+                              </>
+                            ))}
+
                         <td>
-                          {item.isOpen ? "$" : ""}
-                          {Object.keys(currentSelectedStock).length > 0
-                            ? currentSelectedStock.price
-                            : defaultSelectedStock.price}
-                        </td>
-                        <td
-                          style={{
-                            color:
-                              getProfitAndLoss(item.openRateOfAsset) < 0
-                                ? "red"
-                                : "green",
-                          }}
-                        >
-                          {getProfitAndLoss(item.openRateOfAsset)}
-                        </td>
-                        <td>
-                          {item.profit}/{item.loss}
+                          {item.profit.toString().slice(0, 8)}/
+                          {item.loss.toString().slice(0, 8)}
                         </td>
                         <td style={{ display: "flex", width: "75%" }}>
                           <button className="orderBtn btn-green">
@@ -210,17 +224,7 @@ const Orders = (props) => {
                           {item.isOpen && (
                             <button
                               className="orderBtn btn-red"
-                              // onClick={closeOrder(
-                              //   item._id,
-                              //   (parseInt(item.unit) / parseInt(item.buyW) -
-                              //     parseInt(item.stockAmount)) *
-                              //     10 *
-                              //     parseInt(item.buyW),
-                              //   (parseInt(item.unit) /
-                              //     parseInt(getRate(item.stockName))) *
-                              //     10 *
-                              //     parseInt(getRate(item.stockName))
-                              // )}
+                              onClick={() => handleCloseUserTrade(item._id)}
                             >
                               CLOSE
                             </button>

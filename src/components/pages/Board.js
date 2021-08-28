@@ -31,6 +31,7 @@ const Board = (props) => {
     buysell,
     setTotalUp,
     setBuysell,
+    data,
   } = props;
 
   const { user, loading } = useSelector((state) => state.auth);
@@ -38,20 +39,26 @@ const Board = (props) => {
   const { currentSelectedStock, defaultSelectedStock, allStockAssets } =
     useSelector((state) => state.stock);
 
+  // Action creators
+  const { purchaseStockAsset, setDefaultSelectedStock, setCurrentSelectedStock, getAllStockAssets } = useActions();
+
   const getRate = () => {
     if (Object.keys(defaultSelectedStock).length > 0) {
-      return ((assetQuantity / defaultSelectedStock.price) * 10)
+      return (
+        (assetQuantity / defaultSelectedStock.price) *
+        (data && data.leverageAmount)
+      )
         .toString()
         .slice(0, 8);
     } else {
-      return ((assetQuantity / currentSelectedStock.price) * 10)
+      return (
+        (assetQuantity / currentSelectedStock.price) *
+        (data && data.leverageAmount)
+      )
         .toString()
         .slice(0, 8);
     }
   };
-
-  // Action creators
-  const { purchaseStockAsset } = useActions();
 
   const closeOrder = (id, amount, newAmount) => () => {
     setTotalUp(0);
@@ -101,47 +108,18 @@ const Board = (props) => {
     })();
   };
 
-  const handleStockPurchase = (e) => {
-    e.preventDefault();
+  // A custom hook for rerendering the dashboard component after 10 secondays
+  // To keep track of asset changes
 
-    if (error) {
-      message.error("Asset Purchase Unsuccessful. Please Try Again!");
+  useInterval(() => {
+    getAllStockAssets();
+
+    if (Object.keys(currentSelectedStock).length > 0) {
+      setCurrentSelectedStock(currentSelectedStock);
     } else {
-      purchaseStockAsset(user._id, {
-        tag: "buy",
-        stockName: currentSelectedStock.symbol,
-        stockAmount: assetQuantity / currentSelectedStock.price,
-        buyW: currentSelectedStock.symbol,
-        unit: assetQuantity,
-      });
-      message.success(
-        `Buy trade of ${currentSelectedStock.symbol} : ${currentSelectedStock.price}`
-      );
-
-      setBuysell(true);
+      setDefaultSelectedStock();
     }
-  };
-
-  const handleStockSale = (e) => {
-    e.preventDefault();
-
-    if (error) {
-      message.error("Asset Sale Unsuccessful. Please Try Again!");
-    } else {
-      purchaseStockAsset(user._id, {
-        tag: "sell",
-        stockName: currentSelectedStock.symbol,
-        stockAmount: assetQuantity / currentSelectedStock.price,
-        buyW: currentSelectedStock.symbol,
-        unit: assetQuantity,
-      });
-      message.success(
-        `Sell trade of ${currentSelectedStock.symbol} : ${currentSelectedStock.price}`
-      );
-
-      setBuysell(true);
-    }
-  };
+  }, 10000);
 
   return (
     !loading && (
@@ -240,16 +218,21 @@ const Board = (props) => {
                   >
                     <div onClick={() => setLevIsh((prev) => !prev)}>
                       <span className="dash-alt-text text">Leverage</span>
-                      <span className="amount">X10</span>
+                      <span className="amount">
+                        X{data && data.leverageAmount}
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 {levIsh && (
                   <div className="levC">
-                    <div className="levHeader">x10</div>
-                    x10 Leverage means that if the asset price changes by 1%
-                    your position performance will increase by 10%
+                    <div className="levHeader">
+                      x{data && data.leverageAmount}
+                    </div>
+                    x{data && data.leverageAmount} Leverage means that if the
+                    asset price changes by 1% your position performance will
+                    increase by {data && data.leverageAmount}%
                   </div>
                 )}
 
@@ -455,7 +438,6 @@ const Board = (props) => {
               assetQuantity={assetQuantity}
               profitAmount={profitAmount}
               setBuyStock={setBuyStock}
-              handleStockPurchas={handleStockPurchase}
               setProfitAmount={setProfitAmount}
               stopLossAmount={stopLossAmount}
               setBuysell={setBuysell}
@@ -476,7 +458,7 @@ const Board = (props) => {
               setSellStock={setSellStock}
               setProfitAmount={setProfitAmount}
               stopLossAmount={stopLossAmount}
-              handleStockSale={handleStockSale}
+              // handleStockSale={handleStockSale}
               setBuysell={setBuysell}
             />
           </section>
@@ -498,4 +480,5 @@ Board.propTypes = {
   closeSetlevIsh: PropTypes.func.isRequired,
   handleBuyStock: PropTypes.func.isRequired,
   handleSellStock: PropTypes.func.isRequired,
+  data: PropTypes.object,
 };

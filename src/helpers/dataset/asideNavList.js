@@ -5,7 +5,7 @@ import {
   IoPlanetOutline,
 } from "react-icons/io5";
 import { AiOutlineCalculator } from "react-icons/ai";
- import { FaMoneyCheckAlt  } from "react-icons/fa"
+import { FaMoneyCheckAlt, FaAward } from "react-icons/fa";
 export const asideList = [
   { id: 0, title: "board", path: "/dashboard/board", icon: RiBarChartBoxLine },
   {
@@ -27,7 +27,12 @@ export const asideList = [
     path: "/dashboard/auto_copy_trader",
     icon: IoPeopleOutline,
   },
-  { id: 5, title: "calc", path:"/dashboard/calc", icon: AiOutlineCalculator },
+  { id: 5, title: "calc", path: "/dashboard/calc", icon: AiOutlineCalculator },
   // { id: 6, title: "news", path: "/dashboard/news", icon: IoPlanetOutline },
-  { id: 7, title: "Leader Board", path: "/dashboard/leaderboard", icon: IoPlanetOutline },
+  {
+    id: 7,
+    title: "Leader Board",
+    path: "/dashboard/leaderboard",
+    icon: FaAward,
+  },
 ];

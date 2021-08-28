@@ -765,16 +765,38 @@ export const deleteUserAutoCopyTrade = (userId) => async (dispatch) => {
 
 export const getAllUserTrades = (userId) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/trade/${userId}`)
+    const { data } = await axios.get(`/api/trade/${userId}`);
 
     dispatch({
       type: actionTypes.GET_ALL_USER_TRADES,
       payload: data,
-    })
+    });
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
       payload: error.message,
-    })
+    });
   }
-}
+};
+
+export const closeUserTrade = (tradeId) => async (dispatch) => {
+  // const config = {
+  //   headers: {
+  //     "Content-Types": "application/json"
+  //   }
+  // }
+
+  // const body = JSON.stringify(data);
+  try {
+    await axios.put(`api/trade/closeTrade/${tradeId}`);
+
+    dispatch({
+      type: actionTypes.CLOSE_USER_TRADE,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
