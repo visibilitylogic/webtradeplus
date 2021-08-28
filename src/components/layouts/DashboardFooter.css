@@ -837,7 +837,7 @@
 .dash-contents .trade .chart {
   height: 94vh;
   width: calc(100% - 125px);
-  width: -webkit-calc(100% - 90px) !important;
+  width: -webkit-calc(100% - 77px) !important;
 }
   
 }
