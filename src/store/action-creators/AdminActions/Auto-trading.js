@@ -10,6 +10,7 @@ const instance = axios.create({
 export const add_auto_trade = (datas) => async (dispatch) => {
   try {
     const { data } = await instance.post("/", datas, getToken());
+
     dispatch({
       type: actionTypes.AUTO_TRADE_ADD_SUCCESS,
       payload: data,
@@ -31,6 +32,36 @@ export const get_all_auto_trades = () => async (dispatch) => {
     dispatch({
       type: actionTypes.AUTO_TRADES,
       payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.AUTO_TRADE_ERROR,
+      payload: error.message,
+    });
+  }
+};
+// export const update_auto_trade = (id, datas)=> async (dispatch)=>{
+//     try {
+//       const {data} = await instance.put(`/${id}`, datas, getToken());
+//       dispatch({
+//         type:actionTypes.AUTO_TRADE_UPDATE,
+//         payload:data
+//       })
+//     } catch (error) {
+//         console.log(error);
+//         dispatch({
+//             type: actionTypes.AUTO_TRADE_ERROR,
+//             payload: error.message,
+//           });
+//     }
+// }
+
+export const delete_auto_trade = (id) => async (dispatch) => {
+  try {
+    const { data } = await instance.delete(`/${id}`, getToken());
+    dispatch({
+      type: actionTypes.AUTO_TRADE_DELETE,
+      payload: id,
     });
   } catch (error) {
     dispatch({
@@ -75,20 +106,20 @@ export const update_auto_trade = (id, datas) => async (dispatch) => {
   }
 };
 
-export const delete_auto_trade = (id) => async (dispatch) => {
-  try {
-    const { data } = await instance.delete(`/${id}`, getToken());
-    dispatch({
-      type: actionTypes.AUTO_TRADE_DELETE,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: actionTypes.AUTO_TRADE_ERROR,
-      payload: error.message,
-    });
-  }
-};
+// export const delete_auto_trade = (id) => async (dispatch) => {
+//   try {
+//     const { data } = await instance.delete(`/${id}`, getToken());
+//     dispatch({
+//       type: actionTypes.AUTO_TRADE_DELETE,
+//       payload: data,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: actionTypes.AUTO_TRADE_ERROR,
+//       payload: error.message,
+//     });
+//   }
+// };
 
 export const setOpen = () => (dispatch) => {
   dispatch({

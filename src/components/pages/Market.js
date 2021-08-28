@@ -13,7 +13,7 @@ function Market() {
   // market && setsearchMarket(market)
   
     return (
-        <div>
+        <div style={{marginLeft:"55px"}}>
             <h1  style={{textAlign:"center", color:"white", marginBottom:"25px", fontFamily:"arial", marginTop:"20px"}}>Market List</h1>
             <div style={{ width: "100%", textAlign: "right"  }}>
                       {/* <input
@@ -24,7 +24,7 @@ function Market() {
                       /> */}
                       {/* <button onClick={handleSearch}>Search</button> */}
                     </div>
-             <Table striped bordered hover variant="dark">
+             <Table style={{margin: "auto",width:"99%"}} striped bordered hover variant="dark">
                     <thead>
                       <tr>
                         <th>Market</th>

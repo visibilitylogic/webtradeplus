@@ -19,6 +19,7 @@ const initialState = {
   userTrades: [],
   activeTrade: {},
   userMargin: 1,
+  singleUser: null,
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -67,7 +68,7 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        allOrders: action.payload,
+        user: action.payload,
         error: null,
       };
 
@@ -76,6 +77,13 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         loading: false,
         allUsers: action.payload,
+        error: null,
+      };
+    case actionTypes.GET_CURRENT_PROFILE:
+      return {
+        ...state,
+        loading: false,
+        singleUser: action.payload,
         error: null,
       };
     case actionTypes.GET_ALL_DEPOSITS:
@@ -91,6 +99,33 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         loading: false,
         allTrades: action.payload,
+        error: null,
+      };
+    // case actionTypes.SET_AUTO_TRADE:
+    //   const newUserState = state.singleUser
+    //   newUserState.autoTrade = action.payload
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     singleUser: newUserState,
+    //     error: null,
+    //   }
+    case actionTypes.APPROVE_VERIFY:
+      const approveState = state.singleUser;
+      approveState.autoTrade = action.payload;
+      return {
+        ...state,
+        loading: false,
+        singleUser: approveState,
+        error: null,
+      };
+    case actionTypes.SET_LIVE_TRADE:
+      const newLive_TRADE = state.singleUser;
+      newLive_TRADE.liveTrade = action.payload;
+      return {
+        ...state,
+        loading: false,
+        singleUser: newLive_TRADE,
         error: null,
       };
 
@@ -128,6 +163,7 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         userMargin: action.payload,
       };
+
     case actionTypes.PROFILE_ERROR:
       return {
         ...state,

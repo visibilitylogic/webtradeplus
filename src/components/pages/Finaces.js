@@ -3,10 +3,9 @@ import { useSelector } from 'react-redux';
 import "./finances.css"
 function Finaces() {
     const {user} = useSelector(state=> state.auth); 
-    
     return (
         <div>
-            <h1 style={{textAlign:"center", color:"white", marginBottom:"25px", fontFamily:"arial", marginTop:"20px"}}>  Finances Tab</h1>
+            <h1 style={{textAlign:"center", color:"white", marginBottom:"25px", fontFamily:"arial", marginTop:"20px"}}>  Finances </h1>
             <div className="first_div" style={{display:"flex", flexDirection:"column", maxWidth:"1200px", margin:"auto"}}> 
                 <div className="flex_row1">
                     <div>

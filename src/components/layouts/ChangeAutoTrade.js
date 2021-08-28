@@ -4,9 +4,10 @@ import Switch from 'react-switch'
 const ChangeAutoTrade = ({ autoTrade }) => {
   const [checkButton, setcheckButton] = useState(autoTrade.autoTrade)
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     setcheckButton(!checkButton)
   }
+  console.log(checkButton)
   return (
     <Switch
       onChange={handleClick}

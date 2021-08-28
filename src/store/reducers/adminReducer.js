@@ -16,7 +16,8 @@ const adminInitialState = {
 }
 
 const LiveTradeInitial = {
-    liveTrades:null,
+    liveTrades:false,
+    leverage:{},
     success:"",
     error:""
 }
@@ -32,6 +33,7 @@ export function adminReducer(state = initialState, action){
         case actionTypes.AUTO_TRADE_ADD_SUCCESS:
             return {
                 ...state,
+                loading:false,
                 trades:[{...action.payload}, ...state.trades],
                 success:"Successfull added auto trade"
             }
@@ -39,13 +41,15 @@ export function adminReducer(state = initialState, action){
         case actionTypes.AUTO_TRADE_UPDATE:
             return {
                 ...state,
-                success:"Tade Updated Successfully"
+                success:"Trade Updated Successfully"
             }
         break;
         case actionTypes.AUTO_TRADE_DELETE:
             return {
                 ...state,
-                success:action.payload
+                loading:false,
+                success:action.payload,
+                trades: state.trades.filter((trade)=> trade.id !== action.payload)
             }
         break;
         case actionTypes.AUTO_TRADE_ERROR:
@@ -60,6 +64,8 @@ export function adminReducer(state = initialState, action){
                 loading:false,
                 trades:action.payload
             }
+            console.log(state.trades);
+            
         break;
         case actionTypes.SPECIFIC_TRADE:
             return {
@@ -88,6 +94,7 @@ export const adminDataReducer =  (state=adminInitialState, action)=>{
             return {
                 ...state,
                 loading:false,
+                success:"",
                 adminData: action.payload
             }
         break;
@@ -120,10 +127,21 @@ export function admin_live_trade(state=LiveTradeInitial, action){
         case actionTypes.UPDATE_LIVE_TRADE:
             return{
                 ...state,
-                liveTrades:!state.liveTrades,
                 success:action.payload
             }
         break;
+        case actionTypes.SET_LEVERAGE:
+            return {
+                ...state,
+                leverage:action.payload,
+                success:"Leverage updated successfully"
+            }
+        break;
+        case actionTypes.SET_LEVERAGE_ERROR:
+            return {
+                ...state,
+                leverage_error: action.payload
+            }
         case actionTypes.LIVE_TRADE_ERROR:
             return {
                 ...state,

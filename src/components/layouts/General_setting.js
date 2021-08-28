@@ -869,7 +869,7 @@ const handleImageChangeLogo = (e) => {
                           style={{ width: "100%" }}
                           placeholder="select one country"
                           defaultValue={
-                            adminData
+                            (adminData && adminData.blacklistedCountries)
                               ? adminData.blacklistedCountries.map(
                                   (e) => e
                                 )
@@ -878,7 +878,7 @@ const handleImageChangeLogo = (e) => {
                           onChange={handleChangeCountry}
                           optionLabelProp="label"
                         >
-                          {countryList.map((country) => (
+                          { countryList && countryList.map((country) => (
                             <Option
                               style={{ color: "black" }}
                               key={country}
