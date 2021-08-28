@@ -27,6 +27,7 @@ const BuyStockModal = (props) => {
     (state) => state.stock
   );
   const { error } = useSelector((state) => state.profile);
+  const { webData } = useSelector((state) => state.web);
 
   const { purchaseStockAsset } = useActions();
 
@@ -82,10 +83,10 @@ const BuyStockModal = (props) => {
         </div>
         <div className="split moved">
           <span>
+            $
             {Object.keys(defaultSelectedStock).length > 0
               ? defaultSelectedStock.price
               : currentSelectedStock.price}{" "}
-            $
           </span>
         </div>
       </div>
@@ -95,7 +96,12 @@ const BuyStockModal = (props) => {
         </div>
         <div className="split moved">
           <span>
-            {getRate(defaultSelectedStock, currentSelectedStock, assetQuantity)}
+            {getRate(
+              defaultSelectedStock,
+              currentSelectedStock,
+              assetQuantity,
+              webData.leverageAmount
+            )}{" "}
             {Object.keys(defaultSelectedStock).length > 0
               ? defaultSelectedStock.symbol
               : currentSelectedStock.symbol}
@@ -120,7 +126,7 @@ const BuyStockModal = (props) => {
           <span>Leverage</span>
         </div>
         <div className="split moved">
-          <span>10</span>
+          <span>{webData && webData.leverageAmount}</span>
         </div>
       </div>
       <div className="dash-row dash-row-centralized">
@@ -128,17 +134,7 @@ const BuyStockModal = (props) => {
           <span>Margin Required</span>
         </div>
         <div className="split moved">
-          <span>
-            {/* {Object.keys(defaultSelectedStock).length > 0
-              ? defaultSelectedStock.price.toString().slice(0, 8)
-              : Object.keys(currentSelectedStock).length > 0
-              ? currentSelectedStock.price.toString().slice(0, 8)
-              : ""}
-            {Object.keys(defaultSelectedStock).length > 0
-              ? defaultSelectedStock.symbol
-              : currentSelectedStock.symbol} */}
-            {assetQuantity}
-          </span>
+          <span>{assetQuantity}</span>
         </div>
       </div>
       <div

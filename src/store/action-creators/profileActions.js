@@ -778,3 +778,25 @@ export const getAllUserTrades = (userId) => async (dispatch) => {
     });
   }
 };
+
+export const closeUserTrade = (tradeId) => async (dispatch) => {
+  // const config = {
+  //   headers: {
+  //     "Content-Types": "application/json"
+  //   }
+  // }
+
+  // const body = JSON.stringify(data);
+  try {
+    await axios.put(`api/trade/closeTrade/${tradeId}`);
+
+    dispatch({
+      type: actionTypes.CLOSE_USER_TRADE,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};

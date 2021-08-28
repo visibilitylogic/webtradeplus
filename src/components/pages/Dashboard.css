@@ -3421,7 +3421,7 @@ span.close svg:hover {
   background-color: #2cac40;
   color: #fff;
   width: 100%;
-  padding: 10px;
+  padding: 10px !important;
   border: none;
   border-radius: 0;
   font-family: "dash-regular";
@@ -3446,7 +3446,7 @@ span.close svg:hover {
 }
 
 .credit-modal .process input {
-  padding: 10px;
+  padding: 10px !important;
   width: 100%;
   background-color: transparent;
   border: 1px solid #363c4f;
@@ -4179,6 +4179,12 @@ span.close svg:hover {
 .dash-row .split-25 {
   width: 23%;
   margin: 1% 1%;
+}
+
+.dash-row .content > .tab-content {
+  width: 100%;
+  padding: 0;
+  margin-bottom: 0;
 }
 
 .font-weight-normal {
