@@ -100,7 +100,7 @@ function Payment() {
                 </span>
               )}
 
-              <NavLink to="/dashboard/mastercard" className="configure">
+              <NavLink to="/dashboard/admin/mastercard" className="configure">
                 Configure
               </NavLink>
             </div>
@@ -133,7 +133,7 @@ function Payment() {
                   Disabled
                 </span>
               )}
-              <NavLink to="/dashboard/bitcoin" className="configure">
+              <NavLink to="/dashboard/admin/bitcoin" className="configure">
                 Configure
               </NavLink>
             </div>
