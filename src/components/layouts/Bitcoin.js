@@ -1,14 +1,16 @@
+import { message } from 'antd';
+import axios from 'axios';
 import React, {useState} from 'react'
 import { Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import getToken from '../../store/utils/gettoken';
 import { useActions } from '../hooks/useActions';
 
 function Bitcoin() {
-    const {change_admin_data} = useActions();
+    const {change_admin_data, get_admin_data} = useActions();
     const {adminData} = useSelector(state=> state.adminInfo); 
-    const {loading, success, error} = useSelector(state=> state.adminInfo)
-    const [suc, setSuc] = useState("")
-    const [e, setE] = useState("")
+    // const {loading, success, error} = useSelector(state=> state.adminInfo)
+    const [loading, setLoading] = useState(false);
     const [paymentSuccessText, setpaymentSuccessText] = useState("");
     const [paymentRefPattern, setpaymentRefPattern] = useState("");
     const [paymentNeedsApproval, setpaymentNeedsApproval] = useState(null);
@@ -123,7 +125,18 @@ function Bitcoin() {
       };
       const url = "https://trade-backend-daari.ondigitalocean.app/api/site/btcAdminSettings"
       const onSaved = ()=>{
-        change_admin_data(url, dataAll);
+        setLoading(true)
+        axios
+          .put(url, dataAll, getToken())
+          .then(res=> {
+            console.log(res.data)
+            setLoading(false)
+            message.success("Data Updated Successfully");
+            get_admin_data()
+          })
+          .catch(err=>{
+            message.error("Error occured while updataing")
+          })
       }
     return (
         <div>
@@ -256,6 +269,7 @@ function Bitcoin() {
                         <h4>Upload Qr Code</h4>
                       </div>
                       <div className="actions">
+                      <img src={BTCQRCodeImg} className="logo" />
                         <input
                           onChange={handleImageChange}
                           className="dash-input"
@@ -270,6 +284,7 @@ function Bitcoin() {
                         <h4>Upload Image 1</h4>
                       </div>
                       <div className="actions">
+                        <img src={img1} className="logo" />
                         <input
                           onChange={handleImageChange1}
                           className="dash-input"
@@ -284,6 +299,7 @@ function Bitcoin() {
                         <h4>Image 1 Link</h4>
                       </div>
                       <div className="actions">
+
                         <input
                           value={imgLink1}
                           onChange={(e) => setImgLink1(e.target.value)}
@@ -299,6 +315,7 @@ function Bitcoin() {
                         <h4>Upload Image 2</h4>
                       </div>
                       <div className="actions">
+                      <img src={img2} className="logo" />
                         <input
                           onChange={handleImageChange2}
                           className="dash-input"
@@ -328,6 +345,7 @@ function Bitcoin() {
                         <h4>Upload Image 3</h4>
                       </div>
                       <div className="actions">
+                      <img src={img3} className="logo" />
                         <input
                           onChange={handleImageChange3}
                           className="dash-input"
@@ -352,11 +370,7 @@ function Bitcoin() {
                     </div>
 
                     <div className="save-btn">
-                      <button onClick={onSaved}> {loading &&
-                      <Spinner animation="border" variant="primary" role="status"></Spinner>
-                      } {
-                          loading  ?  "Saving..." : "Save"
-                      } </button>
+                      <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                     </div>
                   </div>
                 </div>
