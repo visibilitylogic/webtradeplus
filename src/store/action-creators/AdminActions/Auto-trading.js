@@ -10,7 +10,7 @@ const instance = axios.create({
 export const add_auto_trade = (datas)=> async (dispatch)=>{
     try {
       const {data} = await instance.post("/", datas, getToken());  
-      console.log(data);
+
       dispatch({
         type:actionTypes.AUTO_TRADE_ADD_SUCCESS,
         payload:data
@@ -84,7 +84,7 @@ export const delete_auto_trade = (id)=> async (dispatch)=>{
         const {data} = await instance.delete(`/${id}`, getToken());
         dispatch({
             type:actionTypes.AUTO_TRADE_DELETE,
-            payload:data
+            payload:id
         })
     } catch (error) {
         dispatch({

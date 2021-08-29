@@ -47,7 +47,9 @@ const SubSidebar = ({ view, getRate }) => {
               </span>
               <span
                 className={`${
-                  defaultSelectedStock.changesPercentage < 0 ? "red" : "green"
+                  defaultSelectedStock.changesPercentage < 0
+                    ? "loss-percentage"
+                    : "profit-percentage"
                 }`}
               >
                 {Object.keys(defaultSelectedStock).length > 0 &&

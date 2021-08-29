@@ -6,7 +6,6 @@ import useFormInput from "../hooks/useFormInput";
 import { useActions } from "../hooks/useActions";
 import { useSelector } from "react-redux";
 import "./Form.css";
-
 import { countryList } from "../../helpers/dataset/countryList";
 import { sponsors } from "./../../helpers/dataset/sponsors";
 

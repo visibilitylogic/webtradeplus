@@ -3,12 +3,11 @@ import {Select, message} from "antd";
 import { useSelector } from 'react-redux';
 import {countryList}  from "../../helpers/dataset/countryList";
 import { useActions } from '../hooks/useActions';
+import axios from 'axios';
+import getToken from '../../store/utils/gettoken';
 const {Option} = Select;
 function General_setting() {
-  const {change_admin_data} = useActions();
-  const {success, error} = useSelector(state=> state.adminInfo)
-  const [suc, setSuc] = useState("")
-  const [e, setE] = useState("")
+  const {change_admin_data, get_admin_data} = useActions();
   const {adminData} = useSelector(state=> state.adminInfo)
   const [siteLogo, setLogo] = useState("");
   const [siteLogoWhite, setsiteLogoWhite]=useState("");
@@ -41,7 +40,7 @@ function General_setting() {
   const [googleSlot, setGoogleSlot] = useState("");
   const [privacyPolicyLink, setprivacyPolicyLink]=useState("")
   const [termsOfServicesLink, settermsOfServicesLink]=useState("")
-  const [submitLoading, setSubmitLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   function handleChangeCountry(value) {
     setBlackListedCountry(value);
   }
@@ -150,22 +149,22 @@ const handleImageChangeLogo = (e) => {
   };
   const url = "https://trade-backend-daari.ondigitalocean.app/api/site/generalsettings"
   const onSaved = ()=>{
-    if(window.confirm("Are you to update the data")){
-        change_admin_data(url, dataAll);
-        if(success && success.length > 0){
-          setSuc(success)
-        }else if (error && error.length> 0){
-          setE(error)
-        }
-      }
+    setLoading(true)
+    axios
+      .put(url, dataAll, getToken())
+      .then(res=> {
+        setLoading(false)
+        message.success("Data Updated Successfully");
+        get_admin_data()
+      })
+      .catch(err=>{
+        message.error("Error occured while updataing")
+      })
   }
     return (
         <div>
              <div>
-             {
-                  suc && message.success(suc, ()=> setSuc("")),
-                  e && message.error(e, ()=> setE(""))
-              }
+              
                   <div className="public-card">
                     <div className="each-row dash-row">
                       <div className="dtls">
@@ -186,11 +185,11 @@ const handleImageChangeLogo = (e) => {
                       </div>
 
                       <div className="save-btn">
-                        <button onClick={onSaved}>
-                        {submitLoading?<><i className="fa fa-spin fa-spinner"></i>Saving...</>:"Save"} 
-                        </button>
+                        
+                        <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
+                    
 
                     <div className="each-row dash-row">
                       <div className="dtls">
@@ -208,13 +207,14 @@ const handleImageChangeLogo = (e) => {
                           name="siteLogo"
                           onChange={handleImageChangeLogoWhite}
                         />
+                        
                       </div>
-
                       <div className="save-btn">
-                        <button onClick={onSaved}>
-                        {submitLoading?<><i className="fa fa-spin fa-spinner"></i>Saving...</>:"Save"} 
-                        </button>
-                      </div>
+                         
+                         <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
+                    </div>
+
+                     
                     </div>
                  
                     <div className="each-row dash-row">
@@ -234,11 +234,8 @@ const handleImageChangeLogo = (e) => {
                           onChange={handleImageChangesiteFav}
                         />
                       </div>
-
-                      <div className="save-btn">
-                        <button onClick={onSaved}>
-                        {submitLoading?<><i className="fa fa-spin fa-spinner"></i>Saving...</>:"Save"} 
-                        </button>
+                      <div className="save-btn">                         
+                           <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
                     <div className="each-row dash-row">
@@ -869,7 +866,7 @@ const handleImageChangeLogo = (e) => {
                           style={{ width: "100%" }}
                           placeholder="select one country"
                           defaultValue={
-                            adminData
+                            (adminData && adminData.blacklistedCountries)
                               ? adminData.blacklistedCountries.map(
                                   (e) => e
                                 )
@@ -878,7 +875,7 @@ const handleImageChangeLogo = (e) => {
                           onChange={handleChangeCountry}
                           optionLabelProp="label"
                         >
-                          {countryList.map((country) => (
+                          { countryList && countryList.map((country) => (
                             <Option
                               style={{ color: "black" }}
                               key={country}
@@ -950,13 +947,9 @@ const handleImageChangeLogo = (e) => {
                     </div>
                   </div>
                   <div className="save-btn">
-                    <button
-                      loading={submitLoading}
-                      disabled={submitLoading}
-                      onClick={onSaved}
-                    >
-                     {submitLoading?<><i className="fa fa-spin fa-spinner"></i>Saving...</>:"Save"} 
-                    </button>
+                   
+                        <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
+          
                   </div>
                 </div>
         </div>

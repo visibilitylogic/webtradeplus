@@ -105,40 +105,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     getWebData();
-  }, []);
-
-  // A custom hook for rerendering the dashboard component after 10 secondays
-  // To keep track of asset changes
-
-  // useInterval(() => {
-  //
-  //     ?
-  //     :
-  // }, );
-
-  useEffect(() => {
-    getCryptoAssets();
-    getCommodityStocks();
-    getInvestorsExchange();
-    getExchangeTradedFund();
-    getForexStocks();
-    getAllStockAssets();
-  }, []);
-
-  useInterval(() => {
-    if (Object.keys(currentSelectedStock).length > 0) {
-      setCurrentSelectedStock(currentSelectedStock);
-      getCryptoAssets();
-      getCommodityStocks();
-      getInvestorsExchange();
-      getExchangeTradedFund();
-      getForexStocks();
-    } else {
-      setDefaultSelectedStock();
-    }
-  }, 10000);
-
-  useEffect(() => {
     setDefaultSelectedStock();
   }, []);
 
@@ -212,6 +178,7 @@ const Dashboard = () => {
               closeSetlevIsh={closeSetlevIsh}
               handleBuyStock={handleBuyStock}
               handleSellStock={handleSellStock}
+              data={webData}
             />
           )}
 

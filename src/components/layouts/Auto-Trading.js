@@ -1,27 +1,21 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector} from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import "./AutoTrading.css";
 import { useActions } from '../hooks/useActions';
 import SuccessModal from '../Modals/SuccessModal';
 import {Alert, Button, Spinner, Table} from "react-bootstrap";
 import EditTrade from './EditTrade';
 import { useHistory } from 'react-router-dom';
+import EditAutoTrade from './EditAutoTrade';
+import { message } from 'antd';
 function AutoTrading() {
-    const {success, loading, trades, specificTrade} = useSelector(state=> state.adminData);
-    const history = useHistory();
-    console.log(specificTrade);
+    const {success, loading, trades, error} = useSelector(state=> state.adminData);
     const {add_auto_trade, get_all_auto_trades, get_specific_trade, delete_auto_trade} = useActions();
     const [input, setInput] = useState({
         userName:"",
-        profitPercentage:0,
-        subscriptionFee:0
+        profitPercentage:null,
+        subscriptionFee:null
     });
-    const [isOpen, setisOpen] = useState(false);
-    const [tradeId, setTradeId] = useState("");
-    const [alert, setAlert] = useState(true)
-    const toggleOpen = ()=>{
-        setisOpen(!isOpen)
-    }
     const handleInput = (e)=>{
         setInput({...input, [e.target.name]:e.target.value });
     }
@@ -41,25 +35,24 @@ function AutoTrading() {
             userName:"",
             profitPercentage:"",
             subscriptionFee:""
-        })
+        });
+        
+        if( success && success.length > 0) message.success("Successfully added auto trade")
+        if( error && error.length > 0) message.error("error in updating")
         get_all_auto_trades()
     }
   
-    const editTrade = (id)=>{
-        get_specific_trade(id);
-        setisOpen(true)
-        setTradeId(id)
-    }
+   
 
     const handleDelete = (id)=>{
         if(window.confirm("Are you sure you want to delete this trade ??")){
             delete_auto_trade(id);
         }
         get_all_auto_trades();
-
         
-       
-    }
+        if( success && success.length > 0) message.success("Trade Deleted")
+        if( error && error.length > 0) message.error("error in deleting")
+     }
     
     return (
         <div classname="AutoTrading_Wrapper">
@@ -67,11 +60,11 @@ function AutoTrading() {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <h3>Username</h3>
-                        <input type="text" name="userName"  value={input.userName} onChange={handleInput} required />
+                        <input type="text" name="userName" placeholder="John Doe" value={input.userName} onChange={handleInput} required />
                     </div>
                     <div>
                         <h3>Profit (in percentage)</h3>
-                        <input type="number" name="profitPercentage" value={input.profitPercentage}  onChange={handleInput} required/>
+                        <input type="number" name="profitPercentage"  value={input.profitPercentage}  onChange={handleInput} required/>
                     </div>
                     <div>
                         <h3>Subscription Fee</h3>
@@ -98,9 +91,10 @@ function AutoTrading() {
   </thead>
   <tbody>
       {
-          loading && <Spinner animation="grow" size="lg" className="loading" variant="primary" />
-      }
-      {
+          loading ?
+           (<Spinner animation="grow" size="lg" className="loading" variant="primary" />) :
+      
+      (
          trades &&  trades.map((trade, i)=> (
               <tr key={i}>
                   <td>{i}</td>
@@ -108,21 +102,20 @@ function AutoTrading() {
                   <td>{trade.profitPercentage}</td>
                   <td>{trade.subscriptionFee}</td>
                   <td>{trade.date.split("T")[0]}</td>
-                  <td><Button onClick={()=> editTrade(trade._id) }>Edit</Button> <Button variant="danger" onClick={()=> handleDelete(trade._id)}>Delete</Button></td>
+                  <td><EditAutoTrade id = {trade._id}><Button>Edit</Button></EditAutoTrade> <Button variant="danger" onClick={()=> handleDelete(trade._id)}>Delete</Button></td>
               </tr>
           ))
+      )
       }
 
-      {
-          specificTrade && <EditTrade isOpen={isOpen} id={tradeId} trade ={specificTrade} setisOpen={setisOpen} toggle={toggleOpen}/>
-      }
+       
   
   </tbody>
 </Table>
                 </div>
             </div>
-        </div>
-    )
+    </div>
+  );
 }
 
-export default AutoTrading
+export default AutoTrading;

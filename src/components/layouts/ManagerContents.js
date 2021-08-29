@@ -123,6 +123,7 @@ const ManagerContents = (props) => {
     // user.notificationsEnabled,
   })
 
+  // auth
   const setAuth0 = useCallback(() => {
     setAuth(!auth)
     // setAuthEnabled({
@@ -145,10 +146,6 @@ const ManagerContents = (props) => {
       notificationEnabled: !user.notificationsEnabled,
     })
   }, [notification])
-
-  // useEffect(() => {
-  //   getSingleWithdrawals()
-  // }, [])
 
   const deleteAutoCopyTrade = async () => {
     setLoading(true)
@@ -674,7 +671,7 @@ const ManagerContents = (props) => {
                   )}
                   {/* <div
                     className="public-card white-card"
-                    style={{ marginTop: '15px' }}
+                    style={{ marginTop: "15px" }}
                   >
                     <div className="each-row dash-row">
                       <div className="dtls">

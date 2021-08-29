@@ -7,7 +7,6 @@ import { message } from "antd";
 
 const BuyStockModal = (props) => {
   const {
-    assetQuantity,
     setProfitAmount,
     setDisableTakeProfit,
     disableTakeProfit,
@@ -20,20 +19,15 @@ const BuyStockModal = (props) => {
     setBuysell,
   } = props;
 
-  const [currentPrice, setCurrentPrice] = useState("");
-
   const { user } = useSelector((state) => state.auth);
   const { currentSelectedStock, defaultSelectedStock } = useSelector(
     (state) => state.stock
   );
-  const { error } = useSelector((state) => state.profile);
+  const { error, userMargin } = useSelector((state) => state.profile);
+  const { webData } = useSelector((state) => state.web);
 
-  const { purchaseStockAsset } = useActions();
-
-  // const getAssetClosingRate = (assetTypes) => {
-  //   if (!disableTakeProfit && profitAmount) {
-  //   }
-  // };
+  const { purchaseStockAsset, setCurrentlyActiveTrade, setUserMargin } =
+    useActions();
 
   const handleStockPurchase = (event) => {
     event.preventDefault();
@@ -44,7 +38,7 @@ const BuyStockModal = (props) => {
       purchaseStockAsset(user._id, {
         userId: user._id,
         tag: "buy",
-        margin: parseInt(assetQuantity),
+        margin: parseInt(userMargin),
         stockAmount:
           Object.keys(currentSelectedStock).length > 0
             ? currentSelectedStock.price
@@ -68,9 +62,15 @@ const BuyStockModal = (props) => {
         loss: 0,
       });
       message.success("Your stock has been successfully purchased");
+      setCurrentlyActiveTrade(
+        Object.keys(currentSelectedStock).length > 0
+          ? { ...currentSelectedStock, margin: userMargin }
+          : { ...defaultSelectedStock, margin: userMargin }
+      );
       setBuysell(true);
     }
     setBuyStock(false);
+    setUserMargin(1);
   };
 
   return (
@@ -82,10 +82,10 @@ const BuyStockModal = (props) => {
         </div>
         <div className="split moved">
           <span>
+            $
             {Object.keys(defaultSelectedStock).length > 0
               ? defaultSelectedStock.price
               : currentSelectedStock.price}{" "}
-            $
           </span>
         </div>
       </div>
@@ -95,7 +95,12 @@ const BuyStockModal = (props) => {
         </div>
         <div className="split moved">
           <span>
-            {getRate(defaultSelectedStock, currentSelectedStock, assetQuantity)}
+            {getRate(
+              defaultSelectedStock,
+              currentSelectedStock,
+              userMargin,
+              webData.leverageAmount
+            )}{" "}
             {Object.keys(defaultSelectedStock).length > 0
               ? defaultSelectedStock.symbol
               : currentSelectedStock.symbol}
@@ -112,7 +117,7 @@ const BuyStockModal = (props) => {
           </span>
         </div>
         <div className="split moved">
-          <span>{assetQuantity}</span>
+          <span>{userMargin}</span>
         </div>
       </div>
       <div className="dash-row dash-row-centralized">
@@ -120,7 +125,7 @@ const BuyStockModal = (props) => {
           <span>Leverage</span>
         </div>
         <div className="split moved">
-          <span>10</span>
+          <span>{webData && webData.leverageAmount}</span>
         </div>
       </div>
       <div className="dash-row dash-row-centralized">
@@ -128,17 +133,7 @@ const BuyStockModal = (props) => {
           <span>Margin Required</span>
         </div>
         <div className="split moved">
-          <span>
-            {/* {Object.keys(defaultSelectedStock).length > 0
-              ? defaultSelectedStock.price.toString().slice(0, 8)
-              : Object.keys(currentSelectedStock).length > 0
-              ? currentSelectedStock.price.toString().slice(0, 8)
-              : ""}
-            {Object.keys(defaultSelectedStock).length > 0
-              ? defaultSelectedStock.symbol
-              : currentSelectedStock.symbol} */}
-            {assetQuantity}
-          </span>
+          <span>{userMargin}</span>
         </div>
       </div>
       <div
@@ -268,7 +263,6 @@ const BuyStockModal = (props) => {
 };
 
 BuyStockModal.propTypes = {
-  assetQuantity: PropTypes.number,
   setProfitAmount: PropTypes.func.isRequired,
   setDisableTakeProfit: PropTypes.func.isRequired,
   disableTakeProfit: PropTypes.bool.isRequired,

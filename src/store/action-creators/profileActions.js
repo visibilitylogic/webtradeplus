@@ -1,11 +1,11 @@
 import * as actionTypes from '../action-types'
 import axios from 'axios'
 
-// const BASE_URL = "https://trade-backend-daari.ondigitalocean.app/api";
+const BASE_URL = 'https://trade-backend-daari.ondigitalocean.app'
 
 export const getCurrentProfile = (userId) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/profile/single/${userId}`)
+    const { data } = await axios.get(`${BASE_URL}/api/profile/single/${userId}`)
     dispatch({
       type: actionTypes.GET_CURRENT_PROFILE,
       payload: data,
@@ -28,7 +28,7 @@ export const updateProfile = (profile) => async (dispatch) => {
   const body = JSON.stringify(profile)
 
   try {
-    await axios.put(`/api/profile/update/user`, body, config)
+    await axios.put(`${BASE_URL}/api/profile/update/user`, body, config)
     dispatch({
       type: actionTypes.UPDATE_PROFILE_SUCCESS,
     })
@@ -64,7 +64,7 @@ export const processDeposit = (details) => async (dispatch) => {
   const body = JSON.stringify(details)
 
   try {
-    await axios.post(`/api/deposit`, body, config)
+    await axios.post(`${BASE_URL}/api/deposit`, body, config)
     dispatch({
       type: actionTypes.PROCESS_DEPOSIT_SUCCESS,
     })
@@ -86,7 +86,7 @@ export const processWithdrawal = (details) => async (dispatch) => {
   const body = JSON.stringify(details)
 
   try {
-    await axios.post(`/api/withdraw`, body, config)
+    await axios.post(`${BASE_URL}/api/withdraw`, body, config)
     dispatch({
       type: actionTypes.PROCESS_WITHDRAWAL_SUCCESS,
     })
@@ -100,7 +100,9 @@ export const processWithdrawal = (details) => async (dispatch) => {
 
 export const getBankPaymentMethod = (userId) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/profile/paymentDetails/${userId}`)
+    const { data } = await axios.get(
+      `${BASE_URL}/api/profile/paymentDetails/${userId}`,
+    )
     dispatch({
       type: actionTypes.GET_BANK_PAYMENT_METHOD,
       payload: data.banks,
@@ -115,7 +117,9 @@ export const getBankPaymentMethod = (userId) => async (dispatch) => {
 
 export const getCryptoPaymentMethod = (userId) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/profile/paymentDetails/${userId}`)
+    const { data } = await axios.get(
+      `${BASE_URL}/api/profile/paymentDetails/${userId}`,
+    )
     dispatch({
       type: actionTypes.GET_CRYPTO_PAYMENT_METHOD,
       payload: data.crypto,
@@ -137,7 +141,7 @@ export const setAutoTrade = (userId, details) => async (dispatch) => {
 
   const body = JSON.stringify(details)
   try {
-    await axios.put(`/api/users/autotrade/${userId}`, body, config)
+    await axios.put(`${BASE_URL}/api/users/autotrade/${userId}`, body, config)
     dispatch({
       type: actionTypes.SET_AUTO_TRADE,
     })
@@ -177,7 +181,7 @@ export const setIsTrading = (details) => async (dispatch) => {
 
   const body = JSON.stringify(details)
   try {
-    await axios.put(`/api/profile/isTrading`, body, config)
+    await axios.put(`${BASE_URL}/api/profile/isTrading`, body, config)
 
     dispatch({
       type: actionTypes.SET_IS_TRADING,
@@ -199,7 +203,7 @@ export const setLiveTrade = (id, details) => async (dispatch) => {
 
   const body = JSON.stringify(details)
   try {
-    await axios.put(`/api/profile/liveTrade/${id}`, body, config)
+    await axios.put(`${BASE_URL}/api/profile/liveTrade/${id}`, body, config)
 
     dispatch({
       type: actionTypes.SET_LIVE_TRADE,
@@ -220,7 +224,11 @@ export const setNotificationEnabled = (details) => async (dispatch) => {
 
   const body = JSON.stringify(details)
   try {
-    await axios.put(`/api/profile/notificationsEnabled`, body, config)
+    await axios.put(
+      `${BASE_URL}/api/profile/notificationsEnabled`,
+      body,
+      config,
+    )
 
     dispatch({
       type: actionTypes.SET_IS_NOTIFICATION,
@@ -242,7 +250,7 @@ export const addBankPaymentMethod = (bankDetails) => async (dispatch) => {
 
   const body = JSON.stringify(bankDetails)
   try {
-    await axios.put(`/api/profile/userbankdetails`, body, config)
+    await axios.put(`${BASE_URL}/api/profile/userbankdetails`, body, config)
     dispatch({
       type: actionTypes.BANK_PAYMENT_METHOD_ADDED,
     })
@@ -263,7 +271,7 @@ export const addCryptoPaymentMethod = (cryptoDetails) => async (dispatch) => {
 
   const body = JSON.stringify(cryptoDetails)
   try {
-    await axios.put(`/api/profile/usercryptodetails`, body, config)
+    await axios.put(`${BASE_URL}/api/profile/usercryptodetails`, body, config)
     dispatch({
       type: actionTypes.CRYPTO_PAYMENT_METHOD_ADDED,
     })
@@ -285,7 +293,7 @@ export const updateWalletBalance = (details) => async (dispatch) => {
   const body = JSON.stringify(details)
 
   try {
-    await axios.put(`/api/profile/CreditDebitAmount`, body, config)
+    await axios.put(`${BASE_URL}/api/profile/CreditDebitAmount`, body, config)
     dispatch({
       type: actionTypes.UPDATE_WALLET_BALANCE,
     })
@@ -307,7 +315,7 @@ export const approveDeposit = (details) => async (dispatch) => {
   const body = JSON.stringify(details)
 
   try {
-    await axios.put(`/api/deposit/approve`, body, config)
+    await axios.put(`${BASE_URL}/api/deposit/approve`, body, config)
     dispatch({
       type: actionTypes.APPROVE_DEPOSIT,
     })
@@ -329,7 +337,7 @@ export const declineDeposit = (details) => async (dispatch) => {
   const body = JSON.stringify(details)
 
   try {
-    await axios.put(`/api/deposit/decline`, body, config)
+    await axios.put(`${BASE_URL}/api/deposit/decline`, body, config)
     dispatch({
       type: actionTypes.DECLINE_DEPOSIT,
     })
@@ -350,7 +358,7 @@ export const declineVerify = (id) => async (dispatch) => {
 
   const body = JSON.stringify(id)
   try {
-    await axios.put(`/api/verify/decline`, body, config)
+    await axios.put(`${BASE_URL}/api/verify/decline`, body, config)
     dispatch({
       type: actionTypes.DECLINE_VERIFY,
     })
@@ -372,7 +380,7 @@ export const approveVerify = (details) => async (dispatch) => {
   const body = JSON.stringify(details)
 
   try {
-    await axios.put(`/api/verify/approve`, body, config)
+    await axios.put(`${BASE_URL}/api/verify/approve`, body, config)
     dispatch({
       type: actionTypes.APPROVE_VERIFY,
     })
@@ -413,7 +421,7 @@ export const declineWithdrawal = (details) => async (dispatch) => {
 
   const body = JSON.stringify(details)
   try {
-    await axios.put(`/api/withdraw/decline`, body, config)
+    await axios.put(`${BASE_URL}/api/withdraw/decline`, body, config)
     dispatch({
       type: actionTypes.DECLINE_WITHDRAWAL,
     })
@@ -434,7 +442,7 @@ export const approveWithdrawal = (details) => async (dispatch) => {
 
   const body = JSON.stringify(details)
   try {
-    await axios.put(`/api/withdraw/approve`, body, config)
+    await axios.put(`${BASE_URL}/api/withdraw/approve`, body, config)
     dispatch({
       type: actionTypes.APPROVE_WITHDRAWAL,
     })
@@ -455,7 +463,7 @@ export const makeAdmin = (id) => async (dispatch) => {
 
   const body = JSON.stringify(id)
   try {
-    await axios.put(`/api/users/makeAdmin`, body, config)
+    await axios.put(`${BASE_URL}/api/users/makeAdmin`, body, config)
     dispatch({
       type: actionTypes.MAKE_ADMIN,
     })
@@ -476,7 +484,7 @@ export const removeAdmin = (id) => async (dispatch) => {
 
   const body = JSON.stringify(id)
   try {
-    await axios.put(`/api/users/removeAdmin`, body, config)
+    await axios.put(`${BASE_URL}/api/users/removeAdmin`, body, config)
     dispatch({
       type: actionTypes.REMOVE_ADMIN,
     })
@@ -497,7 +505,7 @@ export const makeManager = (id) => async (dispatch) => {
 
   const body = JSON.stringify(id)
   try {
-    await axios.put(`/api/users/makeManager`, body, config)
+    await axios.put(`${BASE_URL}/api/users/makeManager`, body, config)
     dispatch({
       type: actionTypes.MAKE_MANAGER,
     })
@@ -518,7 +526,7 @@ export const removeManager = (id) => async (dispatch) => {
 
   const body = JSON.stringify(id)
   try {
-    await axios.put(`/api/users/removeManager`, body, config)
+    await axios.put(`${BASE_URL}/api/users/removeManager`, body, config)
     dispatch({
       type: actionTypes.REMOVE_MANAGER,
     })
@@ -539,7 +547,7 @@ export const deleteUser = (id) => async (dispatch) => {
 
   const body = JSON.stringify(id)
   try {
-    await axios.delete(`/api/users/remove`, body, config)
+    await axios.delete(`${BASE_URL}/api/users/remove`, body, config)
     dispatch({
       type: actionTypes.DELETE_USER,
     })
@@ -561,7 +569,7 @@ export const runPassword = (details) => async (dispatch) => {
   const body = JSON.stringify(details)
 
   try {
-    await axios.put(`/api/profile/update/user`, body, config)
+    await axios.put(`${BASE_URL}/api/profile/update/user`, body, config)
 
     dispatch({
       type: actionTypes.RUN_USER_PASSWORD,
@@ -584,7 +592,7 @@ export const requestVerification = (details) => async (dispatch) => {
   const body = JSON.stringify(details)
 
   try {
-    await axios.post(`/api/verify/verificationrequest`, body, config)
+    await axios.post(`${BASE_URL}/api/verify/verificationrequest`, body, config)
     dispatch({
       type: actionTypes.REQUEST_VERIFICATION,
     })
@@ -606,7 +614,7 @@ export const purchaseStockAsset = (userId, data) => async (dispatch) => {
   const body = JSON.stringify(data)
 
   try {
-    await axios.post(`/api/trade/buy/${userId}`, body, config)
+    await axios.post(`${BASE_URL}/api/trade/buy/${userId}`, body, config)
 
     dispatch({
       type: actionTypes.PURCHASE_STOCK,
@@ -629,7 +637,7 @@ export const sellStockAsset = (userId, data) => async (dispatch) => {
   const body = JSON.stringify(data)
 
   try {
-    await axios.post(`/api/trade/sell/${userId}`, body, config)
+    await axios.post(`${BASE_URL}/api/trade/sell/${userId}`, body, config)
 
     dispatch({
       type: actionTypes.SELL_STOCK,
@@ -644,7 +652,7 @@ export const sellStockAsset = (userId, data) => async (dispatch) => {
 
 export const deleteUserTrade = (stockId) => async (dispatch) => {
   try {
-    await axios.delete(`/api/trade/${stockId}`)
+    await axios.delete(`${BASE_URL}/api/trade/${stockId}`)
     dispatch({
       type: actionTypes.DELETE_STOCK,
     })
@@ -658,7 +666,7 @@ export const deleteUserTrade = (stockId) => async (dispatch) => {
 
 export const getAllWithdrawals = (details) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/withdraw/AllHistory`)
+    const { data } = await axios.get(`${BASE_URL}/api/withdraw/AllHistory`)
     dispatch({
       type: actionTypes.GET_ALL_WITHDRAWALS,
       payload: data,
@@ -701,7 +709,7 @@ export const getSingleDeposit = (details) => async (dispatch) => {
 
 export const getAllOrders = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/trade/buy/allTrade`)
+    const { data } = await axios.get(`${BASE_URL}/api/trade/buy/allTrade`)
 
     dispatch({
       type: actionTypes.GET_ALL_ORDERS,
@@ -733,7 +741,7 @@ export const getAllUsers = () => async (dispatch) => {
 
 export const getAllDeposits = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/deposit/AllHistory`)
+    const { data } = await axios.get(`${BASE_URL}/api/deposit/AllHistory`)
 
     dispatch({
       type: actionTypes.GET_ALL_DEPOSITS,
@@ -764,7 +772,7 @@ export const singleUserDeposit = (id) => async (dispatch) => {
 
 export const getAllTrades = () => async (dispatch) => {
   try {
-    const { data } = await axios.get('/api/trade/buy/allTrade')
+    const { data } = await axios.get('${BASE_URL}/api/trade/buy/allTrade')
 
     dispatch({
       type: actionTypes.GET_ALL_TRADES,
@@ -780,7 +788,7 @@ export const getAllTrades = () => async (dispatch) => {
 
 export const getAllVerifiedUsers = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/verify`)
+    const { data } = await axios.get(`${BASE_URL}/api/verify`)
 
     dispatch({
       type: actionTypes.GET_ALL_VERIFIED_USERS,
@@ -796,7 +804,7 @@ export const getAllVerifiedUsers = () => async (dispatch) => {
 
 export const getUserAutoCopyTrade = (userId) => async (dispatch) => {
   try {
-    const { data } = await axios(`/api/autocopytrade/${userId}`)
+    const { data } = await axios(`${BASE_URL}/api/autocopytrade/${userId}`)
 
     dispatch({
       type: actionTypes.USER_AUTO_COPY_TRADE,
@@ -819,7 +827,7 @@ export const addUserAutoCopyTrade = (data) => async (dispatch) => {
 
   const body = JSON.stringify(data)
   try {
-    await axios.post(`/api/autocopytrade`, body, config)
+    await axios.post(`${BASE_URL}/api/autocopytrade`, body, config)
 
     dispatch({
       type: actionTypes.ADD_USER_AUTO_COPY_TRADE,
@@ -834,7 +842,7 @@ export const addUserAutoCopyTrade = (data) => async (dispatch) => {
 
 export const deleteUserAutoCopyTrade = (userId) => async (dispatch) => {
   try {
-    await axios.delete(`/api/autocopytrade/${userId}`)
+    await axios.delete(`${BASE_URL}/api/autocopytrade/${userId}`)
     dispatch({
       type: actionTypes.DELETE_USER_AUTO_COPY_TRADE,
     })
@@ -848,7 +856,7 @@ export const deleteUserAutoCopyTrade = (userId) => async (dispatch) => {
 
 export const getAllUserTrades = (userId) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/trade/${userId}`)
+    const { data } = await axios.get(`${BASE_URL}/api/trade/${userId}`)
 
     dispatch({
       type: actionTypes.GET_ALL_USER_TRADES,
@@ -891,3 +899,35 @@ export const ActivateUser = (userId) => async (dispatch) => {
     })
   }
 }
+
+export const closeUserTrade = (tradeId) => async (dispatch) => {
+  // const config = {
+  //   headers: {
+  //     "Content-Types": "application/json"
+  //   }
+  // }
+
+  // const body = JSON.stringify(data);
+  try {
+    await axios.put(`api/trade/closeTrade/${tradeId}`)
+
+    dispatch({
+      type: actionTypes.CLOSE_USER_TRADE,
+    })
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    })
+  }
+}
+
+export const setCurrentlyActiveTrade = (trade) => (dispatch) => {
+  dispatch({
+    type: actionTypes.CURRENTLY_ACTIVE_TRADE,
+    payload: trade,
+  })
+}
+
+export const setUserMargin = (margin) => (dispatch) =>
+  dispatch({ type: actionTypes.SET_USER_MARGIN, payload: margin })
