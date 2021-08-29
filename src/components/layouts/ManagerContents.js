@@ -52,6 +52,7 @@ const ManagerContents = (props) => {
 
   const { user } = useSelector((state) => state.auth)
   console.log(allTrades)
+  console.log(allUsers)
   // ACTION CREATORS
   const {
     updateWalletBalance,

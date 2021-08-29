@@ -132,7 +132,7 @@ export const getCryptoPaymentMethod = (userId) => async (dispatch) => {
   }
 }
 
-export const setAutoTrade = (userId, details) => async (dispatch) => {
+export const setAutoTrade = (details) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -141,7 +141,7 @@ export const setAutoTrade = (userId, details) => async (dispatch) => {
 
   const body = JSON.stringify(details)
   try {
-    await axios.put(`${BASE_URL}/api/users/autotrade/${userId}`, body, config)
+    await axios.put(`${BASE_URL}/api/users/autotrade/`, body, config)
     dispatch({
       type: actionTypes.SET_AUTO_TRADE,
     })
@@ -194,7 +194,7 @@ export const setIsTrading = (details) => async (dispatch) => {
   }
 }
 
-export const setLiveTrade = (id, details) => async (dispatch) => {
+export const setLiveTrade = (details) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -202,8 +202,9 @@ export const setLiveTrade = (id, details) => async (dispatch) => {
   }
 
   const body = JSON.stringify(details)
+
   try {
-    await axios.put(`${BASE_URL}/api/profile/liveTrade/${id}`, body, config)
+    await axios.put(`${BASE_URL}/api/profile/liveTrade/`, body, config)
 
     dispatch({
       type: actionTypes.SET_LIVE_TRADE,
@@ -401,7 +402,7 @@ export const approveSingleUserVerify = (details) => async (dispatch) => {
   // const body = JSON.stringify(details)
 
   try {
-    await axios.put(`/api/users/verify/${details}`, config)
+    await axios.put(`${BASE_URL}/api/users/verify/${details}`, config)
     dispatch({
       type: actionTypes.APPROVE_SINGLE_VERIFY,
     })
@@ -664,7 +665,7 @@ export const deleteUserTrade = (stockId) => async (dispatch) => {
   }
 }
 
-export const getAllWithdrawals = (details) => async (dispatch) => {
+export const getAllWithdrawals = () => async (dispatch) => {
   try {
     const { data } = await axios.get(`${BASE_URL}/api/withdraw/AllHistory`)
     dispatch({
@@ -680,7 +681,9 @@ export const getAllWithdrawals = (details) => async (dispatch) => {
 }
 export const getSingleWithdrawals = (details) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/users/my-withdrawals/${details}`)
+    const { data } = await axios.get(
+      `${BASE_URL}/api/users/my-withdrawals/${details}`,
+    )
     dispatch({
       type: actionTypes.GET_SINGLE_WITHDRAWALS,
       payload: data,
@@ -694,7 +697,9 @@ export const getSingleWithdrawals = (details) => async (dispatch) => {
 }
 export const getSingleDeposit = (details) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/users/deposit-history/${details}`)
+    const { data } = await axios.get(
+      `${BASE_URL}/api/users/deposit-history/${details}`,
+    )
     dispatch({
       type: actionTypes.GET_SINGLE_DEPOSIT,
       payload: data,
@@ -725,7 +730,7 @@ export const getAllOrders = () => async (dispatch) => {
 
 export const getAllUsers = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/allUser`)
+    const { data } = await axios.get(`${BASE_URL}/allUser`)
 
     dispatch({
       type: actionTypes.GET_ALL_USERS,
@@ -756,7 +761,9 @@ export const getAllDeposits = () => async (dispatch) => {
 }
 export const singleUserDeposit = (id) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/users/deposit-history/${id}`)
+    const { data } = await axios.get(
+      `${BASE_URL}/api/users/deposit-history/${id}`,
+    )
 
     dispatch({
       type: actionTypes.GET_SINGLE_USER_DEPOSITS,
@@ -772,7 +779,7 @@ export const singleUserDeposit = (id) => async (dispatch) => {
 
 export const getAllTrades = () => async (dispatch) => {
   try {
-    const { data } = await axios.get('${BASE_URL}/api/trade/buy/allTrade')
+    const { data } = await axios.get(`${BASE_URL}/api/trade/buy/allTrade`)
 
     dispatch({
       type: actionTypes.GET_ALL_TRADES,

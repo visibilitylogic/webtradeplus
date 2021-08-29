@@ -7,19 +7,20 @@ import { message } from 'antd'
 
 const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
   const { isAdmin, isManager, _id, autoTrade, liveTrade } = singleUser
-  const [livstate, setLiveState] = useState(liveTrade)
+  const [livestate, setLiveState] = useState(liveTrade)
   const [auto, setAuto] = useState(autoTrade)
   const { error } = useSelector((state) => state.profile)
   const { setLiveTrade, setAutoTrade } = useActions()
 
-  console.log(singleUser)
   const setTradeFunc = async () => {
     if (error) {
       message.error('Failed!!!')
     } else {
-      await setAutoTrade(_id, {
+      const details = {
+        id: _id,
         autoTrade: !autoTrade,
-      })
+      }
+      await setAutoTrade(details)
       setAuto(!autoTrade)
 
       message.success('Successfull')
@@ -30,10 +31,12 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
     if (error) {
       message.error('Failed')
     } else {
-      await setLiveTrade(_id, {
+      const details = {
+        id: _id,
         liveTrade: !liveTrade,
-      })
-
+      }
+      await setLiveTrade(details)
+      setLiveState(!liveTrade)
       message.success(' Successful')
     }
   }
@@ -64,7 +67,7 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
               <div>
                 <Switch
                   onChange={setToggles}
-                  checked={liveTrade}
+                  checked={livestate}
                   className="react-switch"
                   onColor="#54AC40"
                   uncheckedIcon={false}

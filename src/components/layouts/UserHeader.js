@@ -23,7 +23,11 @@ const UserHeader = ({ singleUser }) => {
             <div className="d-flex justify-content-center">
               <img
                 className=" image-fluid w-30"
-                src={img ? img : './imagePlaceHolder.jpg'}
+                src={
+                  img
+                    ? img
+                    : 'https://p.kindpng.com/picc/s/78-785827_user-profile-avatar-login-account-male-user-icon.png'
+                }
                 alt="profile-pics"
                 style={{ width: '50px', borderRadius: '50%' }}
               />
