@@ -1,14 +1,13 @@
 import { message } from 'antd';
+import axios from 'axios';
 import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
+import getToken from '../../store/utils/gettoken';
 import { useActions } from '../hooks/useActions';
 
 function Identity() {
   const {adminData} = useSelector(state=> state.adminInfo) 
-  const {change_admin_data} = useActions();
-  const {success, error} = useSelector(state=> state.adminInfo)
-  const [suc, setSuc] = useState("")
-  const [e, setE] = useState("")
+  const {change_admin_data,get_admin_data} = useActions();
   const[enableIdentitySystem ,setEnableIdentitySystem] = useState(null)
   const[blockTradingWithoutIdentity,setBlockTradingWithoutIdentity] = useState(null)
   const[blockDepositeWithoutIdentityVerification,setBlockDepositeWithoutIdentityVerification] = useState(null)
@@ -24,7 +23,7 @@ function Identity() {
   const[webCamDocumentRatio,setWebCamDocumentRatio] = useState();
   const[identityDocumentName,setIdentityDocumentName] = useState();
   const[documentIdentityList,setDocumentIdentityList] = useState()
-  const [submitLoading, setSubmitLoading]=useState(false)
+  const [loading,setLoading]=useState(false)
  
 
   
@@ -66,22 +65,22 @@ useEffect(()=>{
 
   const url = "https://trade-backend-daari.ondigitalocean.app/api/site/siteidentitysettings"
   const onSaved = ()=>{
-    if(window.confirm("Are you to update the data")){
-        change_admin_data(url, dataAll);
-        if(success && success.length > 0){
-          setSuc(success)
-        }else if (error && error.length> 0){
-          setE(error)
-        }
-      }
+    setLoading(true)
+    axios
+      .put(url, dataAll, getToken())
+      .then(res=> {
+        setLoading(false)
+        message.success("Data Updated Successfully");
+        get_admin_data()
+      })
+      .catch(err=>{
+        message.error("Error occured while updataing")
+      })
   }
     return (
         <div>
             <div>
-            {
-                  suc && message.success(suc, ()=> setSuc("")),
-                  e && message.error(e, ()=> setE(""))
-              }
+            
                     <div className="public-card">
                       <div className="each-row dash-row">
                         <div className="dtls">
@@ -255,9 +254,8 @@ useEffect(()=>{
                         </div>
                       </div>
                       <div className="save-btn">
-                        <button onClick={onSaved} style={{ backgroundColor: "#29c359" }}>
-                          Save
-                        </button>
+                      <button  style={{ backgroundColor: "#29c359" }}onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
+                       
                       </div>
                     </div>
                     <table style={{ marginTop: 20 }}>
@@ -439,9 +437,7 @@ useEffect(()=>{
                         </div>
                       </div>
                       <div className="save-btn">
-                        <button onChange={onSaved} style={{ backgroundColor: "#29c359" }}>
-                          Add new
-                        </button>
+                           <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
                     {/* Document identity list */}
@@ -512,9 +508,7 @@ useEffect(()=>{
                         </div>
                       </div>
                       <div className="save-btn">
-                        <button style={{ backgroundColor: "#29c359" }}>
-                          Add new
-                        </button>
+                           <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
                   </div>

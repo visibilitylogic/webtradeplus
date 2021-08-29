@@ -4,12 +4,11 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { message } from 'antd';
 import { useActions } from '../hooks/useActions';
+import axios from 'axios';
+import getToken from '../../store/utils/gettoken';
 function Payment() {
   const { adminData} = useSelector(state=> state.adminInfo); 
-  const {change_admin_data} = useActions();
-  const {success, error, loading} = useSelector(state=> state.adminInfo)
-  const [suc, setSuc] = useState("")
-  const [e, setE] = useState("")
+  const {change_admin_data, get_admin_data} = useActions();
   const [paymentSuccessText, setpaymentSuccessText] = useState("");
   const [paymentRefPattern, setpaymentRefPattern] = useState("");
   const [paymentMinDeposit, setPaymentMinDeposit] = useState("");
@@ -22,7 +21,7 @@ function Payment() {
   const [btcHeaderText, setbtcHeaderText] = useState("");
   const [btcAddress, setbtcAddress] = useState("");
   const [buyBTCLink, setbuyBTCLink] = useState("");
-  const [submitLoading, setSubmitLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dataAll = {
     paymentSuccessText: paymentSuccessText,
     paymentRefPattern: paymentRefPattern,
@@ -56,22 +55,21 @@ function Payment() {
 
   const url = "https://trade-backend-daari.ondigitalocean.app/api/site/paymentsettings";
   const onSaved = ()=>{
-    if(window.confirm("Are you to update the data")){
-        change_admin_data(url, dataAll);
-        if(success && success.length > 0){
-          setSuc(success)
-        }else if (error && error.length> 0){
-          setE(error)
-        }
-      }
+    setLoading(true)
+    axios
+      .put(url, dataAll, getToken())
+      .then(res=> {
+        setLoading(false)
+        message.success("Data Updated Successfully");
+        get_admin_data()
+      })
+      .catch(err=>{
+        message.error("Error occured while updataing")
+      })
   }
     return (
         <div>        
         <div>
-        {
-                  suc && message.success(suc, ()=> setSuc("")),
-                  e && message.error(e, ()=> setE(""))
-              }
         <div
           className="public-card"
           style={{ paddingLeft: 0, paddingRight: 0 }}
@@ -279,9 +277,7 @@ function Payment() {
           </div>
         </div>
         <div className="save-btn">
-          <button disabled={submitLoading} onClick={onSaved}>
-            {loading ? "Saving..." : "Save"}
-          </button>
+             <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button> 
         </div>
       </div>
 

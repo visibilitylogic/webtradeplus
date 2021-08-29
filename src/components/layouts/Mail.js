@@ -1,34 +1,32 @@
-import { message } from "antd";
-import React, { useState, useEffect } from "react";
-import { WindowSidebar } from "react-bootstrap-icons";
-import { useSelector } from "react-redux";
-// import { get_admin_data } from '../../store/action-creators/AdminActions/Admin';
-import { useActions } from "../hooks/useActions";
-import "./Mail.css";
+import { message } from 'antd'
+import axios from 'axios'
+import React, { useState, useEffect } from 'react'
+import { WindowSidebar } from 'react-bootstrap-icons'
+import { useSelector } from 'react-redux'
+import getToken from '../../store/utils/gettoken'
+import { useActions } from '../hooks/useActions'
+import './Mail.css'
 function Mail() {
-  const { adminData } = useSelector((state) => state.adminInfo);
-  const { change_admin_data } = useActions();
-  const { success, error } = useSelector((state) => state.adminInfo);
-  const [suc, setSuc] = useState("");
-  const [e, setE] = useState("");
-  const [smtp, setSMTP] = useState(true);
-  const [mailEngine, setmailEngine] = useState("");
-  const [mailForm, setmailForm] = useState("");
-  const [SMTPServer, setSMTPServer] = useState("");
-  const [SMTPPort, setSMTPPort] = useState("");
-  const [SMTPMail, setSMTPMail] = useState("");
-  const [SMTPPassword, setSMTPPassword] = useState("");
-  const [EmailSenderName, setEmailSenderName] = useState("");
-  const [emailSendName, setemailSendName] = useState("");
-  const [supportMail, setsupportMail] = useState("");
-  const [supportPhone, setsupportPhone] = useState("");
-  const [supportAddress, setsupportAddress] = useState("");
-  const [DPOPhone, setDPOPhone] = useState("");
-  const [DPOEmail, setDPOEmail] = useState("");
-  const [sendWelcomeMail, setsendWelcomeMail] = useState(false);
-  const [welcomeMail, setwelcomeMail] = useState("");
-  const [newUserWelcomeMailTitle, setnewUserWelcomeMailTitle] = useState(false);
-  const [submitLoading, setSubmitLoading] = useState(false);
+  const { adminData } = useSelector((state) => state.adminInfo)
+  const { change_admin_data, get_admin_data } = useActions()
+  const [smtp, setSMTP] = useState(true)
+  const [mailEngine, setmailEngine] = useState('')
+  const [mailForm, setmailForm] = useState('')
+  const [SMTPServer, setSMTPServer] = useState('')
+  const [SMTPPort, setSMTPPort] = useState('')
+  const [SMTPMail, setSMTPMail] = useState('')
+  const [SMTPPassword, setSMTPPassword] = useState('')
+  const [EmailSenderName, setEmailSenderName] = useState('')
+  const [emailSendName, setemailSendName] = useState('')
+  const [supportMail, setsupportMail] = useState('')
+  const [supportPhone, setsupportPhone] = useState('')
+  const [supportAddress, setsupportAddress] = useState('')
+  const [DPOPhone, setDPOPhone] = useState('')
+  const [DPOEmail, setDPOEmail] = useState('')
+  const [sendWelcomeMail, setsendWelcomeMail] = useState(false)
+  const [welcomeMail, setwelcomeMail] = useState('')
+  const [newUserWelcomeMailTitle, setnewUserWelcomeMailTitle] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (adminData) {
@@ -69,22 +67,23 @@ function Mail() {
     newUserWelcomeMailTitle: newUserWelcomeMailTitle,
   };
   const url =
-    "https://trade-backend-daari.ondigitalocean.app/api/site/mailsettings";
-  const saveData = () => {
-    change_admin_data(url, dataAll);
-    if (success && success.length > 0) {
-      setSuc(success);
-    } else if (error && error.length > 0) {
-      setE(error);
+    'https://trade-backend-daari.ondigitalocean.app/api/site/mailsettings'
+    const onSaved = ()=>{
+      setLoading(true)
+      axios
+        .put(url, dataAll, getToken())
+        .then(res=> {
+          setLoading(false)
+          message.success("Data Updated Successfully");
+          get_admin_data()
+        })
+        .catch(err=>{
+          message.error("Error occured while updataing")
+        })
     }
-  };
   return (
     <div>
       <div>
-        {
-          (suc && message.success(suc, () => setSuc("")),
-          e && message.error(e, () => setE("")))
-        }
         <div className="public-card">
           <div className="each-row dash-row">
             <div className="dtls">
@@ -355,7 +354,7 @@ function Mail() {
           </div>
         </div>
         <div className="save-btn">
-          <button onClick={saveData}>Save</button>
+             <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button> 
         </div>
       </div>
     </div>
