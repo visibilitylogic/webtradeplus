@@ -7,9 +7,9 @@ function UserBalance({
   setCredit,
   text,
 }) {
-  const { _id } = singleUser
   return (
     <>
+    {singleUser  &&
       <div className="public-card white-card" style={{ marginTop: '15px' }}>
         <div className="each-row dash-row">
           <div className="dtls">
@@ -50,11 +50,13 @@ function UserBalance({
             />
           </div>
         </div>
-      </div>
       <div className="save-btn">
-        <button onClick={() => handleUpdateWalletBalance(_id)}>Save</button>
+        <button onClick={() => handleUpdateWalletBalance(singleUser)}>Save</button>
       </div>
+      </div>
+}
     </>
+
   )
 }
 

@@ -7,12 +7,12 @@ export const AllUser = ({ proofDocument }) => {
         </a>
       </div>
       <div className="rounded mr-1">
-        <a className="bg-dark py-1 px-3 text-light" href="">
+        <a className="bg-dark  px-3 text-light" href="">
           Passport Image
         </a>
       </div>
       <div className="rounded ">
-        <a className="bg-dark py-1 px-3 text-light" href="">
+        <a className="bg-dark  px-3 text-light" href="">
           Proof Document
         </a>
       </div>

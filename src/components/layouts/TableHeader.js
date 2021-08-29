@@ -11,6 +11,23 @@ export const Columns = [
     Header: 'Last Name',
     accessor: 'lastname',
   },
+  // {
+  //   maxWidth: 30,
+  //   minWidth: 10,
+  //   width: 20,
+  //   id:"online",
+  //   Header: 'online',
+  //   accessor: 'isOnline',
+  //   accessor: ({ isOnline }) => (
+  //     <span style={{width:"20px", height:"20px", borderRadius:"50%",}}
+  //       className={
+  //         isOnline ? ' bg-success '
+  //           : ' bg-danger'
+  //       }
+  //     >edf</span>
+  
+  //   ),
+  // },
   {
     Header: 'Email',
     accessor: 'email',

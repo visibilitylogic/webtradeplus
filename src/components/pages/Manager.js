@@ -14,7 +14,7 @@ const Manager = () => {
 
   const {
     getAllWithdrawals,
-    // getAllOrders,
+    getAllOrders,
     getAllTrades,
     getAllUsers,
     getAllDeposits,
@@ -23,7 +23,7 @@ const Manager = () => {
 
   useEffect(() => {
     getAllWithdrawals();
-    // getAllOrders(user && userId);
+    getAllOrders();
     getAllUsers();
     getAllDeposits();
     getAllTrades();

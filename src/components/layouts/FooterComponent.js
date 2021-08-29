@@ -24,7 +24,7 @@ const FooterComponent = ({
               onClick={() => previousPage()}
               disabled={!canPreviousPage}
             >
-             ◀
+              ◀
             </div>
             <div>
               <strong className="strong">
@@ -114,7 +114,7 @@ const FooterStyle = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    // padding: 1rem;
     color: black;
     z-index: 1;
   }

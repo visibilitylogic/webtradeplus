@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import ApproveDeposit from './ApproveDeposit'
 import PaymentModal from './PaymentModal'
 export const depositHeader = [
   {
@@ -10,7 +11,6 @@ export const depositHeader = [
     id: 'name',
     Header: 'Name',
     accessor: 'name',
- 
   },
 
   {
@@ -40,7 +40,7 @@ export const depositHeader = [
 
   {
     Header: 'Amount Received',
-    accessor: 'amount',
+    accessor: '',
   },
   {
     Header: 'Payment Gateway',
@@ -69,18 +69,6 @@ export const depositHeader = [
   {
     Header: 'Action',
     accessor: 'status',
-    accessor: ({ status }) => {
-      return status === 'Pending' || status === 'Declined' ? (
-        <div className="d-flex flex-column">
-          <a
-            className="text-light text-center bg-success mb-2"
-            onClick={() => alert(123)}
-          >
-            Accept
-          </a>
-          <a className="text-light text-center bg-danger">Decline</a>
-        </div>
-      ) : null
-    },
+    accessor: (status) => <ApproveDeposit status={status} />,
   },
 ]

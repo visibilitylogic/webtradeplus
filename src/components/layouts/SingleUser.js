@@ -1,25 +1,61 @@
-import React from 'react'
-import SwitchBtn from './Switch'
-import Switch from 'react-switch'
+import React, { useState } from 'react'
+import { useActions } from '../hooks/useActions'
+import { message } from 'antd'
+import { useSelector } from 'react-redux'
 
-function SingleUser({
-  setNotifications,
-  handleApproveVerify,
-  setAuth0,
-  checked2,
-  checked,
-  singleUser,
-}) {
+function SingleUser({ singleUser }) {
+  const { approveSingleUserVerify, DeactivateUser, ActivateUser } = useActions()
   const {
     name,
     country,
-    phone,
+    phoneNumber,
     currency,
     time,
     _id,
-    isVerified,
+    isAdmin,
+    isManager,
+    verify,
     isActive,
   } = singleUser
+  const [verifystate, setverifystate] = useState(verify)
+  const [activestate] = useState(isActive)
+  const [active, setActive] = useState(true)
+  const [deactivate, setdeActivate] = useState(' DEACTIVATE USER')
+  const [activate, setActivate] = useState(' ACTIVATE USER')
+  const { error } = useSelector((state) => state.profile)
+
+  const handleApproveVerify = async () => {
+    if (error) {
+      message.error('Identity Approval Was Not Successful')
+    } else {
+      await approveSingleUserVerify(_id)
+      setverifystate(!verify)
+
+      message.success('Identity Was Successfully Approved')
+    }
+  }
+  const handleActivate = async () => {
+    if (error) {
+      message.error('Activation Was Not Successful')
+    } else {
+      await ActivateUser(_id)
+      // setActivate('ACTIVATED')
+      setActive(true)
+
+      message.success('Identity Was Successfully Activated')
+    }
+  }
+  const handleDeActivate = async () => {
+    if (error) {
+      message.error('Deactivation Was Not Successful')
+    } else {
+      await DeactivateUser(_id)
+      // setdeActivate('DEACTIVATED')
+      setActive(false)
+      message.success('Identity Was Successfully Deactivated')
+    }
+  }
+
   return (
     <>
       {singleUser && (
@@ -36,7 +72,7 @@ function SingleUser({
             <div className="dash-row dash-row-centralized">
               <div className="th">Phone</div>
               <div className="td">
-                {phone ? phone : 'No phone number attached'}
+                {phoneNumber ? phoneNumber : 'No phone number attached'}
               </div>
             </div>
             <div className="dash-row dash-row-centralized">
@@ -54,84 +90,65 @@ function SingleUser({
               <div className="td d-flex justify-content-space-between align-items-center">
                 <span
                   className={
-                    isVerified
+                    verifystate
                       ? 'bg-success p-2  text-light'
                       : 'text-light p-2 bg-danger'
                   }
                 >
-                  {isVerified ? 'VERIFIED' : 'PENDING'}
+                  {verifystate ? 'VERIFIED' : 'PENDING'}
                 </span>
-                <div className="ml-2">
-                  <Switch
-                    onChange={() => handleApproveVerify(_id)}
-                    checked={isVerified}
-                    className="react-switch"
-                    onColor="#54AC40"
-                    uncheckedIcon={false}
-                    checkedIcon={false}
-                    offColor="#000000"
-                  />
-                </div>
+
+                {!verifystate ? (
+                  <div>
+                    <a
+                      className="text-light p-2  ml-3 text-bold  bg-success"
+                      onClick={handleApproveVerify}
+                    >
+                      VERIFY USER
+                    </a>
+                  </div>
+                ) : null}
+
+                <div className="ml-2"></div>
               </div>
             </div>
-            {/* <div className="dash-row dash-row-centralized">
-              <div className="th">Notification</div>
-              <div className="td">
-                <label>
-                  <SwitchBtn
-                    onChange={() => setNotifications()}
-                    checked={checked}
-                  />
-                </label>
-              </div>
-            </div> */}
-            {/* <div className="dash-row dash-row-centralized">
-              <div className="th">2 Step Authentification</div>
-              <div className="td">
-                <Switch
-                  // onChange={handleClick}
-                  checked={checkButton}
-                  className="react-switch"
-                  onColor="#54AC40"
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                  offColor="#000000"
-                />
-              </div>
-            </div> */}
+
             <div className="dash-row dash-row-centralized">
               <div className="th">Created date</div>
               <div className="td">{time ? time.slice(0, 10) : ''}</div>
             </div>
             <div className="dash-row dash-row-centralized">
-              <div className="th">User status</div>
+              <div className="th">
+                {isManager
+                  ? 'MANAGER STATUS '
+                  : isAdmin
+                  ? 'ADMIN STATUS'
+                  : 'USER STATUS'}
+              </div>
               <div className="td">
-                {isActive ? (
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                      <span className="text-light p-2 bg-success">ACTIVE</span>
-                    </div>
-                    <div className="ml-4 bg-danger p-2">
-                      <a href="#" className="text-light py-2 text-bold">
-                        DEACTIVE USER
-                      </a>
-                    </div>
+                <div className="d-flex justify-content-between align-items-center">
+                  <div
+                    className={
+                      active
+                        ? 'text-light p-2 bg-success mr-2'
+                        : 'text-light p-2 bg-danger mr-2'
+                    }
+                  >
+                    <a>{active ? 'ACTIVE' : 'INACTIVE'}</a>
                   </div>
-                ) : (
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                      <span className="text-light p-4 text-bold  bg-danger">
-                        DEACTIVATED
-                      </span>
-                    </div>
-
-                    <div className="ml-4 bg-success">
-                      <a href="#" className="text-light p-4">
-                        ACTIVATE USER
-                      </a>
-                    </div>
+                  <div
+                    className={
+                      active
+                        ? 'text-light p-2 bg-danger'
+                        : 'text-light p-2 bg-success'
+                    }
+                    onClick={active ? handleDeActivate : handleActivate}
+                  >
+                    <a href="#" className="text-light text-bold">
+                      {active ? deactivate : activate}
+                    </a>
                   </div>
-                )}
+                </div>
               </div>
             </div>
           </div>
