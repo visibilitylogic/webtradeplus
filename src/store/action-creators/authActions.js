@@ -3,7 +3,7 @@ import axios from 'axios'
 import setAuthToken from '../utils/setAuthToken'
 
 // const BASE_URL = "https://trade-backend-daari.ondigitalocean.app/api";
-// AUTHENTICATIONS
+
 export const loadUser = (userId) => async (dispatch) => {
   dispatch({
     type: actionTypes.GET_USER,
