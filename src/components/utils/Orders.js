@@ -176,7 +176,7 @@ const Orders = (props) => {
                           className="rise"
                           style={
                             item.tag === "buy"
-                              ? { color: "green" }
+                              ? { color: "#54ac40" }
                               : { color: "red" }
                           }
                         >
@@ -202,7 +202,7 @@ const Orders = (props) => {
                                     color:
                                       asset.price - item.openRateOfAsset < 0
                                         ? "red"
-                                        : "green",
+                                        : "#54ac40",
                                   }}
                                 >
                                   {asset.price - item.openRateOfAsset > 0 &&

@@ -37,7 +37,7 @@ const SellStockModal = (props) => {
       sellStockAsset(user._id, {
         userId: user._id,
         tag: "sell",
-        margin: parseInt(userMargin),
+        margin: parseInt(userMargin) * webData.leverageAmount,
         stockAmount:
           Object.keys(currentSelectedStock).length > 0
             ? currentSelectedStock.price
@@ -237,9 +237,13 @@ const SellStockModal = (props) => {
         <div className="split moved">
           <span>
             {Object.keys(defaultSelectedStock).length > 0
-              ? defaultSelectedStock.price.toString().slice(0, 8)
+              ? (defaultSelectedStock.price - defaultSelectedStock.price * 0.02)
+                  .toString()
+                  .slice(0, 8)
               : Object.keys(currentSelectedStock).length > 0
-              ? currentSelectedStock.price.toString().slice(0, 8)
+              ? (currentSelectedStock.price - currentSelectedStock.price * 0.02)
+                  .toString()
+                  .slice(0, 8)
               : ""}{" "}
             USD
           </span>
