@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { useTable, useSortBy, usePagination } from 'react-table'
+import { getSingleWithdrawals } from '../../store/action-creators/profileActions'
 import { useActions } from '../hooks/useActions'
 
 import FooterComponent from './FooterComponent'
@@ -68,7 +69,7 @@ const BasicTable = ({
                 <tr
                   {...row.getRowProps()}
                   onClick={() => {
-                    console.log(row.original._id)
+                    getSingleWithdrawals(row.original._id)
                     getCurrentProfile(row.original._id)
                     setDisplayC(true)
                   }}
@@ -76,6 +77,7 @@ const BasicTable = ({
                   {row.cells.map((cell) => {
                     return (
                       <td
+                        style={{ maxHeight: '20px', height: '15px' }}
                         onClick={() => {
                           setUserLevel(
                             user.isAdmin

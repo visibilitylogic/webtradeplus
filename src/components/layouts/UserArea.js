@@ -1,29 +1,50 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Switch from 'react-switch'
 import { useSelector } from 'react-redux'
 import { useActions } from '../hooks/useActions'
+import { message } from 'antd'
 
 const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
-  const {
-    setLiveTrade,
-    setAutoTrade,
-    setNotificationEnabled, // expecting end point
-  } = useActions()
+  const { isAdmin, isManager, _id, autoTrade, liveTrade } = singleUser
+  const [livstate, setLiveState] = useState(liveTrade)
+  const [auto, setAuto] = useState(autoTrade)
+  const { error } = useSelector((state) => state.profile)
+  const { setLiveTrade, setAutoTrade } = useActions()
 
-  const setTradeFunc = () => {
-    setAutoTrade(singleUser._id)
+  console.log(singleUser)
+  const setTradeFunc = async () => {
+    if (error) {
+      message.error('Failed!!!')
+    } else {
+      await setAutoTrade(_id, {
+        autoTrade: !autoTrade,
+      })
+      setAuto(!autoTrade)
+
+      message.success('Successfull')
+    }
   }
 
-  const setToggles = () => {
-    setLiveTrade(singleUser._id)
+  const setToggles = async () => {
+    if (error) {
+      message.error('Failed')
+    } else {
+      await setLiveTrade(_id, {
+        liveTrade: !liveTrade,
+      })
+
+      message.success(' Successful')
+    }
   }
 
   return (
     <>
       {singleUser && (
         <UserAreaContainer>
-          <h3 className="text-center">USER</h3>
+          <h3 className="text-center">
+            {isAdmin ? 'ADMIN' : isManager ? 'Manager' : 'USER'}
+          </h3>
           <div className="d-flex justify-content-flex-start w-75  align-items-center mb-3">
             <i
               className="fas fa-2x fa-edit mr-auto"
@@ -32,7 +53,7 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
 
             <i
               className="delete-profile fas  fa-2x fa-user-minus"
-              onClick={() => handleDeleteUser(singleUser._id)}
+              onClick={() => handleDeleteUser(_id)}
             />
           </div>
           <div className="d-flex justify-content-flex-start w-75 mx-auto flex-column align-items-center">
@@ -43,7 +64,7 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
               <div>
                 <Switch
                   onChange={setToggles}
-                  checked={singleUser.liveTrade}
+                  checked={liveTrade}
                   className="react-switch"
                   onColor="#54AC40"
                   uncheckedIcon={false}
@@ -59,7 +80,7 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
               <div>
                 <Switch
                   onChange={setTradeFunc}
-                  checked={singleUser.autoTrade}
+                  checked={auto}
                   className="react-switch"
                   onColor="#54AC40"
                   uncheckedIcon={false}

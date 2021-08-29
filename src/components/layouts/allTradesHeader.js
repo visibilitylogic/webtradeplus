@@ -24,7 +24,9 @@ export const allTradesHeader = [
     accessor: ({ tag }) => (
       <p
         className={
-          tag === 'buy' ? ' bg-danger text-light' : ' bg-success text-light'
+          tag === 'buy'
+            ? ' text-center bg-danger text-light'
+            : ' text-center bg-success text-light'
         }
       >
         {tag}
@@ -47,12 +49,28 @@ export const allTradesHeader = [
   },
 
   {
-    Header: 'Profit',
+    Header: 'Profit/Loss',
     accessor: 'profit',
   },
   {
-    Header: 'Loss',
-    accessor: 'loss',
+    Header: 'Take Profit',
+    accessor: 'takeProfit',
+  },
+  {
+    Header: 'Name Of Assest',
+    accessor: 'nameOfAsset',
+  },
+  {
+    Header: 'Type Of Assest',
+    accessor: 'typeOfAsset',
+  },
+  {
+    Header: 'Open Rate Of Assest',
+    accessor: 'openRateOfAssest',
+  },
+  {
+    Header: 'Close Rate Of Assest',
+    accessor: 'closeRateOfAssest',
   },
   {
     Header: 'Payment Details',

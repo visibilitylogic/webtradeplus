@@ -31,7 +31,9 @@ export const bankTransferHeader = [
     accessor: ({ status }) => (
       <p
         className={
-          status === 'Declined' ? 'text text-danger' : 'text text-success'
+          status === 'Declined'
+            ? 'text-center text-danger'
+            : 'text-center text-success'
         }
       >
         {status}

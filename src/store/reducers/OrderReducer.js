@@ -7,7 +7,6 @@ const initialState = {
 }
 
 export const orderReducer = (state = initialState, action) => {
-  console.log(action)
   switch (action.type) {
     case ORDER_LOADING:
       return {

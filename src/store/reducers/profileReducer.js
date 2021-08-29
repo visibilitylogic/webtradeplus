@@ -18,6 +18,9 @@ const initialState = {
   userAutoCopyTrade: [],
   userTrades: [],
   singleUser: null,
+  singleWithdrawals: [],
+  singleDeposit: [],
+  allSingleDeposits:[]
 }
 
 export default function profileReducer(state = initialState, action) {
@@ -43,6 +46,12 @@ export default function profileReducer(state = initialState, action) {
         depositAmount: action.payload,
         error: null,
       }
+    case actionTypes.GET_SINGLE_DEPOSIT:
+      return {
+        ...state,
+        singleDeposit: action.payload,
+        error: null,
+      }
 
     case actionTypes.SET_WITHDRAWAL_AMOUNT:
       return {
@@ -59,6 +68,13 @@ export default function profileReducer(state = initialState, action) {
         bankTransfers: state.allWithdrawals.filter(
           (withdrawal) => withdrawal.method === 'Bank Transfer',
         ),
+        error: null,
+      }
+    case actionTypes.GET_SINGLE_WITHDRAWALS:
+      return {
+        ...state,
+        loading: false,
+        singleWithdrawals: action.payload,
         error: null,
       }
 
@@ -84,6 +100,7 @@ export default function profileReducer(state = initialState, action) {
         singleUser: action.payload,
         error: null,
       }
+
     case actionTypes.GET_ALL_DEPOSITS:
       return {
         ...state,
@@ -91,7 +108,13 @@ export default function profileReducer(state = initialState, action) {
         allDeposits: action.payload,
         error: null,
       }
-
+    case actionTypes.GET_SINGLE_USER_DEPOSITS:
+      return {
+        ...state,
+        loading: false,
+        allSingleDeposits: action.payload,
+        error: null,
+      }
     case actionTypes.GET_ALL_TRADES:
       return {
         ...state,
@@ -108,24 +131,24 @@ export default function profileReducer(state = initialState, action) {
     //     singleUser: newUserState,
     //     error: null,
     //   }
-    case actionTypes.APPROVE_VERIFY:
-      const approveState = state.singleUser
-      approveState.autoTrade = action.payload
-      return {
-        ...state,
-        loading: false,
-        singleUser: approveState,
-        error: null,
-      }
-    case actionTypes.SET_LIVE_TRADE:
-      const newLive_TRADE = state.singleUser
-      newLive_TRADE.liveTrade = action.payload
-      return {
-        ...state,
-        loading: false,
-        singleUser: newLive_TRADE,
-        error: null,
-      }
+    // case actionTypes.APPROVE_SINGLE_VERIFY:
+    //   const approveState = state.singleUser
+    //   approveState.autoTrade = action.payload
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     singleUser: approveState,
+    //     error: null,
+    //   }
+    // case actionTypes.SET_LIVE_TRADE:
+    //   const newLive_TRADE = state.singleUser
+    //   newLive_TRADE.liveTrade = !newLive_TRADE.liveTrade
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     singleUser: newLive_TRADE,
+    //     error: null,
+    //   }
 
     case actionTypes.GET_ALL_VERIFIED_USERS:
       return {
