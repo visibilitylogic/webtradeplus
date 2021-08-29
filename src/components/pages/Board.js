@@ -1,5 +1,4 @@
 import { Fragment, useState } from "react";
-import { message } from "antd";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import SubSidebar from "../layouts/SubSidebar";
@@ -9,6 +8,7 @@ import BuyStockModal from "../utils/modals/trading/BuyStock";
 import { useActions } from "../hooks/useActions";
 import SellStockModal from "../utils/modals/trading/SellStock";
 import useInterval from "../hooks/useInterval";
+import { getProfitOrLoss } from "../../helpers/getProfitOrLoss";
 
 const Board = (props) => {
   const [sellStock, setSellStock] = useState(false);
@@ -34,9 +34,10 @@ const Board = (props) => {
   } = props;
 
   const { user, loading } = useSelector((state) => state.auth);
-  const { error, userMargin } = useSelector((state) => state.profile);
-  const { currentSelectedStock, defaultSelectedStock, allStockAssets } =
-    useSelector((state) => state.stock);
+  const { userMargin, activeTrade } = useSelector((state) => state.profile);
+  const { currentSelectedStock, defaultSelectedStock } = useSelector(
+    (state) => state.stock
+  );
 
   // Action creators
   const {
@@ -46,6 +47,12 @@ const Board = (props) => {
     getAllStockAssets,
     setUserMargin,
   } = useActions();
+
+  const profitOrLoss = getProfitOrLoss(
+    activeTrade,
+    currentSelectedStock,
+    defaultSelectedStock
+  );
 
   const getRate = () => {
     if (Object.keys(defaultSelectedStock).length > 0) {
@@ -137,7 +144,14 @@ const Board = (props) => {
             <div className="dash-row">
               <div className="chart">
                 <div className="ChartPL">
-                  <h1 style={{color:"#54ac40"}}>P/L = 0</h1>
+                  <h1
+                    style={{
+                      color:
+                        parseFloat(profitOrLoss) >= 0 ? "#54ac40" : "orangered",
+                    }}
+                  >
+                    P/L = {parseFloat(profitOrLoss)}
+                  </h1>
                 </div>
                 {/* TradingView Widget BEGIN */}
                 <div className="tradingview-widget-container">

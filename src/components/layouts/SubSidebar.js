@@ -70,7 +70,11 @@ const SubSidebar = ({ view, getRate }) => {
                 </span>
                 <span
                   style={{ flex: 1, justifySelf: "center" }}
-                  className={`${stock.changesPercentage < 0 ? "red" : "green"}`}
+                  className={`${
+                    stock.changesPercentage < 0
+                      ? "loss-percentage"
+                      : "profit-percentage"
+                  }`}
                 >
                   {stock.changesPercentage
                     ? stock.changesPercentage.toFixed(2)
