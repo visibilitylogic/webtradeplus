@@ -7,28 +7,73 @@ import getToken from '../../store/utils/gettoken';
 import { useActions } from '../hooks/useActions';
 
 function Bitcoin() {
-    const {change_admin_data, get_admin_data} = useActions();
-    const {adminData} = useSelector(state=> state.adminInfo); 
-    // const {loading, success, error} = useSelector(state=> state.adminInfo)
-    const [loading, setLoading] = useState(false);
-    const [paymentSuccessText, setpaymentSuccessText] = useState("");
-    const [paymentRefPattern, setpaymentRefPattern] = useState("");
-    const [paymentNeedsApproval, setpaymentNeedsApproval] = useState(null);
-    const [masterCardStatus, setmasterCardStatus] = useState(null);
-    const [bitCoinStatus, setbitCoinStatus] = useState(null);
-    const [btcHeaderText, setbtcHeaderText] = useState("");
-    const [btcAddress, setbtcAddress] = useState("");
-    const [buyBTCLink, setbuyBTCLink] = useState("");
-    const [BTCAmount1, setBTCAmount1] = useState(0);
-    const [BTCAmount2, setBTCAmount2] = useState(0);
-    const [BTCAmount3, setBTCAmount3] = useState(0);
-    const [BTCQRCodeImg, setBTCQRCodeImg] = useState("");
-    const [img1, setImg1] = useState("");
-    const [img2, setImg2] = useState("");
-    const [img3, setImg3] = useState("");
-    const [imgLink1, setImgLink1] = useState("");
-    const [imgLink2, setImgLink2] = useState("");
-    const [imgLink3, setImgLink3] = useState("");
+  const {change_admin_data, get_admin_data} = useActions();
+  const {adminData} = useSelector(state=> state.adminInfo); 
+  const [loading, setLoading] = useState(false);
+  const [paymentSuccessText, setpaymentSuccessText] = useState("");
+  const [paymentRefPattern, setpaymentRefPattern] = useState("");
+  const [paymentNeedsApproval, setpaymentNeedsApproval] = useState(null);
+  const [masterCardStatus, setmasterCardStatus] = useState(null);
+  const [bitCoinStatus, setbitCoinStatus] = useState(null);
+  const [btcHeaderText, setbtcHeaderText] = useState("");
+  const [btcAddress, setbtcAddress] = useState("");
+  const [buyBTCLink, setbuyBTCLink] = useState("");
+  const [BTCAmount1, setBTCAmount1] = useState(0);
+  const [BTCAmount2, setBTCAmount2] = useState(0);
+  const [BTCAmount3, setBTCAmount3] = useState(0);
+  const [BTCQRCodeImg, setBTCQRCodeImg] = useState("");
+  const [img1, setImg1] = useState("");
+  const [img2, setImg2] = useState("");
+  const [img3, setImg3] = useState("");
+  const [imgLink1, setImgLink1] = useState("");
+  const [imgLink2, setImgLink2] = useState("");
+  const [imgLink3, setImgLink3] = useState("");
+   
+    useState(() => {
+      if (adminData) {
+        setpaymentSuccessText(adminData.paymentSuccessText);
+        setpaymentRefPattern(adminData.paymentRefPattern);
+        setpaymentNeedsApproval(adminData.paymentNeedsApproval);
+        setmasterCardStatus(adminData.masterCardStatus);
+        setbitCoinStatus(adminData.bitCoinStatus);
+        setbtcHeaderText(adminData.btcHeaderText);
+        setbtcAddress(adminData.btcAddress);
+        setbuyBTCLink(adminData.buyBTCLink);
+        setBTCAmount1(adminData.BTCAmount1);
+        setBTCAmount2(adminData.BTCAmount2);
+        setBTCAmount3(adminData.BTCAmount3);
+        setBTCQRCodeImg(adminData.BTCQRCodeImg);
+        setImg1(adminData.depositeImg1);
+        setImg2(adminData.depositeImg2);
+        setImg3(adminData.depositeImg3);
+        setImgLink1(adminData.depositeImg1Link);
+        setImgLink2(adminData.depositeImg2Link);
+        setImgLink3(adminData.depositeImg3Link);
+      }
+    }, []);
+
+    
+    const dataAll = {
+      paymentSuccessText: paymentSuccessText,
+      paymentRefPattern: paymentRefPattern,
+      paymentNeedsApproval: paymentNeedsApproval,
+      masterCardStatus: masterCardStatus,
+      bitCoinStatus: bitCoinStatus,
+      buyBTCLink: buyBTCLink,
+      btcAddress: btcAddress,
+      btcHeaderText: btcHeaderText,
+      BTCAmount1: parseInt(BTCAmount1),
+      BTCAmount2: parseInt(BTCAmount2),
+      BTCAmount3: parseInt(BTCAmount3),
+      BTCQRCodeImg: BTCQRCodeImg,
+      depositeImg1: img1,
+      depositeImg2: img2,
+      depositeImg3: img3,
+      depositeImg1Link: imgLink1,
+      depositeImg2Link: imgLink2,
+      depositeImg3Link: imgLink3,
+    };
+
     const handleImageChange = (e) => {
         // console.log(e.target.files[])
         e.preventDefault();
@@ -41,7 +86,9 @@ function Bitcoin() {
           };
         }
       };
-    }
+    
+
+
 
   const handleImageChange1 = (e) => {
     // console.log(e.target.files[])
@@ -76,6 +123,8 @@ function Bitcoin() {
       reader3.onloadend = () => {
         setImg3(reader3.result);
       };
+    }
+  }
       const url = "https://trade-backend-daari.ondigitalocean.app/api/site/btcAdminSettings"
       const onSaved = ()=>{
         setLoading(true)
@@ -329,7 +378,7 @@ function Bitcoin() {
                 </div>
         </div>    
   )
-  }
+  
 }
 
 export default Bitcoin;
