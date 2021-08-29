@@ -8,33 +8,40 @@ import getToken from '../../store/utils/gettoken';
 
 function Trading() {
     const {get_Live_Trade, update_Live_Trade, setNewLeverage, get_admin_data} = useActions();
-    // const {} = useSelector((state)=> state.liveTrades)
+    const [loading , setLoading] = useState(false)
     const {liveTrades, success, error} = useSelector(state =>state.liveTrade)
     const {adminData} = useSelector(state =>state.adminInfo)
     const [liveTrader, setLiveTrade] = useState(false);
     const [Leverage, setLeverage] = useState(null);
-    const [successs, setSuccesss] = useState("")
     useEffect(async ()=>{
-      // get_Live_Trade();
-     const {data} = await axios.get("https://trade-backend-daari.ondigitalocean.app/api/site/livetrade", getToken());
-     console.log(data);
-     setLiveTrade(data)
+      const {data} = await axios.get("https://trade-backend-daari.ondigitalocean.app/api/site/livetrade", getToken());
+      setLiveTrade(data)
     }, []);
     const updateLeverage = ()=>{
-      setNewLeverage(Leverage)
-      setLeverage("");
-      get_admin_data()
+      setLoading(true)
+      const datas = {leverageAmount : Leverage}
+      axios
+      .put("https://trade-backend-daari.ondigitalocean.app/api/site/leverageAmount", datas, getToken())
+      .then(res=>{
+        setLoading(false)
+        message.success("leverage updated successfully");
+         get_admin_data()
+      })
+      .catch(err=>{
+        message.error("error in updating live trade")
+      })
     }
     const updateTrade = async ()=>{
       const datas  = { liveTrade:!liveTrader}
-      console.log(datas);
-      const {data} = await axios.put("https://trade-backend-daari.ondigitalocean.app/api/profile/users/liveTrade", datas, getToken() )
-      setSuccesss(data)
-      // update_Live_Trade(liveTrader);
-      // get_Live_Trade()
-      // if(success && success.length > 0){
-      //   message.success(success)
-      // }
+      axios
+        .put("https://trade-backend-daari.ondigitalocean.app/api/profile/users/liveTrade", datas, getToken())
+        .then(res=>{
+          message.success(res.data);
+          get_Live_Trade()
+        })
+        .catch(err=>{
+          message.error("error in updating live trade")
+        })
     }
 
     useState(()=>{
@@ -44,12 +51,6 @@ function Trading() {
     })
     return (
         <div>
-          {
-            (success && success.length > 0) ?  message.success(success) : " "
-          }
-          {
-            (successs && successs.length > 0) ?  message.success(successs) : " "
-          }
            <div>
                     <div className="public-card">
                       <div className="each-row dash-row">
@@ -98,7 +99,7 @@ function Trading() {
                           </h4>
                         <div style={{display:"flex", marginRight:"14px", justifyContent:"space-between"}}>
                           <input type="number" value={Leverage? Leverage : " "}  style={{padding:"0px 18px"}} onChange={(e)=> setLeverage(e.target.value)}/>
-                          <Button variant="primary" style={{marginLeft:"6px"}} onClick={updateLeverage}>Save</Button>
+                          <Button variant="primary" style={{marginLeft:"6px"}} onClick={updateLeverage}>{loading ? "Saving..." : "Save"}</Button>
                         </div>
                         </div>
                       </div>

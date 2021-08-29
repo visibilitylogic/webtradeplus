@@ -22,8 +22,7 @@ import Bitcoin from "../layouts/Bitcoin";
 const Admin = (props) => {
   const location = useLocation();
   const { get_admin_data } = useActions();
-  const pathname = location.pathname.split("/")[2];
-
+  const pathname = location.pathname.slice(10);
   const { allUsers } = props;
   const [url, setUrl] = useState("");
 
@@ -36,55 +35,55 @@ const Admin = (props) => {
 
   const display = (link) => {
     switch (link) {
-      case "admin":
+      case "/admin":
         return <AdminDashboard />;
         break;
-      case "auto-trading":
+      case "/admin/auto-trading":
         return <AutoTrading />;
         break;
-      case "general_settings":
+      case "/admin/general_settings":
         return <General_setting />;
         break;
-      case "general_appearance":
+      case "/admin/general_appearance":
         return <General_appearance />;
         break;
-      case "mail":
+      case "/admin/mail":
         return <Mail />;
         break;
-      case "payment":
+      case "/admin/payment":
         return <Payment />;
-      case "template":
+      case "/admin/template":
         return <Template />;
         break;
-      case "loginsignup":
+      case "/admin/loginsignup":
         return <LoginSignup />;
-      case "additional":
+      case "/admin/additional":
         return <Additional />;
         break;
-      case "trading":
+      case "/admin/trading":
         return <Trading />;
         break;
-      case "search":
+      case "/admin/search":
         return <Search />;
         break;
-      case "bankaccounts":
+      case "/admin/bankaccounts":
         return <Bank />;
         break;
-      case "identity":
+      case "/admin/identity":
         return <Identity />;
         break;
-      case "subscriptions":
+      case "/admin/subscriptions":
         return <Subscription />;
         break;
-      case "loginpage":
+      case "/admin/loginpage":
         return <LoginPage />;
         break;
-      case "mastercard":
-        return <MasterCard />;
-        break;
-      case "bitcoin":
-        return <Bitcoin />;
-        break;
+      case "/admin/mastercard":
+        return <MasterCard/>
+      break;
+      case "/admin/bitcoin":
+        return <Bitcoin/>
+      break;
       default:
         return null;
         break;

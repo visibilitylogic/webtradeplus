@@ -2,34 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useActions } from '../hooks/useActions'
-
-// const trade_orders = 
-// [
-//   {
-//     id:1,
-//     isOpen:true,
-//     nameOfAsset: "Bitcoin",
-//     tag:"buy",
-//     openRateOfAsset: 2000
-//   },
-
-//   {
-//     id:2,
-//     isOpen:false,
-//     nameOfAsset: "Ethereum",
-//     tag:"Sell",
-//     openRateOfAsset: 2000
-//   },
-
-//   {
-//     id:3,
-//     isOpen:true,
-//     nameOfAsset: "Bitcoin",
-//     tag:"buy",
-//     openRateOfAsset: 5000
-//   }
-
-// ]
+ 
 function OrderBook() {
   const {getOrder} = useActions();
   const {user} = useSelector(state=> state.auth);

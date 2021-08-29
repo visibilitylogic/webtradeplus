@@ -50,7 +50,7 @@ const Routes = () => {
           <PrivateRoute path={`/dashboard`} component={Dashboard}/>
           <PrivateRoute path={`/dashboard/:slug`} exact component={Admin}/>
           <PrivateRoute path={`/dashboard`} component={Dashboard} />
-          <PrivateRoute path={`/dashboard/admin/:slug`} component={Admin} />
+          <PrivateRoute path={`/dashboard/admin/:slug`}  component={Admin} />
         </Switch>
       </div>
       {!isAuthenticated && <Footer data={webData} />}

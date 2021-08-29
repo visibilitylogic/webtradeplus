@@ -1,14 +1,15 @@
 import { message } from 'antd';
+import axios from 'axios';
 import React, {useState} from 'react'
 import { useSelector } from 'react-redux';
+import getToken from '../../store/utils/gettoken';
 import { useActions } from '../hooks/useActions';
 import "./Mail.css";
 function Template() {
   const {adminData} = useSelector(state=> state.adminInfo);  
-  const {change_admin_data} = useActions();
-  const {loading,success, error} = useSelector(state=> state.adminInfo)
-  const [suc, setSuc] = useState("")
-  const [e, setE] = useState("")
+  const [loading, setLoading] = useState(false)
+  const {change_admin_data, get_admin_data} = useActions();
+  // const {loading,success, error} = useSelector(state=> state.adminInfo)
     const[privacyPolicy,setprivacyPolicy]=useState("")
     const[termsOfServices,settermsOfServices]=useState("")
     const[newUserWelcomeMail,setnewUserWelcomeMail]=useState("")
@@ -55,24 +56,20 @@ function Template() {
       })
       const url = "https://trade-backend-daari.ondigitalocean.app/api/site/mailtemplates"
       const onSaved = ()=>{
-        if(window.confirm("Are you to update the data")){
-            change_admin_data(url, dataAll);
-            if(success && success.length > 0){
-              setSuc(success)
-            }else if (error && error.length> 0){
-              setE(error)
-            }
-          }
+        setLoading(true)
+        axios
+          .put(url, dataAll, getToken())
+          .then(res=> {
+            setLoading(false)
+            message.success("Data Updated Successfully");
+            get_admin_data()
+          })
+          .catch(err=>{
+            message.error("Error occured while updataing")
+          })
       }
     return (
         <div style={{width:"100%"}}>
-          {
-            (!loading && success ) && message.success(success)
-          }
-          {/* {
-                  suc && message.success(suc, ()=> setSuc("")),
-                  e && message.error(e, ()=> setE(""))
-              } */}
             <div>
                     <h3>Page configuration</h3>
                     <div className="public-card">
@@ -86,7 +83,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                        <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
+                        <button onClick={onSaved}>{loading ? "Saving......":"Save"}</button>
                       </div>
                     </div>
 
@@ -101,7 +98,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
+                      <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
 
@@ -118,7 +115,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
+                      <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
 
@@ -133,7 +130,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
+                      <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
 
@@ -148,7 +145,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
+                      <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
 
@@ -163,7 +160,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
+                      <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
 
@@ -178,7 +175,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
+                      <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
 
@@ -193,7 +190,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
+                      <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
 
@@ -208,7 +205,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
+                      <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
 
@@ -223,7 +220,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
+                      <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
 
@@ -238,7 +235,7 @@ function Template() {
                       </div>
 
                       <div className="save-btn">
-                      <button disabled={submitLoading} onClick={onSaved}>{loading ? "Saving":"Save"}</button>
+                      <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
                       </div>
                     </div>
                   </div>
