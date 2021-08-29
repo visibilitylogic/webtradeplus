@@ -71,6 +71,7 @@ export const update_auto_trade = (id, datas)=> async (dispatch)=>{
         payload:data
       })
     } catch (error) {
+        console.log(error);
         dispatch({
             type: actionTypes.AUTO_TRADE_ERROR,
             payload: error.message,

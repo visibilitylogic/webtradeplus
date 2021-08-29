@@ -85,7 +85,7 @@ const Admin = (props) => {
         return <Bitcoin/>
       break;
       default:
-        return <AdminDashboard />;
+        return null;
         break;
     }
   };

@@ -30,25 +30,24 @@ function Mail() {
 
   useEffect(() => {
     if (adminData) {
-      console.log(adminData)
-      setmailEngine(adminData.mailEngine)
-      setSMTPPort(adminData.SMTPPort)
-      setSMTPServer(adminData.SMTPServer)
-      setSMTPMail(adminData.SMTPMail)
-      setSMTPPassword(adminData.SMTPPassword)
-      setEmailSenderName(adminData.EmailSenderName)
-      setmailForm(adminData.mailForm)
-      setemailSendName(adminData.emailSendName)
-      setsupportMail(adminData.supportMail)
-      setsupportPhone(adminData.supportPhone)
-      setsupportAddress(adminData.supportAddress)
-      setDPOPhone(adminData.DPOPhone)
-      setDPOEmail(adminData.DPOEmail)
-      setsendWelcomeMail(adminData.sendWelcomeMail)
-      setwelcomeMail(adminData.welcomeMail)
-      setnewUserWelcomeMailTitle(adminData.newUserWelcomeMailTitle)
+      setmailEngine(adminData.mailEngine);
+      setSMTPPort(adminData.SMTPPort);
+      setSMTPServer(adminData.SMTPServer);
+      setSMTPMail(adminData.SMTPMail);
+      setSMTPPassword(adminData.SMTPPassword);
+      setEmailSenderName(adminData.EmailSenderName);
+      setmailForm(adminData.mailForm);
+      setemailSendName(adminData.emailSendName);
+      setsupportMail(adminData.supportMail);
+      setsupportPhone(adminData.supportPhone);
+      setsupportAddress(adminData.supportAddress);
+      setDPOPhone(adminData.DPOPhone);
+      setDPOEmail(adminData.DPOEmail);
+      setsendWelcomeMail(adminData.sendWelcomeMail);
+      setwelcomeMail(adminData.welcomeMail);
+      setnewUserWelcomeMailTitle(adminData.newUserWelcomeMailTitle);
     }
-  }, [])
+  }, []);
   const dataAll = {
     mailEngine: mailEngine,
     SMTPServer: SMTPServer,
@@ -66,7 +65,7 @@ function Mail() {
     sendWelcomeMail: sendWelcomeMail,
     welcomeMail: welcomeMail,
     newUserWelcomeMailTitle: newUserWelcomeMailTitle,
-  }
+  };
   const url =
     'https://trade-backend-daari.ondigitalocean.app/api/site/mailsettings'
     const onSaved = ()=>{
@@ -359,7 +358,7 @@ function Mail() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Mail
+export default Mail;

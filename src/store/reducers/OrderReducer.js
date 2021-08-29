@@ -1,10 +1,9 @@
-import { GET_ORDERS, GET_ORDER_ERROR, ORDER_LOADING } from '../action-types'
+import { GET_ORDERS, GET_ORDER_ERROR, ORDER_LOADING } from "../action-types";
 
 const initialState = {
   loading: false,
   trade_orders: [],
-  openData: [],
-}
+};
 
 export const orderReducer = (state = initialState, action)=>{
     // console.log(action);

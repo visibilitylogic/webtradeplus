@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector} from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import "./AutoTrading.css";
 import { useActions } from '../hooks/useActions';
 import SuccessModal from '../Modals/SuccessModal';
@@ -114,8 +114,8 @@ function AutoTrading() {
 </Table>
                 </div>
             </div>
-        </div>
-    )
+    </div>
+  );
 }
 
-export default AutoTrading
+export default AutoTrading;
