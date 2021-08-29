@@ -841,3 +841,13 @@
 }
   
 }
+
+
+.ChartPL {
+  position: absolute;
+  z-index: 9;
+  background: transparent;
+  /* color: white; */
+  left: 65%;
+  top: 5%;
+}
