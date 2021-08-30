@@ -49,7 +49,7 @@ function SingleUser({ singleUser }) {
     if (error) {
       message.error('Deactivation Was Not Successful')
     } else {
-      await alert(1233)
+      // await alert(1233)
       await DeactivateUser(_id)
       // setdeActivate('DEACTIVATED')
       setActive(false)
