@@ -3,8 +3,9 @@ export const Admin_sidebar_array = [
         id:1,
         icon:"mdi mdi-speedometer",
         title:"Dashboard",
-        active:"active",
-        path: "/dashboard/admin"
+        active:"",
+        path: "/dashboard/admin",
+        exact: true,
 
     },
     {
