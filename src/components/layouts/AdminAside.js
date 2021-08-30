@@ -15,7 +15,7 @@ function AdminAside() {
                             exact={item.exact} 
                             activeStyle={{
                                 fontWeight: "bold",
-                                color: "#007CEF"
+                                backgroundColor: "#4a5060"
                             }}
                         >
                             <span className={item.icon}/> {item.title}
