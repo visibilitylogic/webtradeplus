@@ -49,6 +49,7 @@ function SingleUser({ singleUser }) {
     if (error) {
       message.error('Deactivation Was Not Successful')
     } else {
+      await alert(1233)
       await DeactivateUser(_id)
       // setdeActivate('DEACTIVATED')
       setActive(false)
@@ -142,7 +143,7 @@ function SingleUser({ singleUser }) {
                         ? 'text-light p-2 bg-danger'
                         : 'text-light p-2 bg-success'
                     }
-                    onClick={active ? handleDeActivate : handleActivate}
+                    onClick={active ? handleDeActivate() : handleActivate()}
                   >
                     <a href="#" className="text-light text-bold">
                       {active ? deactivate : activate}

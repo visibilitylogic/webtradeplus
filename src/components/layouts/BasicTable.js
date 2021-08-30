@@ -95,7 +95,7 @@ const BasicTable = ({
                   })}
                 </tr>
               )
-            } else if (type === 'verifiedUsers') {
+            } else if (type === 'verifiedUsers' || type === 'withdrawal') {
               return (
                 <tr
                   {...row.getRowProps()}

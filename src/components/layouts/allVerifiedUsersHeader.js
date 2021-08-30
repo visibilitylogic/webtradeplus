@@ -17,7 +17,6 @@ export const allVerifiedUsersHeader = [
 
   {
     Header: 'Status',
-
     accessor: ({ status }) => (
       <p
         className={
