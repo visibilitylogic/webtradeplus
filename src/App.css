@@ -2172,7 +2172,7 @@ span.close svg:hover {
   color: #3f4858;
   cursor: pointer;
   display: inline-block;
-  padding: 10px 15px;
+  padding: 5px 15px;
   font-weight: bold;
 }
 
@@ -2206,7 +2206,7 @@ span.close svg:hover {
 
 .manager-tab-dtls {
   padding: 0 15px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .manager-tab-dtls .chart {
@@ -2219,18 +2219,18 @@ span.close svg:hover {
   color: #000;
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .manager-tab-dtls table tr th {
   font-weight: normal;
   text-align: left;
   background-color: #e9ecf2;
-  padding: 15px 10px;
+  padding: 6px 4px;
 }
 
 [manager-tab-dtls='bank-transfers'] table tr td {
-  padding: 30px 10px !important;
+  padding: 10px 5px !important;
 }
 
 [manager-tab-dtls='identity'] table tr td {
@@ -2239,7 +2239,7 @@ span.close svg:hover {
 
 .manager-tab-dtls table tr td {
   text-align: left;
-  padding: 5px 10px;
+  padding: 5px 8px;
   font-size: 90%;
 }
 
@@ -2616,7 +2616,7 @@ span.close svg:hover {
 }
 
 [manager-tab-dtls='bank-transfers'] table tr td {
-  padding: 30px 10px !important;
+  padding: 5px 10px !important;
 }
 
 [manager-tab-dtls='identity'] table tr td {
@@ -3756,7 +3756,7 @@ span.close svg:hover {
   color: #3f4858;
   cursor: pointer;
   display: inline-block;
-  padding: 10px 15px;
+  padding: 4px 15px;
   font-weight: bold;
 }
 
@@ -3790,7 +3790,7 @@ span.close svg:hover {
 
 .manager-tab-dtls {
   padding: 0 15px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .manager-tab-dtls .chart {
@@ -3810,11 +3810,11 @@ span.close svg:hover {
   font-weight: normal;
   text-align: left;
   background-color: #e9ecf2;
-  padding: 15px 10px;
+  padding: 10px 10px;
 }
 
 [manager-tab-dtls='bank-transfers'] table tr td {
-  padding: 30px 10px !important;
+  padding: 10px 10px !important;
 }
 
 [manager-tab-dtls='identity'] table tr td {
@@ -3823,7 +3823,7 @@ span.close svg:hover {
 
 .manager-tab-dtls table tr td {
   text-align: left;
-  padding: 15px 10px;
+  padding: 8px 5px;
   font-size: 90%;
 }
 

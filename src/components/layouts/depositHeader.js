@@ -1,6 +1,7 @@
 import { format } from 'date-fns'
 import ApproveDeposit from './ApproveDeposit'
 import PaymentModal from './PaymentModal'
+import DepositState from './DepositState'
 export const depositHeader = [
   {
     id: 'Ref',
@@ -40,31 +41,23 @@ export const depositHeader = [
 
   {
     Header: 'Amount Received',
-    accessor: '',
-  },
-  {
-    Header: 'Payment Gateway',
-    accessor: 'method',
+    accessor: 'amount',
+    accessor: ({ amount }) => amount,
   },
   {
     id: 'cryptoAddress',
+    Header: 'Payment Gateway',
+    accessor: 'cryptoAddress',
+  },
+  {
     Header: 'Payment Details',
-    // accessor: 'cryptoAddress',
-    accessor: (cryptoAddress) => <PaymentModal cryptoAddress={cryptoAddress} />,
+    accessor: 'method',
+    accessor: (method) => <PaymentModal method={method} />,
   },
   {
     Header: 'Status',
-    accessor: ({ status }) => (
-      <p
-        className={
-          status === 'Declined' || status === 'Pending'
-            ? ' bg-danger text-light p-1 text-center'
-            : 'bg-success text-light p-1 text-center'
-        }
-      >
-        {status}
-      </p>
-    ),
+    accessor: 'status',
+    accessor: ({ status }) => <DepositState status={status} />,
   },
   {
     Header: 'Action',
