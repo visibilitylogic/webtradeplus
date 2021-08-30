@@ -39,6 +39,7 @@ const ManagerContents = (props) => {
     tradeApproval,
   } = useSelector((state) => state.profile)
 
+  console.log(allTrades,'ussse')
   const { user } = useSelector((state) => state.auth)
 
   // ACTION CREATORS

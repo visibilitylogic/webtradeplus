@@ -8304,3 +8304,12 @@ label.custom-control-label {
     height: auto;
   }
 }
+
+
+dash-contents .sidebar ul li a span {
+  font-size: 8px;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 0px;
+  white-space: nowrap;
+}

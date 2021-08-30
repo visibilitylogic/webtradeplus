@@ -1,32 +1,35 @@
-import { format } from 'date-fns'
+import { format } from "date-fns";
 export const allTradesHeader = [
   {
-    Header: 'Ref',
-    accessor: 'Ref',
+    Header: "Ref",
+    accessor: "_id",
+    accessor: ({ _id }) => <p>{_id.slice(3, 8)}</p>,
   },
   {
-    Header: 'active',
-    accessor: 'active',
+    Header: "Active",
+    accessor: "isOpen",
+    accessor: ({ isOpen }) => (
+      <p
+        className={
+          isOpen === true
+            ? " text-center bg-success text-light"
+            : " text-center bg-denger text-light"
+        }
+      >
+        {isOpen === true ? "true" : "false"}
+      </p>
+    ),
   },
 
   {
-    Header: 'Order Date',
-    accessor: '',
-  },
-  {
-    //id: 'time',
-    Header: 'Exchange',
-    accessor: 'buyW',
-  },
-  {
-    Header: 'type',
-    accessor: 'tag',
+    Header: "type",
+    accessor: "tag",
     accessor: ({ tag }) => (
       <p
         className={
-          tag === 'buy'
-            ? ' text-center bg-danger text-light'
-            : ' text-center bg-success text-light'
+          tag === "buy"
+            ? " text-center bg-success text-light"
+            : " text-center bg-denger text-light"
         }
       >
         {tag}
@@ -34,53 +37,60 @@ export const allTradesHeader = [
     ),
   },
   {
-    Header: 'Amount',
-    accessor: 'stockAmount',
+    Header: "Margin",
+    accessor: "margin",
   },
   {
-    Header: 'Total',
-    accessor: 'total',
+    Header: "Profit",
+    accessor: "profit",
+    accessor: ({ profit }) => (
+      <p className={" text-center bg-success text-light"}>{profit}</p>
+    ),
+  },
+  {
+    Header: "Loss",
+    accessor: "loss",
+    accessor: ({ loss }) => (
+      <p className={" text-center bg-danger text-light"}>{loss}</p>
+    ),
+  },
+  {
+    Header: "Take Profit",
+    accessor: "takeProfit",
+  },
+  {
+    Header: "Stop Loss",
+    accessor: "takeLoss",
+  },
+  {
+    Header: "Name Of Assest",
+    accessor: "nameOfAsset",
+  },
+  {
+    Header: "Type Of Assest",
+    accessor: "typeOfAsset",
+  },
+  {
+    Header: "Open Rate",
+    accessor: "openRateOfAsset",
+  },
+  {
+    Header: "Close Rate",
+    accessor: "closeRateOfAsset",
   },
 
   {
-    id: 'Wallet Received',
-    Header: 'Wallet Received',
-    accessor: 'unit',
-  },
-
-  {
-    Header: 'Profit/Loss',
-    accessor: 'profit',
-  },
-  {
-    Header: 'Take Profit',
-    accessor: 'takeProfit',
-  },
-  {
-    Header: 'Name Of Assest',
-    accessor: 'nameOfAsset',
-  },
-  {
-    Header: 'Type Of Assest',
-    accessor: 'typeOfAsset',
-  },
-  {
-    Header: 'Open Rate Of Assest',
-    accessor: 'openRateOfAssest',
-  },
-  {
-    Header: 'Close Rate Of Assest',
-    accessor: 'closeRateOfAssest',
-  },
-  {
-    Header: 'Payment Details',
-    accessor: 'cryptoAddress',
-  },
-  {
-    Header: 'Time',
-    accessor: 'time',
+    Header: "Time",
+    accessor: "time",
     Cell: ({ value }) => {
-      return format(new Date(value), 'dd/MM/yyyy')
+      return format(new Date(value), "dd/MM/yyyy");
     },
   },
-]
+  {
+    Header: "Action",
+    accessor: "icon",
+    accessor: ({ _id }) => (
+      <button className={" text-center bg-primary text-light"}>{"EDIT"}</button>
+    ),
+  },
+];
