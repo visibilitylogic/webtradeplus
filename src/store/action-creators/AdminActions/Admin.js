@@ -9,7 +9,7 @@ export const get_admin_data = () => async (dispatch) => {
   try {
     const { data } = await axios.get(
       "https://trade-backend-daari.ondigitalocean.app/api/site",
-      getToken()
+      getToken() 
     );
     dispatch({
       type: actionTypes.ADMIN_DATA,
