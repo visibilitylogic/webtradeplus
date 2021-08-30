@@ -8313,3 +8313,23 @@ dash-contents .sidebar ul li a span {
   margin-top: 0px;
   white-space: nowrap;
 }
+
+.manager-tab-dtls table tr td {
+  text-align: left;
+  padding: 10px 10px;
+  font-size: 80%;
+}
+[manager-tab-dtls='identity'] table tr td {
+  padding: 9px 8px !important;
+}
+
+.manager-tab-dtls {
+  margin-top: 1%;
+}
+
+.hmgzrr {
+  background: white;
+  width: 96%;
+  height: 90%;
+  padding-bottom: 2px !important;
+}
