@@ -98,7 +98,7 @@ function Trading() {
                             Trading Leverage
                           </h4>
                         <div style={{display:"flex", marginRight:"14px", justifyContent:"space-between"}}>
-                          <input type="number" value={Leverage? Leverage : " "}  style={{padding:"0px 18px"}} onChange={(e)=> setLeverage(e.target.value)}/>
+                          <input type="number" placeholder="10" value={Leverage? Leverage : " "}  style={{padding:"0px 18px"}} onChange={(e)=> setLeverage(e.target.value)}/>
                           <Button variant="primary" style={{marginLeft:"6px"}} onClick={updateLeverage}>{loading ? "Saving..." : "Save"}</Button>
                         </div>
                         </div>
@@ -141,7 +141,8 @@ function Trading() {
             <div className="dtls">
               <h4>Enable native trading without exchange</h4>
               <p>
-                Warning !<br />
+                <span className="red-color">Warning!</span>
+                <br />
                 This option is more risky, because you need to manage by
                 yourself the liquidy
               </p>
