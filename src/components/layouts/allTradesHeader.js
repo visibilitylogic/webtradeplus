@@ -43,10 +43,16 @@ export const allTradesHeader = [
   {
     Header: "Profit",
     accessor: "profit",
+    accessor: ({ profit }) => (
+      <p className={" text-center bg-success text-light"}>{profit}</p>
+    ),
   },
   {
     Header: "Loss",
     accessor: "loss",
+    accessor: ({ loss }) => (
+      <p className={" text-center bg-danger text-light"}>{loss}</p>
+    ),
   },
   {
     Header: "Take Profit",
@@ -65,11 +71,11 @@ export const allTradesHeader = [
     accessor: "typeOfAsset",
   },
   {
-    Header: "Open Rate Of Assest",
+    Header: "Open Rate",
     accessor: "openRateOfAsset",
   },
   {
-    Header: "Close Rate Of Assest",
+    Header: "Close Rate",
     accessor: "closeRateOfAsset",
   },
 
@@ -84,7 +90,7 @@ export const allTradesHeader = [
     Header: "Action",
     accessor: "icon",
     accessor: ({ _id }) => (
-      <button className={" text-center bg-primary text-light"}>{'EDIT'}</button>
+      <button className={" text-center bg-primary text-light"}>{"EDIT"}</button>
     ),
   },
 ];
