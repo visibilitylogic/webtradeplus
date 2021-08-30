@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 
 const ManagerHeader = ({ setDisplayC }) => {
   const {
@@ -8,8 +8,9 @@ const ManagerHeader = ({ setDisplayC }) => {
     allWithdrawals,
     allVerifiedUsers,
     allOrders,
+    allTrades,
     allUsers,
-  } = useSelector((state) => state.profile);
+  } = useSelector((state) => state.profile)
 
   return (
     <div className="tabs manager-tabs">
@@ -27,7 +28,7 @@ const ManagerHeader = ({ setDisplayC }) => {
         <span className="notify">
           <small>
             {allDeposits.length > 0 &&
-              allDeposits.filter((deposit) => deposit.status === "Pending")
+              allDeposits.filter((deposit) => deposit.status === 'Pending')
                 .length}
           </small>
         </span>
@@ -40,7 +41,7 @@ const ManagerHeader = ({ setDisplayC }) => {
         <span className="notify">
           <small>
             {allVerifiedUsers.length > 0 &&
-              allVerifiedUsers.filter((verify) => verify.status === "Pending")
+              allVerifiedUsers.filter((verify) => verify.status === 'Pending')
                 .length}
           </small>
         </span>
@@ -58,7 +59,7 @@ const ManagerHeader = ({ setDisplayC }) => {
       <div manager-tab="orders" className="tab">
         <span>Orders</span>
         <span className="notify">
-          <small>{allOrders.length}</small>
+          <small>{Object.entries(allTrades).length}</small>
         </span>
       </div>
       <div manager-tab="withdraw" className="tab">
@@ -67,7 +68,7 @@ const ManagerHeader = ({ setDisplayC }) => {
           <small>
             {allWithdrawals.length > 0 &&
               allWithdrawals.filter(
-                (withdrawal) => withdrawal.status === "Pending"
+                (withdrawal) => withdrawal.status === 'Pending',
               ).length}
           </small>
         </span>
@@ -76,11 +77,11 @@ const ManagerHeader = ({ setDisplayC }) => {
         <span>Traders Approvals</span>
       </div>
     </div>
-  );
-};
+  )
+}
 
 ManagerHeader.propTypes = {
   setDisplayC: PropTypes.func.isRequired,
-};
+}
 
-export default ManagerHeader;
+export default ManagerHeader

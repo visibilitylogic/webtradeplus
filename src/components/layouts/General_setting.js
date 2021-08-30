@@ -247,6 +247,7 @@ const handleImageChangeLogo = (e) => {
                           className="dash-input"
                           type="text"
                           name="siteTitle"
+                          placeholder="Title"
                           value={siteTitle}
                           onChange={(e) => setTitle(e.target.value)}
                         />
@@ -262,6 +263,7 @@ const handleImageChangeLogo = (e) => {
                         <textarea
                           onChange={(e) => setAppDescription(e.target.value)}
                           value={appDescription}
+                          placeholder="Your description here..."
                           className="dash-text-area"
                         />
                       </div>
@@ -274,6 +276,7 @@ const handleImageChangeLogo = (e) => {
                         <input type="text"
                           onChange={(e) => setprivacyPolicyLink(e.target.value)}
                           value={privacyPolicyLink}
+                          placeholder="https://www.google.com/"
                           className="dash-input"
                         />
                       </div>
@@ -286,6 +289,7 @@ const handleImageChangeLogo = (e) => {
                         <input type="text"
                           onChange={(e) => settermsOfServicesLink(e.target.value)}
                           value={termsOfServicesLink}
+                          placeholder="https://www."
                           className="dash-input"
                         />
                       </div>
@@ -396,7 +400,7 @@ const handleImageChangeLogo = (e) => {
                       <div className="dtls">
                         <h4>Switch charts to tradingview charts</h4>
                         <p>
-                          /!\ Some exchanges / pairs can be not available /!\
+                          Some exchanges / pairs can be not available<span className="red-color">!</span>
                         </p>
                       </div>
                       <div className="actions switch-field">

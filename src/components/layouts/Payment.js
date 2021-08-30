@@ -82,7 +82,7 @@ function Payment() {
               <a
                 className="icon mdi mdi-information-outline"
                 href="https://help.ovrley.com/help-center/articles/6/fortumo"
-                target="_blank"
+                target="_blank" rel="noreferrer"
               />{" "}
               <span className="font-size-13 text-fade">
                 This payment gateway is only available for
@@ -100,7 +100,7 @@ function Payment() {
                 </span>
               )}
 
-              <NavLink to="/dashboard/mastercard" className="configure">
+              <NavLink to="/dashboard/admin/mastercard" className="configure">
                 Configure
               </NavLink>
             </div>
@@ -133,7 +133,7 @@ function Payment() {
                   Disabled
                 </span>
               )}
-              <NavLink to="/dashboard/bitcoin" className="configure">
+              <NavLink to="/dashboard/admin/bitcoin" className="configure">
                 Configure
               </NavLink>
             </div>

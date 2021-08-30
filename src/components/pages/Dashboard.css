@@ -7841,13 +7841,11 @@ label.custom-control-label {
   border: 2px solid #00cec9;
 }
 
-
-.ChartPL{
-      position: absolute;
-    z-index: 99999;
-    background: transparent;
-    /* color: white; */
-    left: 65%;
-    top: 5%;
-
+.ChartPL {
+  position: absolute;
+  z-index: 9;
+  background: transparent;
+  /* color: white; */
+  left: 65%;
+  top: 5%;
 }

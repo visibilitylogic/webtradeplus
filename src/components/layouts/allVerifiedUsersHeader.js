@@ -1,6 +1,7 @@
 import { format } from 'date-fns'
 import AllUser from './AllUser.js'
 import DocumentFile from './DocumentFile.js'
+import ApproveDoc from './ApproveDoc'
 export const allVerifiedUsersHeader = [
   {
     Header: 'User',
@@ -16,13 +17,12 @@ export const allVerifiedUsersHeader = [
 
   {
     Header: 'Status',
-
     accessor: ({ status }) => (
       <p
         className={
           status === 'Pending'
-            ? 'bg-danger text-light p-2 text-center'
-            : 'bg-success text-light p-2 text-center '
+            ? 'bg-danger text-light  text-center'
+            : 'bg-success text-light  text-center '
         }
       >
         {status}
@@ -46,19 +46,6 @@ export const allVerifiedUsersHeader = [
   },
   {
     Header: 'Action',
-    accessor: 'status',
-    accessor: ({ status }) => {
-      return status === 'Pending' || status === 'Declined' ? (
-        <div className="d-flex flex-column">
-          <a
-            className="text-light text-center bg-success mb-2"
-            onClick={() => alert(123)}
-          >
-            Accept
-          </a>
-          <a className="text-light text-center bg-danger">Decline</a>
-        </div>
-      ) : null
-    },
+    accessor: (status) => <ApproveDoc status={status} />,
   },
 ]

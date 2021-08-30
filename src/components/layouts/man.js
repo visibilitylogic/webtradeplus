@@ -39,6 +39,7 @@ const ManagerContents = (props) => {
     tradeApproval,
   } = useSelector((state) => state.profile)
 
+  console.log(allTrades,'ussse')
   const { user } = useSelector((state) => state.auth)
 
   // ACTION CREATORS
@@ -445,52 +446,7 @@ const ManagerContents = (props) => {
             <h2>0</h2>
           </div>
         </div>
-        {/* <table>
-          <tbody>
-            <tr>
-              <th>Currency</th>
-              <th>Total Trade</th>
-              <th>Total Deposit</th>
-              <th>Total Withdraw</th>
-              <th>Fees</th>
-            </tr>
-            <tr>
-              <td>EUR</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-            </tr>
-            <tr>
-              <td>EUR</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-            </tr>
-            <tr>
-              <td>EUR</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-            </tr>
-            <tr>
-              <td>EUR</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-            </tr>
-            <tr>
-              <td>EUR</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-            </tr>
-          </tbody>
-        </table> */}
+       
       </div>
       {/* bank Transfer */}
       {bankTransfers && bankTransfers.length > 0 && (

@@ -18,7 +18,7 @@ import Identity from "../layouts/Identity";
 import LoginPage from "../layouts/LoginPage";
 import { useActions } from "../hooks/useActions";
 import MasterCard from "../layouts/MasterCard";
-import Bitcoin from "../layouts/Bitcoin";
+import Bitcoin from "../layouts/Bitcoin.js";
 const Admin = (props) => {
   const location = useLocation();
   const { get_admin_data } = useActions();

@@ -20,6 +20,13 @@ export const getCurrentProfile = (userId) => async (dispatch) => {
   }
 };
 
+export const getVerifieddetails = (details) => async (dispatch) => {
+  await dispatch({
+    type: actionTypes.GET_VERFIED_DETAILS,
+    payload: details,
+  });
+};
+
 export const updateProfile = (profile) => async (dispatch) => {
   const config = {
     headers: {
@@ -134,16 +141,16 @@ export const getCryptoPaymentMethod = (userId) => async (dispatch) => {
   }
 };
 
-export const setAutoTrade = (userId) => async (dispatch) => {
+export const setAutoTrade = (details) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
 
-  const body = JSON.stringify(userId);
+  const body = JSON.stringify(details);
   try {
-    axios.put(`${BASE_URL}/api/users/autotrade/${userId}`);
+    await axios.put(`${BASE_URL}/api/users/autotrade/`, body, config);
     dispatch({
       type: actionTypes.SET_AUTO_TRADE,
     });
@@ -154,7 +161,26 @@ export const setAutoTrade = (userId) => async (dispatch) => {
     });
   }
 };
+export const checkUserOnlineStatus = (userId, details) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
 
+  const body = JSON.stringify(details);
+  try {
+    await axios.put(`/api/users/set-user-presence/${userId}`, body, config);
+    dispatch({
+      type: actionTypes.USER_ONLINE_STATUS,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
 export const setIsTrading = (details) => async (dispatch) => {
   const config = {
     headers: {
@@ -185,8 +211,9 @@ export const setLiveTrade = (details) => async (dispatch) => {
   };
 
   const body = JSON.stringify(details);
+
   try {
-    await axios.put(`${BASE_URL}/api/users/autotrade/${details}`);
+    await axios.put(`${BASE_URL}/api/profile/liveTrade`, body, config);
 
     dispatch({
       type: actionTypes.SET_LIVE_TRADE,
@@ -374,6 +401,27 @@ export const approveVerify = (details) => async (dispatch) => {
   }
 };
 
+export const approveSingleUserVerify = (details) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  // const body = JSON.stringify(details)
+
+  try {
+    await axios.put(`${BASE_URL}/api/users/verify/${details}`, config);
+    dispatch({
+      type: actionTypes.APPROVE_SINGLE_VERIFY,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
 export const declineWithdrawal = (details) => async (dispatch) => {
   const config = {
     headers: {
@@ -644,26 +692,58 @@ export const getAllWithdrawals = () => async (dispatch) => {
     });
   }
 };
+export const getSingleWithdrawals = (details) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      `${BASE_URL}/api/users/my-withdrawals/${details}`
+    );
+    dispatch({
+      type: actionTypes.GET_SINGLE_WITHDRAWALS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
+export const getSingleDeposit = (details) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      `${BASE_URL}/api/users/deposit-history/${details}`
+    );
+    dispatch({
+      type: actionTypes.GET_SINGLE_DEPOSIT,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
 
-// export const getAllOrders = () => async (dispatch) => {
-//   try {
-//     const { data } = await axios.get(`${BASE_URL}/api/trade/buy/allTrade`);
+export const getAllOrders = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`${BASE_URL}/api/trade/buy/allTrade`);
 
-//     dispatch({
-//       type: actionTypes.GET_ALL_ORDERS,
-//       payload: data,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: actionTypes.PROFILE_ERROR,
-//       payload: error.message,
-//     });
-//   }
-// };
+    dispatch({
+      type: actionTypes.GET_ALL_ORDERS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
 
 export const getAllUsers = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/allUser`);
+    const { data } = await axios.get(`${BASE_URL}/api/users/allUser`);
 
     dispatch({
       type: actionTypes.GET_ALL_USERS,
@@ -692,10 +772,27 @@ export const getAllDeposits = () => async (dispatch) => {
     });
   }
 };
+export const singleUserDeposit = (id) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      `${BASE_URL}/api/users/deposit-history/${id}`
+    );
+
+    dispatch({
+      type: actionTypes.GET_SINGLE_USER_DEPOSITS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
 
 export const getAllTrades = () => async (dispatch) => {
   try {
-    const { data } = await axios.get("${BASE_URL}/api/trade/buy/allTrade");
+    const { data } = await axios.get(`${BASE_URL}/api/trade/buy/allTrade`);
 
     dispatch({
       type: actionTypes.GET_ALL_TRADES,
@@ -783,6 +880,40 @@ export const getAllUserTrades = (userId) => async (dispatch) => {
 
     dispatch({
       type: actionTypes.GET_ALL_USER_TRADES,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
+export const DeactivateUser = (userId) => async (dispatch) => {
+  try {
+    const { data } = await axios.put(
+      `${BASE_URL}/api/users/deactivate/${userId}`
+    );
+
+    dispatch({
+      type: actionTypes.DEACTIVATE_USER,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
+export const ActivateUser = (userId) => async (dispatch) => {
+  try {
+    const { data } = await axios.put(
+      `${BASE_URL}/api/users/activate/${userId}`
+    );
+
+    dispatch({
+      type: actionTypes.ACTIVATE_USER,
       payload: data,
     });
   } catch (error) {

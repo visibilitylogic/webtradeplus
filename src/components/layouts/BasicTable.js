@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { useTable, useSortBy, usePagination } from 'react-table'
+import { getSingleWithdrawals } from '../../store/action-creators/profileActions'
 import { useActions } from '../hooks/useActions'
 
 import FooterComponent from './FooterComponent'
@@ -13,7 +14,7 @@ const BasicTable = ({
 }) => {
   const columns = useMemo(() => column, [])
   const data = useMemo(() => allUsers, [])
-  const { getCurrentProfile } = useActions()
+  const { getCurrentProfile, getVerifieddetails } = useActions()
   const tableInstance = useTable(
     {
       columns,
@@ -68,7 +69,7 @@ const BasicTable = ({
                 <tr
                   {...row.getRowProps()}
                   onClick={() => {
-                    console.log(row.original._id)
+                    getSingleWithdrawals(row.original._id)
                     getCurrentProfile(row.original._id)
                     setDisplayC(true)
                   }}
@@ -76,6 +77,7 @@ const BasicTable = ({
                   {row.cells.map((cell) => {
                     return (
                       <td
+                        style={{ maxHeight: '20px', height: '15px' }}
                         onClick={() => {
                           setUserLevel(
                             user.isAdmin
@@ -85,6 +87,26 @@ const BasicTable = ({
                               : 'none',
                           )
                         }}
+                        {...cell.getCellProps()}
+                      >
+                        {cell.render('Cell')}
+                      </td>
+                    )
+                  })}
+                </tr>
+              )
+            } else if (type === 'verifiedUsers' || type === 'withdrawal') {
+              return (
+                <tr
+                  {...row.getRowProps()}
+                  onClick={() => {
+                    getVerifieddetails(row.original)
+                  }}
+                >
+                  {row.cells.map((cell) => {
+                    return (
+                      <td
+                        style={{ maxHeight: '20px', height: '15px' }}
                         {...cell.getCellProps()}
                       >
                         {cell.render('Cell')}

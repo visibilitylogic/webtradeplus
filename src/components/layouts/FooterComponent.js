@@ -13,10 +13,15 @@ const FooterComponent = ({
   return (
     <>
       <div
-        className="d-flex justify-content-between"
-        style={{ width: '100%', margin: 'auto', background: 'white' }}
+        className="d-flex justify-content-between mb-3 align-items-center"
+        style={{
+          width: '100%',
+
+          background: 'white',
+          padding: '0 0 20px 0 0',
+        }}
       >
-        <FooterStyle style={{ width: '50%', margin: 'auto' }}>
+        <FooterStyle style={{ width: '50%', margin: '0 auto' }}>
           <div className="list-footer">
             <div
               className="btn-container"
@@ -24,7 +29,7 @@ const FooterComponent = ({
               onClick={() => previousPage()}
               disabled={!canPreviousPage}
             >
-             ◀
+              ◀
             </div>
             <div>
               <strong className="strong">
@@ -44,7 +49,7 @@ const FooterComponent = ({
         </FooterStyle>
         <FooterStyle2>
           <div className=" d-flex justify-content-start align-items-center mr-3">
-            <div className="p-container">
+            <div className="p-container align-self-flex-start">
               <strong>
                 <p className="p mb-0">Show: </p>
               </strong>
@@ -94,7 +99,7 @@ const FooterStyle = styled.div`
   }
 
   .list-item {
-    padding: 1rem;
+    padding: 0 1rem;
     box-shadow: -1px 5px 7px 1px rgba(164, 164, 164, 0.15);
     border-bottom: 1px solid #e7e7e7;
     animation: 0.5s fade ease-in-out;
@@ -103,25 +108,23 @@ const FooterStyle = styled.div`
   .list-item > .item-title {
     font-size: 1.2rem;
     font-weight: 400;
-    margin-bottom: 0.25rem;
   }
 
   .list-item > .item-description {
-    margin-bottom: 0.5rem;
   }
 
   .list-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+
     color: black;
     z-index: 1;
   }
 
   .list-footer > .btn-container {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -129,14 +132,18 @@ const FooterStyle = styled.div`
     background: white;
     box-shadow: 1px 0px 8px -3px rgba(0, 0, 0, 0.52);
     font-weight: 600;
+    cursor: pointer;
   }
   strong.strong {
-    color: black;
-    zindex: 2;
+    z-index: 2;
+    line-height: 2;
+    color: #2727c1;
+    font-size: 1.3rem;
   }
 
   .btn-container:hover {
-    background: rgba(255, 255, 255, 0.5);
+    background-color: #2727c1;
+    color: white !important;
   }
 
   @keyframes fade {
