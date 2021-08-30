@@ -71,15 +71,10 @@ export default function stockReducer(state = initialState, action) {
         defaultSelectedStock: action.payload,
       };
     case actionTypes.ADD_STOCK_TO_LIST:
-      // localStorage.setItem(
-      //   "stocksSelected",
-      //   JSON.stringify([action.payload, ...state.stocksSelected])
-      // );
       return {
         ...state,
-        stocksSelected: [action.payload, ...state.stocksSelected],
-        // ...action.payload,
         loading: false,
+        stocksSelected: [action.payload, ...state.stocksSelected],
       };
     case actionTypes.DELETE_STOCK:
       return {
