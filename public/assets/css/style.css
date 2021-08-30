@@ -9,13 +9,13 @@
 }
 
 @font-face {
-  font-family: "dash-regular";
-  src: url("/assets/fonts/Trebuchet_MS.ttf");
+  font-family: 'dash-regular';
+  src: url('/assets/fonts/Trebuchet_MS.ttf');
 }
 
 @font-face {
-  font-family: "dash-bold";
-  src: url("/assets/fonts/Futura/std-heavy.ttf");
+  font-family: 'dash-bold';
+  src: url('/assets/fonts/Futura/std-heavy.ttf');
 }
 
 html {
@@ -29,7 +29,7 @@ body {
   margin: 0;
   background-color: #131722;
   color: #f5f5f6;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   letter-spacing: 1px;
   overflow: hidden;
 }
@@ -89,9 +89,9 @@ body {
   border: 1px solid #555;
 }
 
-a {
-  text-decoration: none !important;
-}
+/* a {
+  text-decoration: none;
+} */
 
 .dash-navbar .stock .stock-box span.close {
   position: absolute;
@@ -304,7 +304,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row {
   padding: 1px 10px;
   border-bottom: 1px solid #555;
@@ -313,7 +313,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .date {
   width: 30%;
@@ -322,7 +322,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .date
   p.time {
@@ -332,7 +332,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .date
   p.day-month {
@@ -344,7 +344,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .currency {
   width: 60%;
@@ -353,7 +353,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .currency
   p.currency-type {
@@ -363,7 +363,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .currency
   p.cad {
@@ -375,7 +375,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .rate {
   width: 10%;
@@ -384,7 +384,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .rate
   p.rate-no {
@@ -396,7 +396,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .rate
   p.currency {
@@ -409,14 +409,14 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"] {
+  [dash-tab-sec='opened-position'] {
   display: none;
 }
 
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row {
   padding: 1px 10px;
   border-bottom: 1px solid #555;
@@ -425,7 +425,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .date {
   width: 30%;
@@ -434,7 +434,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .date
   p.time {
@@ -444,7 +444,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .date
   p.day-month {
@@ -456,7 +456,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .currency {
   width: 60%;
@@ -465,7 +465,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .currency
   p.currency-type {
@@ -475,7 +475,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .currency
   p.cad {
@@ -487,7 +487,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .rate {
   width: 10%;
@@ -496,7 +496,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .rate
   p.rate-no {
@@ -508,7 +508,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .rate
   p.currency {
@@ -1058,7 +1058,7 @@ a {
   border-radius: 5px;
   text-transform: uppercase;
   font-size: 10px;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   letter-spacing: 1px;
 }
 
@@ -1152,7 +1152,7 @@ a {
   border-radius: 5px;
   text-transform: uppercase;
   font-size: 10px;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   letter-spacing: 1px;
 }
 
@@ -1247,7 +1247,7 @@ a {
   border-radius: 5px;
   text-transform: uppercase;
   font-size: 10px;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   letter-spacing: 1px;
   margin-top: 20px;
 }
@@ -1509,7 +1509,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row {
   padding: 1px 10px;
   border-bottom: 1px solid #555;
@@ -1518,7 +1518,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .date {
   width: 30%;
@@ -1527,7 +1527,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .date
   p.time {
@@ -1537,7 +1537,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .date
   p.day-month {
@@ -1549,7 +1549,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .currency {
   width: 60%;
@@ -1558,7 +1558,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .currency
   p.currency-type {
@@ -1568,7 +1568,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .currency
   p.cad {
@@ -1580,7 +1580,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .rate {
   width: 10%;
@@ -1589,7 +1589,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .rate
   p.rate-no {
@@ -1601,7 +1601,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="order-book"]
+  [dash-tab-sec='order-book']
   .dash-row
   .rate
   p.currency {
@@ -1614,14 +1614,14 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"] {
+  [dash-tab-sec='opened-position'] {
   display: none;
 }
 
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row {
   padding: 1px 10px;
   border-bottom: 1px solid #555;
@@ -1630,7 +1630,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .date {
   width: 30%;
@@ -1639,7 +1639,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .date
   p.time {
@@ -1649,7 +1649,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .date
   p.day-month {
@@ -1661,7 +1661,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .currency {
   width: 60%;
@@ -1670,7 +1670,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .currency
   p.currency-type {
@@ -1680,7 +1680,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .currency
   p.cad {
@@ -1692,7 +1692,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .rate {
   width: 10%;
@@ -1701,7 +1701,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .rate
   p.rate-no {
@@ -1713,7 +1713,7 @@ a {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec="opened-position"]
+  [dash-tab-sec='opened-position']
   .dash-row
   .rate
   p.currency {
@@ -2263,7 +2263,7 @@ a {
   border-radius: 5px;
   text-transform: uppercase;
   font-size: 10px;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   letter-spacing: 1px;
 }
 
@@ -2357,7 +2357,7 @@ a {
   border-radius: 5px;
   text-transform: uppercase;
   font-size: 10px;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   letter-spacing: 1px;
 }
 
@@ -2452,7 +2452,7 @@ a {
   border-radius: 5px;
   text-transform: uppercase;
   font-size: 10px;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   letter-spacing: 1px;
   margin-top: 20px;
 }
@@ -2700,7 +2700,7 @@ a {
   padding: 10px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   outline: none;
   letter-spacing: 1px;
 }
@@ -2712,7 +2712,7 @@ a {
   padding: 10px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   outline: none;
   letter-spacing: 1px;
 }
@@ -2723,7 +2723,7 @@ a {
   padding: 10px 10px;
   cursor: pointer;
   border-radius: 5px;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   outline: none;
   letter-spacing: 1px;
   text-decoration: none;
@@ -2736,7 +2736,7 @@ a {
   padding: 10px 25px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   outline: none;
   letter-spacing: 1px;
   background-color: #131722;
@@ -2751,24 +2751,24 @@ a {
   cursor: pointer;
 }
 
-[data-tab-dtl="notification"] img {
+[data-tab-dtl='notification'] img {
   max-width: 250px;
   width: 100%;
   display: block;
   margin: 0 auto;
 }
 
-[data-tab-dtl="notification"] .other-dtls {
+[data-tab-dtl='notification'] .other-dtls {
   margin: 1% 1%;
   padding: 30px 0;
 }
 
-[data-tab-dtl="notification"] .other-dtls ul {
+[data-tab-dtl='notification'] .other-dtls ul {
   margin-left: 1%;
   padding-left: 1%;
 }
 
-[data-tab-dtl="notification"] .other-dtls ul li {
+[data-tab-dtl='notification'] .other-dtls ul li {
   margin: 20px 0;
 }
 
@@ -2829,7 +2829,7 @@ a {
   border: none;
   color: #fff;
   border-radius: 5px;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   outline: none;
   letter-spacing: 1px;
   background-color: #131722;
@@ -3239,11 +3239,11 @@ span.close svg:hover {
   padding: 15px 10px;
 }
 
-[manager-tab-dtls="bank-transfers"] table tr td {
+[manager-tab-dtls='bank-transfers'] table tr td {
   padding: 30px 10px !important;
 }
 
-[manager-tab-dtls="identity"] table tr td {
+[manager-tab-dtls='identity'] table tr td {
   padding: 30px 10px !important;
 }
 
@@ -3417,7 +3417,7 @@ span.close svg:hover {
 
 .admin-content {
   width: -webkit-calc(100% - 200px);
-  flex:9;
+  flex: 9;
   height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
@@ -3558,7 +3558,7 @@ span.close svg:hover {
   display: block;
   padding: 15px 15px;
   border: 1px solid #e1e3e6;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
 }
 
 .admin-content .dash-select {
@@ -3566,7 +3566,7 @@ span.close svg:hover {
   display: block;
   padding: 15px 15px;
   border: 1px solid #e1e3e6;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
 }
 
 .admin-content .dash-select-short {
@@ -3574,7 +3574,7 @@ span.close svg:hover {
   padding: 10px 10px;
   font-size: 15px;
   border: 1px solid #e1e3e6;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
 }
 
 .admin-content .dash-text-area,
@@ -3584,7 +3584,7 @@ span.close svg:hover {
   display: block;
   padding: 15px 15px;
   border: 1px solid #e1e3e6;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
 }
 
 .admin-content .public-card .actions p.small {
@@ -3601,7 +3601,7 @@ span.close svg:hover {
   padding: 15px 35px;
   border-radius: 5px;
   color: #fff;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   background-color: #4786ff;
   border: none;
   display: inline-block;
@@ -3611,7 +3611,7 @@ span.close svg:hover {
   padding: 15px 35px;
   border-radius: 5px;
   color: #fff !important;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   background-color: #29c359 !important;
   text-decoration: none;
   border: none;
@@ -3640,11 +3640,11 @@ span.close svg:hover {
   padding: 15px 10px;
 }
 
-[manager-tab-dtls="bank-transfers"] table tr td {
+[manager-tab-dtls='bank-transfers'] table tr td {
   padding: 30px 10px !important;
 }
 
-[manager-tab-dtls="identity"] table tr td {
+[manager-tab-dtls='identity'] table tr td {
   padding: 30px 10px !important;
 }
 
@@ -4092,7 +4092,7 @@ span.close svg:hover {
   background-color: #363c4f;
   border: none;
   color: #fff;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   outline: none;
 }
 
@@ -4112,7 +4112,7 @@ span.close svg:hover {
   width: 100%;
   padding: 15px 15px;
   border: none;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   outline: none;
 }
 
@@ -4122,7 +4122,7 @@ span.close svg:hover {
   background-color: transparent;
   border: 1px solid #363c4f;
   color: #fff;
-  font-family: "dash-regular";
+  font-family: 'dash-regular';
   outline: none;
 }
 
@@ -4274,13 +4274,10 @@ span.close svg:hover {
   margin-top: -5px;
 }
 
-
-::-webkit-scrollbar{
-  width: 0px
-
+::-webkit-scrollbar {
+  width: 0px;
 }
-::-webkit-scrollbar-track-piece{
+::-webkit-scrollbar-track-piece {
   background-color: transparent;
-  -webkit-border-radius: 6px
+  -webkit-border-radius: 6px;
 }
-  

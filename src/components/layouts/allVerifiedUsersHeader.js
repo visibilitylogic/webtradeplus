@@ -47,7 +47,6 @@ export const allVerifiedUsersHeader = [
   },
   {
     Header: 'Action',
-    accessor: 'status',
-    accessor: ({ status }) => <ApproveDoc status={status} />,
+    accessor: (status) => <ApproveDoc status={status} />,
   },
 ]

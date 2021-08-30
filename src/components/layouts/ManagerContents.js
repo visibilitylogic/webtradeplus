@@ -51,8 +51,8 @@ const ManagerContents = (props) => {
   } = useSelector((state) => state.profile)
 
   const { user } = useSelector((state) => state.auth)
-  console.log(allTrades)
-  console.log(allUsers)
+  console.log(allVerifiedUsers)
+
   // ACTION CREATORS
   const {
     updateWalletBalance,
@@ -107,7 +107,7 @@ const ManagerContents = (props) => {
   //   id: singleUser._id,
   //   liveTrade: singleUser.liveTrade,
   // })
-
+  console.log(allVerifiedUsers)
   //
   //setAutoTrade
   const [trade, setTrade] = useState({
@@ -1334,9 +1334,9 @@ export default React.memo(ManagerContents)
 
 const TableContainer = styled.div`
   background: white;
-  margin: 1.2rem auto 0 auto;
   width: 96%;
   height: 90%;
+  padding-bottom: 20px;
   table {
     border-collapse: collapse;
     width: 100%;
@@ -1359,7 +1359,7 @@ const TableContainer = styled.div`
     border: 0;
   }
   tabel td {
-    max-height: 40px;
+    max-height: 20px;
   }
   table tr {
     padding-left: 20px;
@@ -1367,7 +1367,6 @@ const TableContainer = styled.div`
 
   table th {
     padding-top: 3px;
-    padding-bottom: 2px;
     text-align: left;
     background: #e9ecf2;
     color: black;

@@ -18,6 +18,13 @@ export const getCurrentProfile = (userId) => async (dispatch) => {
   }
 }
 
+export const getVerifieddetails = (details) => async (dispatch) => {
+  await dispatch({
+    type: actionTypes.GET_VERFIED_DETAILS,
+    payload: details,
+  })
+}
+
 export const updateProfile = (profile) => async (dispatch) => {
   const config = {
     headers: {

@@ -23,6 +23,8 @@ const initialState = {
   singleWithdrawals: [],
   singleDeposit: [],
   allSingleDeposits: [],
+  DepositApproval: {},
+  singleUserVerifedDetails: {},
 }
 
 export default function profileReducer(state = initialState, action) {
@@ -46,6 +48,12 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         depositAmount: action.payload,
+        error: null,
+      }
+    case actionTypes.APPROVE_DEPOSIT:
+      return {
+        ...state,
+        DepositApproval: action.payload,
         error: null,
       }
     case actionTypes.GET_SINGLE_DEPOSIT:
@@ -100,6 +108,13 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         loading: false,
         singleUser: action.payload,
+        error: null,
+      }
+    case actionTypes.GET_VERFIED_DETAILS:
+      return {
+        ...state,
+        loading: false,
+        singleUserVerifedDetails: action.payload,
         error: null,
       }
 

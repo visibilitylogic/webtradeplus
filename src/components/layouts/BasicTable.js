@@ -14,7 +14,7 @@ const BasicTable = ({
 }) => {
   const columns = useMemo(() => column, [])
   const data = useMemo(() => allUsers, [])
-  const { getCurrentProfile } = useActions()
+  const { getCurrentProfile, getVerifieddetails } = useActions()
   const tableInstance = useTable(
     {
       columns,
@@ -87,6 +87,26 @@ const BasicTable = ({
                               : 'none',
                           )
                         }}
+                        {...cell.getCellProps()}
+                      >
+                        {cell.render('Cell')}
+                      </td>
+                    )
+                  })}
+                </tr>
+              )
+            } else if (type === 'verifiedUsers') {
+              return (
+                <tr
+                  {...row.getRowProps()}
+                  onClick={() => {
+                    getVerifieddetails(row.original)
+                  }}
+                >
+                  {row.cells.map((cell) => {
+                    return (
+                      <td
+                        style={{ maxHeight: '20px', height: '15px' }}
                         {...cell.getCellProps()}
                       >
                         {cell.render('Cell')}
