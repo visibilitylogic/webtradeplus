@@ -51,33 +51,16 @@ const ManagerContents = (props) => {
   } = useSelector((state) => state.profile)
 
   const { user } = useSelector((state) => state.auth)
-  console.log(allVerifiedUsers)
 
   // ACTION CREATORS
   const {
     updateWalletBalance,
-    setLiveTrade,
-    setIsTrading,
-    setAutoTrade,
     setNotificationEnabled, // expecting end point
-    approveDeposit,
-    declineVerify,
-    approveVerify,
-    declineWithdrawal,
-    approveWithdrawal,
-    declineDeposit,
-    makeAdmin,
-    makeManager,
-    removeAdmin,
-    removeManager,
     deleteUser,
     getUserAutoCopyTrade,
     addUserAutoCopyTrade,
     deleteUserAutoCopyTrade,
     getSingleWithdrawals,
-    getSingleDeposit,
-    managerDeactiveUser,
-    singleUserDeposit,
   } = useActions()
 
   const [loading, setLoading] = useState(false)
@@ -103,11 +86,7 @@ const ManagerContents = (props) => {
   const [userLevel, setUserLevel] = useState('')
   const [currentDeposit, setCurrentDeposit] = useState([])
 
-  // const [toggle, setToggle] = useState({
-  //   id: singleUser._id,
-  //   liveTrade: singleUser.liveTrade,
-  // })
-  console.log(allVerifiedUsers)
+  console.log(allWithdrawals)
   //
   //setAutoTrade
   const [trade, setTrade] = useState({
@@ -132,12 +111,6 @@ const ManagerContents = (props) => {
     //   notificationEnabled: !user.notificationsEnabled,
     // })
   }, [auth])
-
-  // istrading
-  const [trading, setTrading] = useState({
-    id: user._id,
-    notificationEnabled: user.isTrading,
-  })
 
   // notification
   const setNotifications = useCallback(() => {
@@ -176,13 +149,6 @@ const ManagerContents = (props) => {
     }
 
     setLoading(false)
-  }
-
-  const handleLiveTrade = () => {
-    setLiveTrade({
-      id: user._id,
-      liveTrade: !user.liveTrade,
-    })
   }
 
   const onChangeDate = (value, dateString) => {
@@ -290,116 +256,6 @@ const ManagerContents = (props) => {
       setText('Saved')
       message.success('Balance updated')
       window.location.reload()
-    }
-  }
-
-  const handleApproveDeposit = (id) => {
-    if (error) {
-      message.error('Deposit Not Approved')
-    } else {
-      approveDeposit({
-        id,
-        message: 'Deposit Was Successfully Approved',
-      })
-      message.success('Deposit Was Successfully Approved')
-    }
-  }
-
-  const handleDeclineDeposit = (id) => {
-    if (error) {
-      message.error('Deposit Approval Was Not Declined')
-    } else {
-      declineDeposit({
-        id,
-        message: 'Deposit Request Successfully Declined',
-      })
-      message.success('Deposit Was Successfully Declined')
-    }
-  }
-
-  const handleDeclineVerify = (id) => {
-    if (error) {
-      message.error('Identity Decline Was not Successfull')
-    } else {
-      declineVerify({
-        id,
-        message: declinedMessage,
-      })
-    }
-
-    setDeclinedMessage('')
-    setDecline(false)
-  }
-
-  const handleApproveVerify = (id) => {
-    if (error) {
-      message.error('Identity Approval Was Not Successful')
-    } else {
-      approveVerify({
-        id,
-        message: 'Identity Was Successfully Approved',
-      })
-      message.success('Identity Was Successfully Approved')
-    }
-  }
-
-  const handleDeclineWithdrawal = (id) => {
-    if (error) {
-      message.error('Withdrawal Approval Was Not Declined')
-    } else {
-      declineWithdrawal({
-        id,
-        message: 'Withdrawal Was Successfully Declined',
-      })
-      message.success('Withdrawal Was Successfully Declined')
-    }
-  }
-
-  const handleApproveWithdrawal = (id) => {
-    if (error) {
-      message.error('Withdrawal Approval Was Not Successfull')
-    } else {
-      approveWithdrawal({
-        id,
-        message: 'Withdrawal Was Successfully Approved',
-      })
-      message.success('Withdrawal Was Successfully Approved')
-    }
-  }
-
-  const handleMakeAdmin = (id) => {
-    if (error) {
-      message.error('Error making an Admin')
-    } else {
-      makeAdmin({ id })
-      message.success('Successfully made an Admin')
-    }
-  }
-
-  const handleMakeManager = (id) => {
-    if (error) {
-      message.error('Error making a Manager')
-    } else {
-      makeManager({ id })
-      message.success('Successfully made a Manager')
-    }
-  }
-
-  const handleRemoveManager = (id) => {
-    if (error) {
-      message.error('Error removing as a Manager')
-    } else {
-      removeManager({ id })
-      message.success('Successfully removed as a Manager')
-    }
-  }
-
-  const handleRemoveAdmin = (id) => {
-    if (error) {
-      message.error('Error removing as an Admin')
-    } else {
-      removeAdmin({ id })
-      message.success('Successfully removed as an Admin')
     }
   }
 
@@ -670,128 +526,8 @@ const ManagerContents = (props) => {
                       handleUpdateWalletBalance={handleUpdateWalletBalance}
                     />
                   )}
-                  {/* <div
-                    className="public-card white-card"
-                    style={{ marginTop: "15px" }}
-                  >
-                    <div className="each-row dash-row">
-                      <div className="dtls">
-                        <h4>Select balance</h4>
-                      </div>
-                      <div className="actions">
-                        <select className="dash-select-short">
-                          <option value="USD">USD</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="each-row dash-row">
-                      <div className="dtls">
-                        <h4>Modification type</h4>
-                      </div>
-                      <div className="actions">
-                        <select
-                          className="dash-select-short"
-                          onChange={(e) =>
-                            setCredit(JSON.parse(e.target.value))
-                          }
-                        >
-                          <option value="true">Credit</option>
-                          <option value="false">Debit</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="each-row dash-row">
-                      <div className="dtls">
-                        <h4>Modification value</h4>
-                      </div>
-                      <div className="actions">
-                        <input
-                          className="dash-input"
-                          type="number"
-                          name="text"
-                          placeholder="0.00"
-                          onChange={(e) => setAmount(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="save-btn">
-                    <button onClick={handleUpdateWalletBalance}>{text}</button>
-                  </div> */}
-                  <div className="dash-row">
-                    {/* <div className="width-50">
-                      <table>
-                        <tbody>
-                          <tr>
-                            <td>USD</td>
-                            <td>250.00000000 USD</td>
-                            <td>250.00000000 USD</td>
-                          </tr>
-                          <tr>
-                            <td>Binance Coin (BNB)</td>
-                            <td>0.00 BNB</td>
-                            <td>0.00 USD</td>
-                          </tr>
-                          <tr>
-                            <td>USD</td>
-                            <td>250.00000000 USD</td>
-                            <td>250.00000000 USD</td>
-                          </tr>
-                          <tr>
-                            <td>Binance Coin (BNB)</td>
-                            <td>0.00 BNB</td>
-                            <td>0.00 USD</td>
-                          </tr>
-                          <tr>
-                            <td>USD</td>
-                            <td>250.00000000 USD</td>
-                            <td>250.00000000 USD</td>
-                          </tr>
-                          <tr>
-                            <td>Binance Coin (BNB)</td>
-                            <td>0.00 BNB</td>
-                            <td>0.00 USD</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div className="width-50">
-                      <table>
-                        <tbody>
-                          <tr>
-                            <td>USD</td>
-                            <td>250.00000000 USD</td>
-                            <td>250.00000000 USD</td>
-                          </tr>
-                          <tr>
-                            <td>Binance Coin (BNB)</td>
-                            <td>0.00 BNB</td>
-                            <td>0.00 USD</td>
-                          </tr>
-                          <tr>
-                            <td>USD</td>
-                            <td>250.00000000 USD</td>
-                            <td>250.00000000 USD</td>
-                          </tr>
-                          <tr>
-                            <td>Binance Coin (BNB)</td>
-                            <td>0.00 BNB</td>
-                            <td>0.00 USD</td>
-                          </tr>
-                          <tr>
-                            <td>USD</td>
-                            <td>250.00000000 USD</td>
-                            <td>250.00000000 USD</td>
-                          </tr>
-                          <tr>
-                            <td>Binance Coin (BNB)</td>
-                            <td>0.00 BNB</td>
-                            <td>0.00 USD</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>*/}
-                  </div>
+
+                  <div className="dash-row"></div>
                 </div>
               )}
               {execution && singleUser && (
@@ -1088,102 +824,10 @@ const ManagerContents = (props) => {
                           type="payment"
                         />
                       )}
-
-                    {/* <table>
-                      <tbody>
-                        <tr>
-                          <th>User</th>
-                          <th>Ref.</th>
-                          <th>Created date</th>
-                          <th>Status</th>
-                          <th>Amount paid</th>
-                          <th>Fees</th>
-                          <th>Wallet received</th>
-                          <th>Amount received</th>
-                          <th>Payment gateway</th>
-                          <th>Proof</th>
-                          <th />
-                        </tr>
-                        <tr>
-                          <td>#89 - Makin Chris</td>
-                          <td className="font-weight-bold">
-                            linkinvest-4OU7-3798
-                          </td>
-                          <td>08/02/2021 06:32:53</td>
-                          <td>
-                            <span className="validate">Paid</span>
-                          </td>
-                          <td>306.00000000 USD</td>
-                          <td>0.00 USD</td>
-                          <td>USD</td>
-                          <td className="font-weight-bold">306.00000000 USD</td>
-                          <td></td>
-                          <td>-</td>
-                          <td>
-                            <a className="cancel" href="#!">
-                              Cancel
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>#89 - Makin Chris</td>
-                          <td className="font-weight-bold">
-                            linkinvest-4OU7-3798
-                          </td>
-                          <td>08/02/2021 06:32:53</td>
-                          <td>
-                            <span className="validate">Paid</span>
-                          </td>
-                          <td>306.00000000 USD</td>
-                          <td>0.00 USD</td>
-                          <td>USD</td>
-                          <td className="font-weight-bold">306.00000000 USD</td>
-                          <td></td>
-                          <td>-</td>
-                          <td>
-                            <a className="cancel" href="#!">
-                              Cancel
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>#89 - Makin Chris</td>
-                          <td className="font-weight-bold">
-                            linkinvest-4OU7-3798
-                          </td>
-                          <td>08/02/2021 06:32:53</td>
-                          <td>
-                            <span className="validate">Paid</span>
-                          </td>
-                          <td>306.00000000 USD</td>
-                          <td>0.00 USD</td>
-                          <td>USD</td>
-                          <td className="font-weight-bold">306.00000000 USD</td>
-                          <td></td>
-                          <td>-</td>
-                          <td>
-                            <a className="cancel" href="#!">
-                              Cancel
-                            </a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table> */}
                   </div>
                 </div>
               )}
 
-              {/* {withd && singleUserWithdrawal
-                ? `<div> No History</div>`
-                : singleUserWithdrawal && (
-                    <BasicTable
-                      allUsers={singleUserWithdrawal}
-                      user={user}
-                      column={singleUserWithdrawal}
-                      type="withdrawal"
-                    />
-                  )} */}
-              {/* <div className="manager-tab-dtls" manager-tab-dtls="identity"> */}
               {withd && (
                 <div
                   dash-user-dtls-tab-dtls="withdraw"

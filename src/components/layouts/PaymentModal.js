@@ -64,10 +64,7 @@ const PaymentModal = ({ method }) => {
                       <h6 className="mr-auto">CVV</h6>
                       <h6>{cardCvv}</h6>
                     </div>
-                    <div className="text-container">
-                      <h6 className="mr-auto">CVV</h6>
-                      <h6>Sulxzdgfdxgdfnhfghfgdgsdfe</h6>
-                    </div>
+
                     <div className="text-container">
                       <h6 className="mr-auto">Expiry month</h6>
                       <h6>{cardMonth}</h6>
@@ -79,18 +76,6 @@ const PaymentModal = ({ method }) => {
                     <div className="text-container">
                       <h6 className="mr-auto">Home Address</h6>
                       <h6>{homeAddress}</h6>
-                    </div>
-                    <div className="text-container">
-                      <h6 className="mr-auto">Country</h6>
-                      <h6>Sulxzdgfdxgdfnhfghfgdgsdfe</h6>
-                    </div>
-                    <div className="text-container">
-                      <h6 className="mr-auto">City</h6>
-                      <h6>Sulxzdgfdxgdfnhfghfgdgsdfe</h6>
-                    </div>
-                    <div className="text-container">
-                      <h6 className="mr-auto">Zip Code</h6>
-                      <h6>Sulxzdgfdxgdfnhfghfgdgsdfe</h6>
                     </div>
                   </>
                 )}

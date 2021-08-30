@@ -211,7 +211,7 @@ export const setLiveTrade = (details) => async (dispatch) => {
   const body = JSON.stringify(details)
 
   try {
-    await axios.put(`${BASE_URL}/api/profile/liveTrade/`, body, config)
+    await axios.put(`${BASE_URL}/api/profile/liveTrade`, body, config)
 
     dispatch({
       type: actionTypes.SET_LIVE_TRADE,
@@ -737,7 +737,7 @@ export const getAllOrders = () => async (dispatch) => {
 
 export const getAllUsers = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(`${BASE_URL}/allUser`)
+    const { data } = await axios.get(`${BASE_URL}/api/users/allUser`)
 
     dispatch({
       type: actionTypes.GET_ALL_USERS,
@@ -885,7 +885,9 @@ export const getAllUserTrades = (userId) => async (dispatch) => {
 }
 export const DeactivateUser = (userId) => async (dispatch) => {
   try {
-    const { data } = await axios.put(`/api/users/deactivate/${userId}`)
+    const { data } = await axios.put(
+      `${BASE_URL}/api/users/deactivate/${userId}`,
+    )
 
     dispatch({
       type: actionTypes.DEACTIVATE_USER,
@@ -900,7 +902,7 @@ export const DeactivateUser = (userId) => async (dispatch) => {
 }
 export const ActivateUser = (userId) => async (dispatch) => {
   try {
-    const { data } = await axios.put(`api/users/activate/${userId}`)
+    const { data } = await axios.put(`${BASE_URL}/api/users/activate/${userId}`)
 
     dispatch({
       type: actionTypes.ACTIVATE_USER,

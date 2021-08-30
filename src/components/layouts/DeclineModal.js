@@ -13,10 +13,11 @@ const DeclineModal = ({ modalstate, status }) => {
     if (error) {
       message.error('Denial Was Not Successful')
     } else {
-      await declineVerify({
+      const details = {
         id: status.userId,
         message: declinedMessage,
-      })
+      }
+      await declineVerify(details)
 
       setDeclinedMessage('')
       //   setDecline(false);

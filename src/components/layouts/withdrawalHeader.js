@@ -1,4 +1,6 @@
 import { format } from 'date-fns'
+import ViewWithDrawalDetails from './ViewWithDrawalDetails'
+import WithdrawalStatus from './WithdrawalStatus'
 export const withdrawalHeader = [
   {
     id: 'Ref',
@@ -16,20 +18,20 @@ export const withdrawalHeader = [
   },
   {
     Header: 'Withdrawal Method',
-    accessor: '',
+    accessor: 'method',
   },
   {
     Header: 'Withdrawal Info',
     accessor: 'withdrawInfo',
-    // accessor: ({ withdrawInfo }) => <Witdrawal withdrawInfo={withdrawInfo} />,
+    Cell: <ViewWithDrawalDetails />,
   },
+
   {
-    id: 'Date',
-    Header: 'Time',
-    // accessor: 'time',
-    // Cell: ({ time }) => {
-    //   return format(new Date(time), 'dd/MM/yyyy')
-    // },
+    Header: 'Date',
+    accessor: 'time',
+    Cell: ({ value }) => {
+      return format(new Date(value), 'dd/MM/yyyy')
+    },
   },
   {
     id: 'Amount',
@@ -38,7 +40,26 @@ export const withdrawalHeader = [
   },
 
   {
-    Header: 'Fees',
-    accessor: 'fees',
+    Header: 'Total',
+    accessor: 'total',
+  },
+  {
+    id: 'Status',
+    Header: 'Status',
+    accessor: ({ status }) => (
+      <p
+        className={
+          status === 'Pending'
+            ? 'bg-danger text-light p-1  text-center'
+            : 'bg-success text-light p-1  text-center '
+        }
+      >
+        {status}
+      </p>
+    ),
+  },
+  {
+    Header: 'Action',
+    accessor: ({ status }) => <WithdrawalStatus status={status} />,
   },
 ]
