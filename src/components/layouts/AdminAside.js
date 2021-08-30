@@ -10,7 +10,14 @@ function AdminAside() {
           {
                 array.map((item)=>(
                     <li key={item.id} className="">
-                        <NavLink to={item.path}>
+                        <NavLink 
+                            to={item.path}
+                            exact={item.exact} 
+                            activeStyle={{
+                                fontWeight: "bold",
+                                color: "#007CEF"
+                            }}
+                        >
                             <span className={item.icon}/> {item.title}
                         </NavLink>
                     </li>

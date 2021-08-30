@@ -82,7 +82,7 @@ function Payment() {
               <a
                 className="icon mdi mdi-information-outline"
                 href="https://help.ovrley.com/help-center/articles/6/fortumo"
-                target="_blank"
+                target="_blank" rel="noreferrer"
               />{" "}
               <span className="font-size-13 text-fade">
                 This payment gateway is only available for

@@ -64,11 +64,11 @@ function AutoTrading() {
                     </div>
                     <div>
                         <h3>Profit (in percentage)</h3>
-                        <input type="number" name="profitPercentage"  value={input.profitPercentage}  onChange={handleInput} required/>
+                        <input type="number" name="profitPercentage" placeholder="10%"  value={input.profitPercentage}  onChange={handleInput} required/>
                     </div>
                     <div>
                         <h3>Subscription Fee</h3>
-                        <input type="number" name="subscriptionFee" value={input.subscriptionFee} onChange={handleInput} required/>
+                        <input type="number" name="subscriptionFee" placeholder="1,000" value={input.subscriptionFee} onChange={handleInput} required/>
                     </div>
                     <div>
                         <Button className ="add" type="submit" size="lg">Add</Button>
