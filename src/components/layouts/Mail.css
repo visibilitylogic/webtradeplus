@@ -8333,3 +8333,25 @@ dash-contents .sidebar ul li a span {
   height: 90%;
   padding-bottom: 2px !important;
 }
+
+
+.VictoryContainer {
+  background: white;
+}
+
+
+.manager-tab-dtls .chart {
+  background-color: #fff;
+  height: 375px;
+  padding: 3%;
+}
+
+.recharts-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+svg.recharts-surface {
+  width: 100%;
+  height: 100%;
+}
