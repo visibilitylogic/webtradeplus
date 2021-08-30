@@ -30,8 +30,17 @@ import { paymentHeader } from './paymentHeader'
 import { singleUserWithdrawal } from './singleUserWithdrawal'
 import EstimatedBallance from './EstimatedBallance'
 import UserHeader from './UserHeader'
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 
 const ManagerContents = (props) => {
+  const data = [
+    { name: 'User', uv: 400, pv: 2400, amt: 2400 },
+    { name: 'Deposit', uv: 100, pv: 200, amt: 2500 },
+    { name: 'KYC', uv: 300, pv: 1400, amt: 1400 },
+    { name: 'Orders', uv: 600, pv: 6400, amt: 6400 },
+    { name: 'Withdrawal', uv: 400, pv: 2400, amt: 2400 },
+  ]
+
   const history = useHistory()
   const { displayC, setDisplayC, setEditProfile } = props
   const {
@@ -283,7 +292,16 @@ const ManagerContents = (props) => {
           </div>
           <div className="split-50" />
         </div>
-        <div className="chart" />
+        <div className="chart">
+          <LineChart width={1900} height={410} data={data}>
+            <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+            <CartesianGrid stroke="#ccc" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+          </LineChart>
+        </div>
+
         <div className="dash-row" style={{ margin: '15px 0' }}>
           <div className="into-6">
             <h5 className="text-uppercase">New user</h5>

@@ -13,6 +13,7 @@ function Trading() {
     const {adminData} = useSelector(state =>state.adminInfo)
     const [liveTrader, setLiveTrade] = useState(false);
     const [Leverage, setLeverage] = useState(null);
+    const [marginCall, setMarginCall] = useState(null);
     useEffect(async ()=>{
       const {data} = await axios.get("https://trade-backend-daari.ondigitalocean.app/api/site/livetrade", getToken());
       setLiveTrade(data)
@@ -29,6 +30,20 @@ function Trading() {
       })
       .catch(err=>{
         message.error("error in updating live trade")
+      })
+    }
+    const updateMarginCall = ()=>{
+      setLoading(true)
+      const datas = {marginCallAmount : marginCall}
+      axios
+      .put("https://trade-backend-daari.ondigitalocean.app/api/site/marginCall", datas, getToken())
+      .then(res=>{
+        setLoading(false)
+        message.success("Margin Call updated successfully");
+         get_admin_data()
+      })
+      .catch(err=>{
+        message.error("error in updating Margin Call")
       })
     }
     const updateTrade = async ()=>{
@@ -98,8 +113,19 @@ function Trading() {
                             Trading Leverage
                           </h4>
                         <div style={{display:"flex", marginRight:"14px", justifyContent:"space-between"}}>
-                          <input type="number" value={Leverage? Leverage : " "}  style={{padding:"0px 18px"}} onChange={(e)=> setLeverage(e.target.value)}/>
+                          <input type="number" placeholder="10" value={Leverage? Leverage : " "}  style={{padding:"0px 18px"}} onChange={(e)=> setLeverage(e.target.value)}/>
                           <Button variant="primary" style={{marginLeft:"6px"}} onClick={updateLeverage}>{loading ? "Saving..." : "Save"}</Button>
+                        </div>
+                        </div>
+                      </div>
+                      <div className="each-row dash-row">
+                        <div className="dtls" style={{display:"flex", justifyContent:"space-between"}}>
+                          <h4>
+                            Margin Call
+                          </h4>
+                        <div style={{display:"flex", marginRight:"14px", justifyContent:"space-between"}}>
+                          <input type="number" placeholder="10" value={marginCall? marginCall : " "}  style={{padding:"0px 18px"}} onChange={(e)=> setMarginCall(e.target.value)}/>
+                          <Button variant="primary" style={{marginLeft:"6px"}} onClick={updateMarginCall}>{loading ? "Saving..." : "Save"}</Button>
                         </div>
                         </div>
                       </div>
@@ -141,7 +167,8 @@ function Trading() {
             <div className="dtls">
               <h4>Enable native trading without exchange</h4>
               <p>
-                Warning !<br />
+                <span className="red-color">Warning!</span>
+                <br />
                 This option is more risky, because you need to manage by
                 yourself the liquidy
               </p>

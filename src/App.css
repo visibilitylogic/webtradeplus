@@ -2844,6 +2844,11 @@ span.close svg:hover {
   cursor: pointer;
 }
 
+.configure :hover {
+  background-color: rgb(231, 28, 28);
+  cursor: pointer;
+}
+
 .withdraw-modal-box {
   position: fixed;
   top: 0;
@@ -6074,4 +6079,8 @@ admin-sidebar ul li a {
 }
 .red {
   background-color: red;
+}
+
+.red-color {
+  color: red;
 }
