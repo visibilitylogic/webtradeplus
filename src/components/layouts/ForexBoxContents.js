@@ -38,10 +38,19 @@ const ForexBoxContents = ({
     }
   };
 
+  const spinnerStyle = {
+    height: "100%",
+    width: "100%",
+    marginTop: "-50px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
   return (
-    <div className="second">
+    <div className="second" style={{ position: "relative" }}>
       {loading ? (
-        <Spinner />
+        <Spinner style={spinnerStyle} />
       ) : (
         <div className="all">
           <div className="header">

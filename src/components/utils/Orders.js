@@ -1,74 +1,24 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
-import { useEffect } from "react";
 import useInterval from "../hooks/useInterval";
 import { message } from "antd";
 import "./Orders.css";
 
 const Orders = (props) => {
-  const [currentStock, setCurrentStock] = useState({});
-  const { buysell, orders, getRate, closeOrder, setBuysell } = props;
+  const { buysell, setBuysell } = props;
 
   const { user } = useSelector((state) => state.auth);
   const { userTrades, error } = useSelector((state) => state.profile);
-  const { defaultSelectedStock, allStockAssets } = useSelector(
-    (state) => state.stock
-  );
+  const { defaultSelectedStock, currentSelectedStock, allStockAssets } =
+    useSelector((state) => state.stock);
 
-  const { getAllUserTrades, deleteUserTrade, closeUserTrade } = useActions();
-
-  const getStockPrice = (item) => {
-    allStockAssets.length > 0 &&
-      allStockAssets.filter((stock) => {
-        if (stock.symbol === item) {
-          setCurrentStock(stock);
-        } else {
-          return false;
-        }
-      });
-  };
-
-  // const getItem = () => {
-  //   let buy = orders.filter((item) => {
-  //     return (
-  //       item.tag === "buy" &&
-  //       parseInt(item.unit) / parseInt(getRate(item.stockName)) <
-  //         parseInt(item.stockAmount) &&
-  //       item.active
-  //     );
-  //   });
-
-  //   let sell = orders.filter((item) => {
-  //     return (
-  //       item.tag === "sell" &&
-  //       parseInt(item.unit) / parseInt(getRate(item.stockName)) >
-  //         parseInt(item.stockAmount) &&
-  //       item.active
-  //     );
-  //   });
-  //   let closeArr = [...buy, ...sell];
-
-  //   return closeArr;
-  // };
-
-  const closeTimer = () => {
-    // let arr = getItem();
-    let arr = [];
-    arr.map((item) => {
-      return closeOrder(
-        item._id,
-        (parseInt(item.unit) / parseInt(getRate(item.stockName)) -
-          parseInt(item.stockAmount)) *
-          10 *
-          parseInt(getRate(item.stockName)),
-        (parseInt(item.unit) / parseInt(getRate(item.stockName))) *
-          10 *
-          parseInt(getRate(item.stockName))
-      )();
-    });
-  };
+  const {
+    getAllUserTrades,
+    deleteUserTrade,
+    closeUserBuyTrade,
+    closeUserSellTrade,
+  } = useActions();
 
   const handleDeleteUserTrade = (tradeId) => {
     if (error) {
@@ -79,16 +29,26 @@ const Orders = (props) => {
     }
   };
 
-  const handleCloseUserTrade = (tradeId) => {
+  const handleCloseUserTrade = (trade, closeRate) => {
     if (error) {
       message.error("Trade could not be closed");
-    } else {
-      closeUserTrade(tradeId);
-      setTimeout(
-        () => message.success("Trade has been closed successfully"),
-        5000
-      );
+      return;
     }
+
+    if (trade.tag === "buy") {
+      closeUserBuyTrade(trade._id, {
+        closeRateOfAsset: closeRate,
+      });
+    } else {
+      closeUserSellTrade(trade._id, {
+        closeRateOfAsset: closeRate,
+      });
+    }
+
+    setTimeout(
+      () => message.success("Your trade has been closed successfully"),
+      5000
+    );
   };
 
   useInterval(() => {
@@ -211,34 +171,37 @@ const Orders = (props) => {
                                     .toString()
                                     .slice(0, 8)}
                                 </td>
+                                <td>
+                                  {item.profit.toString().slice(0, 6)}/
+                                  {item.loss.toString().slice(0, 6)}
+                                </td>
+                                <td style={{ display: "flex", width: "75%" }}>
+                                  <button className="orderBtn btn-green">
+                                    {item.isOpen ? "Open" : "closed"}
+                                  </button>
+
+                                  {item.isOpen && (
+                                    <button
+                                      className="orderBtn btn-red"
+                                      onClick={() =>
+                                        handleCloseUserTrade(item, asset.price)
+                                      }
+                                    >
+                                      CLOSE
+                                    </button>
+                                  )}
+
+                                  <i
+                                    className="fas fa-trash trashS"
+                                    onClick={() =>
+                                      handleDeleteUserTrade(item._id)
+                                    }
+                                  >
+                                    {" "}
+                                  </i>
+                                </td>
                               </>
                             ))}
-
-                        <td>
-                          {item.profit.toString().slice(0, 8)}/
-                          {item.loss.toString().slice(0, 8)}
-                        </td>
-                        <td style={{ display: "flex", width: "75%" }}>
-                          <button className="orderBtn btn-green">
-                            {item.isOpen ? "Open" : "closed"}
-                          </button>
-
-                          {item.isOpen && (
-                            <button
-                              className="orderBtn btn-red"
-                              onClick={() => handleCloseUserTrade(item._id)}
-                            >
-                              CLOSE
-                            </button>
-                          )}
-
-                          <i
-                            className="fas fa-trash trashS"
-                            onClick={() => handleDeleteUserTrade(item._id)}
-                          >
-                            {" "}
-                          </i>
-                        </td>
                       </tr>
                     ))
                   : ""}

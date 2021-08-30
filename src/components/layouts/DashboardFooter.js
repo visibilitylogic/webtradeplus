@@ -32,7 +32,10 @@ const DashboardFooter = ({ setSupport }) => {
           <p className="ml-2">White</p>
         </div>
         <div className="accounting-area">
-          <p>Balance: {user && `${user.currency}${user.wallet}`} |</p>
+          <p>
+            Balance:{" "}
+            {user && `${user.currency}${user.wallet.toString().slice(0, 8)}`} |
+          </p>
           <p
             style={{
               color:
