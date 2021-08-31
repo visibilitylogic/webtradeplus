@@ -1,8 +1,10 @@
 import { useEffect } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import ForexBoxAside from "./ForexBoxAside";
 import ForexBoxContents from "./ForexBoxContents";
 import { useActions } from "../hooks/useActions";
+import useSelector from "react-redux";
 
 const ForexBox = (props) => {
   const { openForex, setOpenForex, selectedStock, setSelectedStock } = props;
@@ -14,14 +16,6 @@ const ForexBox = (props) => {
     getExchangeTradedFund,
     getForexStocks,
   } = useActions();
-
-  useEffect(() => {
-    getCryptoAssets();
-    getForexStocks();
-    getCommodityStocks();
-    getInvestorsExchange();
-    getExchangeTradedFund();
-  }, []);
 
   return (
     openForex && (
