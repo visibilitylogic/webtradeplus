@@ -47,7 +47,10 @@ const DashboardFooter = ({ setSupport }) => {
         <div className="accounting-area">
           <p>
             Balance: {user && user.currency}
-            {new Intl.NumberFormat("en-US").format(user && user.wallet)} |
+            {new Intl.NumberFormat("en-US")
+              .format(user && user.wallet)
+              .slice(0, 8)}{" "}
+            |
           </p>
           <p
             style={{
