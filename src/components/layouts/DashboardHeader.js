@@ -38,7 +38,17 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
   const { user, loading } = useSelector((state) => state.auth);
   const { isDarkMode } = useSelector((state) => state.theme);
 
-  const { logout, setCurrentSelectedStock, getWebData } = useActions();
+  const {
+    logout,
+    setCurrentSelectedStock,
+    getWebData,
+    getAllStockAssets,
+    getCryptoAssets,
+    getCommodityStocks,
+    getForexStocks,
+    getExchangeTradedFund,
+    getInvestorsExchange,
+  } = useActions();
 
   const [selectedStock, setSelectedStock] = useState(1);
   const [personalData, setPersonalData] = useState(false);
@@ -93,6 +103,22 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
     }
   };
 
+  const handleSelectedStockAsset = () => {
+    if (selectedStock === 0) {
+      return getAllStockAssets();
+    } else if (selectedStock === 1) {
+      return getCryptoAssets();
+    } else if (selectedStock === 2) {
+      return getForexStocks();
+    } else if (selectedStock === 3) {
+      return getInvestorsExchange();
+    } else if (selectedStock === 4) {
+      return getCommodityStocks();
+    } else {
+      return getExchangeTradedFund();
+    }
+  };
+
   // useInterval(getWebData, 10000);
 
   return (
@@ -123,6 +149,7 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
                   onClick={() => {
                     setSelectedStock(stock.id);
                     setOpenForex(true);
+                    // handleSelectedStockAsset();
                   }}
                   className={`stock-nav-item ${
                     isDarkMode
@@ -314,11 +341,9 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
                 <div className="account-wrapper">
                   <h6 className="mb-0">
                     {user && user.currency}
-                    {new Intl.NumberFormat("en-US").format(0)
-                      ? new Intl.NumberFormat("en-US").format(
-                          user && user.wallet
-                        )
-                      : 0.0}
+                    {new Intl.NumberFormat("en-US")
+                      .format(user && user.wallet + user.bonus + user.profit)
+                      .slice(0, 8)}
                   </h6>
                 </div>
               }

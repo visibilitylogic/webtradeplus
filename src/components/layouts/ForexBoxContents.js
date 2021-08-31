@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
@@ -15,10 +15,19 @@ const ForexBoxContents = ({
     useSelector((state) => state.stock);
   const { webData } = useSelector((state) => state.web);
 
-  const { setCurrentSelectedStock, addStockToList } = useActions();
+  const {
+    setCurrentSelectedStock,
+    addStockToList,
+    getCryptoAssets,
+    getCommodityStocks,
+    getInvestorsExchange,
+    getExchangeTradedFund,
+    getForexStocks,
+  } = useActions();
 
   const [showIbox, setShowIbox] = useState(false);
   const [currentItem, setCurrentItem] = useState({});
+  const [stockLoading, setStockLoading] = useState(true);
 
   const [filterText, setFilterText] = useState("");
 
@@ -38,20 +47,28 @@ const ForexBoxContents = ({
     }
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setStockLoading(false, 5000);
+    });
+
+    getCryptoAssets();
+    getForexStocks();
+    getCommodityStocks();
+    getInvestorsExchange();
+    getExchangeTradedFund();
+  }, []);
+
   const spinnerStyle = {
-    height: "100%",
-    width: "100%",
-    marginTop: "-50px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    marginTop: -50,
   };
 
-  const stockLoading = true;
-
   return (
-    <div className="second">
-      {loading ? (
+    <div className="second" style={{ position: "relative" }}>
+      {stockLoading ? (
         <Spinner style={spinnerStyle} />
       ) : (
         <div className="all">
@@ -191,6 +208,7 @@ const ForexBoxContents = ({
                 commodities.length > 0 &&
                 commodities.map((item, index) => (
                   <tr
+                    key={index}
                     onMouseMove={() => handleCurrentItem(item)}
                     onMouseLeave={() => setShowIbox(false)}
                     onClick={() => {
@@ -223,8 +241,9 @@ const ForexBoxContents = ({
                 ))}
               {selectedStock === 5 &&
                 etf.length > 0 &&
-                etf.map((item) => (
+                etf.map((item, index) => (
                   <tr
+                    key={index}
                     onMouseMove={() => handleCurrentItem(item)}
                     onMouseLeave={() => setShowIbox(false)}
                     onClick={() => {
@@ -242,7 +261,7 @@ const ForexBoxContents = ({
                       </div>
                     </td>
                     <td>$ {item.price}</td>
-                    <td>x{webData && webData.leverageAmount}10</td>
+                    <td>x{webData && webData.leverageAmount}</td>
                     <td>
                       <div className="dash-row dash-row-centralized space-around">
                         <div>

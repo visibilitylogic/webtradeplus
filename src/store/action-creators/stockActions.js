@@ -147,9 +147,6 @@ export const getExchangeTradedFund = () => async (dispatch) => {
 // };
 
 export const setDefaultSelectedStock = () => async (dispatch) => {
-  dispatch({
-    type: actionTypes.LOAD_STOCK,
-  });
   const { data } = await axios.get(
     `https://financialmodelingprep.com/api/v3/quotes/crypto?apikey=6e39eba411ee51caced6ab2be49f987b`
   );
