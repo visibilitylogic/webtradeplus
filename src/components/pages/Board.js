@@ -146,8 +146,7 @@ const Board = (props) => {
                 <div className="ChartPL">
                   <h1
                     style={{
-                      color:
-                        parseFloat(profitOrLoss) >= 0 ? "#54ac40" : "orangered",
+                      color: parseFloat(profitOrLoss) >= 0 ? "#54ac40" : "red",
                     }}
                   >
                     P/L = {parseFloat(profitOrLoss)}
@@ -167,7 +166,8 @@ const Board = (props) => {
                       target="_blank"
                     >
                       <span className="blue-text">
-                        {Object.keys(defaultSelectedStock).length > 0
+                        {!loading &&
+                        Object.keys(defaultSelectedStock).length > 0
                           ? defaultSelectedStock.symbol
                           : currentSelectedStock.symbol}{" "}
                         Chart
@@ -175,7 +175,7 @@ const Board = (props) => {
                     </a>{" "}
                     <TradingViewWidget
                       symbol={
-                        Object.keys(defaultSelectedStock).length > 0
+                        !loading && Object.keys(defaultSelectedStock).length > 0
                           ? defaultSelectedStock.symbol
                           : currentSelectedStock.symbol
                       }
@@ -269,14 +269,12 @@ const Board = (props) => {
                     {getRate(
                       defaultSelectedStock,
                       currentSelectedStock,
-                      userMargin
+                      userMargin,
+                      data && data.leverageAmount
                     )}
                   </span>
                 </div>
-                {user &&
-                user.wallet > 0 &&
-                !user.isTrading &&
-                user.liveTrade ? (
+                {user && user.wallet > 0 && !user.isTrading && user.liveTrade ? (
                   <div className="actions">
                     <div
                       className={
@@ -335,7 +333,7 @@ const Board = (props) => {
                         <span className="text">SELL</span>
                       </div>
                     </div>
-                    <div>
+                    {/* <div>
                       <h5
                         style={{
                           color: "white",
@@ -357,7 +355,7 @@ const Board = (props) => {
                           <span className="slider round" />
                         </label>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 ) : (
                   <div className="actions1 credit" onClick={closeSetlevIsh}>
