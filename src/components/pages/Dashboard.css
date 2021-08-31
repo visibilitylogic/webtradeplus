@@ -4355,7 +4355,7 @@ span.close svg:hover {
   position: fixed;
   z-index: 1000;
   border-radius: 5px;
-  left: 10px;
+  left: 0 !important;
   top: 70px;
   background-color: #131722;
 }
