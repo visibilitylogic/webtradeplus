@@ -51,7 +51,7 @@ const ForexBoxContents = ({
 
   return (
     <div className="second">
-      {stockLoading ? (
+      {loading ? (
         <Spinner style={spinnerStyle} />
       ) : (
         <div className="all">
