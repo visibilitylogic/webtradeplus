@@ -108,6 +108,8 @@ const Dashboard = () => {
     setDefaultSelectedStock();
   }, []);
 
+  // useInterval(getWebData, 10000);
+
   useEffect(() => {
     [...asideList].forEach((tab) => {
       switch (window.location.pathname) {
