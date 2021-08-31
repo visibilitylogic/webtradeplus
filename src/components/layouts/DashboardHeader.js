@@ -10,6 +10,7 @@ import "./DashboardHeader.css";
 import Notification from "../utils/Notification";
 import VerificationModal from "../utils/modals/kyc/VerificationModal";
 import ForexBox from "../layouts/ForexBox";
+import useInterval from "../hooks/useInterval";
 
 import {
   X,
@@ -37,7 +38,7 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
   const { user, loading } = useSelector((state) => state.auth);
   const { isDarkMode } = useSelector((state) => state.theme);
 
-  const { logout, setCurrentSelectedStock } = useActions();
+  const { logout, setCurrentSelectedStock, getWebData } = useActions();
 
   const [selectedStock, setSelectedStock] = useState(1);
   const [personalData, setPersonalData] = useState(false);
@@ -81,7 +82,6 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
 
   const handleCryptoSettings = () => {
     setWithdrawalSettings(false);
-    // setBankTransferSelected(false);
     setCryptoCurrencySelected(true);
   };
 
@@ -93,6 +93,8 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
     }
   };
 
+  // useInterval(getWebData, 10000);
+
   return (
     !loading && (
       <Fragment>
@@ -102,7 +104,7 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
         >
           <Navbar.Brand>
             <img
-              style={{ width: "100%"}}
+              style={{ width: "100%" }}
               src={
                 data
                   ? data.useWhiteLogo

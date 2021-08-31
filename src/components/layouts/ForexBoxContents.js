@@ -47,9 +47,11 @@ const ForexBoxContents = ({
     alignItems: "center",
   };
 
+  const stockLoading = true;
+
   return (
-    <div className="second" style={{ position: "relative" }}>
-      {loading ? (
+    <div className="second">
+      {stockLoading ? (
         <Spinner style={spinnerStyle} />
       ) : (
         <div className="all">

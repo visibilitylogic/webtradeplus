@@ -37,11 +37,13 @@ const SellStockModal = (props) => {
       sellStockAsset(user._id, {
         userId: user._id,
         tag: "sell",
-        margin: parseInt(userMargin) * webData.leverageAmount,
-        stockAmount:
-          Object.keys(currentSelectedStock).length > 0
-            ? currentSelectedStock.price
-            : defaultSelectedStock.price,
+        margin: parseFloat(userMargin),
+        stockAmount: getRate(
+          currentSelectedStock,
+          defaultSelectedStock,
+          parseFloat(userMargin),
+          webData && webData.leverageAmount
+        ),
         nameOfAsset:
           Object.keys(currentSelectedStock).length > 0
             ? currentSelectedStock.symbol
