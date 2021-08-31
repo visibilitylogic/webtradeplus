@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import ReactCountryFlag from 'react-country-flag'
 import { useActions } from '../hooks/useActions'
 import CountryList from 'react-select-country-list'
+import { useSelector } from 'react-redux'
 
 const UserHeader = ({ singleUser }) => {
+  // const { singleUser } = useSelector((state) => state.profile)
   const {
     checkUserOnlineStatus, // expecting end point
   } = useActions()
@@ -14,7 +16,6 @@ const UserHeader = ({ singleUser }) => {
   useEffect(() => {
     setUserState(checkUserOnlineStatus(_id, { isOnline: true }))
   }, [])
-
   return (
     <>
       {singleUser && (

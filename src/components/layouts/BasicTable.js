@@ -12,9 +12,9 @@ const BasicTable = ({
   column,
   type,
 }) => {
-  const columns = useMemo(() => column, [])
-  const data = useMemo(() => allUsers, [])
-  const { getCurrentProfile, getVerifieddetails } = useActions()
+  const columns = useMemo(() => column, [column, type])
+  const data = useMemo(() => allUsers, [allUsers])
+  const { getSingleProfile, getVerifieddetails } = useActions()
   const tableInstance = useTable(
     {
       columns,
@@ -70,14 +70,18 @@ const BasicTable = ({
                   {...row.getRowProps()}
                   onClick={() => {
                     getSingleWithdrawals(row.original._id)
-                    getCurrentProfile(row.original._id)
+                    getSingleProfile(row.original)
                     setDisplayC(true)
                   }}
                 >
                   {row.cells.map((cell) => {
                     return (
                       <td
-                        style={{ maxHeight: '20px', height: '15px' }}
+                        style={{
+                          maxHeight: '20px',
+                          height: '15px',
+                          cursor: 'pointer',
+                        }}
                         onClick={() => {
                           setUserLevel(
                             user.isAdmin

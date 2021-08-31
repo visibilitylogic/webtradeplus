@@ -7,14 +7,9 @@ import { useActions } from '../hooks/useActions'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import Moment from 'react-moment'
-import Switch from 'react-switch'
 import styled from 'styled-components'
 import 'moment-timezone'
-import PaymentDetailsPopOver from '../utils/modals/PaymentDetailsPopOver'
-import VerifyDetailsPopOver from '../utils/modals/VerifyDetailsPopOver'
-import VerifyDocModal from '../utils/modals/VerifyDocModal'
 import EditAutoCopyTrade from '../utils/EditAutoCopyTrade'
-import WithdrawDetailsModal from '../utils/modals/WithdrawalDetailsPopOver'
 import BasicTable from './BasicTable'
 import { Columns } from './TableHeader'
 import { depositHeader } from './depositHeader'
@@ -95,7 +90,6 @@ const ManagerContents = (props) => {
   const [userLevel, setUserLevel] = useState('')
   const [currentDeposit, setCurrentDeposit] = useState([])
 
-  console.log(allWithdrawals)
   //
   //setAutoTrade
   const [trade, setTrade] = useState({

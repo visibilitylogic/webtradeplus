@@ -5,11 +5,11 @@ function UserBalance({
   singleUser,
   setAmount,
   setCredit,
+
   text,
 }) {
   return (
     <>
-    {singleUser  &&
       <div className="public-card white-card" style={{ marginTop: '15px' }}>
         <div className="each-row dash-row">
           <div className="dtls">
@@ -50,13 +50,13 @@ function UserBalance({
             />
           </div>
         </div>
-      <div className="save-btn">
-        <button onClick={() => handleUpdateWalletBalance(singleUser)}>Save</button>
+        <div className="save-btn">
+          <button onClick={() => handleUpdateWalletBalance(singleUser)}>
+            Save
+          </button>
+        </div>
       </div>
-      </div>
-}
     </>
-
   )
 }
 

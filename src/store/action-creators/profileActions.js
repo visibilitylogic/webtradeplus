@@ -17,6 +17,12 @@ export const getCurrentProfile = (userId) => async (dispatch) => {
     })
   }
 }
+export const getSingleProfile = (data) => async (dispatch) => {
+  dispatch({
+    type: actionTypes.GET_SINGLE_DETAILS,
+    payload: data,
+  })
+}
 
 export const getVerifieddetails = (details) => async (dispatch) => {
   await dispatch({
@@ -366,7 +372,11 @@ export const declineVerify = (id) => async (dispatch) => {
 
   const body = JSON.stringify(id)
   try {
-    await axios.put(`${BASE_URL}/api/verify/decline`, body, config)
+    await axios.put(
+      `https://trade-backend-daari.ondigitalocean.app/api/verify/decline`,
+      body,
+      config,
+    )
     dispatch({
       type: actionTypes.DECLINE_VERIFY,
     })
@@ -400,16 +410,8 @@ export const approveVerify = (details) => async (dispatch) => {
   }
 }
 export const approveSingleUserVerify = (details) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }
-
-  // const body = JSON.stringify(details)
-
   try {
-    await axios.put(`${BASE_URL}/api/users/verify/${details}`, config)
+    await axios.put(`${BASE_URL}/api/users/verify/${details}`)
     dispatch({
       type: actionTypes.APPROVE_SINGLE_VERIFY,
     })
