@@ -70,7 +70,7 @@ const CryptoStepFive = ({
     )
   );
 };
-
+ 
 CryptoStepFive.propTypes = {
   cryptoStepFive: PropTypes.bool.isRequired,
   goBackToCryptoStepFour: PropTypes.func.isRequired,
