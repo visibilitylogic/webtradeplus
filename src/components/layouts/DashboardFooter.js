@@ -19,6 +19,19 @@ const DashboardFooter = ({ setSupport }) => {
     currentSelectedStock,
     defaultSelectedStock
   );
+
+  const equity =
+    Object.keys(activeTrade).length > 0
+      ? (user.wallet + activeTrade.margin + parseFloat(profitOrLoss))
+          .toString()
+          .slice(0, 8)
+      : 0;
+
+  const freeMargin =
+    Object.keys(activeTrade).length > 0
+      ? user.wallet + parseFloat(profitOrLoss)
+      : 0;
+
   return (
     <footer className="dash-footer">
       <div className="footer-left-side">
@@ -32,7 +45,10 @@ const DashboardFooter = ({ setSupport }) => {
           <p className="ml-2">White</p>
         </div>
         <div className="accounting-area">
-          <p>Balance: {user && `${user.currency}${user.wallet}`} |</p>
+          <p>
+            Balance: {user && user.currency}
+            {new Intl.NumberFormat("en-US").format(user && user.wallet)} |
+          </p>
           <p
             style={{
               color:
@@ -46,16 +62,12 @@ const DashboardFooter = ({ setSupport }) => {
                   : "red",
             }}
           >
-            &nbsp;P/L: ${profitOrLoss}&nbsp;
+            &nbsp;P/L: {user && user.currency}
+            {new Intl.NumberFormat("en-US").format(profitOrLoss)}&nbsp;
           </p>{" "}
           |
           <p>
-            &nbsp;Equity: $
-            {Object.keys(activeTrade).length > 0
-              ? (user.wallet + activeTrade.margin + parseFloat(profitOrLoss))
-                  .toString()
-                  .slice(0, 8)
-              : 0}
+            &nbsp;Equity: ${new Intl.NumberFormat("en-US").format(equity)}
             &nbsp;|
           </p>
           <p>
@@ -63,10 +75,8 @@ const DashboardFooter = ({ setSupport }) => {
             {Object.keys(activeTrade).length > 0 ? activeTrade.margin : 0} |
           </p>
           <p>
-            &nbsp;Free Margin: $
-            {Object.keys(activeTrade).length > 0
-              ? user.wallet + parseFloat(profitOrLoss)
-              : 0}
+            &nbsp;Free Margin: {user && user.currency}
+            {freeMargin}
           </p>
         </div>
       </div>

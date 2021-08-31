@@ -146,7 +146,6 @@ const Dashboard = () => {
       style={{
         minHeight: "100vh",
         background: "#131722",
-        position: "relative",
       }}
     >
       <DashboardHeader

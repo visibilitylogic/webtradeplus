@@ -37,11 +37,13 @@ const SellStockModal = (props) => {
       sellStockAsset(user._id, {
         userId: user._id,
         tag: "sell",
-        margin: parseInt(userMargin) * webData.leverageAmount,
-        stockAmount:
-          Object.keys(currentSelectedStock).length > 0
-            ? currentSelectedStock.price
-            : defaultSelectedStock.price,
+        margin: parseFloat(userMargin),
+        stockAmount: getRate(
+          currentSelectedStock,
+          defaultSelectedStock,
+          parseFloat(userMargin),
+          webData && webData.leverageAmount
+        ),
         nameOfAsset:
           Object.keys(currentSelectedStock).length > 0
             ? currentSelectedStock.symbol
@@ -219,11 +221,12 @@ const SellStockModal = (props) => {
         <div className="split moved">
           <span>
             2.00% ={" "}
-            {Object.keys(defaultSelectedStock).length > 0
-              ? defaultSelectedStock.price.toString().slice(0, 8)
-              : Object.keys(currentSelectedStock).length > 0
-              ? currentSelectedStock.price.toString().slice(0, 8)
-              : ""}{" "}
+            {getRate(
+              defaultSelectedStock,
+              currentSelectedStock,
+              userMargin,
+              webData.leverageAmount
+            )}{" "}
             {Object.keys(defaultSelectedStock).length > 0
               ? defaultSelectedStock.symbol
               : currentSelectedStock.symbol}
@@ -236,15 +239,23 @@ const SellStockModal = (props) => {
         </div>
         <div className="split moved">
           <span>
-            {Object.keys(defaultSelectedStock).length > 0
-              ? (defaultSelectedStock.price - defaultSelectedStock.price * 0.02)
-                  .toString()
-                  .slice(0, 8)
-              : Object.keys(currentSelectedStock).length > 0
-              ? (currentSelectedStock.price - currentSelectedStock.price * 0.02)
-                  .toString()
-                  .slice(0, 8)
-              : ""}{" "}
+            {(
+              getRate(
+                defaultSelectedStock,
+                currentSelectedStock,
+                userMargin,
+                webData.leverageAmount
+              ) -
+              getRate(
+                defaultSelectedStock,
+                currentSelectedStock,
+                userMargin,
+                webData.leverageAmount
+              ) *
+                0.02
+            )
+              .toString()
+              .slice(0, 8)}
             USD
           </span>
         </div>

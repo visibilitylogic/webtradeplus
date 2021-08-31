@@ -323,7 +323,11 @@ const ManagerContents = (props) => {
           </div>
         </div>
       </div>
-      <div className="manager-tab-dtls" manager-tab-dtls="bank-transfers">
+      <div
+        className="manager-tab-dtls"
+        manager-tab-dtls="bank-transfers"
+        style={{ marginLeft: '4%' }}
+      >
         {bankTransfers && bankTransfers.length > 0 && (
           <TableContainer>
             <BasicTable
@@ -336,7 +340,11 @@ const ManagerContents = (props) => {
         )}
       </div>
 
-      <div className="manager-tab-dtls" manager-tab-dtls="payments">
+      <div
+        className="manager-tab-dtls"
+        manager-tab-dtls="payments"
+        style={{ marginLeft: '4%' }}
+      >
         {allDeposits && allDeposits.length > 0 && (
           <TableContainer>
             <BasicTable
@@ -349,7 +357,11 @@ const ManagerContents = (props) => {
         )}
       </div>
 
-      <div className="manager-tab-dtls" manager-tab-dtls="subscriptions">
+      <div
+        className="manager-tab-dtls"
+        manager-tab-dtls="subscriptions"
+        style={{ marginLeft: '4%' }}
+      >
         <table>
           <tbody>
             <tr>
@@ -373,7 +385,11 @@ const ManagerContents = (props) => {
           </tbody>
         </table>
       </div>
-      <div className="manager-tab-dtls" manager-tab-dtls="identity">
+      <div
+        className="manager-tab-dtls"
+        manager-tab-dtls="identity"
+        style={{ marginLeft: '4%' }}
+      >
         {allVerifiedUsers && allVerifiedUsers.length > 0 && (
           <TableContainer>
             <BasicTable
@@ -387,7 +403,11 @@ const ManagerContents = (props) => {
       </div>
 
       {/* Table */}
-      <div className="manager-tab-dtls" manager-tab-dtls="users">
+      <div
+        className="manager-tab-dtls"
+        manager-tab-dtls="users"
+        style={{ marginLeft: '4%' }}
+      >
         {!displayC && allUsers && allUsers.length > 0 && (
           <div className="first-sec">
             <TableContainer>
@@ -939,7 +959,11 @@ const ManagerContents = (props) => {
           </div>
         )}
       </div>
-      <div className="manager-tab-dtls" manager-tab-dtls="orders">
+      <div
+        className="manager-tab-dtls"
+        manager-tab-dtls="orders"
+        style={{ marginLeft: '4%' }}
+      >
         {allTrades && allTrades.length > 0 && (
           <TableContainer>
             <BasicTable
@@ -950,7 +974,11 @@ const ManagerContents = (props) => {
           </TableContainer>
         )}
       </div>
-      <div className="manager-tab-dtls" manager-tab-dtls="withdraw">
+      <div
+        className="manager-tab-dtls"
+        manager-tab-dtls="withdraw"
+        style={{ marginLeft: '4%' }}
+      >
         {allWithdrawals && allWithdrawals.length > 0 && (
           <TableContainer>
             <BasicTable

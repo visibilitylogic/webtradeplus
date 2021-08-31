@@ -363,20 +363,16 @@ export const declineDeposit = (details) => async (dispatch) => {
   }
 }
 
-export const declineVerify = (id) => async (dispatch) => {
+export const declineVerify = (details) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   }
 
-  const body = JSON.stringify(id)
+  const body = JSON.stringify(details)
   try {
-    await axios.put(
-      `https://trade-backend-daari.ondigitalocean.app/api/verify/decline`,
-      body,
-      config,
-    )
+    await axios.put(`${BASE_URL}/api/verify/decline`, body, config)
     dispatch({
       type: actionTypes.DECLINE_VERIFY,
     })
@@ -396,7 +392,6 @@ export const approveVerify = (details) => async (dispatch) => {
   }
 
   const body = JSON.stringify(details)
-
   try {
     await axios.put(`${BASE_URL}/api/verify/approve`, body, config)
     dispatch({
@@ -409,6 +404,7 @@ export const approveVerify = (details) => async (dispatch) => {
     })
   }
 }
+
 export const approveSingleUserVerify = (details) => async (dispatch) => {
   try {
     await axios.put(`${BASE_URL}/api/users/verify/${details}`)
@@ -918,19 +914,49 @@ export const ActivateUser = (userId) => async (dispatch) => {
   }
 }
 
-export const closeUserTrade = (tradeId) => async (dispatch) => {
-  // const config = {
-  //   headers: {
-  //     "Content-Types": "application/json"
-  //   }
-  // }
+export const closeUserBuyTrade = (tradeId, data) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
 
-  // const body = JSON.stringify(data);
+  const body = JSON.stringify(data)
   try {
-    await axios.put(`api/trade/closeTrade/${tradeId}`)
+    await axios.put(
+      `${BASE_URL}/api/trade/buy/closeTrade/${tradeId}`,
+      body,
+      config,
+    )
 
     dispatch({
-      type: actionTypes.CLOSE_USER_TRADE,
+      type: actionTypes.CLOSE_USER_BUY_TRADE,
+    })
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    })
+  }
+}
+
+export const closeUserSellTrade = (tradeId, data) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+
+  const body = JSON.stringify(data)
+  try {
+    await axios.put(
+      `${BASE_URL}/api/trade/sell/closeTrade/${tradeId}`,
+      body,
+      config,
+    )
+
+    dispatch({
+      type: actionTypes.CLOSE_USER_SELL_TRADE,
     })
   } catch (error) {
     dispatch({

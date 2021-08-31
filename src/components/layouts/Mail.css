@@ -8372,3 +8372,58 @@ tspan {
   background-color: #1d2435;
   color: white !important;
 }
+
+.dash-contents .sidebar ul li a span {
+  font-size: 6px;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 5px;
+  white-space: nowrap;
+}
+
+.manager-tab-dtls .chart {
+  background-color: #fff;
+  height: 36vh;
+  padding: 3%;
+}
+
+.split-50 h3 {
+  color: white;
+  white-space: nowrap;
+}
+
+[manager-tab-dtls='identity'] table tr td {
+  padding: 5px 8px !important;
+}
+
+[manager-tab-dtls='payments'] table tr td {
+  padding: 10px 8px !important;
+}
+
+
+[manager-tab-dtls='withdraw'] table tr td {
+  padding: 0.5px 8px !important;
+}
+
+.kYmpIH {
+  background: white;
+  width: 96%;
+  height: 90%;
+  padding-bottom: 2px !important;
+}
+
+.manager-tab-dtls table tr td {
+  text-align: left;
+  padding: 4px 10px ;
+  font-size: 80%;
+}
+
+.fa-edit:before {
+  content: "\f044";
+  cursor: pointer !important;
+}
+
+.fa-user-minus:before {
+  content: "\f503";
+  cursor: pointer !important;
+}

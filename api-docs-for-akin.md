@@ -13,7 +13,7 @@
 - To update a user's pulse amount make a Put request to this endpoint {BaseURL}/api/users/pulse/:userId, in the body, pass in the pulseType which is either deposit,profit or bonus. pass in the profitLoss which is either true or false. true is for profit and false is loss. pass in the amount wich is of number data type,.. eg {"pulseType": "deposit", "profitLoss":"true,"amount":20000}.
 Note: it will throw an error is during any loss transaction, the wallet amounts to zero.
 
-
+ 
 - To get a single user's  withdrawal hsitory make a get request to this endpoint {BaseURL}/api/users/my-withdrawals/:userId
 
 - To get a single user's  deposit hsitory make a get request to this endpoint {BaseURL}/api/users/deposit-history/:userId
