@@ -1,32 +1,32 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { useHistory } from 'react-router-dom'
-import { Container, Card, Form, Row, Col, Table } from 'react-bootstrap'
-import { Button, Tag, DatePicker, message } from 'antd'
-import { useSelector } from 'react-redux'
-import { useActions } from '../hooks/useActions'
-import PropTypes from 'prop-types'
-import axios from 'axios'
-import Moment from 'react-moment'
-import Switch from 'react-switch'
-import styled from 'styled-components'
-import 'moment-timezone'
-import PaymentDetailsPopOver from '../utils/modals/PaymentDetailsPopOver'
-import VerifyDetailsPopOver from '../utils/modals/VerifyDetailsPopOver'
-import VerifyDocModal from '../utils/modals/VerifyDocModal'
-import EditAutoCopyTrade from '../utils/EditAutoCopyTrade'
-import WithdrawDetailsModal from '../utils/modals/WithdrawalDetailsPopOver'
-import BasicTable from './BasicTable'
-import { Columns } from './TableHeader'
-import { depositHeader } from './depositHeader'
-import { withdrawalHeader } from './withdrawalHeader'
-import { allTradesHeader } from './allTradesHeader'
-import { allVerifiedUsersHeader } from './allVerifiedUsersHeader'
-import { bankTransferHeader } from './bankTransferHeader'
-import { tradeApprovalHeader } from './tradeApprovalHeader'
+import React, { useState, useEffect, useCallback } from "react";
+import { useHistory } from "react-router-dom";
+import { Container, Card, Form, Row, Col, Table } from "react-bootstrap";
+import { Button, Tag, DatePicker, message } from "antd";
+import { useSelector } from "react-redux";
+import { useActions } from "../hooks/useActions";
+import PropTypes from "prop-types";
+import axios from "axios";
+import Moment from "react-moment";
+import Switch from "react-switch";
+import styled from "styled-components";
+import "moment-timezone";
+import PaymentDetailsPopOver from "../utils/modals/PaymentDetailsPopOver";
+import VerifyDetailsPopOver from "../utils/modals/VerifyDetailsPopOver";
+import VerifyDocModal from "../utils/modals/VerifyDocModal";
+import EditAutoCopyTrade from "../utils/EditAutoCopyTrade";
+import WithdrawDetailsModal from "../utils/modals/WithdrawalDetailsPopOver";
+import BasicTable from "./BasicTable";
+import { Columns } from "./TableHeader";
+import { depositHeader } from "./depositHeader";
+import { withdrawalHeader } from "./withdrawalHeader";
+import { allTradesHeader } from "./allTradesHeader";
+import { allVerifiedUsersHeader } from "./allVerifiedUsersHeader";
+import { bankTransferHeader } from "./bankTransferHeader";
+import { tradeApprovalHeader } from "./tradeApprovalHeader";
 
 const ManagerContents = (props) => {
-  const history = useHistory()
-  const { displayC, setDisplayC, setEditProfile } = props
+  const history = useHistory();
+  const { displayC, setDisplayC, setEditProfile } = props;
   const {
     error,
     allDeposits,
@@ -37,10 +37,10 @@ const ManagerContents = (props) => {
     allUsers,
     userAutoCopyTrade,
     tradeApproval,
-  } = useSelector((state) => state.profile)
+  } = useSelector((state) => state.profile);
 
-  console.log(allTrades,'ussse')
-  const { user } = useSelector((state) => state.auth)
+  console.log(allTrades, "ussse");
+  const { user } = useSelector((state) => state.auth);
 
   // ACTION CREATORS
   const {
@@ -63,364 +63,364 @@ const ManagerContents = (props) => {
     addUserAutoCopyTrade,
     deleteUserAutoCopyTrade,
     managerDeactiveUser,
-  } = useActions()
+  } = useActions();
 
-  const [loading, setLoading] = useState(false)
-  const [profitLoss, setProfitLoss] = useState(false)
-  const [market, setMarket] = useState('')
-  const [amount, setAmount] = useState(0)
-  const [asset, setAsset] = useState('')
-  const [bal, setBal] = useState(false)
-  const [execution, setExecution] = useState(false)
-  const [withd, setWithd] = useState(false)
-  const [secu, setSecu] = useState(false)
-  const [card, setCard] = useState(true)
-  const [payments, setPayments] = useState(false)
-  const [orderT, setOrderT] = useState(false)
-  const [text, setText] = useState('')
-  const [checkDate, setCheckDate] = useState(false)
-  const [copyTradeBtn, setCopyTradeBtn] = useState(true)
-  const [schedule, setSchedule] = useState(false)
-  const [credit, setCredit] = useState(true)
-  const [scheduledTime, setScheduledTime] = useState('')
-  const [decline, setDecline] = useState(false)
-  const [declinedMessage, setDeclinedMessage] = useState('')
-  const [userLevel, setUserLevel] = useState('')
-  const [currentDeposit, setCurrentDeposit] = useState([])
+  const [loading, setLoading] = useState(false);
+  const [profitLoss, setProfitLoss] = useState(false);
+  const [market, setMarket] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [asset, setAsset] = useState("");
+  const [bal, setBal] = useState(false);
+  const [execution, setExecution] = useState(false);
+  const [withd, setWithd] = useState(false);
+  const [secu, setSecu] = useState(false);
+  const [card, setCard] = useState(true);
+  const [payments, setPayments] = useState(false);
+  const [orderT, setOrderT] = useState(false);
+  const [text, setText] = useState("");
+  const [checkDate, setCheckDate] = useState(false);
+  const [copyTradeBtn, setCopyTradeBtn] = useState(true);
+  const [schedule, setSchedule] = useState(false);
+  const [credit, setCredit] = useState(true);
+  const [scheduledTime, setScheduledTime] = useState("");
+  const [decline, setDecline] = useState(false);
+  const [declinedMessage, setDeclinedMessage] = useState("");
+  const [userLevel, setUserLevel] = useState("");
+  const [currentDeposit, setCurrentDeposit] = useState([]);
 
   const [toggle, setToggle] = useState({
     id: user._id,
     liveTrade: user.liveTrade,
-  })
+  });
   const [notification, setNotification] = useState({
     id: user._id,
     notificationEnabled: user.notificationsEnabled,
-  })
+  });
   const [auth, setAuth] = useState({
     id: user._id,
     authEnabled: false,
     // user.notificationsEnabled,
-  })
+  });
 
   // auth
-  console.log(allUsers)
+
   const setAuth0 = useCallback(() => {
-    setAuth(!auth)
+    setAuth(!auth);
     // setAuthEnabled({
     //   id: user._id,
     //   notificationEnabled: !user.notificationsEnabled,
     // })
-  }, [auth])
+  }, [auth]);
 
   // istrading
   const [trading, setTrading] = useState({
     id: user._id,
     notificationEnabled: user.isTrading,
-  })
+  });
 
   //  const paginate = (num) => setCurrentPage(num)
   const setToggles = useCallback(() => {
-    setToggle(!toggle.liveTrade)
+    setToggle(!toggle.liveTrade);
     setLiveTrade({
       id: user._id,
       liveTrade: !user.liveTrade,
-    })
-  }, [toggle])
+    });
+  }, [toggle]);
 
   // notification
   const setNotifications = useCallback(() => {
-    setNotification(!notification)
+    setNotification(!notification);
     setNotificationEnabled({
       id: user._id,
       notificationEnabled: !user.notificationsEnabled,
-    })
-  }, [notification])
+    });
+  }, [notification]);
 
   // isTrading
 
   // const setTrading = useCallback(() => {}, [])
 
   const deleteAutoCopyTrade = async () => {
-    setLoading(true)
+    setLoading(true);
 
     if (error) {
-      message.error('Error Deleting Auto-trade')
+      message.error("Error Deleting Auto-trade");
     } else {
-      deleteUserAutoCopyTrade(user._id)
-      message.success('Successfully Deleted Auto-trade')
+      deleteUserAutoCopyTrade(user._id);
+      message.success("Successfully Deleted Auto-trade");
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const submitAutoCopyTrade = async (payload) => {
-    setLoading(true)
+    setLoading(true);
     if (error) {
-      message.error('Error Adding Auto-Trade')
+      message.error("Error Adding Auto-Trade");
     } else {
-      addUserAutoCopyTrade(payload)
-      setProfitLoss(false)
-      setMarket('')
-      setAmount(0)
-      setAsset('')
-      setScheduledTime('')
-      message.success('Successfully Added Auto-trade')
+      addUserAutoCopyTrade(payload);
+      setProfitLoss(false);
+      setMarket("");
+      setAmount(0);
+      setAsset("");
+      setScheduledTime("");
+      message.success("Successfully Added Auto-trade");
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const handleLiveTrade = () => {
     setLiveTrade({
       id: user._id,
       liveTrade: !user.liveTrade,
-    })
-  }
+    });
+  };
 
   const onChangeDate = (value, dateString) => {
-    setCheckDate(false)
+    setCheckDate(false);
     if (new Date(dateString) < new Date(new Date().setHours(0, 0, 0, 0))) {
-      setCopyTradeBtn(true)
+      setCopyTradeBtn(true);
     } else if (
       new Date(dateString) >= new Date(new Date().setHours(0, 0, 0, 0))
     ) {
-      setCopyTradeBtn(false)
+      setCopyTradeBtn(false);
     }
-  }
+  };
 
   const handleSetCard = () => {
-    setCard(true)
-    setWithd(false)
-    setBal(false)
-    setExecution(false)
-    setPayments(false)
-    setSecu(false)
-    setOrderT(false)
-    ;(async () => {
+    setCard(true);
+    setWithd(false);
+    setBal(false);
+    setExecution(false);
+    setPayments(false);
+    setSecu(false);
+    setOrderT(false);
+    (async () => {
       const { data } = await axios(
-        `https://trade-backend-daari.ondigitalocean.app/api/trade/deposit/${user._id}`,
-      )
-      setCurrentDeposit(data)
-    })()
-  }
+        `https://trade-backend-daari.ondigitalocean.app/api/trade/deposit/${user._id}`
+      );
+      setCurrentDeposit(data);
+    })();
+  };
 
   const handleSetWithd = () => {
-    setWithd(true)
-    setCard(false)
-    setBal(false)
-    setExecution(false)
-    setPayments(false)
-    setSecu(false)
-    setOrderT(false)
-  }
+    setWithd(true);
+    setCard(false);
+    setBal(false);
+    setExecution(false);
+    setPayments(false);
+    setSecu(false);
+    setOrderT(false);
+  };
 
   const handleSetBal = () => {
-    setBal(true)
-    setCard(false)
-    setExecution(false)
-    setPayments(false)
-    setSecu(false)
-    setWithd(false)
-    setOrderT(false)
-  }
+    setBal(true);
+    setCard(false);
+    setExecution(false);
+    setPayments(false);
+    setSecu(false);
+    setWithd(false);
+    setOrderT(false);
+  };
 
   const handleSetSecu = () => {
-    setSecu(true)
-    setBal(false)
-    setCard(false)
-    setExecution(false)
-    setPayments(false)
-    setWithd(false)
-    setOrderT(false)
-  }
+    setSecu(true);
+    setBal(false);
+    setCard(false);
+    setExecution(false);
+    setPayments(false);
+    setWithd(false);
+    setOrderT(false);
+  };
 
   const handleSetOrder = () => {
-    setOrderT(true)
-    setSecu(false)
-    setBal(false)
-    setCard(false)
-    setExecution(false)
-    setPayments(false)
-    setWithd(false)
-  }
+    setOrderT(true);
+    setSecu(false);
+    setBal(false);
+    setCard(false);
+    setExecution(false);
+    setPayments(false);
+    setWithd(false);
+  };
 
   const handleSetExecution = () => {
-    setExecution(true)
-    setOrderT(false)
-    setSecu(false)
-    setBal(false)
-    setCard(false)
-    setPayments(false)
-    setWithd(false)
-  }
+    setExecution(true);
+    setOrderT(false);
+    setSecu(false);
+    setBal(false);
+    setCard(false);
+    setPayments(false);
+    setWithd(false);
+  };
 
   const handleSetPayments = () => {
-    setPayments(true)
-    setExecution(false)
-    setOrderT(false)
-    setSecu(false)
-    setBal(false)
-    setCard(false)
-    setWithd(false)
-  }
+    setPayments(true);
+    setExecution(false);
+    setOrderT(false);
+    setSecu(false);
+    setBal(false);
+    setCard(false);
+    setWithd(false);
+  };
 
   const handleUpdateWalletBalance = () => {
     if (loading) {
-      setText('Updating...')
+      setText("Updating...");
     } else if (!credit && parseInt(amount) > user.wallet) {
       message.error(
-        'This transaction is not valid as it will result in a negative balance',
-      )
+        "This transaction is not valid as it will result in a negative balance"
+      );
     } else {
       updateWalletBalance({
         id: user._id,
         amount,
         action: credit,
-      })
+      });
 
-      setText('Saved')
-      message.success('Balance updated')
-      window.location.reload()
+      setText("Saved");
+      message.success("Balance updated");
+      window.location.reload();
     }
-  }
+  };
 
   const handleApproveDeposit = (id) => {
     if (error) {
-      message.error('Deposit Not Approved')
+      message.error("Deposit Not Approved");
     } else {
       approveDeposit({
         id,
-        message: 'Deposit Was Successfully Approved',
-      })
-      message.success('Deposit Was Successfully Approved')
+        message: "Deposit Was Successfully Approved",
+      });
+      message.success("Deposit Was Successfully Approved");
     }
-  }
+  };
 
   const handleDeclineDeposit = (id) => {
     if (error) {
-      message.error('Deposit Approval Was Not Declined')
+      message.error("Deposit Approval Was Not Declined");
     } else {
       declineDeposit({
         id,
-        message: 'Deposit Request Successfully Declined',
-      })
-      message.success('Deposit Was Successfully Declined')
+        message: "Deposit Request Successfully Declined",
+      });
+      message.success("Deposit Was Successfully Declined");
     }
-  }
+  };
 
   const handleDeclineVerify = (id) => {
     if (error) {
-      message.error('Identity Decline Was not Successfull')
+      message.error("Identity Decline Was not Successfull");
     } else {
       declineVerify({
         id,
         message: declinedMessage,
-      })
+      });
     }
 
-    setDeclinedMessage('')
-    setDecline(false)
-  }
+    setDeclinedMessage("");
+    setDecline(false);
+  };
 
   const handleApproveVerify = (id) => {
     if (error) {
-      message.error('Identity Approval Was Not Successful')
+      message.error("Identity Approval Was Not Successful");
     } else {
       approveVerify({
         id,
-        message: 'Identity Was Successfully Approved',
-      })
-      message.success('Identity Was Successfully Approved')
+        message: "Identity Was Successfully Approved",
+      });
+      message.success("Identity Was Successfully Approved");
     }
-  }
+  };
 
   const handleDeclineWithdrawal = (id) => {
     if (error) {
-      message.error('Withdrawal Approval Was Not Declined')
+      message.error("Withdrawal Approval Was Not Declined");
     } else {
       declineWithdrawal({
         id,
-        message: 'Withdrawal Was Successfully Declined',
-      })
-      message.success('Withdrawal Was Successfully Declined')
+        message: "Withdrawal Was Successfully Declined",
+      });
+      message.success("Withdrawal Was Successfully Declined");
     }
-  }
+  };
 
   const handleApproveWithdrawal = (id) => {
     if (error) {
-      message.error('Withdrawal Approval Was Not Successfull')
+      message.error("Withdrawal Approval Was Not Successfull");
     } else {
       approveWithdrawal({
         id,
-        message: 'Withdrawal Was Successfully Approved',
-      })
-      message.success('Withdrawal Was Successfully Approved')
+        message: "Withdrawal Was Successfully Approved",
+      });
+      message.success("Withdrawal Was Successfully Approved");
     }
-  }
+  };
 
   const handleMakeAdmin = (id) => {
     if (error) {
-      message.error('Error making an Admin')
+      message.error("Error making an Admin");
     } else {
-      makeAdmin({ id })
-      message.success('Successfully made an Admin')
+      makeAdmin({ id });
+      message.success("Successfully made an Admin");
     }
-  }
+  };
 
   const handleMakeManager = (id) => {
     if (error) {
-      message.error('Error making a Manager')
+      message.error("Error making a Manager");
     } else {
-      makeManager({ id })
-      message.success('Successfully made a Manager')
+      makeManager({ id });
+      message.success("Successfully made a Manager");
     }
-  }
+  };
 
   const handleRemoveManager = (id) => {
     if (error) {
-      message.error('Error removing as a Manager')
+      message.error("Error removing as a Manager");
     } else {
-      removeManager({ id })
-      message.success('Successfully removed as a Manager')
+      removeManager({ id });
+      message.success("Successfully removed as a Manager");
     }
-  }
+  };
 
   const handleRemoveAdmin = (id) => {
     if (error) {
-      message.error('Error removing as an Admin')
+      message.error("Error removing as an Admin");
     } else {
-      removeAdmin({ id })
-      message.success('Successfully removed as an Admin')
+      removeAdmin({ id });
+      message.success("Successfully removed as an Admin");
     }
-  }
+  };
 
   const handleDeleteUser = (id) => {
     if (error) {
-      message.error('Try again')
+      message.error("Try again");
     } else {
-      deleteUser({ id })
-      message.success('User was successfully deleted from the database')
-      history.push('/dashboard/manager')
+      deleteUser({ id });
+      message.success("User was successfully deleted from the database");
+      history.push("/dashboard/manager");
     }
-  }
+  };
 
   useEffect(() => {
-    getUserAutoCopyTrade(user._id)
-  }, [])
+    getUserAutoCopyTrade(user._id);
+  }, []);
 
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
         <div className="dash-row dash-row-centralized">
           <div className="split-50">
-            <h3 style={{ fontWeight: 'normal' }}>
+            <h3 style={{ fontWeight: "normal" }}>
               Statistics - 04/02/2021 to 13/02/2021
             </h3>
           </div>
           <div className="split-50" />
         </div>
         <div className="chart" />
-        <div className="dash-row" style={{ margin: '15px 0' }}>
+        <div className="dash-row" style={{ margin: "15px 0" }}>
           <div className="into-6">
             <h5 className="text-uppercase">New user</h5>
             <h2>{allUsers.length}</h2>
@@ -446,15 +446,14 @@ const ManagerContents = (props) => {
             <h2>0</h2>
           </div>
         </div>
-       
       </div>
       {/* bank Transfer */}
       {bankTransfers && bankTransfers.length > 0 && (
         <TableContainer
           style={{
-            background: 'white',
-            margin: '  1.2rem auto 0 auto',
-            width: '96%',
+            background: "white",
+            margin: "  1.2rem auto 0 auto",
+            width: "96%",
           }}
         >
           <BasicTable
@@ -470,9 +469,9 @@ const ManagerContents = (props) => {
       {allDeposits && allDeposits.length > 0 && (
         <TableContainer
           style={{
-            background: 'white',
-            margin: '  1.2rem auto 0 auto',
-            width: '96%',
+            background: "white",
+            margin: "  1.2rem auto 0 auto",
+            width: "96%",
           }}
         >
           <BasicTable
@@ -512,9 +511,9 @@ const ManagerContents = (props) => {
       {allVerifiedUsers && allVerifiedUsers.length > 0 && (
         <TableContainer
           style={{
-            background: 'white',
-            margin: '  1.2rem auto 0 auto',
-            width: '96%',
+            background: "white",
+            margin: "  1.2rem auto 0 auto",
+            width: "96%",
           }}
         >
           <BasicTable
@@ -530,9 +529,9 @@ const ManagerContents = (props) => {
 
       <TableContainer
         style={{
-          background: 'white',
-          margin: '  1.2rem auto 0 auto',
-          width: '96%',
+          background: "white",
+          margin: "  1.2rem auto 0 auto",
+          width: "96%",
         }}
       >
         {!displayC && allUsers.length > 0 && (
@@ -549,10 +548,10 @@ const ManagerContents = (props) => {
 
       <div className="manager-tab-dtls" manager-tab-dtls="users">
         {displayC && (
-          <div className="second-sec" style={{ display: 'block' }}>
-            <div className="user-dtls-tab" style={{ display: 'block' }}>
+          <div className="second-sec" style={{ display: "block" }}>
+            <div className="user-dtls-tab" style={{ display: "block" }}>
               <div
-                className={card ? 'live' : ''}
+                className={card ? "live" : ""}
                 onClick={handleSetCard}
                 dash-user-dtls-tab="card"
               >
@@ -561,42 +560,42 @@ const ManagerContents = (props) => {
               <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetBal}
-                className={bal ? 'live' : ''}
+                className={bal ? "live" : ""}
               >
                 Balances
               </div>
               <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetExecution}
-                className={execution ? 'live' : ''}
+                className={execution ? "live" : ""}
               >
                 Auto Copy Trading
               </div>
               <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetPayments}
-                className={payments ? 'live' : ''}
+                className={payments ? "live" : ""}
               >
                 Payments
               </div>
               <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetWithd}
-                className={withd ? 'live' : ''}
+                className={withd ? "live" : ""}
               >
                 Withdraw
               </div>
               <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetOrder}
-                className={orderT ? 'live' : ''}
+                className={orderT ? "live" : ""}
               >
                 Orders
               </div>
               <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetSecu}
-                className={secu ? 'live' : ''}
+                className={secu ? "live" : ""}
               >
                 Security
               </div>
@@ -609,7 +608,7 @@ const ManagerContents = (props) => {
                       <div className="user-detail dash-row dash-row-centralized">
                         <div
                           className="image"
-                          style={{ backgroundImage: 'url()' }}
+                          style={{ backgroundImage: "url()" }}
                         />
                         <div className="dtls">
                           <div className="name font-weight-bold font-size-18">
@@ -619,10 +618,10 @@ const ManagerContents = (props) => {
                           <div className="dash-row dash-row-centralized font-size-12">
                             <div
                               className="country-flag"
-                              style={{ backgroundImage: 'url()' }}
+                              style={{ backgroundImage: "url()" }}
                             />
                             <div className="country text-uppercase">
-                              {user.country ? user.country : ''}
+                              {user.country ? user.country : ""}
                             </div>
                           </div>
                         </div>
@@ -630,19 +629,19 @@ const ManagerContents = (props) => {
                       <div className="estimate dash-row dash-row-centralized">
                         <div className="estimated-card">
                           <div className="font-size-14 font-weight-bold">
-                            ESTIMATE BALANCE IN{' '}
-                            <span style={{ color: '#ff7700' }}>USD</span>
+                            ESTIMATE BALANCE IN{" "}
+                            <span style={{ color: "#ff7700" }}>USD</span>
                           </div>
                           <div>
                             <h2
                               style={{
                                 margin: 0,
-                                marginTop: '10px',
-                                color: '#29c359',
+                                marginTop: "10px",
+                                color: "#29c359",
                               }}
                             >
-                              {new Intl.NumberFormat('en-US').format(
-                                user.wallet,
+                              {new Intl.NumberFormat("en-US").format(
+                                user.wallet
                               )}
                               USD
                             </h2>
@@ -651,8 +650,8 @@ const ManagerContents = (props) => {
 
                         <div
                           style={{
-                            paddingLeft: '20px',
-                            width: '30%',
+                            paddingLeft: "20px",
+                            width: "30%",
                           }}
                           className="d-flex justify-content-center  flex-column align-items-center"
                         >
@@ -661,8 +660,8 @@ const ManagerContents = (props) => {
                             <button
                               className="edit-profile"
                               style={{
-                                backgroundColor: '#363c4f',
-                                borderRadius: '4px',
+                                backgroundColor: "#363c4f",
+                                borderRadius: "4px",
                               }}
                               onClick={() => setEditProfile(true)}
                             >
@@ -670,8 +669,8 @@ const ManagerContents = (props) => {
                             </button>
                             <button
                               style={{
-                                backgroundColor: '#e30f0f',
-                                borderRadius: '4px',
+                                backgroundColor: "#e30f0f",
+                                borderRadius: "4px",
                               }}
                               className="delete-profile"
                             >
@@ -751,13 +750,13 @@ const ManagerContents = (props) => {
                         <div className="dash-row dash-row-centralized">
                           <div className="th">Last location</div>
                           <div className="td">
-                            {user.country ? user.country : ''}
+                            {user.country ? user.country : ""}
                           </div>
                         </div>
                         <div className="dash-row dash-row-centralized">
                           <div className="th">Phone</div>
                           <div className="td">
-                            {user.phone ? user.phoneNumber : ''}
+                            {user.phone ? user.phoneNumber : ""}
                           </div>
                         </div>
 
@@ -776,10 +775,10 @@ const ManagerContents = (props) => {
                           <div className="td">
                             <span
                               style={{
-                                backgroundColor: '#0579f8',
-                                color: '#fff',
-                                display: 'block',
-                                padding: '2px 5px',
+                                backgroundColor: "#0579f8",
+                                color: "#fff",
+                                display: "block",
+                                padding: "2px 5px",
                               }}
                             >
                               IN VERIFICATION
@@ -819,7 +818,7 @@ const ManagerContents = (props) => {
                         <div className="dash-row dash-row-centralized">
                           <div className="th">Created date</div>
                           <div className="td">
-                            {user.time ? user.time.slice(0, 10) : ''}
+                            {user.time ? user.time.slice(0, 10) : ""}
                           </div>
                         </div>
                         <div className="dash-row dash-row-centralized">
@@ -827,10 +826,10 @@ const ManagerContents = (props) => {
                           <div className="td">
                             <span
                               style={{
-                                backgroundColor: '#39d95f',
-                                color: '#fff',
-                                display: 'block',
-                                padding: '2px 5px',
+                                backgroundColor: "#39d95f",
+                                color: "#fff",
+                                display: "block",
+                                padding: "2px 5px",
                               }}
                             >
                               ACTIVE
@@ -855,7 +854,7 @@ const ManagerContents = (props) => {
                                 <div
                                   className="country-flag"
                                   style={{
-                                    backgroundImage: 'url()',
+                                    backgroundImage: "url()",
                                   }}
                                 />
                                 <div className="country-name">
@@ -891,14 +890,14 @@ const ManagerContents = (props) => {
               {bal && (
                 <div
                   dash-user-dtls-tab-dtls="balances"
-                  style={{ display: 'block' }}
+                  style={{ display: "block" }}
                 >
                   <div className="dtls-sec">
                     <div className="dash-row dash-row-centralized header">
                       <div className="user-detail dash-row dash-row-centralized">
                         <div
                           className="image"
-                          style={{ backgroundImage: 'url()' }}
+                          style={{ backgroundImage: "url()" }}
                         />
                         <div className="dtls">
                           <div className="name font-weight-bold font-size-18">
@@ -908,10 +907,10 @@ const ManagerContents = (props) => {
                           <div className="dash-row dash-row-centralized font-size-12">
                             <div
                               className="country-flag"
-                              style={{ backgroundImage: 'url()' }}
+                              style={{ backgroundImage: "url()" }}
                             />
                             <div className="country text-uppercase">
-                              {user.country ? user.country : ''}
+                              {user.country ? user.country : ""}
                             </div>
                           </div>
                         </div>
@@ -919,19 +918,19 @@ const ManagerContents = (props) => {
                       <div className="estimate dash-row dash-row-centralized">
                         <div className="estimated-card">
                           <div className="font-size-14 font-weight-bold">
-                            ESTIMATE BALANCE IN{' '}
-                            <span style={{ color: '#ff7700' }}>USD</span>
+                            ESTIMATE BALANCE IN{" "}
+                            <span style={{ color: "#ff7700" }}>USD</span>
                           </div>
                           <div>
                             <h2
                               style={{
                                 margin: 0,
-                                marginTop: '10px',
-                                color: '#29c359',
+                                marginTop: "10px",
+                                color: "#29c359",
                               }}
                             >
-                              {new Intl.NumberFormat('en-US').format(
-                                user.wallet,
+                              {new Intl.NumberFormat("en-US").format(
+                                user.wallet
                               )}
                               USD
                             </h2>
@@ -939,8 +938,8 @@ const ManagerContents = (props) => {
                         </div>
                         <div
                           style={{
-                            paddingLeft: '20px',
-                            width: '30%',
+                            paddingLeft: "20px",
+                            width: "30%",
                           }}
                           className="d-flex justify-content-center  flex-column align-items-center"
                         >
@@ -949,16 +948,16 @@ const ManagerContents = (props) => {
                             <button
                               className="edit-profile"
                               style={{
-                                backgroundColor: '#363c4f',
-                                borderRadius: '4px',
+                                backgroundColor: "#363c4f",
+                                borderRadius: "4px",
                               }}
                             >
                               Edit profile
                             </button>
                             <button
                               style={{
-                                backgroundColor: '#e30f0f',
-                                borderRadius: '4px',
+                                backgroundColor: "#e30f0f",
+                                borderRadius: "4px",
                               }}
                               className="delete-profile"
                             >
@@ -1008,7 +1007,7 @@ const ManagerContents = (props) => {
                   </div>
                   <div
                     className="public-card white-card"
-                    style={{ marginTop: '15px' }}
+                    style={{ marginTop: "15px" }}
                   >
                     <div className="each-row dash-row">
                       <div className="dtls">
@@ -1131,21 +1130,21 @@ const ManagerContents = (props) => {
                 </div>
               )}
               {execution && (
-                <Row className="px-3" style={{ marginBottom: '10%' }}>
+                <Row className="px-3" style={{ marginBottom: "10%" }}>
                   <Col md={4} className="mt-5">
-                    <Card style={{ background: '#fff' }}>
+                    <Card style={{ background: "#fff" }}>
                       <Card.Body>
                         <h6>
-                          Current Balance:{' '}
+                          Current Balance:{" "}
                           <span
                             style={{
-                              fontSize: '1.2rem',
-                              color: 'green',
-                              fontWeight: 'bold',
+                              fontSize: "1.2rem",
+                              color: "green",
+                              fontWeight: "bold",
                             }}
                           >
                             $
-                            {new Intl.NumberFormat('en-US').format(user.wallet)}
+                            {new Intl.NumberFormat("en-US").format(user.wallet)}
                           </span>
                         </h6>
                         <h6>
@@ -1229,9 +1228,9 @@ const ManagerContents = (props) => {
                                   id="default-radio"
                                   name="time"
                                   onChange={() => {
-                                    setSchedule(true)
-                                    setCopyTradeBtn(true)
-                                    setScheduledTime(null)
+                                    setSchedule(true);
+                                    setCopyTradeBtn(true);
+                                    setScheduledTime(null);
                                   }}
                                 />
                               </Col>
@@ -1242,12 +1241,12 @@ const ManagerContents = (props) => {
                                   id="default-radio"
                                   name="time"
                                   onChange={(e) => {
-                                    setSchedule(false)
-                                    setCheckDate((prev) => !prev)
-                                    setCopyTradeBtn((prev) => !prev)
+                                    setSchedule(false);
+                                    setCheckDate((prev) => !prev);
+                                    setCopyTradeBtn((prev) => !prev);
                                     setScheduledTime((prev) =>
-                                      prev ? new Date() : null,
-                                    )
+                                      prev ? new Date() : null
+                                    );
                                   }}
                                 />
                               </Col>
@@ -1286,7 +1285,7 @@ const ManagerContents = (props) => {
                                   Applying...
                                 </>
                               ) : (
-                                'Apply'
+                                "Apply"
                               )}
                             </Button>
                           </div>
@@ -1298,19 +1297,19 @@ const ManagerContents = (props) => {
                     <div className="autoT">
                       <div
                         style={{
-                          marginTop: '7%',
+                          marginTop: "7%",
                         }}
                       >
-                        <h4 style={{ color: 'white' }}>
-                          {' '}
-                          AutoCopy Trader - Queue :{' '}
+                        <h4 style={{ color: "white" }}>
+                          {" "}
+                          AutoCopy Trader - Queue :{" "}
                         </h4>
                       </div>
                       <div>
                         <h3
-                          style={{ color: 'white' }}
-                        >{`$ ${new Intl.NumberFormat('en-US').format(
-                          user.estimatedBalance,
+                          style={{ color: "white" }}
+                        >{`$ ${new Intl.NumberFormat("en-US").format(
+                          user.estimatedBalance
                         )}`}</h3>
                         <p>Estimated balance on</p>
                         <p>
@@ -1342,11 +1341,11 @@ const ManagerContents = (props) => {
                               <td>{data.assets}</td>
                               <td>
                                 $
-                                {new Intl.NumberFormat('en-US').format(
-                                  data.amount,
+                                {new Intl.NumberFormat("en-US").format(
+                                  data.amount
                                 )}
                               </td>
-                              <td>{data.profitLoss ? 'Profit' : 'Loss'}</td>
+                              <td>{data.profitLoss ? "Profit" : "Loss"}</td>
                               <td>
                                 <Moment format="hh:mm - DD MMMM YYYY">
                                   {data.scheduledTime}
@@ -1361,20 +1360,20 @@ const ManagerContents = (props) => {
                                 >
                                   <Tag
                                     color="blue"
-                                    style={{ cursor: 'pointer' }}
+                                    style={{ cursor: "pointer" }}
                                   >
                                     Edit
                                   </Tag>
                                 </EditAutoCopyTrade>
                                 <Tag
-                                  style={{ cursor: 'pointer' }}
+                                  style={{ cursor: "pointer" }}
                                   onClick={() => deleteAutoCopyTrade()}
                                   color="red"
                                 >
                                   {loading ? (
                                     <i className="fa fa-spin fa-spinner"></i>
                                   ) : (
-                                    'Delete'
+                                    "Delete"
                                   )}
                                 </Tag>
                               </td>
@@ -1389,14 +1388,14 @@ const ManagerContents = (props) => {
               {payments && (
                 <div
                   dash-user-dtls-tab-dtls="payments"
-                  style={{ display: 'block' }}
+                  style={{ display: "block" }}
                 >
                   <div className="dtls-sec">
                     <div className="dash-row dash-row-centralized header">
                       <div className="user-detail dash-row dash-row-centralized">
                         <div
                           className="image"
-                          style={{ backgroundImage: 'url()' }}
+                          style={{ backgroundImage: "url()" }}
                         />
                         <div className="dtls">
                           <div className="name font-weight-bold font-size-18">
@@ -1406,10 +1405,10 @@ const ManagerContents = (props) => {
                           <div className="dash-row dash-row-centralized font-size-12">
                             <div
                               className="country-flag"
-                              style={{ backgroundImage: 'url()' }}
+                              style={{ backgroundImage: "url()" }}
                             />
                             <div className="country text-uppercase">
-                              {user.country ? user.country : ''}
+                              {user.country ? user.country : ""}
                             </div>
                           </div>
                         </div>
@@ -1417,28 +1416,28 @@ const ManagerContents = (props) => {
                       <div className="estimate dash-row dash-row-centralized">
                         <div className="estimated-card">
                           <div className="font-size-14 font-weight-bold">
-                            ESTIMATE BALANCE IN{' '}
-                            <span style={{ color: '#ff7700' }}>USD</span>
+                            ESTIMATE BALANCE IN{" "}
+                            <span style={{ color: "#ff7700" }}>USD</span>
                           </div>
                           <div>
                             <h2
                               style={{
                                 margin: 0,
-                                marginTop: '10px',
-                                color: '#29c359',
+                                marginTop: "10px",
+                                color: "#29c359",
                               }}
                             >
-                              {new Intl.NumberFormat('en-US').format(
-                                user.wallet,
-                              )}{' '}
+                              {new Intl.NumberFormat("en-US").format(
+                                user.wallet
+                              )}{" "}
                               USD
                             </h2>
                           </div>
                         </div>
                         <div
                           style={{
-                            paddingLeft: '20px',
-                            width: '30%',
+                            paddingLeft: "20px",
+                            width: "30%",
                           }}
                         >
                           <div className="d-flex justify-content-center align-items-center">
@@ -1460,16 +1459,16 @@ const ManagerContents = (props) => {
                           <button
                             className="edit-profile"
                             style={{
-                              backgroundColor: '#363c4f',
-                              borderRadius: '4px',
+                              backgroundColor: "#363c4f",
+                              borderRadius: "4px",
                             }}
                           >
                             Edit profile
                           </button>
                           <button
                             style={{
-                              backgroundColor: '#e30f0f',
-                              borderRadius: '4px',
+                              backgroundColor: "#e30f0f",
+                              borderRadius: "4px",
                             }}
                             className="delete-profile"
                           >
@@ -1574,14 +1573,14 @@ const ManagerContents = (props) => {
               {withd && (
                 <div
                   dash-user-dtls-tab-dtls="withdraw"
-                  style={{ display: 'block' }}
+                  style={{ display: "block" }}
                 >
                   <div className="dtls-sec">
                     <div className="dash-row dash-row-centralized header">
                       <div className="user-detail dash-row dash-row-centralized">
                         <div
                           className="image"
-                          style={{ backgroundImage: 'url()' }}
+                          style={{ backgroundImage: "url()" }}
                         />
                         <div className="dtls">
                           <div className="name font-weight-bold font-size-18">
@@ -1591,10 +1590,10 @@ const ManagerContents = (props) => {
                           <div className="dash-row dash-row-centralized font-size-12">
                             <div
                               className="country-flag"
-                              style={{ backgroundImage: 'url()' }}
+                              style={{ backgroundImage: "url()" }}
                             />
                             <div className="country text-uppercase">
-                              {user.country ? user.country : ''}
+                              {user.country ? user.country : ""}
                             </div>
                           </div>
                         </div>
@@ -1602,28 +1601,28 @@ const ManagerContents = (props) => {
                       <div className="estimate dash-row dash-row-centralized">
                         <div className="estimated-card">
                           <div className="font-size-14 font-weight-bold">
-                            ESTIMATE BALANCE IN{' '}
-                            <span style={{ color: '#ff7700' }}>USD</span>
+                            ESTIMATE BALANCE IN{" "}
+                            <span style={{ color: "#ff7700" }}>USD</span>
                           </div>
                           <div>
                             <h2
                               style={{
                                 margin: 0,
-                                marginTop: '10px',
-                                color: '#29c359',
+                                marginTop: "10px",
+                                color: "#29c359",
                               }}
                             >
-                              {new Intl.NumberFormat('en-US').format(
-                                user.wallet,
-                              )}{' '}
+                              {new Intl.NumberFormat("en-US").format(
+                                user.wallet
+                              )}{" "}
                               USD
                             </h2>
                           </div>
                         </div>
                         <div
                           style={{
-                            paddingLeft: '20px',
-                            width: '30%',
+                            paddingLeft: "20px",
+                            width: "30%",
                           }}
                         >
                           <div className="d-flex justify-content-center align-items-center">
@@ -1644,12 +1643,12 @@ const ManagerContents = (props) => {
                           </div>
                           <button
                             className="edit-profile"
-                            style={{ backgroundColor: '#363c4f' }}
+                            style={{ backgroundColor: "#363c4f" }}
                           >
                             Edit profile
                           </button>
                           <button
-                            style={{ backgroundColor: '#e30f0f' }}
+                            style={{ backgroundColor: "#e30f0f" }}
                             className="delete-profile"
                           >
                             Delete user
@@ -1664,14 +1663,14 @@ const ManagerContents = (props) => {
               {orderT && (
                 <div
                   dash-user-dtls-tab-dtls="orders"
-                  style={{ display: 'block' }}
+                  style={{ display: "block" }}
                 >
                   <div className="dtls-sec">
                     <div className="dash-row dash-row-centralized header">
                       <div className="user-detail dash-row dash-row-centralized">
                         <div
                           className="image"
-                          style={{ backgroundImage: 'url()' }}
+                          style={{ backgroundImage: "url()" }}
                         />
                         <div className="dtls">
                           <div className="name font-weight-bold font-size-18">
@@ -1681,10 +1680,10 @@ const ManagerContents = (props) => {
                           <div className="dash-row dash-row-centralized font-size-12">
                             <div
                               className="country-flag"
-                              style={{ backgroundImage: 'url()' }}
+                              style={{ backgroundImage: "url()" }}
                             />
                             <div className="country text-uppercase">
-                              {user.country ? user.country : ''}
+                              {user.country ? user.country : ""}
                             </div>
                           </div>
                         </div>
@@ -1692,28 +1691,28 @@ const ManagerContents = (props) => {
                       <div className="estimate dash-row dash-row-centralized">
                         <div className="estimated-card">
                           <div className="font-size-14 font-weight-bold">
-                            ESTIMATE BALANCE IN{' '}
-                            <span style={{ color: '#ff7700' }}>USD</span>
+                            ESTIMATE BALANCE IN{" "}
+                            <span style={{ color: "#ff7700" }}>USD</span>
                           </div>
                           <div>
                             <h2
                               style={{
                                 margin: 0,
-                                marginTop: '10px',
-                                color: '#29c359',
+                                marginTop: "10px",
+                                color: "#29c359",
                               }}
                             >
-                              {new Intl.NumberFormat('en-US').format(
-                                user.wallet,
-                              )}{' '}
+                              {new Intl.NumberFormat("en-US").format(
+                                user.wallet
+                              )}{" "}
                               USD
                             </h2>
                           </div>
                         </div>
                         <div
                           style={{
-                            paddingLeft: '20px',
-                            width: '30%',
+                            paddingLeft: "20px",
+                            width: "30%",
                           }}
                         >
                           <div className="d-flex justify-content-center align-items-center">
@@ -1735,16 +1734,16 @@ const ManagerContents = (props) => {
                           <button
                             className="edit-profile"
                             style={{
-                              backgroundColor: '#363c4f',
-                              borderRadius: '4px',
+                              backgroundColor: "#363c4f",
+                              borderRadius: "4px",
                             }}
                           >
                             Edit profile
                           </button>
                           <button
                             style={{
-                              backgroundColor: '#e30f0f',
-                              borderRadius: '4px',
+                              backgroundColor: "#e30f0f",
+                              borderRadius: "4px",
                             }}
                             className="delete-profile"
                           >
@@ -1760,14 +1759,14 @@ const ManagerContents = (props) => {
               {secu && (
                 <div
                   dash-user-dtls-tab-dtls="security"
-                  style={{ display: 'block' }}
+                  style={{ display: "block" }}
                 >
                   <div className="dtls-sec">
                     <div className="dash-row dash-row-centralized header">
                       <div className="user-detail dash-row dash-row-centralized">
                         <div
                           className="image"
-                          style={{ backgroundImage: 'url()' }}
+                          style={{ backgroundImage: "url()" }}
                         />
                         <div className="dtls">
                           <div className="name font-weight-bold font-size-18">
@@ -1777,10 +1776,10 @@ const ManagerContents = (props) => {
                           <div className="dash-row dash-row-centralized font-size-12">
                             <div
                               className="country-flag"
-                              style={{ backgroundImage: 'url()' }}
+                              style={{ backgroundImage: "url()" }}
                             />
                             <div className="country text-uppercase">
-                              {user.country ? user.country : ''}
+                              {user.country ? user.country : ""}
                             </div>
                           </div>
                         </div>
@@ -1788,28 +1787,28 @@ const ManagerContents = (props) => {
                       <div className="estimate dash-row dash-row-centralized">
                         <div className="estimated-card">
                           <div className="font-size-14 font-weight-bold">
-                            ESTIMATE BALANCE IN{' '}
-                            <span style={{ color: '#ff7700' }}>USD</span>
+                            ESTIMATE BALANCE IN{" "}
+                            <span style={{ color: "#ff7700" }}>USD</span>
                           </div>
                           <div>
                             <h2
                               style={{
                                 margin: 0,
-                                marginTop: '10px',
-                                color: '#29c359',
+                                marginTop: "10px",
+                                color: "#29c359",
                               }}
                             >
-                              {new Intl.NumberFormat('en-US').format(
-                                user.wallet,
-                              )}{' '}
+                              {new Intl.NumberFormat("en-US").format(
+                                user.wallet
+                              )}{" "}
                               USD
                             </h2>
                           </div>
                         </div>
                         <div
                           style={{
-                            paddingLeft: '20px',
-                            width: '30%',
+                            paddingLeft: "20px",
+                            width: "30%",
                           }}
                         >
                           <div className="d-flex justify-content-center align-items-center">
@@ -1831,16 +1830,16 @@ const ManagerContents = (props) => {
                           <button
                             className="edit-profile"
                             style={{
-                              backgroundColor: '#363c4f',
-                              borderRadius: '4px',
+                              backgroundColor: "#363c4f",
+                              borderRadius: "4px",
                             }}
                           >
                             Edit profile
                           </button>
                           <button
                             style={{
-                              backgroundColor: '#e30f0f',
-                              borderRadius: '4px',
+                              backgroundColor: "#e30f0f",
+                              borderRadius: "4px",
                             }}
                             className="delete-profile"
                           >
@@ -1860,9 +1859,9 @@ const ManagerContents = (props) => {
         {allTrades && allTrades.length > 0 && (
           <TableContainer
             style={{
-              background: 'white',
-              margin: '  1.2rem auto 0 auto',
-              width: '96%',
+              background: "white",
+              margin: "  1.2rem auto 0 auto",
+              width: "96%",
             }}
           >
             <BasicTable
@@ -1878,9 +1877,9 @@ const ManagerContents = (props) => {
         {allWithdrawals && allWithdrawals.length > 0 && (
           <TableContainer
             style={{
-              background: 'white',
-              margin: '  1.2rem auto 0 auto',
-              width: '96%',
+              background: "white",
+              margin: "  1.2rem auto 0 auto",
+              width: "96%",
             }}
           >
             <BasicTable
@@ -1898,9 +1897,9 @@ const ManagerContents = (props) => {
         {tradeApproval && tradeApproval.length > 0 && (
           <TableContainer
             style={{
-              background: 'white',
-              margin: '  1.2rem auto 0 auto',
-              width: '96%',
+              background: "white",
+              margin: "  1.2rem auto 0 auto",
+              width: "96%",
             }}
           >
             <BasicTable
@@ -1913,16 +1912,16 @@ const ManagerContents = (props) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 ManagerContents.propTypes = {
   displayC: PropTypes.bool,
   setDisplayC: PropTypes.func.isRequired,
   setEditProfile: PropTypes.func.isRequired,
-}
+};
 
-export default React.memo(ManagerContents)
+export default React.memo(ManagerContents);
 
 const TableContainer = styled.div`
   table {
@@ -1965,4 +1964,4 @@ const TableContainer = styled.div`
   table tr:hover {
     background-color: #ddd;
   }
-`
+`;
