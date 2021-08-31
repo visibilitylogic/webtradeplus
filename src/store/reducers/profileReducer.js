@@ -87,6 +87,13 @@ export default function profileReducer(state = initialState, action) {
         singleWithdrawals: action.payload,
         error: null,
       }
+    case actionTypes.GET_SINGLE_DETAILS:
+      return {
+        ...state,
+        loading: false,
+        singleUser: action.payload,
+        error: null,
+      }
 
     case actionTypes.GET_ALL_ORDERS:
       return {
@@ -107,7 +114,7 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        singleUser: action.payload,
+        profile: action.payload,
         error: null,
       }
     case actionTypes.GET_VERFIED_DETAILS:

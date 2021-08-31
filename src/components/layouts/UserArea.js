@@ -6,13 +6,15 @@ import { useActions } from '../hooks/useActions'
 import { message } from 'antd'
 
 const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
+  const { error } = useSelector((state) => state.profile)
   const { isAdmin, isManager, _id, autoTrade, liveTrade } = singleUser
   const [livestate, setLiveState] = useState(liveTrade)
   const [auto, setAuto] = useState(autoTrade)
-  const { error } = useSelector((state) => state.profile)
   const { setLiveTrade, setAutoTrade } = useActions()
+  console.log(livestate)
 
   const setTradeFunc = async () => {
+    console.log('2222')
     if (error) {
       message.error('Failed!!!')
     } else {
