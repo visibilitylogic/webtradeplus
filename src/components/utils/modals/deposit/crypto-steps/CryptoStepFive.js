@@ -58,6 +58,8 @@ const CryptoStepFive = ({
             style={{
               width: "39%",
               padding: "15px 30px",
+              height: '7vh'
+
             }}
             onClick={handleCryptoStepFive}
           >
@@ -68,7 +70,7 @@ const CryptoStepFive = ({
     )
   );
 };
-
+ 
 CryptoStepFive.propTypes = {
   cryptoStepFive: PropTypes.bool.isRequired,
   goBackToCryptoStepFour: PropTypes.func.isRequired,

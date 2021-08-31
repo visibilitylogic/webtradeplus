@@ -29,7 +29,7 @@ const UserHeader = ({ singleUser }) => {
                     : "https://p.kindpng.com/picc/s/78-785827_user-profile-avatar-login-account-male-user-icon.png"
                 }
                 alt="profile-pics"
-                style={{ width: "50px", borderRadius: "50%" }}
+                style={{ width: "50px", borderRadius: "50%" , height:'50px'}}
               />
             </div>
             <div className="dtls">
