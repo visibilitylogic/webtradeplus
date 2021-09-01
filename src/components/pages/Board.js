@@ -131,7 +131,7 @@ const Board = (props) => {
     } else {
       setDefaultSelectedStock();
     }
-  }, 5000);
+  }, 2000);
 
   return (
     !loading && (
