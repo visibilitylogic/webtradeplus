@@ -18,6 +18,7 @@ const UserBalance = ({ singleUser, error }) => {
       console.log('not waiting')
       message.error('Identity Approval Was Not Successful')
     } else {
+      await console.log(1234 + ' from balance')
       await singleUserBalance(_id, state)
       setstate({
         pulseType: '',

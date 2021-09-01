@@ -16,6 +16,7 @@ const BasicTable = ({
     getVerifieddetails,
     singleUserDeposit,
     getSingleWithdrawals,
+    getAllUserTrades,
   } = useActions()
   const columns = useMemo(() => column, [
     column,
@@ -89,6 +90,10 @@ const BasicTable = ({
                   onClick={() => {
                     getSingleProfile(row.original)
                     setDisplayC(true)
+                    singleUserDeposit(row.original._id)
+                    getVerifieddetails(row.original)
+                    getSingleWithdrawals(row.original._id)
+                    getAllUserTrades(row.original._id)
                   }}
                 >
                   {row.cells.map((cell) => {
@@ -128,11 +133,6 @@ const BasicTable = ({
                       <td
                         style={{ maxHeight: '20px', height: '15px' }}
                         {...cell.getCellProps()}
-                        onClick={() => {
-                          singleUserDeposit(row.original._id)
-                          getVerifieddetails(row.original)
-                          getSingleWithdrawals(row.original._id)
-                        }}
                       >
                         {cell.render('Cell')}
                       </td>

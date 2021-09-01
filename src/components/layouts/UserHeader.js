@@ -12,14 +12,6 @@ const UserHeader = ({ singleUser }) => {
   const { email, country, name, img, _id, isOnline } = singleUser
   const [userState, setUserState] = useState(isOnline)
 
-  useEffect(() => {
-    const details = {
-      id: _id,
-      isOnline: isOnline,
-    }
-    setUserState(checkUserOnlineStatus(details))
-  }, [])
-
   return (
     <>
       {singleUser && (
