@@ -62,10 +62,9 @@ const Withdrawals = ({ setWithdraw, country }) => {
         <div className="sidebar">
           <div className="links">
             <a href="#!">
-              <span className="font-size-15 font-weight-bold">
-                {user.currency}
-              </span>
+              {/* <span className="font-size-15 font-weight-bold"></span> */}
               <span className="font-size-11">
+                {user && user.currency === "USD" ? "$" : user && user.currency}
                 {`${new Intl.NumberFormat("en-US")
                   .format(user && user.wallet + user.bonus + user.profit)
                   .slice(0, 9)}`}
@@ -122,15 +121,19 @@ const Withdrawals = ({ setWithdraw, country }) => {
               <div className="withdraw-card">
                 <span className="title">FEES (3.00 %)</span>
                 <span>
+                  {user && user.currency === "USD"
+                    ? "$"
+                    : user && user.currency}
                   {addComma(percent)}
-                  {user.currency}
                 </span>
               </div>
               <div className="withdraw-card total">
                 <span className="title">TOTAL</span>
                 <span>
-                  {withdrawalAmount > 0 ? addComma(Math.round(amount)) : 0}
-                  {user.currency}
+                  {user && user.currency === "USD"
+                    ? "$"
+                    : user && user.currency}
+                  {withdrawalAmount > 0 ? addComma(amount.toFixed(2)) : 0}
                 </span>
               </div>
             </div>

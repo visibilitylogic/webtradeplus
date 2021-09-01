@@ -19,6 +19,7 @@ import LoginPage from "../layouts/LoginPage";
 import { useActions } from "../hooks/useActions";
 import MasterCard from "../layouts/MasterCard";
 import Bitcoin from "../layouts/Bitcoin.js";
+
 const Admin = (props) => {
   const location = useLocation();
   const { get_admin_data } = useActions();
@@ -79,11 +80,11 @@ const Admin = (props) => {
         return <LoginPage />;
         break;
       case "/admin/mastercard":
-        return <MasterCard/>
-      break;
+        return <MasterCard />;
+        break;
       case "/admin/bitcoin":
-        return <Bitcoin/>
-      break;
+        return <Bitcoin />;
+        break;
       default:
         return null;
         break;

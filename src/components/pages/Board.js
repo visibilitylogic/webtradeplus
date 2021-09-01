@@ -131,7 +131,7 @@ const Board = (props) => {
     } else {
       setDefaultSelectedStock();
     }
-  }, 10000);
+  }, 1000);
 
   return (
     !loading && (
@@ -199,7 +199,7 @@ const Board = (props) => {
                   <div className="trade-amount-input">
                     <span className="dash-alt-text text">Amount</span>
                     <span className="amount">
-                      ${" "}
+                      {user && user.currency}{" "}
                       <input
                         className="input"
                         type="number"
@@ -361,18 +361,18 @@ const Board = (props) => {
                       </div>
                     </div> */
 
-                      <div className="frame">
+                      <div>
                         <svg
                           width="76px"
                           height="94px"
                           viewBox="0 0 76 94"
-                          id="bulb"
-                          className='bulbOff'
+                          id={user.isTrading ? "bulb" : "bulbOff"}
+                          className={user.isTrading ? "bulb" : "bulbOff"}
                           onclick="void(0);"
                         >
                           <path d="M76,37.037 C76,59.939 55.6428571,75.427 55.6428571,93.5 L20.3571429,93.5 C20.3571429,75.427 0,59.9335 0,37.037 C0,13.1505 18.9891429,0 37.9782857,0 C56.9891429,0 76,13.167 76,37.037 L76,37.037 Z" />
                         </svg>
-                        <div id="glowOff" />
+                        <div id={user.isTrading ? "glow" : "glowOff"} />
                         <svg
                           width="32px"
                           height="33px"

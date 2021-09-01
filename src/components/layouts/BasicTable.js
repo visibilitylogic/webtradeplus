@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { useTable, useSortBy, usePagination } from 'react-table'
 import { useActions } from '../hooks/useActions'
 
-import FooterComponent from './FooterComponent'
+import FooterComponent from "./FooterComponent";
 const BasicTable = ({
   allUsers,
   setUserLevel,
@@ -43,8 +43,8 @@ const BasicTable = ({
       data,
     },
     useSortBy,
-    usePagination,
-  )
+    usePagination
+  );
 
   const {
     getTableProps,
@@ -59,9 +59,10 @@ const BasicTable = ({
     previousPage,
     page,
     prepareRow,
-  } = tableInstance
+  } = tableInstance;
 
-  const { pageIndex, pageSize } = state
+  const { pageIndex, pageSize } = state;
+
   return (
     <>
       <table {...getTableProps()}>
@@ -70,13 +71,13 @@ const BasicTable = ({
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render('Header')}{' '}
+                  {column.render("Header")}{" "}
                   <span>
                     {column.isSorted
                       ? column.isSortedDesc
-                        ? '  ⬇️'
-                        : '   ⬆️'
-                      : ''}
+                        ? "  ⬇️"
+                        : "   ⬆️"
+                      : ""}
                   </span>
                 </th>
               ))}
@@ -139,7 +140,7 @@ const BasicTable = ({
         nextPage={nextPage}
       />
     </>
-  )
-}
+  );
+};
 
-export default React.memo(BasicTable)
+export default React.memo(BasicTable);

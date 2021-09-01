@@ -20,7 +20,7 @@ const DashboardFooter = ({ setSupport }) => {
     defaultSelectedStock
   );
 
-  const balance = user && user.wallet + user.bonus + user.profit;
+  const balance = user && user.wallet + user.bonus;
 
   const equity =
     Object.keys(activeTrade).length > 0
@@ -49,7 +49,8 @@ const DashboardFooter = ({ setSupport }) => {
         </div>
         <div className="accounting-area">
           <p>
-            Balance: {user && user.currency}
+            Balance:{" "}
+            {user && user.currency === "USD" ? "$" : user && user.currency}
             {Object.keys(activeTrade).length > 0
               ? new Intl.NumberFormat("en-US")
                   .format(balance - activeTrade.margin)
@@ -76,16 +77,19 @@ const DashboardFooter = ({ setSupport }) => {
           </p>{" "}
           |
           <p>
-            &nbsp;Equity: $
+            &nbsp;Equity:{" "}
+            {user && user.currency === "USD" ? "$" : user && user.currency}
             {new Intl.NumberFormat("en-US").format(equity).slice(0, 9)}
             &nbsp;|
           </p>
           <p>
-            &nbsp;Margin: $
+            &nbsp;Margin:{" "}
+            {user && user.currency === "USD" ? "$" : user && user.currency}
             {Object.keys(activeTrade).length > 0 ? activeTrade.margin : 0} |
           </p>
           <p>
-            &nbsp;Free Margin: {user && user.currency}
+            &nbsp;Free Margin:{" "}
+            {user && user.currency === "USD" ? "$" : user && user.currency}
             {new Intl.NumberFormat("en-US").format(freeMargin).slice(0, 9)}
           </p>
         </div>
