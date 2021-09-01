@@ -24,12 +24,15 @@ const DashboardFooter = ({ setSupport }) => {
 
   const equity =
     Object.keys(activeTrade).length > 0
-      ? balance + activeTrade.margin + parseFloat(profitOrLoss)
+      ? balance +
+        parseFloat(activeTrade.margin) +
+        parseFloat(profitOrLoss) -
+        parseFloat(activeTrade.margin)
       : 0;
 
   const freeMargin =
     Object.keys(activeTrade).length > 0
-      ? balance + parseFloat(profitOrLoss)
+      ? balance + (parseFloat(profitOrLoss) - parseFloat(activeTrade.margin))
       : 0;
 
   return (
