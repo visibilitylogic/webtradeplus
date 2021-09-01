@@ -8556,3 +8556,16 @@ body {
   margin-top: -52px;
   width: 18px !important;
 }
+
+.MuiDataGrid-root .MuiDataGrid-columnHeader--alignRight .MuiDataGrid-columnHeaderDraggableContainer, .MuiDataGrid-root .MuiDataGrid-columnHeader--alignRight .MuiDataGrid-columnHeaderTitleContainer {
+  flex-direction: row !important;
+}
+.MuiDataGrid-root .MuiDataGrid-cell--textRight {
+  text-align: left !important;
+}
+.MuiDataGrid-root .MuiDataGrid-columnHeaderTitle {
+  overflow: hidden;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: clip;
+}
