@@ -47,6 +47,7 @@ const ManagerContents = (props) => {
     allTrades,
     allUsers,
     singleDeposit,
+    userTrades,
     userAutoCopyTrade,
     tradeApproval,
     singleUser,
@@ -109,7 +110,7 @@ const ManagerContents = (props) => {
 
   console.log(singleWithdrawals)
 
-  console.log(allSingleDeposits)
+  console.log(userTrades)
   // auth
   const setAuth0 = useCallback(() => {
     setAuth(!auth)
@@ -177,18 +178,9 @@ const ManagerContents = (props) => {
     setPayments(false)
     setSecu(false)
     setOrderT(false)
-    ;(async () => {
-      const { data } = await axios(
-        `https://trade-backend-daari.ondigitalocean.app/api/trade/deposit/${singleUser._id}`,
-      )
-      setCurrentDeposit(data)
-    })()
   }
 
-  console.log(currentDeposit)
-
   const handleSetWithd = () => {
-    getSingleWithdrawals(singleUser._id)
     setWithd(true)
     setCard(false)
     setBal(false)
@@ -278,9 +270,9 @@ const ManagerContents = (props) => {
     }
   }
 
-  useEffect(() => {
-    getUserAutoCopyTrade(user._id)
-  }, [])
+  // useEffect(() => {
+  //   getUserAutoCopyTrade(singleUser._id)
+  // }, [])
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
