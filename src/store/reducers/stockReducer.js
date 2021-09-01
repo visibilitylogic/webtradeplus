@@ -1,7 +1,7 @@
 import * as actionTypes from "../action-types";
 
 const initialState = {
-  loading: true,
+  loading: false,
   crypto: [],
   iex: [],
   commodities: [],
@@ -16,6 +16,11 @@ const initialState = {
 
 export default function stockReducer(state = initialState, action) {
   switch (action.type) {
+    // case actionTypes.LOAD_STOCK:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
     case actionTypes.GET_CRYPTO_ASSETS:
       return {
         ...state,

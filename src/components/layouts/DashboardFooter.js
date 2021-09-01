@@ -22,14 +22,18 @@ const DashboardFooter = ({ setSupport }) => {
 
   const equity =
     Object.keys(activeTrade).length > 0
-      ? (user.wallet + activeTrade.margin + parseFloat(profitOrLoss))
+      ? (
+          (user && user.wallet + user.bonus + user.profit) +
+          activeTrade.margin +
+          parseFloat(profitOrLoss)
+        )
           .toString()
           .slice(0, 8)
       : 0;
 
   const freeMargin =
-    Object.keys(activeTrade).length > 0
-      ? user.wallet + parseFloat(profitOrLoss)
+    Object.keys(activeTrade).length > 0 && user
+      ? user.wallet + user.bonus + user.profit + parseFloat(profitOrLoss)
       : 0;
 
   return (
@@ -37,7 +41,7 @@ const DashboardFooter = ({ setSupport }) => {
       <div className="footer-left-side">
         <div className="admin-text-wrapper">
           <FaRegGem size={15} className="mr-2" />
-          <p>Admin</p>
+          <p>{user && user.isAdmin ? "Admin" : "User"}</p>
         </div>
         <div className="theme-wrapper">
           <p className="mr-2">Dark</p>
@@ -47,7 +51,10 @@ const DashboardFooter = ({ setSupport }) => {
         <div className="accounting-area">
           <p>
             Balance: {user && user.currency}
-            {new Intl.NumberFormat("en-US").format(user && user.wallet)} |
+            {new Intl.NumberFormat("en-US")
+              .format(user && user.wallet + user.bonus + user.profit)
+              .slice(0, 8)}{" "}
+            |
           </p>
           <p
             style={{
@@ -63,11 +70,13 @@ const DashboardFooter = ({ setSupport }) => {
             }}
           >
             &nbsp;P/L: {user && user.currency}
-            {new Intl.NumberFormat("en-US").format(profitOrLoss)}&nbsp;
+            {new Intl.NumberFormat("en-US").format(profitOrLoss).slice(0, 8)}
+            &nbsp;
           </p>{" "}
           |
           <p>
-            &nbsp;Equity: ${new Intl.NumberFormat("en-US").format(equity)}
+            &nbsp;Equity: $
+            {new Intl.NumberFormat("en-US").format(equity).slice(0, 8)}
             &nbsp;|
           </p>
           <p>
@@ -76,7 +85,7 @@ const DashboardFooter = ({ setSupport }) => {
           </p>
           <p>
             &nbsp;Free Margin: {user && user.currency}
-            {freeMargin}
+            {new Intl.NumberFormat("en-US").format(freeMargin).slice(0, 8)}
           </p>
         </div>
       </div>

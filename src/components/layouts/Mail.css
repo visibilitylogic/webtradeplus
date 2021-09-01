@@ -8427,3 +8427,7 @@ tspan {
   content: "\f503";
   cursor: pointer !important;
 }
+
+.ant-card-body {
+  padding: 65px;
+}
