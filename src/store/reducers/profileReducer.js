@@ -1,7 +1,7 @@
 import * as actionTypes from '../action-types'
 
 const initialState = {
-  profile: null,
+  // profile: null,
   error: null,
   loading: true,
   depositAmount: 0,
@@ -21,7 +21,6 @@ const initialState = {
   userMargin: 1,
   singleUser: null,
   singleWithdrawals: [],
-  singleDeposit: [],
   allSingleDeposits: [],
   DepositApproval: {},
   singleUserVerifedDetails: {},
@@ -56,12 +55,12 @@ export default function profileReducer(state = initialState, action) {
         DepositApproval: action.payload,
         error: null,
       }
-    case actionTypes.GET_SINGLE_DEPOSIT:
-      return {
-        ...state,
-        singleDeposit: action.payload,
-        error: null,
-      }
+    // case actionTypes.GET_SINGLE_DEPOSIT:
+    //   return {
+    //     ...state,
+    //     singleDeposit: action.payload,
+    //     error: null,
+    //   }
 
     case actionTypes.SET_WITHDRAWAL_AMOUNT:
       return {

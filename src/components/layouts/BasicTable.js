@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react'
 import { useTable, useSortBy, usePagination } from 'react-table'
-import { getSingleWithdrawals } from '../../store/action-creators/profileActions'
 import { useActions } from '../hooks/useActions'
 
 import FooterComponent from './FooterComponent'
@@ -12,9 +11,28 @@ const BasicTable = ({
   column,
   type,
 }) => {
-  const columns = useMemo(() => column, [column, type])
-  const data = useMemo(() => allUsers, [allUsers])
-  const { getSingleProfile, getVerifieddetails } = useActions()
+  const {
+    getSingleProfile,
+    getVerifieddetails,
+    singleUserDeposit,
+    getSingleWithdrawals,
+  } = useActions()
+  const columns = useMemo(() => column, [
+    column,
+    type,
+    getSingleProfile,
+    getVerifieddetails,
+    singleUserDeposit,
+    getSingleWithdrawals,
+  ])
+  const data = useMemo(() => allUsers, [
+    allUsers,
+    type,
+    getSingleProfile,
+    getVerifieddetails,
+    singleUserDeposit,
+    getSingleWithdrawals,
+  ])
   const tableInstance = useTable(
     {
       columns,
@@ -69,7 +87,6 @@ const BasicTable = ({
                 <tr
                   {...row.getRowProps()}
                   onClick={() => {
-                    getSingleWithdrawals(row.original._id)
                     getSingleProfile(row.original)
                     setDisplayC(true)
                   }}
@@ -99,19 +116,23 @@ const BasicTable = ({
                   })}
                 </tr>
               )
-            } else if (type === 'verifiedUsers' || type === 'withdrawal') {
+            } else if (
+              type === 'singlepayment' ||
+              type === 'verifiedUsers' ||
+              type === 'withdrawal'
+            ) {
               return (
-                <tr
-                  {...row.getRowProps()}
-                  onClick={() => {
-                    getVerifieddetails(row.original)
-                  }}
-                >
+                <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
                       <td
                         style={{ maxHeight: '20px', height: '15px' }}
                         {...cell.getCellProps()}
+                        onClick={() => {
+                          singleUserDeposit(row.original._id)
+                          getVerifieddetails(row.original)
+                          getSingleWithdrawals(row.original._id)
+                        }}
                       >
                         {cell.render('Cell')}
                       </td>
