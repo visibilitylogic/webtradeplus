@@ -14,7 +14,6 @@ const UserBalance = ({ singleUser, error }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (error) {
-      console.log('not waiting')
       message.error('Identity Approval Was Not Successful')
     } else {
       await singleUserBalance(_id, state)
