@@ -12,7 +12,7 @@ export const depositHeader = [
     field: "Ref",
     headerName: "Ref",
     accessor: "Ref",
-    width: 180,
+    width: 116,
     type: "text",
     // headerAlign: "center",
     // accessor: ({ Ref }) => <strong> {Ref}</strong>,
@@ -23,7 +23,7 @@ export const depositHeader = [
     headerName: "Name",
     type: "text",
     // headerAlign: "center",
-    width: 180,
+    width: 116,
     accessor: "name",
   },
 
@@ -33,7 +33,7 @@ export const depositHeader = [
     headerName: "Created date",
     type: "date",
     // headerAlign: "center",
-    width: 180,
+    width: 116,
     accessor: "time",
     Cell: ({ value }) => {
       return format(new Date(value), "dd/MM/yyyy");
@@ -45,7 +45,7 @@ export const depositHeader = [
     headerName: "Amount Paid",
     type: "number",
     // headerAlign: "center",
-    width: 180,
+    width: 116,
     accessor: "amount",
     // accessor: ({ amount }) => <strong>{amount}</strong>,
   },
@@ -55,7 +55,7 @@ export const depositHeader = [
     headerName: "Fee",
     type: "number",
     // headerAlign: "center",
-    width: 180,
+    width: 116,
     accessor: "fee",
   },
 
@@ -65,7 +65,7 @@ export const depositHeader = [
     headerName: "Wallet Received",
     type: "date",
     // headerAlign: "center",
-    width: 180,
+    width: 116,
     accessor: "__v",
   },
 
@@ -75,7 +75,7 @@ export const depositHeader = [
     accessor: "amount",
     type: "number",
     // headerAlign: "center",
-    width: 180,
+    width: 116,
     // accessor: ({ amount }) => amount,
   },
   {
@@ -84,7 +84,7 @@ export const depositHeader = [
     headerName: "Payment Gateway",
     type: "text",
     // headerAlign: "center",
-    width: 180,
+    width: 116,
     accessor: "method",
   },
   {
@@ -92,7 +92,7 @@ export const depositHeader = [
     headerName: "Payment Details",
     type: "text",
     // headerAlign: "center",
-    width: 180,
+    width: 116,
     // accessor: (method) => <PaymentModal method={method} />,
     accessor: "method",
   },
@@ -101,7 +101,7 @@ export const depositHeader = [
     headerName: "Status",
     type: "text",
     // headerAlign: "center",
-    width: 180,
+    width: 116,
     backgroundColor: "green",
     renderCell: (props) => {
       return (
@@ -122,7 +122,7 @@ export const depositHeader = [
   {
     field: "action",
     headerName: "Action",
-    width: 180,
+    width: 116,
     // accessor: (status) => <ApproveDeposit status={status} />,
     accessor: "status",
     renderCell: (props) => {

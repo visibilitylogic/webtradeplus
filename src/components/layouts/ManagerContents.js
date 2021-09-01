@@ -332,7 +332,7 @@ const ManagerContents = (props) => {
       <div
         className="manager-tab-dtls"
         manager-tab-dtls="bank-transfers"
-        style={{ marginLeft: "4%" }}
+        
       >
         {bankTransfers && bankTransfers.length > 0 && (
           <TableContainer>
@@ -349,7 +349,7 @@ const ManagerContents = (props) => {
       <div
         className="manager-tab-dtls"
         manager-tab-dtls="payments"
-        style={{ marginLeft: "4%" }}
+        
       >
         {allDeposits && allDeposits.length > 0 && (
           <>
@@ -374,7 +374,7 @@ const ManagerContents = (props) => {
       <div
         className="manager-tab-dtls"
         manager-tab-dtls="subscriptions"
-        style={{ marginLeft: "4%" }}
+        
       >
         <table>
           <tbody>
@@ -402,7 +402,7 @@ const ManagerContents = (props) => {
       <div
         className="manager-tab-dtls"
         manager-tab-dtls="identity"
-        style={{ marginLeft: "4%" }}
+        
       >
         {allVerifiedUsers && allVerifiedUsers.length > 0 && (
           <CustomTable
@@ -426,7 +426,7 @@ const ManagerContents = (props) => {
       <div
         className="manager-tab-dtls"
         manager-tab-dtls="users"
-        style={{ marginLeft: "4%" }}
+        
       >
         {!displayC && allUsers && allUsers.length > 0 && (
           <div className="first-sec">
@@ -985,7 +985,7 @@ const ManagerContents = (props) => {
       <div
         className="manager-tab-dtls"
         manager-tab-dtls="orders"
-        style={{ marginLeft: "4%" }}
+        
       >
         {allTrades && allTrades.length > 0 && (
           <TableContainer>
@@ -1000,7 +1000,7 @@ const ManagerContents = (props) => {
       <div
         className="manager-tab-dtls"
         manager-tab-dtls="withdraw"
-        style={{ marginLeft: "4%" }}
+        
       >
         {allWithdrawals && allWithdrawals.length > 0 && (
           <TableContainer>

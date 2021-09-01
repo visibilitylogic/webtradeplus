@@ -131,7 +131,7 @@ const Board = (props) => {
     } else {
       setDefaultSelectedStock();
     }
-  }, 1000);
+  }, 5000);
 
   return (
     !loading && (
@@ -199,7 +199,9 @@ const Board = (props) => {
                   <div className="trade-amount-input">
                     <span className="dash-alt-text text">Amount</span>
                     <span className="amount">
-                      {user && user.currency}{" "}
+                      {user && user.currency === "USD"
+                        ? "$"
+                        : user && user.currency}{" "}
                       <input
                         className="input"
                         type="number"
