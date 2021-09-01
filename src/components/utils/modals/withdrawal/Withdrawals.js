@@ -66,9 +66,9 @@ const Withdrawals = ({ setWithdraw, country }) => {
                 {user.currency}
               </span>
               <span className="font-size-11">
-                {`${new Intl.NumberFormat("en-US").format(
-                  user ? user.wallet : 0
-                )}`}
+                {`${new Intl.NumberFormat("en-US")
+                  .format(user && user.wallet + user.bonus + user.profit)
+                  .slice(0, 9)}`}
               </span>
             </a>
           </div>

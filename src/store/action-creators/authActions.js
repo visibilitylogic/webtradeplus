@@ -93,28 +93,32 @@ export const loginUser = (email, password) => async (dispatch) => {
   }
 };
 
-export const logout = (id) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  const body = JSON.stringify({ isOnline: false });
-  try {
-    const { data } = await axios.put(
-      `${BASE_URL}/api/users/set-user-presence/${id}`,
-      body,
-      config
-    );
-    dispatch({
-      type: actionTypes.LOGOUT,
-      payload: data,
-    });
-  } catch (error) {
-    console.log(error);
-    dispatch({
-      type: actionTypes.LOGOUT_FAILED,
-      payload: error.message,
-    });
-  }
-};
+// export const logout = () => (dispatch) => {
+//   dispatch({ type: actionTypes.LOGOUT });
+//   // const config = {
+//   //   headers: {
+//   //     "Content-Type": "application/json",
+//   //   },
+//   // };
+//   // const body = JSON.stringify({ isOnline: false });
+//   // try {
+//   //   const { data } = await axios.put(
+//   //     `${BASE_URL}/api/users/set-user-presence/${id}`,
+//   //     body,
+//   //     config
+//   //   );
+//   //   dispatch({
+//   //     type: actionTypes.LOGOUT,
+//   //     payload: data,
+//   //   });
+//   // } catch (error) {
+//   //   console.log(error);
+//   //   dispatch({
+//   //     type: actionTypes.LOGOUT_FAILED,
+//   //     payload: error.message,
+//   //   });
+//   // }
+// };
+
+export const logout = () => (dispatch) =>
+  dispatch({ type: actionTypes.LOGOUT });
