@@ -1,7 +1,7 @@
 import { format } from "date-fns";
-import ApproveDeposit from "./ApproveDeposit";
-import PaymentModal from "./PaymentModal";
-import DepositState from "./DepositState";
+// import ApproveDeposit from "./ApproveDeposit";
+// import PaymentModal from "./PaymentModal";
+// import DepositState from "./DepositState";
 
 const checkIfApproved = (status) => {
   return status === "Approved" ? "none" : "block";
@@ -15,7 +15,7 @@ export const depositHeader = [
     width: 180,
     type: "text",
     // headerAlign: "center",
-    accessor: ({ Ref }) => <strong> {Ref}</strong>,
+    // accessor: ({ Ref }) => <strong> {Ref}</strong>,
   },
   {
     id: "name",
@@ -47,7 +47,7 @@ export const depositHeader = [
     // headerAlign: "center",
     width: 180,
     accessor: "amount",
-    accessor: ({ amount }) => <strong>{amount}</strong>,
+    // accessor: ({ amount }) => <strong>{amount}</strong>,
   },
   {
     id: "Fee",
@@ -103,17 +103,16 @@ export const depositHeader = [
     // headerAlign: "center",
     width: 180,
     backgroundColor: "green",
-    renderCell: (cellValues) => {
+    renderCell: (props) => {
       return (
         <button
           style={{
-            backgroundColor:
-              cellValues.row.status === "Approved" ? "green" : "red",
+            backgroundColor: props.row.status === "Approved" ? "green" : "red",
             border: "none",
             width: "100%",
           }}
         >
-          {cellValues.row.status}
+          {props.row.status}
         </button>
       );
     },
@@ -136,7 +135,7 @@ export const depositHeader = [
               width: "50%",
             }}
           >
-            Approve
+            Accept
           </button>
 
           <button

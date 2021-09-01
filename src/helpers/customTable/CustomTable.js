@@ -23,7 +23,7 @@ const CustomTable = ({
 }) => {
   console.log(`allUsers`, allUsers);
   const dataRows = allUsers.map(
-    (value) => value.userId && { ...value, id: value.userId, width: "100%" }
+    (value) => value.userId && { ...value, id: value.userId }
   );
 
   const classes = useStyles();

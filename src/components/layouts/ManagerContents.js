@@ -407,20 +407,20 @@ const ManagerContents = (props) => {
         style={{ marginLeft: "4%" }}
       >
         {allVerifiedUsers && allVerifiedUsers.length > 0 && (
-          // <CustomTable
-          //   allUsers={allVerifiedUsers}
-          //   user={user}
-          //   column={allVerifiedUsersHeader}
-          //   type="verifiedUsers"
-          // />
-          <TableContainer>
-            <BasicTable
-              allUsers={allVerifiedUsers}
-              user={user}
-              column={allVerifiedUsersHeader}
-              type="verifiedUsers"
-            />
-          </TableContainer>
+          <CustomTable
+            allUsers={allVerifiedUsers}
+            user={user}
+            column={allVerifiedUsersHeader}
+            type="verifiedUsers"
+          />
+          // <TableContainer>
+          //   <BasicTable
+          //     allUsers={allVerifiedUsers}
+          //     user={user}
+          //     column={allVerifiedUsersHeader}
+          //     type="verifiedUsers"
+          //   />
+          // </TableContainer>
         )}
       </div>
 
