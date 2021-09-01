@@ -315,7 +315,9 @@ const DashboardHeader = ({ support, setSupport, data }) => {
               title={
                 <div className="account-wrapper">
                   <h6 className="mb-0">
-                    {user && user.currency}
+                    {user && user.currency === "USD"
+                      ? "$"
+                      : user && user.currency}
                     {new Intl.NumberFormat("en-US")
                       .format(user && user.wallet + user.bonus + user.profit)
                       .slice(0, 9)}
@@ -394,7 +396,9 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                       REAL ACCOUNT
                     </h6>
                     <p className="amount mb-0">
-                      {user && user.currency}
+                      {user && user.currency === "USD"
+                        ? "$"
+                        : user && user.currency}
                       {new Intl.NumberFormat("en-US").format(0)
                         ? new Intl.NumberFormat("en-US").format(0)
                         : new Intl.NumberFormat("en-US").format(0)}
@@ -423,7 +427,10 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                     <h6 style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                       Total ACCOUNT{" "}
                       <span style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
-                        = {user && user.currency}
+                        ={" "}
+                        {user && user.currency === "USD"
+                          ? "$"
+                          : user && user.currency}
                         {new Intl.NumberFormat("en-US")
                           .format(
                             user && user.wallet + user.bonus + user.profit
@@ -435,9 +442,11 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                       className="amount mb-0"
                       style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
                     >
-                      {user && user.currency}
+                      {user && user.currency === "USD"
+                        ? "$"
+                        : user && user.currency}
                       {new Intl.NumberFormat("en-US")
-                        .format(user && user.wallet + user.bonus + user.profit)
+                        .format(user && user.wallet + user.bonus)
                         .slice(0, 9)}
                     </p>
                   </div>

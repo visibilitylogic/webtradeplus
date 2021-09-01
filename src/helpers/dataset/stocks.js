@@ -17,6 +17,6 @@ export const stockAssets = [
   },
   {
     id: 5,
-    name: "ETF",
+    name: "INDICES",
   },
 ];
