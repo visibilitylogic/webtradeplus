@@ -154,7 +154,7 @@ export const setAutoTrade = (details) => async (dispatch) => {
 
   const body = JSON.stringify(details)
   try {
-    await axios.put(`${BASE_URL}/api/users/autotrade/`, body, config)
+    await axios.put(`${BASE_URL}/api/users/autotrade`, body, config)
     dispatch({
       type: actionTypes.SET_AUTO_TRADE,
     })
@@ -165,7 +165,7 @@ export const setAutoTrade = (details) => async (dispatch) => {
     })
   }
 }
-export const checkUserOnlineStatus = (userId, details) => async (dispatch) => {
+export const checkUserOnlineStatus = (details) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -174,7 +174,7 @@ export const checkUserOnlineStatus = (userId, details) => async (dispatch) => {
 
   const body = JSON.stringify(details)
   try {
-    await axios.put(`/api/users/set-user-presence/${userId}`, body, config)
+    await axios.put(`${BASE_URL}/api/users/set-user-presence`, body, config)
     dispatch({
       type: actionTypes.USER_ONLINE_STATUS,
     })
@@ -628,6 +628,26 @@ export const purchaseStockAsset = (userId, data) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: actionTypes.SET_ERROR,
+      payload: error.message,
+    })
+  }
+}
+export const singleUserBalance = (userId, data) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+  const body = JSON.stringify(data)
+  try {
+    await axios.post(`${BASE_URL}/api/users/pulse/${userId}`, body, config)
+
+    dispatch({
+      type: actionTypes.SINGLE_USER_BALANCE,
+    })
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
       payload: error.message,
     })
   }
