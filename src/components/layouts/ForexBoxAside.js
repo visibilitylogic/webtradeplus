@@ -26,25 +26,12 @@ const ForexBoxAside = ({ selectedStock, setSelectedStock }) => {
   );
 };
 
-// selectedStock === menu.id
-// ? "active"
-// : menu.id === 6
-// ? "fMore"
-// : selectedStock === 6
-// ? "active fMore"
-// : ""
-
-// ${
-//   menu.id === 6 ? "fMore" : selectedStock === 6 ? "active fMore" : ""
-// }
-
 const menus = [
   { id: 1, title: "Crypto" },
   { id: 2, title: "Forex" },
   { id: 3, title: "Stocks" },
   { id: 4, title: "Commodities" },
-  { id: 5, title: "ETF" },
-  // { id: 6, title: "Find More" },
+  { id: 5, title: "INDICES" },
 ];
 
 ForexBoxAside.propTypes = {

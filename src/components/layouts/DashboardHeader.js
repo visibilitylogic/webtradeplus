@@ -33,22 +33,13 @@ import { useActions } from "../hooks/useActions";
 import Withdrawals from "../utils/modals/withdrawal/Withdrawals";
 import CryptoStepSix from "../utils/modals/deposit/crypto-steps/CryptoStepSix";
 
-const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
+const DashboardHeader = ({ support, setSupport, data }) => {
   const history = useHistory();
   const { user, loading } = useSelector((state) => state.auth);
+  const { activeTrade } = useSelector((state) => state.profile);
   const { isDarkMode } = useSelector((state) => state.theme);
 
-  const {
-    logout,
-    setCurrentSelectedStock,
-    getWebData,
-    getAllStockAssets,
-    getCryptoAssets,
-    getCommodityStocks,
-    getForexStocks,
-    getExchangeTradedFund,
-    getInvestorsExchange,
-  } = useActions();
+  const { logout, setCurrentSelectedStock } = useActions();
 
   const [selectedStock, setSelectedStock] = useState(1);
   const [personalData, setPersonalData] = useState(false);
@@ -72,6 +63,8 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
     yourCountry: "",
     yourCity: "",
   });
+
+  const balance = user && user.wallet + user.bonus;
 
   //   MODAL STATES
   const [showCredit, setShowCredit] = useState(false);
@@ -103,23 +96,9 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
     }
   };
 
-  const handleSelectedStockAsset = () => {
-    if (selectedStock === 0) {
-      return getAllStockAssets();
-    } else if (selectedStock === 1) {
-      return getCryptoAssets();
-    } else if (selectedStock === 2) {
-      return getForexStocks();
-    } else if (selectedStock === 3) {
-      return getInvestorsExchange();
-    } else if (selectedStock === 4) {
-      return getCommodityStocks();
-    } else {
-      return getExchangeTradedFund();
-    }
-  };
-
-  // useInterval(getWebData, 10000);
+  // useInterval(() => {
+  //   loadUser(user && userId);
+  // }, 10000);
 
   return (
     !loading && (
@@ -149,7 +128,6 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
                   onClick={() => {
                     setSelectedStock(stock.id);
                     setOpenForex(true);
-                    // handleSelectedStockAsset();
                   }}
                   className={`stock-nav-item ${
                     isDarkMode
@@ -340,10 +318,16 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
               title={
                 <div className="account-wrapper">
                   <h6 className="mb-0">
-                    {user && user.currency}
-                    {new Intl.NumberFormat("en-US")
-                      .format(user && user.wallet + user.bonus + user.profit)
-                      .slice(0, 8)}
+                    {user && user.currency === "USD"
+                      ? "$"
+                      : user && user.currency}
+                    {Object.keys(activeTrade).length > 0
+                      ? new Intl.NumberFormat("en-US")
+                          .format(balance - activeTrade.margin)
+                          .slice(0, 9)
+                      : new Intl.NumberFormat("en-US")
+                          .format(balance)
+                          .slice(0, 9)}
                   </h6>
                 </div>
               }
@@ -419,7 +403,9 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
                       REAL ACCOUNT
                     </h6>
                     <p className="amount mb-0">
-                      {user && user.currency}
+                      {user && user.currency === "USD"
+                        ? "$"
+                        : user && user.currency}
                       {new Intl.NumberFormat("en-US").format(0)
                         ? new Intl.NumberFormat("en-US").format(0)
                         : new Intl.NumberFormat("en-US").format(0)}
@@ -448,32 +434,33 @@ const DashboardHeader = ({ data, support, setSupport, handleViewUpdate }) => {
                     <h6 style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                       Total ACCOUNT{" "}
                       <span style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
-                        = {user && user.currency}
-                        {new Intl.NumberFormat("en-US").format(
-                          user && user.wallet
-                        )
-                          ? new Intl.NumberFormat("en-US").format(
-                              user && user.wallet
-                            )
-                          : new Intl.NumberFormat("en-US").format(
-                              user && user.wallet
-                            )}
+                        ={" "}
+                        {user && user.currency === "USD"
+                          ? "$"
+                          : user && user.currency}
+                        {Object.keys(activeTrade).length > 0
+                          ? new Intl.NumberFormat("en-US")
+                              .format(balance - activeTrade.margin)
+                              .slice(0, 9)
+                          : new Intl.NumberFormat("en-US")
+                              .format(balance)
+                              .slice(0, 9)}
                       </span>
                     </h6>
                     <p
                       className="amount mb-0"
                       style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
                     >
-                      {user && user.currency}
-                      {new Intl.NumberFormat("en-US").format(
-                        user && user.wallet
-                      )
-                        ? new Intl.NumberFormat("en-US").format(
-                            user && user.wallet
-                          )
-                        : new Intl.NumberFormat("en-US").format(
-                            user && user.wallet
-                          )}
+                      {user && user.currency === "USD"
+                        ? "$"
+                        : user && user.currency}
+                      {Object.keys(activeTrade).length > 0
+                        ? new Intl.NumberFormat("en-US")
+                            .format(balance - activeTrade.margin)
+                            .slice(0, 9)
+                        : new Intl.NumberFormat("en-US")
+                            .format(balance)
+                            .slice(0, 9)}
                     </p>
                   </div>
                   <div>
@@ -596,7 +583,6 @@ DashboardHeader.propTypes = {
   data: PropTypes.object.isRequired,
   support: PropTypes.bool.isRequired,
   setSupport: PropTypes.func.isRequired,
-  handleViewUpdate: PropTypes.func.isRequired,
 };
 
 export default DashboardHeader;

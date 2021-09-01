@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { useTable, useSortBy, usePagination } from "react-table";
-import { getSingleWithdrawals } from "../../store/action-creators/profileActions";
 import { useActions } from "../hooks/useActions";
 
 import FooterComponent from "./FooterComponent";
@@ -12,11 +11,35 @@ const BasicTable = ({
   column,
   type,
 }) => {
-  // console.log(`columns`, allUsers);
-  // console.log(`column`, column);
-  const columns = useMemo(() => column, [column, type]);
-  const data = useMemo(() => allUsers, [allUsers]);
-  const { getSingleProfile, getVerifieddetails } = useActions();
+  const {
+    getSingleProfile,
+    getVerifieddetails,
+    singleUserDeposit,
+    getSingleWithdrawals,
+    getAllUserTrades,
+  } = useActions();
+  const columns = useMemo(
+    () => column,
+    [
+      column,
+      type,
+      getSingleProfile,
+      getVerifieddetails,
+      singleUserDeposit,
+      getSingleWithdrawals,
+    ]
+  );
+  const data = useMemo(
+    () => allUsers,
+    [
+      allUsers,
+      type,
+      getSingleProfile,
+      getVerifieddetails,
+      singleUserDeposit,
+      getSingleWithdrawals,
+    ]
+  );
   const tableInstance = useTable(
     {
       columns,
@@ -72,9 +95,12 @@ const BasicTable = ({
                 <tr
                   {...row.getRowProps()}
                   onClick={() => {
-                    getSingleWithdrawals(row.original._id);
                     getSingleProfile(row.original);
                     setDisplayC(true);
+                    singleUserDeposit(row.original._id);
+                    getVerifieddetails(row.original);
+                    getSingleWithdrawals(row.original._id);
+                    getAllUserTrades(row.original._id);
                   }}
                 >
                   {row.cells.map((cell) => {
@@ -102,15 +128,13 @@ const BasicTable = ({
                   })}
                 </tr>
               );
-            } else if (type === "verifiedUsers" || type === "withdrawal") {
-              console.log(`row.original`, row.oriiginal);
+            } else if (
+              type === "singlepayment" ||
+              type === "verifiedUsers" ||
+              type === "withdrawal"
+            ) {
               return (
-                <tr
-                  {...row.getRowProps()}
-                  onClick={() => {
-                    getVerifieddetails(row.original);
-                  }}
-                >
+                <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
                       <td

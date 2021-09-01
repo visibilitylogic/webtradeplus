@@ -11,10 +11,8 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
   const [livestate, setLiveState] = useState(liveTrade)
   const [auto, setAuto] = useState(autoTrade)
   const { setLiveTrade, setAutoTrade } = useActions()
-  console.log(livestate)
 
   const setTradeFunc = async () => {
-    console.log('2222')
     if (error) {
       message.error('Failed!!!')
     } else {

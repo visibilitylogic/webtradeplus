@@ -55,6 +55,7 @@ const ManagerContents = (props) => {
     allTrades,
     allUsers,
     singleDeposit,
+    userTrades,
     userAutoCopyTrade,
     tradeApproval,
     singleUser,
@@ -97,13 +98,14 @@ const ManagerContents = (props) => {
   const [declinedMessage, setDeclinedMessage] = useState("");
   const [userLevel, setUserLevel] = useState("");
   const [currentDeposit, setCurrentDeposit] = useState([]);
+  const [state, setstate] = useState("");
 
   //
   //setAutoTrade
-  const [trade, setTrade] = useState({
-    id: user._id,
-    authEnabled: false,
-  });
+  // const [trade, setTrade] = useState({
+  //   id: user._id,
+  //   authEnabled: false,
+  // })
   const [notification, setNotification] = useState({
     id: user._id,
     notificationEnabled: user.notificationsEnabled,
@@ -114,6 +116,9 @@ const ManagerContents = (props) => {
     // user.notificationsEnabled,
   });
 
+  console.log(singleWithdrawals);
+
+  console.log(userTrades);
   // auth
   const setAuth0 = useCallback(() => {
     setAuth(!auth);
@@ -181,16 +186,9 @@ const ManagerContents = (props) => {
     setPayments(false);
     setSecu(false);
     setOrderT(false);
-    (async () => {
-      const { data } = await axios(
-        `https://trade-backend-daari.ondigitalocean.app/api/trade/deposit/${user._id}`
-      );
-      setCurrentDeposit(data);
-    })();
   };
 
   const handleSetWithd = () => {
-    getSingleWithdrawals(singleUser._id);
     setWithd(true);
     setCard(false);
     setBal(false);
@@ -280,9 +278,9 @@ const ManagerContents = (props) => {
     }
   };
 
-  useEffect(() => {
-    getUserAutoCopyTrade(user._id);
-  }, []);
+  // useEffect(() => {
+  //   getUserAutoCopyTrade(singleUser._id)
+  // }, [])
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
@@ -576,9 +574,7 @@ const ManagerContents = (props) => {
                   </div>
 
                   {singleUser && (
-                    <UserBalance
-                      handleUpdateWalletBalance={handleUpdateWalletBalance}
-                    />
+                    <UserBalance singleUser={singleUser} error={error} />
                   )}
 
                   <div className="dash-row"></div>
@@ -866,18 +862,19 @@ const ManagerContents = (props) => {
                         )}
                       </div>
                     </div>
-
+                    {/* deposit for single user */}
+                    {payments && allSingleDeposits.length <= 0 ? (
+                      <div className="d-flex justify-content-center align-items-center">
+                        <h2 className="p-2 m-2">No deposit</h2>
+                      </div>
+                    ) : (
+                      <BasicTable
+                        allUsers={allSingleDeposits}
+                        column={paymentHeader}
+                        type="payment"
+                      />
+                    )}
                     {/* for use */}
-
-                    {payments &&
-                      allSingleDeposits &&
-                      allSingleDeposits.length > 0 && (
-                        <BasicTable
-                          allUsers={allSingleDeposits}
-                          column={paymentHeader}
-                          type="payment"
-                        />
-                      )}
                   </div>
                 </div>
               )}
@@ -905,18 +902,22 @@ const ManagerContents = (props) => {
                         )}
                       </div>
                     </div>
+                    {/* single person withdrawal */}
+                    {withd && singleWithdrawals <= 0 ? (
+                      <div className="d-flex justify-content-center align-items-center">
+                        <h2 className="p-2 m-2">No Withdrawal</h2>
+                      </div>
+                    ) : (
+                      <BasicTable
+                        allUsers={singleWithdrawals}
+                        user={user}
+                        column={singleUserWithdrawal}
+                        type="withdrawal"
+                      />
+                    )}
+                    {/* sdfdsj */}
                   </div>
                 </div>
-              )}
-
-              {/* single person withdrawal */}
-              {withd && singleWithdrawals && (
-                <BasicTable
-                  allUsers={singleWithdrawals}
-                  user={user}
-                  column={singleUserWithdrawal}
-                  type="withdrawal"
-                />
               )}
 
               {orderT && (

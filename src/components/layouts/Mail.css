@@ -9,7 +9,7 @@ body {
   margin: 0;
   background-color: white;
   color: #f5f5f6;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   letter-spacing: 1px;
   overflow: hidden !important;
 }
@@ -296,7 +296,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row {
   padding: 1px 10px;
   border-bottom: 1px solid #555;
@@ -305,7 +305,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .date {
   width: 30%;
@@ -314,7 +314,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .date
   p.time {
@@ -324,7 +324,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .date
   p.day-month {
@@ -336,7 +336,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .currency {
   width: 60%;
@@ -345,7 +345,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .currency
   p.currency-type {
@@ -355,7 +355,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .currency
   p.cad {
@@ -367,7 +367,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .rate {
   width: 10%;
@@ -376,7 +376,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .rate
   p.rate-no {
@@ -388,7 +388,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .rate
   p.currency {
@@ -401,14 +401,14 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position'] {
+  [dash-tab-sec="opened-position"] {
   display: none;
 }
 
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row {
   padding: 1px 10px;
   border-bottom: 1px solid #555;
@@ -417,7 +417,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .date {
   width: 30%;
@@ -426,7 +426,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .date
   p.time {
@@ -436,7 +436,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .date
   p.day-month {
@@ -448,7 +448,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .currency {
   width: 60%;
@@ -457,7 +457,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .currency
   p.currency-type {
@@ -467,7 +467,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .currency
   p.cad {
@@ -479,7 +479,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .rate {
   width: 10%;
@@ -488,7 +488,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .rate
   p.rate-no {
@@ -500,7 +500,7 @@ body {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .rate
   p.currency {
@@ -1057,7 +1057,7 @@ body {
   border-radius: 5px;
   text-transform: uppercase;
   font-size: 10px;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   letter-spacing: 1px;
 }
 
@@ -1151,7 +1151,7 @@ body {
   border-radius: 5px;
   text-transform: uppercase;
   font-size: 10px;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   letter-spacing: 1px;
 }
 
@@ -1245,7 +1245,7 @@ body {
   border-radius: 5px;
   text-transform: uppercase;
   font-size: 10px;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   letter-spacing: 1px;
   margin-top: 20px;
 }
@@ -1493,7 +1493,7 @@ body {
   padding: 10px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   outline: none;
   letter-spacing: 1px;
 }
@@ -1505,7 +1505,7 @@ body {
   padding: 10px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   outline: none;
   letter-spacing: 1px;
 }
@@ -1516,7 +1516,7 @@ body {
   padding: 10px 10px;
   cursor: pointer;
   border-radius: 5px;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   outline: none;
   letter-spacing: 1px;
   text-decoration: none;
@@ -1529,7 +1529,7 @@ body {
   padding: 10px 25px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   outline: none;
   letter-spacing: 1px;
   background-color: #131722;
@@ -1544,24 +1544,24 @@ body {
   cursor: pointer;
 }
 
-[data-tab-dtl='notification'] img {
+[data-tab-dtl="notification"] img {
   max-width: 250px;
   width: 100%;
   display: block;
   margin: 0 auto;
 }
 
-[data-tab-dtl='notification'] .other-dtls {
+[data-tab-dtl="notification"] .other-dtls {
   margin: 1% 1%;
   padding: 30px 0;
 }
 
-[data-tab-dtl='notification'] .other-dtls ul {
+[data-tab-dtl="notification"] .other-dtls ul {
   margin-left: 1%;
   padding-left: 1%;
 }
 
-[data-tab-dtl='notification'] .other-dtls ul li {
+[data-tab-dtl="notification"] .other-dtls ul li {
   margin: 20px 0;
 }
 
@@ -1621,7 +1621,7 @@ body {
   border: none;
   color: #fff;
   border-radius: 5px;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   outline: none;
   letter-spacing: 1px;
   background-color: #131722;
@@ -2047,11 +2047,11 @@ span.close svg:hover {
   cursor: pointer;
 }
 
-[manager-tab-dtls='users'] .second-sec {
+[manager-tab-dtls="users"] .second-sec {
   display: none;
 }
 
-[manager-tab-dtls='users'] .second-sec [dash-user-dtls-tab] {
+[manager-tab-dtls="users"] .second-sec [dash-user-dtls-tab] {
   color: #fff;
   text-transform: uppercase;
   display: inline-block;
@@ -2061,12 +2061,12 @@ span.close svg:hover {
   cursor: pointer;
 }
 
-[manager-tab-dtls='users'] .second-sec [dash-user-dtls-tab].live {
+[manager-tab-dtls="users"] .second-sec [dash-user-dtls-tab].live {
   background-color: #3f4553;
   position: relative;
 }
 
-[manager-tab-dtls='users'] .second-sec [dash-user-dtls-tab-dtls] {
+[manager-tab-dtls="users"] .second-sec [dash-user-dtls-tab-dtls] {
   display: none;
 }
 
@@ -2081,16 +2081,16 @@ span.close svg:hover {
   margin: 20px 0 0 0;
 }
 
-[manager-tab-dtls='users'] .second-sec [dash-user-dtls-tab-dtls]:nth-child(1) {
+[manager-tab-dtls="users"] .second-sec [dash-user-dtls-tab-dtls]:nth-child(1) {
   display: block;
 }
 
-[manager-tab-dtls='users'] .second-sec [dash-user-dtls-tab-dtls] .dtls-sec {
+[manager-tab-dtls="users"] .second-sec [dash-user-dtls-tab-dtls] .dtls-sec {
   width: 100%;
   color: #000;
 }
 
-[manager-tab-dtls='users']
+[manager-tab-dtls="users"]
   .second-sec
   [dash-user-dtls-tab-dtls]
   .dtls-sec
@@ -2100,7 +2100,7 @@ span.close svg:hover {
   justify-content: space-around;
 }
 
-[manager-tab-dtls='users']
+[manager-tab-dtls="users"]
   .second-sec
   [dash-user-dtls-tab-dtls]
   .dtls-sec
@@ -2109,7 +2109,7 @@ span.close svg:hover {
   width: 40%;
 }
 
-[manager-tab-dtls='users']
+[manager-tab-dtls="users"]
   .second-sec
   [dash-user-dtls-tab-dtls]
   .dtls-sec
@@ -2118,7 +2118,7 @@ span.close svg:hover {
   /*width: 40%;*/
 }
 
-[manager-tab-dtls='users']
+[manager-tab-dtls="users"]
   .second-sec
   [dash-user-dtls-tab-dtls]
   .dtls-sec
@@ -2129,7 +2129,7 @@ span.close svg:hover {
   text-align: center;
 }
 
-[manager-tab-dtls='users']
+[manager-tab-dtls="users"]
   .second-sec
   [dash-user-dtls-tab-dtls]
   .dtls-sec
@@ -2143,7 +2143,7 @@ span.close svg:hover {
   margin: 1% 1%;
 }
 
-[manager-tab-dtls='users']
+[manager-tab-dtls="users"]
   .second-sec
   [dash-user-dtls-tab-dtls]
   .dtls-sec
@@ -2153,7 +2153,7 @@ span.close svg:hover {
   font-size: 13px;
 }
 
-[manager-tab-dtls='users']
+[manager-tab-dtls="users"]
   .second-sec
   [dash-user-dtls-tab-dtls]
   .dtls-sec
@@ -2163,7 +2163,7 @@ span.close svg:hover {
   padding: 5px 12px;
 }
 
-[manager-tab-dtls='users']
+[manager-tab-dtls="users"]
   .second-sec
   [dash-user-dtls-tab-dtls]
   .dtls-sec
@@ -2173,7 +2173,7 @@ span.close svg:hover {
   font-weight: bold;
 }
 
-[manager-tab-dtls='users']
+[manager-tab-dtls="users"]
   .second-sec
   [dash-user-dtls-tab-dtls]
   .dtls-sec
@@ -2187,26 +2187,26 @@ span.close svg:hover {
   background-position: center;
 }
 
-[manager-tab-dtls='users'] .login-history {
+[manager-tab-dtls="users"] .login-history {
   width: 49%;
   margin: 2% 1% 2% 0;
   background-color: #fff;
   color: #000;
 }
 
-[manager-tab-dtls='users'] .login-history .header {
+[manager-tab-dtls="users"] .login-history .header {
   padding: 20px 15px;
   background-color: #f4f6f9;
 }
 
-[manager-tab-dtls='users'] .login-history table {
+[manager-tab-dtls="users"] .login-history table {
   width: 100%;
   font-size: 13px;
   padding: 0;
   margin: 0;
 }
 
-[manager-tab-dtls='users'] .login-history table .country-flag {
+[manager-tab-dtls="users"] .login-history table .country-flag {
   width: 20px;
   height: 20px;
   background-color: #ff0000;
@@ -2216,26 +2216,26 @@ span.close svg:hover {
   background-position: center;
 }
 
-[manager-tab-dtls='users'] .deposit-history {
+[manager-tab-dtls="users"] .deposit-history {
   width: 49%;
   margin: 2% 0 2% 1%;
   background-color: #fff;
   color: #000;
 }
 
-[manager-tab-dtls='users'] .deposit-history .header {
+[manager-tab-dtls="users"] .deposit-history .header {
   padding: 20px 15px;
   background-color: #f4f6f9;
 }
 
-[manager-tab-dtls='users'] .deposit-history table {
+[manager-tab-dtls="users"] .deposit-history table {
   width: 100%;
   font-size: 13px;
   padding: 0;
   margin: 0;
 }
 
-[manager-tab-dtls='users']
+[manager-tab-dtls="users"]
   .second-sec
   [dash-user-dtls-tab-dtls]
   .dtls-sec
@@ -2243,7 +2243,7 @@ span.close svg:hover {
   padding-left: 15px;
 }
 
-[manager-tab-dtls='users']
+[manager-tab-dtls="users"]
   .second-sec
   [dash-user-dtls-tab-dtls]
   .dtls-sec
@@ -2252,7 +2252,7 @@ span.close svg:hover {
   margin: 3px 0;
 }
 
-[manager-tab-dtls='users']
+[manager-tab-dtls="users"]
   .second-sec
   [dash-user-dtls-tab-dtls]
   .dtls-sec
@@ -2268,11 +2268,11 @@ span.close svg:hover {
   background-position: center;
 }
 
-[manager-tab-dtls='bank-transfers'] table tr td {
+[manager-tab-dtls="bank-transfers"] table tr td {
   padding: 10px 5px !important;
 }
 
-[manager-tab-dtls='identity'] table tr td {
+[manager-tab-dtls="identity"] table tr td {
   padding: 10px 15px !important;
 }
 
@@ -2571,7 +2571,7 @@ span.close svg:hover {
   display: block;
   padding: 15px 15px;
   border: 1px solid #e1e3e6;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
 }
 
 .dash-select {
@@ -2579,7 +2579,7 @@ span.close svg:hover {
   display: block;
   padding: 15px 15px;
   border: 1px solid #e1e3e6;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
 }
 
 .dash-select-short {
@@ -2587,7 +2587,7 @@ span.close svg:hover {
   padding: 10px 10px;
   font-size: 15px;
   border: 1px solid #e1e3e6;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
 }
 
 .dash-text-area,
@@ -2597,7 +2597,7 @@ span.close svg:hover {
   display: block;
   padding: 15px 15px;
   border: 1px solid #e1e3e6;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
 }
 
 .public-card .actions p.small {
@@ -2614,7 +2614,7 @@ span.close svg:hover {
   padding: 15px 35px;
   border-radius: 5px;
   color: #fff;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   background-color: #4786ff;
   border: none;
   display: inline-block;
@@ -2629,7 +2629,7 @@ span.close svg:hover {
   padding: 15px 35px;
   border-radius: 5px;
   color: #fff !important;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   background-color: #29c359 !important;
   text-decoration: none;
   border: none;
@@ -2658,11 +2658,11 @@ span.close svg:hover {
   padding: 15px 10px;
 }
 
-[manager-tab-dtls='bank-transfers'] table tr td {
+[manager-tab-dtls="bank-transfers"] table tr td {
   padding: 30px 10px !important;
 }
 
-[manager-tab-dtls='identity'] table tr td {
+[manager-tab-dtls="identity"] table tr td {
   padding: 30px 10px !important;
 }
 
@@ -3011,7 +3011,7 @@ span.close svg:hover {
   position: relative;
 }
 
-.withdraw-modal .content .range .input input[type='range'] {
+.withdraw-modal .content .range .input input[type="range"] {
   width: -webkit-calc(100% - 75px);
   width: calc(100% - 75px);
   display: block;
@@ -3028,7 +3028,7 @@ span.close svg:hover {
   .content
   .range
   .input
-  input[type='range']::-webkit-slider-runnable-track {
+  input[type="range"]::-webkit-slider-runnable-track {
   background-color: #d7dbdd;
   height: 6px;
   border-radius: 3px;
@@ -3039,41 +3039,41 @@ span.close svg:hover {
   .content
   .range
   .input
-  input[type='range'][disabled]::-webkit-slider-runnable-track {
+  input[type="range"][disabled]::-webkit-slider-runnable-track {
   border: 1px solid #d7dbdd;
   background-color: transparent;
   opacity: 0.4;
 }
 
-.withdraw-modal .content .range .input input[type='range']::-moz-range-track {
+.withdraw-modal .content .range .input input[type="range"]::-moz-range-track {
   background-color: #d7dbdd;
   height: 6px;
   border-radius: 3px;
   border: none;
 }
 
-.withdraw-modal .content .range .input input[type='range']::-ms-track {
+.withdraw-modal .content .range .input input[type="range"]::-ms-track {
   color: transparent;
   border: none;
   background: none;
   height: 6px;
 }
 
-.withdraw-modal .content .range .input input[type='range']::-ms-fill-lower {
+.withdraw-modal .content .range .input input[type="range"]::-ms-fill-lower {
   background-color: #d7dbdd;
   border-radius: 3px;
 }
 
-.withdraw-modal .content .range .input input[type='range']::-ms-fill-upper {
+.withdraw-modal .content .range .input input[type="range"]::-ms-fill-upper {
   background-color: #d7dbdd;
   border-radius: 3px;
 }
 
-.withdraw-modal .content .range .input input[type='range']::-ms-tooltip {
+.withdraw-modal .content .range .input input[type="range"]::-ms-tooltip {
   display: none; /* display and visibility only */
 }
 
-.withdraw-modal .content .range .input input[type='range']::-moz-range-thumb {
+.withdraw-modal .content .range .input input[type="range"]::-moz-range-thumb {
   border-radius: 20px;
   height: 18px;
   width: 18px;
@@ -3086,7 +3086,7 @@ span.close svg:hover {
   .content
   .range
   .input
-  input[type='range']:active::-moz-range-thumb {
+  input[type="range"]:active::-moz-range-thumb {
   outline: none;
 }
 
@@ -3094,7 +3094,7 @@ span.close svg:hover {
   .content
   .range
   .input
-  input[type='range']::-webkit-slider-thumb {
+  input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none !important;
   border-radius: 100%;
   background-color: #606670;
@@ -3107,7 +3107,7 @@ span.close svg:hover {
   .content
   .range
   .input
-  input[type='range'][disabled]::-webkit-slider-thumb {
+  input[type="range"][disabled]::-webkit-slider-thumb {
   background-color: transparent;
   border: 1px solid #d7dbdd;
 }
@@ -3116,11 +3116,11 @@ span.close svg:hover {
   .content
   .range
   .input
-  input[type='range']:active::-webkit-slider-thumb {
+  input[type="range"]:active::-webkit-slider-thumb {
   outline: none;
 }
 
-.withdraw-modal .content .range .input input[type='range']::-ms-thumb {
+.withdraw-modal .content .range .input input[type="range"]::-ms-thumb {
   border-radius: 100%;
   background-color: #606670;
   height: 18px;
@@ -3128,7 +3128,7 @@ span.close svg:hover {
   border: none;
 }
 
-.withdraw-modal .content .range .input input[type='range']:active::-ms-thumb {
+.withdraw-modal .content .range .input input[type="range"]:active::-ms-thumb {
   border: none;
 }
 
@@ -3354,7 +3354,7 @@ span.close svg:hover {
   background-color: #363c4f;
   border: none;
   color: #fff;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   outline: none;
   height: 55px;
 }
@@ -3385,7 +3385,7 @@ span.close svg:hover {
   padding: 15px 15px;
   border: none;
   border-radius: 0;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   outline: none;
 }
 
@@ -3412,7 +3412,7 @@ span.close svg:hover {
   background-color: transparent;
   border: 1px solid #363c4f;
   color: #fff;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   outline: none;
 }
 
@@ -3451,13 +3451,13 @@ span.close svg:hover {
   border: none;
   outline: none;
   border-radius: 3px;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
 }
 
 .credit-modal .content .credit-card input::placeholder {
   background-color: #8e9bbc;
   color: #fff;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
 }
 
 .credit-modal .content .credit-card input.short {
@@ -3688,7 +3688,7 @@ span.close svg:hover {
 }
 
 .verification-modal .container .option::after {
-  content: '';
+  content: "";
   width: 15px;
   height: 15px;
   border-radius: 50%;
@@ -3722,7 +3722,7 @@ span.close svg:hover {
   border: 1px solid #282b3b;
   background-color: transparent;
   color: #fff;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   outline: none;
 }
 
@@ -4015,11 +4015,11 @@ span.close svg:hover {
   padding: 10px 4px;
 }
 
-[manager-tab-dtls='bank-transfers'] table tr td {
+[manager-tab-dtls="bank-transfers"] table tr td {
   padding: 2px 8px !important;
 }
 
-[manager-tab-dtls='identity'] table tr td {
+[manager-tab-dtls="identity"] table tr td {
   padding: 5px 8px !important;
 }
 
@@ -4270,24 +4270,24 @@ span.close svg:hover {
   cursor: pointer;
 }
 
-[data-tab-dtl='notification'] img {
+[data-tab-dtl="notification"] img {
   max-width: 250px;
   width: 100%;
   display: block;
   margin: 0 auto;
 }
 
-[data-tab-dtl='notification'] .other-dtls {
+[data-tab-dtl="notification"] .other-dtls {
   margin: 1% 1%;
   padding: 30px 0;
 }
 
-[data-tab-dtl='notification'] .other-dtls ul {
+[data-tab-dtl="notification"] .other-dtls ul {
   margin-left: 1%;
   padding-left: 1%;
 }
 
-[data-tab-dtl='notification'] .other-dtls ul li {
+[data-tab-dtl="notification"] .other-dtls ul li {
   margin: 20px 0;
 }
 
@@ -4347,7 +4347,7 @@ span.close svg:hover {
   border: none;
   color: #fff;
   border-radius: 5px;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   outline: none;
   letter-spacing: 1px;
   background-color: #131722;
@@ -4620,7 +4620,7 @@ span.close svg:hover {
   border: none;
   color: #fff;
   border-radius: 5px;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   outline: none;
   letter-spacing: 1px;
   background-color: #131722;
@@ -4814,7 +4814,7 @@ span.close svg:hover {
 
 .slider:before {
   position: absolute;
-  content: '';
+  content: "";
   height: 30px;
   width: 30px;
   left: 5px;
@@ -4828,7 +4828,7 @@ span.close svg:hover {
   color: #fff;
   font-size: 14px;
   line-height: 1;
-  font-family: 'Open Sans', 'sans-serif';
+  font-family: "Open Sans", "sans-serif";
   position: absolute;
   right: 10px;
   top: 50%;
@@ -4882,7 +4882,7 @@ input:checked + .slider:after {
 
 .slider:before {
   position: absolute;
-  content: '';
+  content: "";
   height: 20px;
   width: 20px;
   left: 5px;
@@ -5108,7 +5108,7 @@ dash-navbar .account .account-profile .profile {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .date {
   /* width: 10%; */
@@ -5118,7 +5118,7 @@ dash-navbar .account .account-profile .profile {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row {
   padding: 0px 10px;
   border-bottom: 1px solid #555;
@@ -5127,7 +5127,7 @@ dash-navbar .account .account-profile .profile {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .date {
   width: 10%;
@@ -5137,7 +5137,7 @@ dash-navbar .account .account-profile .profile {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row {
   padding: 0px 10px;
   border-bottom: 1px solid #555;
@@ -5145,7 +5145,7 @@ dash-navbar .account .account-profile .profile {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .date
   p.day-month {
@@ -5158,7 +5158,7 @@ dash-navbar .account .account-profile .profile {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .date
   p.time {
@@ -5169,7 +5169,7 @@ dash-navbar .account .account-profile .profile {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .currency
   p.currency-type {
@@ -5180,7 +5180,7 @@ dash-navbar .account .account-profile .profile {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .currency
   p.cad {
@@ -5193,7 +5193,7 @@ dash-navbar .account .account-profile .profile {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .rate
   p.rate-no {
@@ -5205,7 +5205,7 @@ dash-navbar .account .account-profile .profile {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .rate
   p.currency {
@@ -5219,7 +5219,7 @@ dash-navbar .account .account-profile .profile {
 dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row {
   padding: 10px 10px;
   border-bottom: 1px solid #555;
@@ -5228,7 +5228,7 @@ dash-contents
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .date
   p.day-month {
@@ -5241,7 +5241,7 @@ dash-contents
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .date
   p.time {
@@ -5252,7 +5252,7 @@ dash-contents
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .currency
   p.currency-type {
@@ -5263,7 +5263,7 @@ dash-contents
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .currency
   p.cad {
@@ -5276,7 +5276,7 @@ dash-contents
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .rate
   p.rate-no {
@@ -5288,7 +5288,7 @@ dash-contents
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .rate
   p.currency {
@@ -5302,7 +5302,7 @@ dash-contents
 dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row {
   padding: 10px 10px;
   border-bottom: 1px solid #555;
@@ -5311,7 +5311,7 @@ dash-contents
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row {
   padding: 10px 10px;
   border-bottom: 1px solid #555;
@@ -5320,7 +5320,7 @@ dash-contents
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row {
   padding: 10px 10px;
   border-bottom: 1px solid #555;
@@ -5344,7 +5344,7 @@ dash-contents
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row {
   padding: 10px 10px;
   border-bottom: 1px solid #555;
@@ -5353,7 +5353,7 @@ dash-contents
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row {
   padding: 10px 10px;
   border-bottom: 1px solid #555;
@@ -5884,7 +5884,7 @@ section.view-modal {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .date {
   width: 20%;
@@ -5894,7 +5894,7 @@ section.view-modal {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .currency {
   width: 56%;
@@ -6112,7 +6112,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -6128,7 +6128,7 @@ input[type='number'] {
   display: block;
   padding: 15px 15px;
   border: 1px solid #e1e3e6;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
 }
 
 .dash-contents .trade .trade-action .actions1 .buy {
@@ -6647,7 +6647,7 @@ td.fall {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .currency
   p.currency-type {
@@ -6659,7 +6659,7 @@ td.fall {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='order-book']
+  [dash-tab-sec="order-book"]
   .dash-row
   .date
   p.time {
@@ -6760,7 +6760,7 @@ td.fall {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .date
   p.time {
@@ -6772,7 +6772,7 @@ td.fall {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .currency
   p.currency-type {
@@ -6784,7 +6784,7 @@ td.fall {
 .dash-contents
   .order-book-section
   .order-book-sec
-  [dash-tab-sec='opened-position']
+  [dash-tab-sec="opened-position"]
   .dash-row
   .date {
   width: 17%;
@@ -6985,7 +6985,7 @@ withdraw-modal .content .withdraw-card span.title {
   padding: 15px 35px;
   border-radius: 5px;
   color: #fff;
-  font-family: 'dash-regular';
+  font-family: "dash-regular";
   background-color: orange;
   border: none;
   display: inline-block;
@@ -7079,7 +7079,7 @@ withdraw-modal .content .withdraw-card span.title {
   cursor: pointer;
 }
 
-.input[type='file'] {
+.input[type="file"] {
   position: fixed;
   right: 100%;
   bottom: 100%;
@@ -7096,7 +7096,7 @@ withdraw-modal .content .withdraw-card span.title {
 }
 
 .fa-spinner:before {
-  content: '\f110';
+  content: "\f110";
   margin-left: 10px;
 }
 
@@ -7304,8 +7304,8 @@ input:checked + .slider {
   font-variant: tabular-nums;
   line-height: 1.5715;
   list-style: none;
-  -webkit-font-feature-settings: 'tnum';
-  font-feature-settings: 'tnum', 'tnum';
+  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: "tnum", "tnum";
   position: fixed;
   top: 8px;
   left: -330px !important;
@@ -7313,7 +7313,7 @@ input:checked + .slider {
   width: 100%;
   pointer-events: none;
 }
-[manager-tab-dtls='users']
+[manager-tab-dtls="users"]
   .second-sec
   [dash-user-dtls-tab-dtls]
   .dtls-sec
@@ -8305,7 +8305,6 @@ label.custom-control-label {
   }
 }
 
-
 dash-contents .sidebar ul li a span {
   font-size: 8px;
   text-transform: uppercase;
@@ -8319,7 +8318,7 @@ dash-contents .sidebar ul li a span {
   padding: 10px 10px;
   font-size: 80%;
 }
-[manager-tab-dtls='identity'] table tr td {
+[manager-tab-dtls="identity"] table tr td {
   padding: 9px 8px !important;
 }
 
@@ -8334,11 +8333,9 @@ dash-contents .sidebar ul li a span {
   padding-bottom: 2px !important;
 }
 
-
 .VictoryContainer {
   background: white;
 }
-
 
 .manager-tab-dtls .chart {
   background-color: #fff;
@@ -8358,7 +8355,7 @@ svg.recharts-surface {
 
 tspan {
   font-size: 1.3rem;
-} 
+}
 
 .hquMCJ strong.strong {
   z-index: 2;
@@ -8366,7 +8363,6 @@ tspan {
   color: #1d2435;
   font-size: 1.3rem;
 }
-
 
 .hquMCJ .btn-container:hover {
   background-color: #1d2435;
@@ -8392,16 +8388,15 @@ tspan {
   white-space: nowrap;
 }
 
-[manager-tab-dtls='identity'] table tr td {
+[manager-tab-dtls="identity"] table tr td {
   padding: 5px 8px !important;
 }
 
-[manager-tab-dtls='payments'] table tr td {
+[manager-tab-dtls="payments"] table tr td {
   padding: 10px 8px !important;
 }
 
-
-[manager-tab-dtls='withdraw'] table tr td {
+[manager-tab-dtls="withdraw"] table tr td {
   padding: 0.5px 8px !important;
 }
 
@@ -8414,7 +8409,7 @@ tspan {
 
 .manager-tab-dtls table tr td {
   text-align: left;
-  padding: 4px 10px ;
+  padding: 4px 10px;
   font-size: 80%;
 }
 
@@ -8426,4 +8421,138 @@ tspan {
 .fa-user-minus:before {
   content: "\f503";
   cursor: pointer !important;
+}
+
+.ant-card-body {
+  padding: 65px;
+}
+
+.dash-contents .sidebar ul li a span {
+  font-size: 10px;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 5px;
+  white-space: nowrap;
+}
+.dash-contents .sidebar ul li a span {
+  font-size: 10px;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 5px;
+  white-space: nowrap;
+}
+
+body {
+  overflow-x: hidden;
+  margin: 0;
+}
+
+.frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  margin-top: -200px;
+  margin-left: -200px;
+  border-radius: 2px;
+  box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background: #444;
+  color: #333;
+  font-family: "Open Sans", Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#glow {
+  box-shadow: 0px 0px 30px 5px gold;
+  border-radius: 50px;
+  width: 76px;
+  height: 76px;
+  background: gold;
+  position: absolute;
+  top: 135px;
+  transition: all 0.5s ease-in-out;
+}
+
+#bulb {
+  fill: gold;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+
+
+
+.frame {
+  position: absolute;
+  top: 60%;
+  left: 93%;
+  width: 400px;
+  height: 400px;
+  margin-top: -200px;
+  margin-left: -200px;
+  border-radius: 2px;
+  box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background: transparent;
+  color: #333;
+  font-family: "Open Sans", Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#glow {
+  box-shadow: 0px 0px 30px 5px #54ac40;
+  border-radius: 50px;
+  width: 10%;
+  height: 10%;
+  background: #54ac40;
+  position: absolute;
+  top: 173px;
+  transition: all 0.5s ease-in-out;
+}
+
+#glowOff {
+  opacity: 0;
+  fill: #999;
+}
+.bulbOff{
+  fill:#999;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  width: 35%;
+}
+#bulb {
+  fill: #54ac40;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  width: 35%;
+}
+
+#glow {
+  box-shadow: 0px 0px 30px 5px #54ac40;
+  border-radius: 50px;
+  width: 10%;
+  height: 10%;
+  background: #54ac40;
+  position: absolute;
+  top: 173px;
+  transition: all 0.5s ease-in-out;
+}
+
+#base {
+  fill: #eee;
+  margin-top: -52px;
+  width: 18px !important;
 }

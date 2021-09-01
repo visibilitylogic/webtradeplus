@@ -24,8 +24,8 @@ function OrderBook() {
                 {trade_orders &&
                   trade_orders.map((data) => (
                     <tr
-                      style={{ paddingTop: "4px" }}
                       style={{
+                        paddingTop: "4px",
                         borderBottom: ".1px solid #4a4a4d",
                         marginBottom: "-30px",
                       }}
@@ -87,6 +87,73 @@ function OrderBook() {
                           }}
                         >
                           tag
+                        </p>
+                      </td>
+                      <td style={{ paddingTop: "2%" }}>
+                        <span className="order_span">{data.margin} </span>
+                        <p
+                          style={{
+                            color: "rgb(165 167 173)",
+                            fontSize: "13px",
+                          }}
+                        >
+                          margin
+                        </p>
+                      </td>
+                      <td style={{ paddingTop: "2%" }}>
+                        <span className="order_span">
+                          {data.stockAmount.toString().slice(0, 8)}{" "}
+                        </span>
+                        <p
+                          style={{
+                            color: "rgb(165 167 173)",
+                            fontSize: "13px",
+                          }}
+                        >
+                          investment
+                        </p>
+                      </td>
+                      <td style={{ paddingTop: "2%" }}>
+                        <span className="order_span">
+                          {new Intl.NumberFormat("en-US")
+                            .format(data.profit)
+                            .slice(0, 8)}{" "}
+                        </span>
+                        <p
+                          style={{
+                            color: "rgb(165 167 173)",
+                            fontSize: "13px",
+                          }}
+                        >
+                          profit
+                        </p>
+                      </td>
+                      <td style={{ paddingTop: "2%" }}>
+                        <span className="order_span">
+                          {new Intl.NumberFormat("en-US")
+                            .format(data.loss)
+                            .slice(0, 8)}{" "}
+                        </span>
+                        <p
+                          style={{
+                            color: "rgb(165 167 173)",
+                            fontSize: "13px",
+                          }}
+                        >
+                          loss
+                        </p>
+                      </td>
+                      <td style={{ paddingTop: "2%" }}>
+                        <span className="order_span">
+                          {data.isOpen ? "Open" : "Closed"}
+                        </span>
+                        <p
+                          style={{
+                            color: "rgb(165 167 173)",
+                            fontSize: "13px",
+                          }}
+                        >
+                          status
                         </p>
                       </td>
                     </tr>
@@ -101,7 +168,6 @@ function OrderBook() {
             </div>
           );
         }
-        break;
 
       case "open_position":
         if (openData.length > 0) {
@@ -111,8 +177,8 @@ function OrderBook() {
                 {openData &&
                   openData.map((data) => (
                     <tr
-                      style={{ padding: "14px 0px" }}
                       style={{
+                        padding: "14px 0px",
                         borderBottom: ".1px solid #4a4a4d",
                         marginBottom: "-30px",
                       }}
@@ -176,6 +242,73 @@ function OrderBook() {
                           tag
                         </p>
                       </td>
+                      <td style={{ paddingTop: "2%" }}>
+                        <span className="order_span">{data.margin} </span>
+                        <p
+                          style={{
+                            color: "rgb(165 167 173)",
+                            fontSize: "13px",
+                          }}
+                        >
+                          margin
+                        </p>
+                      </td>
+                      <td style={{ paddingTop: "2%" }}>
+                        <span className="order_span">
+                          {data.stockAmount.toString().slice(0, 8)}{" "}
+                        </span>
+                        <p
+                          style={{
+                            color: "rgb(165 167 173)",
+                            fontSize: "13px",
+                          }}
+                        >
+                          investment
+                        </p>
+                      </td>
+                      <td style={{ paddingTop: "2%" }}>
+                        <span className="order_span">
+                          {new Intl.NumberFormat("en-US")
+                            .format(data.profit)
+                            .slice(0, 8)}{" "}
+                        </span>
+                        <p
+                          style={{
+                            color: "rgb(165 167 173)",
+                            fontSize: "13px",
+                          }}
+                        >
+                          profit
+                        </p>
+                      </td>
+                      <td style={{ paddingTop: "2%" }}>
+                        <span className="order_span">
+                          {new Intl.NumberFormat("en-US")
+                            .format(data.loss)
+                            .slice(0, 8)}{" "}
+                        </span>
+                        <p
+                          style={{
+                            color: "rgb(165 167 173)",
+                            fontSize: "13px",
+                          }}
+                        >
+                          loss
+                        </p>
+                      </td>
+                      <td style={{ paddingTop: "2%" }}>
+                        <span className="order_span">
+                          {data.isOpen ? "Open" : "Closed"}
+                        </span>
+                        <p
+                          style={{
+                            color: "rgb(165 167 173)",
+                            fontSize: "13px",
+                          }}
+                        >
+                          status
+                        </p>
+                      </td>
                     </tr>
                   ))}
               </tbody>
@@ -188,7 +321,6 @@ function OrderBook() {
             </div>
           );
         }
-        break;
       case "auto_trades":
         if (trade_orders.length > 0 && loading) {
           return (
@@ -197,8 +329,8 @@ function OrderBook() {
                 {trade_orders &&
                   trade_orders.map((data) => (
                     <tr
-                      style={{ paddingTop: "4px" }}
                       style={{
+                        paddingTop: "4px",
                         borderBottom: ".1px solid #4a4a4d",
                         marginBottom: "-30px",
                       }}
@@ -274,10 +406,12 @@ function OrderBook() {
             </div>
           );
         }
+      default:
+        break;
     }
   };
   return (
-    <div style={{ marginLeft: "150px" }}>
+    <div style={{ marginLeft: "70px" }}>
       <div
         className="order-book-section orderBookComponent"
         style={{ display: "block" }}
@@ -297,22 +431,25 @@ function OrderBook() {
           </h1>
           <div className="tabs" style={{ borderBottom: "1px solid #4a4a4d" }}>
             <a
-              className={display === "order-book" ? "active" : " "}
-              dash-tab="order-book"
-              onClick={() => setDisplay("order-book")}
-            >
-              Trading History
-            </a>
-            <a
               className={display === "open_position" ? "active" : " "}
               onClick={() => setDisplay("open_position")}
+              href="#!"
             >
               {" "}
               Opened Positions
             </a>
             <a
+              className={display === "order-book" ? "active" : " "}
+              dash-tab="order-book"
+              onClick={() => setDisplay("order-book")}
+              href="#!"
+            >
+              Trading History
+            </a>
+            <a
               className={display === "auto_trades" ? "active" : " "}
               onClick={() => setDisplay("auto_trades")}
+              href="#!"
             >
               {" "}
               Auto Trades

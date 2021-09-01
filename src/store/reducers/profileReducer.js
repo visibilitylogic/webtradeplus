@@ -1,7 +1,7 @@
 import * as actionTypes from "../action-types";
 
 const initialState = {
-  profile: null,
+  // profile: null,
   error: null,
   loading: true,
   depositAmount: 0,
@@ -21,10 +21,10 @@ const initialState = {
   userMargin: 1,
   singleUser: null,
   singleWithdrawals: [],
-  singleDeposit: [],
   allSingleDeposits: [],
   DepositApproval: {},
   singleUserVerifedDetails: {},
+  tradeProfit: 0,
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -56,12 +56,12 @@ export default function profileReducer(state = initialState, action) {
         DepositApproval: action.payload,
         error: null,
       };
-    case actionTypes.GET_SINGLE_DEPOSIT:
-      return {
-        ...state,
-        singleDeposit: action.payload,
-        error: null,
-      };
+    // case actionTypes.GET_SINGLE_DEPOSIT:
+    //   return {
+    //     ...state,
+    //     singleDeposit: action.payload,
+    //     error: null,
+    //   }
 
     case actionTypes.SET_WITHDRAWAL_AMOUNT:
       return {
@@ -216,6 +216,13 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         loading: false,
         userMargin: action.payload,
+      };
+
+    case actionTypes.SET_TRADE_PROFIT:
+      return {
+        ...state,
+        loading: false,
+        tradeProfit: action.payload,
       };
 
     case actionTypes.PROFILE_ERROR:

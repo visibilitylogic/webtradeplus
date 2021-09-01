@@ -1,61 +1,114 @@
 import React, { useState } from 'react'
+import { useActions } from '../hooks/useActions'
+import { message } from 'antd'
 
-function UserBalance({
-  handleUpdateWalletBalance,
-  singleUser,
-  setAmount,
-  setCredit,
+const UserBalance = ({ singleUser, error }) => {
+  const { _id } = singleUser
+  const { singleUserBalance } = useActions()
+  const [state, setstate] = useState({
+    pulseType: '',
+    profitLoss: false,
+    amount: '',
+  })
 
-  text,
-}) {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (error) {
+      console.log('not waiting')
+      message.error('Identity Approval Was Not Successful')
+    } else {
+      await singleUserBalance(_id, state)
+      setstate({
+        pulseType: '',
+        profitLoss: '',
+        amount: '',
+      })
+      message.success('Successfully Approved')
+    }
+  }
   return (
     <>
-      <div className="public-card white-card" style={{ marginTop: '15px' }}>
-        <div className="each-row dash-row">
-          <div className="dtls">
-            <h4>Select balance</h4>
-          </div>
-          <div className="actions">
-            <select className="dash-select-short">
-              <option value="USD">USD</option>
-            </select>
-          </div>
-        </div>
-        <div className="each-row dash-row">
-          <div className="dtls">
-            <h4>Modification type</h4>
-          </div>
-          <div className="actions">
-            <select
-              className=" form-control"
-              onChange={(e) => setCredit(JSON.parse(e.target.value))}
+      {singleUser && (
+        <form onSubmit={handleSubmit}>
+          <div
+            className="public-card white-card mb-3"
+            style={{
+              margin: '15px auto 0 auto',
+              maxWidth: '800px',
+              borderRadius: '6px',
+            }}
+          >
+            <div className="d-flex justify-content-center align-items-center py-4">
+              <div className="mr-auto ">
+                <h6>Pause:</h6>
+              </div>
+              <div className="ml-4 w-75">
+                <select
+                  className=" form-control "
+                  value={state.pulseType}
+                  name="select"
+                  onChange={(e) =>
+                    setstate({ ...state, pulseType: e.target.value })
+                  }
+                >
+                  <option value="bonus">Bonus</option>
+                  <option value="deposit">Deposit</option>
+                  <option value="profit">Profit</option>
+                  <option value="loss">Loss</option>
+                </select>
+              </div>
+            </div>
+            <div className="d-flex justify-content-center align-items-center py-2">
+              <div className="mr-auto ">
+                <h6>Modification Type:</h6>
+              </div>
+              <div className="ml-4 w-75">
+                <select
+                  className="form-control"
+                  name="selectType"
+                  value={state.profitLoss}
+                  onChange={(e) =>
+                    setstate({ ...state, profitLoss: e.target.value })
+                  }
+                >
+                  <option value="true">Credit</option>
+                  <option value="false">Debit</option>
+                </select>
+              </div>
+            </div>
+            <div className="d-flex justify-content-center align-items-center py-2">
+              <div className="mr-auto ">
+                <h6>Modification value:</h6>
+              </div>
+              <div className="ml-4 w-75">
+                <input
+                  className=" form-control form-control-lg"
+                  type="text"
+                  name="text"
+                  required
+                  placeholder="0.00"
+                  value={state.amount}
+                  onChange={(e) =>
+                    setstate({ ...state, amount: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+            <div
+              className="d-flex justify-content-center p-2"
+              style={{ width: '50%', margin: 'auto' }}
             >
-              <option value="credit">Credit</option>
-              <option value="debit">Debit</option>
-              <option value="Bonus">Debit</option>
-            </select>
+              <button
+                type="submit"
+                className="btn btn-success w-75"
+                role="submit"
+              >
+                Save
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="each-row dash-row">
-          <div className="dtls">
-            <h4>Modification value</h4>
-          </div>
-          <div className="actions">
-            <input
-              className=" form-control form-control-lg"
-              type="number"
-              name="text"
-              placeholder="0.00"
-              onChange={(e) => setAmount(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="save-btn">
-          <button onClick={() => handleUpdateWalletBalance(singleUser)}>
-            Save
-          </button>
-        </div>
-      </div>
+        </form>
+      )}
     </>
   )
 }
