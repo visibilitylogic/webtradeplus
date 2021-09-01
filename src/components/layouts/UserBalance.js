@@ -41,7 +41,7 @@ const UserBalance = ({ singleUser, error }) => {
           >
             <div className="d-flex justify-content-center align-items-center py-4">
               <div className="mr-auto ">
-                <h6>Pulse:</h6>
+                <h6>Pause:</h6>
               </div>
               <div className="ml-4 w-75">
                 <select
