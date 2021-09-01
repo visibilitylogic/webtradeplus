@@ -2,21 +2,38 @@ import { format } from "date-fns";
 import ApproveDeposit from "./ApproveDeposit";
 import PaymentModal from "./PaymentModal";
 import DepositState from "./DepositState";
+
+const checkIfApproved = (status) => {
+  return status === "Approved" ? "none" : "block";
+};
 export const depositHeader = [
   {
     id: "Ref",
-    Header: "Ref",
+    field: "Ref",
+    headerName: "Ref",
+    accessor: "Ref",
+    width: 180,
+    type: "text",
+    // headerAlign: "center",
     accessor: ({ Ref }) => <strong> {Ref}</strong>,
   },
   {
     id: "name",
-    Header: "Name",
+    field: "name",
+    headerName: "Name",
+    type: "text",
+    // headerAlign: "center",
+    width: 180,
     accessor: "name",
   },
 
   {
     id: "time",
-    Header: "Created date",
+    field: "time",
+    headerName: "Created date",
+    type: "date",
+    // headerAlign: "center",
+    width: 180,
     accessor: "time",
     Cell: ({ value }) => {
       return format(new Date(value), "dd/MM/yyyy");
@@ -24,44 +41,115 @@ export const depositHeader = [
   },
 
   {
-    Header: "Amount Paid",
+    field: "amount",
+    headerName: "Amount Paid",
+    type: "number",
+    // headerAlign: "center",
+    width: 180,
+    accessor: "amount",
     accessor: ({ amount }) => <strong>{amount}</strong>,
   },
   {
     id: "Fee",
-    Header: "Fee",
+    field: "fee",
+    headerName: "Fee",
+    type: "number",
+    // headerAlign: "center",
+    width: 180,
     accessor: "fee",
   },
 
   {
     id: "Wallet Received",
-    Header: "Wallet Received",
+    field: "__v",
+    headerName: "Wallet Received",
+    type: "date",
+    // headerAlign: "center",
+    width: 180,
     accessor: "__v",
   },
 
   {
-    Header: "Amount Received",
+    field: "amount",
+    headerName: "Amount Received",
     accessor: "amount",
-    accessor: ({ amount }) => amount,
+    type: "number",
+    // headerAlign: "center",
+    width: 180,
+    // accessor: ({ amount }) => amount,
   },
   {
     id: "cryptoAddress",
-    Header: "Payment Gateway",
+    field: "method",
+    headerName: "Payment Gateway",
+    type: "text",
+    // headerAlign: "center",
+    width: 180,
     accessor: "method",
   },
   {
-    Header: "Payment Details",
+    field: "method",
+    headerName: "Payment Details",
+    type: "text",
+    // headerAlign: "center",
+    width: 180,
+    // accessor: (method) => <PaymentModal method={method} />,
     accessor: "method",
-    accessor: (method) => <PaymentModal method={method} />,
   },
   {
-    Header: "Status",
+    field: "status",
+    headerName: "Status",
+    type: "text",
+    // headerAlign: "center",
+    width: 180,
+    backgroundColor: "green",
+    renderCell: (cellValues) => {
+      return (
+        <button
+          style={{
+            backgroundColor:
+              cellValues.row.status === "Approved" ? "green" : "red",
+            border: "none",
+            width: "100%",
+          }}
+        >
+          {cellValues.row.status}
+        </button>
+      );
+    },
+    // accessor: ({ status }) => <DepositState status={status} />,
     accessor: "status",
-    accessor: ({ status }) => <DepositState status={status} />,
   },
   {
-    Header: "Action",
+    field: "action",
+    headerName: "Action",
+    width: 180,
+    // accessor: (status) => <ApproveDeposit status={status} />,
     accessor: "status",
-    accessor: (status) => <ApproveDeposit status={status} />,
+    renderCell: (props) => {
+      return (
+        <div style={{ display: checkIfApproved(props.row.status) }}>
+          <button
+            style={{
+              backgroundColor: "green",
+              border: "none",
+              width: "50%",
+            }}
+          >
+            Approve
+          </button>
+
+          <button
+            style={{
+              backgroundColor: "red",
+              border: "none",
+              width: "50%",
+            }}
+          >
+            Decline
+          </button>
+        </div>
+      );
+    },
   },
 ];

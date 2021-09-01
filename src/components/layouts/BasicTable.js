@@ -12,6 +12,8 @@ const BasicTable = ({
   column,
   type,
 }) => {
+  // console.log(`columns`, allUsers);
+  // console.log(`column`, column);
   const columns = useMemo(() => column, [column, type]);
   const data = useMemo(() => allUsers, [allUsers]);
   const { getSingleProfile, getVerifieddetails } = useActions();
@@ -101,6 +103,7 @@ const BasicTable = ({
                 </tr>
               );
             } else if (type === "verifiedUsers" || type === "withdrawal") {
+              console.log(`row.original`, row.oriiginal);
               return (
                 <tr
                   {...row.getRowProps()}
@@ -124,6 +127,7 @@ const BasicTable = ({
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
+                    console.log(`row.original`, row);
                     return (
                       <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                     );
