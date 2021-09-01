@@ -93,41 +93,10 @@ const ManagerContents = (props) => {
   const [state, setstate] = useState('')
 
   //
-  //setAutoTrade
-  // const [trade, setTrade] = useState({
-  //   id: user._id,
-  //   authEnabled: false,
-  // })
-  const [notification, setNotification] = useState({
-    id: user._id,
-    notificationEnabled: user.notificationsEnabled,
-  })
-  const [auth, setAuth] = useState({
-    id: user._id,
-    authEnabled: false,
-    // user.notificationsEnabled,
-  })
 
   console.log(singleWithdrawals)
 
   console.log(userTrades)
-  // auth
-  const setAuth0 = useCallback(() => {
-    setAuth(!auth)
-    // setAuthEnabled({
-    //   id: user._id,
-    //   notificationEnabled: !user.notificationsEnabled,
-    // })
-  }, [auth])
-
-  // notification
-  const setNotifications = useCallback(() => {
-    setNotification(!notification)
-    setNotificationEnabled({
-      id: user._id,
-      notificationEnabled: !user.notificationsEnabled,
-    })
-  }, [notification])
 
   const deleteAutoCopyTrade = async () => {
     setLoading(true)
@@ -238,26 +207,6 @@ const ManagerContents = (props) => {
     setBal(false)
     setCard(false)
     setWithd(false)
-  }
-
-  const handleUpdateWalletBalance = (user) => {
-    if (loading) {
-      setText('Updating...')
-    } else if (!credit && parseInt(amount) > user.wallet) {
-      message.error(
-        'This transaction is not valid as it will result in a negative balance',
-      )
-    } else {
-      updateWalletBalance({
-        id: user.id,
-        amount,
-        action: credit,
-      })
-
-      setText('Saved')
-      message.success('Balance updated')
-      window.location.reload()
-    }
   }
 
   const handleDeleteUser = (id) => {
@@ -503,12 +452,8 @@ const ManagerContents = (props) => {
                     {/* left hand side of user profile */}
                     {singleUser && (
                       <SingleUser
-                        setNotifications={setNotifications}
-                        setAuth0={setAuth0}
                         singleUser={singleUser}
-                        checked2={auth.authEnabled}
                         setDisplayC={setDisplayC}
-                        checked={notification.notificationsEnabled}
                       />
                     )}
                   </div>
@@ -923,6 +868,17 @@ const ManagerContents = (props) => {
                         )}
                       </div>
                     </div>
+                    {orderT && userTrades <= 0 ? (
+                      <div className="d-flex justify-content-center align-items-center">
+                        <h2 className="p-2 m-2">No Order History</h2>
+                      </div>
+                    ) : (
+                      <BasicTable
+                        allUsers={userTrades}
+                        column={allTradesHeader}
+                        type="withdrawal"
+                      />
+                    )}
                   </div>
                 </div>
               )}
