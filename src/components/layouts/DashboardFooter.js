@@ -20,20 +20,16 @@ const DashboardFooter = ({ setSupport }) => {
     defaultSelectedStock
   );
 
+  const balance = user && user.wallet + user.bonus + user.profit;
+
   const equity =
     Object.keys(activeTrade).length > 0
-      ? (
-          (user && user.wallet + user.bonus + user.profit) +
-          activeTrade.margin +
-          parseFloat(profitOrLoss)
-        )
-          .toString()
-          .slice(0, 8)
+      ? balance + activeTrade.margin + parseFloat(profitOrLoss)
       : 0;
 
   const freeMargin =
-    Object.keys(activeTrade).length > 0 && user
-      ? user.wallet + user.bonus + user.profit + parseFloat(profitOrLoss)
+    Object.keys(activeTrade).length > 0
+      ? balance + parseFloat(profitOrLoss)
       : 0;
 
   return (
@@ -51,9 +47,11 @@ const DashboardFooter = ({ setSupport }) => {
         <div className="accounting-area">
           <p>
             Balance: {user && user.currency}
-            {new Intl.NumberFormat("en-US")
-              .format(user && user.wallet + user.bonus + user.profit)
-              .slice(0, 8)}{" "}
+            {Object.keys(activeTrade).length > 0
+              ? new Intl.NumberFormat("en-US")
+                  .format(balance - activeTrade.margin)
+                  .slice(0, 9)
+              : new Intl.NumberFormat("en-US").format(balance).slice(0, 9)}{" "}
             |
           </p>
           <p
@@ -76,7 +74,7 @@ const DashboardFooter = ({ setSupport }) => {
           |
           <p>
             &nbsp;Equity: $
-            {new Intl.NumberFormat("en-US").format(equity).slice(0, 8)}
+            {new Intl.NumberFormat("en-US").format(equity).slice(0, 9)}
             &nbsp;|
           </p>
           <p>
@@ -85,7 +83,7 @@ const DashboardFooter = ({ setSupport }) => {
           </p>
           <p>
             &nbsp;Free Margin: {user && user.currency}
-            {new Intl.NumberFormat("en-US").format(freeMargin).slice(0, 8)}
+            {new Intl.NumberFormat("en-US").format(freeMargin).slice(0, 9)}
           </p>
         </div>
       </div>
