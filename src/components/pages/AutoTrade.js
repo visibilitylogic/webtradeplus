@@ -106,7 +106,7 @@ function AutoTrade() {
             </div>
             <Row style={{ marginBottom: "10%", marginLeft:'10%' }}>
               {trades.map((data, index) => (
-                <Col md={4} className="mt-3" key={index}>
+                <Col md={6} className="mt-3" key={index}>
                   <Card className="card_style" style={{padding:'75px'}}>
                     <p>Username: {data.userName}</p>
                     <p>Profit % = {data.profitPercentage}%</p>
