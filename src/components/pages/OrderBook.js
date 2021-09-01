@@ -412,7 +412,7 @@ function OrderBook() {
     }
   };
   return (
-    <div style={{ marginLeft: "70px" }}>
+    <div style={{ marginLeft: "140px" }}>
       <div
         className="order-book-section orderBookComponent"
         style={{ display: "block" }}
