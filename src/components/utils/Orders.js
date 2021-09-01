@@ -5,6 +5,7 @@ import useInterval from "../hooks/useInterval";
 import { message } from "antd";
 import "./Orders.css";
 import Spinner from "./Spinner";
+import { getProfitOrLoss } from "../../helpers/getProfitOrLoss";
 
 const spinnerStyle = {
   height: "100%",
@@ -18,16 +19,28 @@ const Orders = (props) => {
   const { buysell, setBuysell } = props;
 
   const { user } = useSelector((state) => state.auth);
-  const { userTrades, error, loading } = useSelector((state) => state.profile);
-  const { allStockAssets } = useSelector((state) => state.stock);
+  const { userTrades, error, loading, tradeProfit } = useSelector(
+    (state) => state.profile
+  );
+  const { allStockAssets, currentSelectedStock, defaultSelectedStock } =
+    useSelector((state) => state.stock);
+  const { activeTrade } = useSelector((state) => state.profile);
   const { webData } = useSelector((state) => state.web);
 
+  const profit = getProfitOrLoss(
+    activeTrade,
+    currentSelectedStock,
+    defaultSelectedStock >= 0
+  );
+
+  console.log(tradeProfit);
   const {
     getAllUserTrades,
     deleteUserTrade,
     closeUserBuyTrade,
     closeUserSellTrade,
     setCurrentlyActiveTrade,
+    setTradeProfit,
   } = useActions();
 
   const handleDeleteUserTrade = (tradeId) => {
@@ -52,11 +65,13 @@ const Orders = (props) => {
       closeUserBuyTrade(trade._id, {
         closeRateOfAsset: closeRate,
       });
+      setTradeProfit(trade.profit);
       setCurrentlyActiveTrade({});
     } else {
       closeUserSellTrade(trade._id, {
         closeRateOfAsset: closeRate,
       });
+      setTradeProfit(trade.profit);
       setCurrentlyActiveTrade({});
     }
 
@@ -69,6 +84,9 @@ const Orders = (props) => {
   useInterval(() => {
     !loading && getAllUserTrades(user && user._id);
   }, 10000);
+
+  const limitTradeList =
+    userTrades.length > 7 ? userTrades.slice(0, 7) : userTrades;
 
   return (
     <div
@@ -141,8 +159,8 @@ const Orders = (props) => {
                     <th>PROFIT/LOSS</th>
                     <th>STATUS</th>
                   </tr>
-                  {userTrades.length > 0
-                    ? userTrades.map((item, i) => (
+                  {limitTradeList.length > 0
+                    ? limitTradeList.map((item, i) => (
                         <tr key={item._id}>
                           <td>{item.time.slice(0, 10)}</td>
                           <td>00{i + 1}</td>
@@ -221,12 +239,12 @@ const Orders = (props) => {
                                     {item.isOpen && (
                                       <button
                                         className="orderBtn btn-red"
-                                        onClick={() =>
+                                        onClick={() => {
                                           handleCloseUserTrade(
                                             item,
                                             asset.price
-                                          )
-                                        }
+                                          );
+                                        }}
                                       >
                                         CLOSE
                                       </button>

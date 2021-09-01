@@ -36,6 +36,7 @@ import CryptoStepSix from "../utils/modals/deposit/crypto-steps/CryptoStepSix";
 const DashboardHeader = ({ support, setSupport, data }) => {
   const history = useHistory();
   const { user, loading } = useSelector((state) => state.auth);
+  const { activeTrade } = useSelector((state) => state.profile);
   const { isDarkMode } = useSelector((state) => state.theme);
 
   const { logout, setCurrentSelectedStock } = useActions();
@@ -62,6 +63,8 @@ const DashboardHeader = ({ support, setSupport, data }) => {
     yourCountry: "",
     yourCity: "",
   });
+
+  const balance = user && user.wallet + user.bonus;
 
   //   MODAL STATES
   const [showCredit, setShowCredit] = useState(false);
@@ -315,10 +318,16 @@ const DashboardHeader = ({ support, setSupport, data }) => {
               title={
                 <div className="account-wrapper">
                   <h6 className="mb-0">
-                    {user && user.currency}
-                    {new Intl.NumberFormat("en-US")
-                      .format(user && user.wallet + user.bonus + user.profit)
-                      .slice(0, 9)}
+                    {user && user.currency === "USD"
+                      ? "$"
+                      : user && user.currency}
+                    {Object.keys(activeTrade).length > 0
+                      ? new Intl.NumberFormat("en-US")
+                          .format(balance - activeTrade.margin)
+                          .slice(0, 9)
+                      : new Intl.NumberFormat("en-US")
+                          .format(balance)
+                          .slice(0, 9)}
                   </h6>
                 </div>
               }
@@ -394,7 +403,9 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                       REAL ACCOUNT
                     </h6>
                     <p className="amount mb-0">
-                      {user && user.currency}
+                      {user && user.currency === "USD"
+                        ? "$"
+                        : user && user.currency}
                       {new Intl.NumberFormat("en-US").format(0)
                         ? new Intl.NumberFormat("en-US").format(0)
                         : new Intl.NumberFormat("en-US").format(0)}
@@ -423,22 +434,33 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                     <h6 style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                       Total ACCOUNT{" "}
                       <span style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
-                        = {user && user.currency}
-                        {new Intl.NumberFormat("en-US")
-                          .format(
-                            user && user.wallet + user.bonus + user.profit
-                          )
-                          .slice(0, 9)}
+                        ={" "}
+                        {user && user.currency === "USD"
+                          ? "$"
+                          : user && user.currency}
+                        {Object.keys(activeTrade).length > 0
+                          ? new Intl.NumberFormat("en-US")
+                              .format(balance - activeTrade.margin)
+                              .slice(0, 9)
+                          : new Intl.NumberFormat("en-US")
+                              .format(balance)
+                              .slice(0, 9)}
                       </span>
                     </h6>
                     <p
                       className="amount mb-0"
                       style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
                     >
-                      {user && user.currency}
-                      {new Intl.NumberFormat("en-US")
-                        .format(user && user.wallet + user.bonus + user.profit)
-                        .slice(0, 9)}
+                      {user && user.currency === "USD"
+                        ? "$"
+                        : user && user.currency}
+                      {Object.keys(activeTrade).length > 0
+                        ? new Intl.NumberFormat("en-US")
+                            .format(balance - activeTrade.margin)
+                            .slice(0, 9)
+                        : new Intl.NumberFormat("en-US")
+                            .format(balance)
+                            .slice(0, 9)}
                     </p>
                   </div>
                   <div>
