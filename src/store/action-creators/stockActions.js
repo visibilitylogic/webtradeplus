@@ -2,9 +2,6 @@ import * as actionTypes from "../action-types";
 import axios from "axios";
 
 export const getCryptoAssets = () => async (dispatch) => {
-  dispatch({
-    type: actionTypes.LOAD_STOCK,
-  });
   try {
     const { data } = await axios(
       `https://financialmodelingprep.com/api/v3/quotes/crypto?apikey=6e39eba411ee51caced6ab2be49f987b`
@@ -23,9 +20,6 @@ export const getCryptoAssets = () => async (dispatch) => {
 };
 
 export const getInvestorsExchange = () => async (dispatch) => {
-  dispatch({
-    type: actionTypes.LOAD_STOCK,
-  });
   try {
     const { data } = await axios(
       `https://financialmodelingprep.com/api/v3/stock/list?apikey=6e39eba411ee51caced6ab2be49f987b`
@@ -44,9 +38,6 @@ export const getInvestorsExchange = () => async (dispatch) => {
 };
 
 export const getCommodityStocks = () => async (dispatch) => {
-  dispatch({
-    type: actionTypes.LOAD_STOCK,
-  });
   try {
     const { data } = await axios(
       `https://financialmodelingprep.com/api/v3/quotes/commodity?apikey=6e39eba411ee51caced6ab2be49f987b`
@@ -65,9 +56,6 @@ export const getCommodityStocks = () => async (dispatch) => {
 };
 
 export const getForexStocks = () => async (dispatch) => {
-  dispatch({
-    type: actionTypes.LOAD_STOCK,
-  });
   try {
     const { data } = await axios(
       `https://financialmodelingprep.com/api/v3/quotes/forex?apikey=6e39eba411ee51caced6ab2be49f987b`
@@ -86,9 +74,6 @@ export const getForexStocks = () => async (dispatch) => {
 };
 
 export const getExchangeTradedFund = () => async (dispatch) => {
-  dispatch({
-    type: actionTypes.LOAD_STOCK,
-  });
   try {
     const { data } = await axios(
       `https://financialmodelingprep.com/api/v3/etf/list?apikey=6e39eba411ee51caced6ab2be49f987b`
@@ -181,9 +166,6 @@ export const deleteStock = (stockSymbol) => (dispatch) => {
 };
 
 export const getAllStockAssets = () => async (dispatch) => {
-  dispatch({
-    type: actionTypes.LOAD_STOCK,
-  });
   Promise.all([
     fetch(
       "https://financialmodelingprep.com/api/v3/quotes/crypto?apikey=6e39eba411ee51caced6ab2be49f987b"

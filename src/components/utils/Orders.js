@@ -52,10 +52,12 @@ const Orders = (props) => {
       closeUserBuyTrade(trade._id, {
         closeRateOfAsset: closeRate,
       });
+      setCurrentlyActiveTrade({});
     } else {
       closeUserSellTrade(trade._id, {
         closeRateOfAsset: closeRate,
       });
+      setCurrentlyActiveTrade({});
     }
 
     setTimeout(

@@ -60,7 +60,7 @@ const Dashboard = () => {
   // Redux state data
   const { webData } = useSelector((state) => state.web);
 
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user, userId } = useSelector((state) => state.auth);
   const { currentSelectedStock } = useSelector((state) => state.stock);
 
   const closeSetlevIsh = () => {
@@ -107,8 +107,6 @@ const Dashboard = () => {
     getWebData();
     setDefaultSelectedStock();
   }, []);
-
-  // useInterval(getWebData, 10000);
 
   useEffect(() => {
     [...asideList].forEach((tab) => {

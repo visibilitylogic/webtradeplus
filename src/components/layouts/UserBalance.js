@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useActions } from '../hooks/useActions'
-import { useSelector } from 'react-redux'
 import { message } from 'antd'
 
 const UserBalance = ({ singleUser, error }) => {
@@ -18,7 +17,6 @@ const UserBalance = ({ singleUser, error }) => {
       console.log('not waiting')
       message.error('Identity Approval Was Not Successful')
     } else {
-      await console.log(1234 + ' from balance')
       await singleUserBalance(_id, state)
       setstate({
         pulseType: '',
@@ -42,7 +40,7 @@ const UserBalance = ({ singleUser, error }) => {
           >
             <div className="d-flex justify-content-center align-items-center py-4">
               <div className="mr-auto ">
-                <h6>Pulse:</h6>
+                <h6>Pause:</h6>
               </div>
               <div className="ml-4 w-75">
                 <select
