@@ -21,7 +21,7 @@ import News from "../pages/News";
 import LeaderBoard from "./LeaderBoard";
 
 const Dashboard = () => {
-  const token = "pk_135c1daf1b8d4130b9318fd5e8ab0e5e";
+  const token = "f591d919a61bb5d54375c002d6a07b44";
   const fetchOrder = () => JSON.parse(localStorage.getItem("orders")) || [];
   const [calcDisplay, setCalcDisplay] = useState(false);
   // const {open } = useSelector(state=> state.toggle)
