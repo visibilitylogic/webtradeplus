@@ -321,7 +321,6 @@ function OrderBook() {
             </div>
           );
         }
-
       case "auto_trades":
         if (trade_orders.length > 0 && loading) {
           return (

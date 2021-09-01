@@ -76,12 +76,15 @@ export const processDeposit = (details) => async (dispatch) => {
     },
   };
 
+  console.log(`details`, details);
   const body = JSON.stringify(details);
 
   try {
-    await axios.post(`${BASE_URL}/api/deposit`, body, config);
+    const response = await axios.post(`${BASE_URL}/api/deposit`, body, config);
+
     dispatch({
       type: actionTypes.PROCESS_DEPOSIT_SUCCESS,
+      payload: response.data,
     });
   } catch (error) {
     dispatch({

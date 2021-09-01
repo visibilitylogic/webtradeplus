@@ -132,6 +132,15 @@ export default function profileReducer(state = initialState, action) {
         allDeposits: action.payload,
         error: null,
       };
+
+    case actionTypes.PROCESS_DEPOSIT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        allDeposits: [...state.allDeposits, action.payload],
+        error: null,
+      };
+
     case actionTypes.GET_SINGLE_USER_DEPOSITS:
       return {
         ...state,
