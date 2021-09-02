@@ -95,9 +95,7 @@ const ManagerContents = (props) => {
 
   //
 
-  console.log(singleUser)
-
-  console.log(userTrades)
+  console.log(singleWithdrawals)
 
   const deleteAutoCopyTrade = async () => {
     setLoading(true)
@@ -407,13 +405,13 @@ const ManagerContents = (props) => {
               >
                 Orders
               </div>
-              <div
+              {/* <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetSecu}
                 className={secu ? 'live' : ''}
               >
                 Security
-              </div>
+              </div> */}
             </div>
             <div className="user-dtls-tab-dtls">
               {card && (

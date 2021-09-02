@@ -1,13 +1,6 @@
 import { format } from 'date-fns'
-import React from 'react'
 
 export const singleUserWithdrawal = [
-  {
-    id: 'User',
-    Header: 'User',
-    accessor: 'user',
-  },
-
   {
     Header: 'Ref',
     accessor: 'Ref',
@@ -23,11 +16,19 @@ export const singleUserWithdrawal = [
   {
     Header: 'Status',
     accessor: 'status',
+    accessor: ({ status }) => (
+      <p
+        className={
+          status === 'Pending'
+            ? 'bg-danger text-light text-center'
+            : 'bg-success text-light text-center '
+        }
+      >
+        {status}
+      </p>
+    ),
   },
-  {
-    Header: 'Amount Paid',
-    accessor: '',
-  },
+
   {
     Header: 'Fees',
     accessor: 'fees',
@@ -39,17 +40,14 @@ export const singleUserWithdrawal = [
   },
 
   {
-    Header: 'Amount Recieved',
-    accessor: '',
+    Header: 'Currency',
+    accessor: 'currency',
   },
   {
-    Header: 'Payment Gateway',
-    accessor: '',
+    Header: 'Total',
+    accessor: 'total',
   },
-  {
-    Header: 'Proof',
-    accessor: '',
-  },
+
   {
     Header: 'Action',
     accessor: 'action',
