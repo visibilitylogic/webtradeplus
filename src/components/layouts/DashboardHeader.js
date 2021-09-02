@@ -550,14 +550,14 @@ const DashboardHeader = ({ support, setSupport, data }) => {
             />
           </section>
         )}
-        {user && user.autoTrade && (
+        {/* {user && user.autoTrade && (
           <div
             className="levC1"
             style={{ display: hideAutoTradeModal ? "none" : "block" }}
           >
             <AutoTrade setHideAutoTradeModal={setHideAutoTradeModal} />
           </div>
-        )}
+        )} */}
         <CryptoStepSix
           cryptoStepSix={cryptoStepSix}
           setCryptoStepSix={setCryptoStepSix}
