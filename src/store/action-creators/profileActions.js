@@ -76,12 +76,15 @@ export const processDeposit = (details) => async (dispatch) => {
     },
   };
 
+  console.log(`details`, details);
   const body = JSON.stringify(details);
 
   try {
-    await axios.post(`${BASE_URL}/api/deposit`, body, config);
+    const response = await axios.post(`${BASE_URL}/api/deposit`, body, config);
+
     dispatch({
       type: actionTypes.PROCESS_DEPOSIT_SUCCESS,
+      payload: response.data,
     });
   } catch (error) {
     dispatch({
@@ -147,7 +150,7 @@ export const getCryptoPaymentMethod = (userId) => async (dispatch) => {
   }
 };
 
-export const setAutoTrade = (details) => async (dispatch) => {
+export const setAutoTrade = (id, details) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -156,7 +159,7 @@ export const setAutoTrade = (details) => async (dispatch) => {
 
   const body = JSON.stringify(details);
   try {
-    await axios.put(`${BASE_URL}/api/users/autotrade`, body, config);
+    await axios.put(`${BASE_URL}/api/users/autotrade/${id}`, body, config);
     dispatch({
       type: actionTypes.SET_AUTO_TRADE,
     });
@@ -909,13 +912,10 @@ export const getAllUserTrades = (userId) => async (dispatch) => {
 };
 export const DeactivateUser = (userId) => async (dispatch) => {
   try {
-    const { data } = await axios.put(
-      `${BASE_URL}/api/users/deactivate/${userId}`
-    );
+    await axios.put(`${BASE_URL}/api/users/deactivate/${userId}`);
 
     dispatch({
       type: actionTypes.DEACTIVATE_USER,
-      payload: data,
     });
   } catch (error) {
     dispatch({
@@ -926,13 +926,10 @@ export const DeactivateUser = (userId) => async (dispatch) => {
 };
 export const ActivateUser = (userId) => async (dispatch) => {
   try {
-    const { data } = await axios.put(
-      `${BASE_URL}/api/users/activate/${userId}`
-    );
+    await axios.put(`${BASE_URL}/api/users/activate/${userId}`);
 
     dispatch({
       type: actionTypes.ACTIVATE_USER,
-      payload: data,
     });
   } catch (error) {
     dispatch({

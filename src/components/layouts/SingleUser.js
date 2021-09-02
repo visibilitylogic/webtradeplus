@@ -24,15 +24,13 @@ function SingleUser({ singleUser }) {
   const [deactivate, setdeActivate] = useState(' DEACTIVATE USER')
   const [activate, setActivate] = useState(' ACTIVATE USER')
 
-  console.log(_id)
-
   const handleApproveVerify = async () => {
     if (error) {
       message.error('Identity Approval Was Not Successful')
     } else {
       await approveSingleUserVerify(_id)
       setverifystate(!verify)
-
+      // location.window.reload()
       message.success('Identity Was Successfully Approved')
     }
   }
@@ -67,7 +65,7 @@ function SingleUser({ singleUser }) {
           <div className="dash-row dash-row-centralized">
             <div className="th">Last location</div>
             <div className="td">
-              {country ? country : 'No phone number selected'}
+              {country ? country : 'No Country selected'}
             </div>
           </div>
           <div className="dash-row dash-row-centralized">

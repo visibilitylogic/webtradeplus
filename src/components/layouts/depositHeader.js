@@ -1,67 +1,154 @@
-import { format } from 'date-fns'
-import ApproveDeposit from './ApproveDeposit'
-import PaymentModal from './PaymentModal'
-import DepositState from './DepositState'
+import { format } from "date-fns";
+// import ApproveDeposit from "./ApproveDeposit";
+// import PaymentModal from "./PaymentModal";
+// import DepositState from "./DepositState";
+
+const checkIfApproved = (status) => {
+  return status === "Approved" ? "none" : "block";
+};
 export const depositHeader = [
   {
-    id: 'Ref',
-    Header: 'Ref',
-    accessor: ({ Ref }) => <strong> {Ref}</strong>,
+    id: "Ref",
+    field: "Ref",
+    headerName: "Ref",
+    accessor: "Ref",
+    width: 116,
+    type: "text",
+    // headerAlign: "center",
+    // accessor: ({ Ref }) => <strong> {Ref}</strong>,
   },
   {
-    id: 'name',
-    Header: 'Name',
-    accessor: 'name',
+    id: "name",
+    field: "name",
+    headerName: "Name",
+    type: "text",
+    // headerAlign: "center",
+    width: 116,
+    accessor: "name",
   },
 
   {
-    id: 'time',
-    Header: 'Created date',
-    accessor: 'time',
+    id: "time",
+    field: "time",
+    headerName: "Created date",
+    type: "date",
+    // headerAlign: "center",
+    width: 116,
+    accessor: "time",
     Cell: ({ value }) => {
-      return format(new Date(value), 'dd/MM/yyyy')
+      return format(new Date(value), "dd/MM/yyyy");
     },
   },
 
   {
-    Header: 'Amount Paid',
-    accessor: ({ amount }) => <strong>{amount}</strong>,
+    field: "amount",
+    headerName: "Amount Paid",
+    type: "number",
+    // headerAlign: "center",
+    width: 116,
+    accessor: "amount",
+    // accessor: ({ amount }) => <strong>{amount}</strong>,
   },
   {
-    id: 'Fee',
-    Header: 'Fee',
-    accessor: 'fee',
+    id: "Fee",
+    field: "fee",
+    headerName: "Fee",
+    type: "number",
+    // headerAlign: "center",
+    width: 116,
+    accessor: "fee",
   },
 
   {
-    id: 'Wallet Received',
-    Header: 'Wallet Received',
-    accessor: '__v',
+    id: "Wallet Received",
+    field: "__v",
+    headerName: "Wallet Received",
+    type: "date",
+    // headerAlign: "center",
+    width: 116,
+    accessor: "__v",
   },
 
   {
-    Header: 'Amount Received',
-    accessor: 'amount',
-    accessor: ({ amount }) => amount,
+    field: "amount",
+    headerName: "Amount Received",
+    accessor: "amount",
+    type: "number",
+    // headerAlign: "center",
+    width: 116,
+    // accessor: ({ amount }) => amount,
   },
   {
-    id: 'cryptoAddress',
-    Header: 'Payment Gateway',
-    accessor: 'cryptoAddress',
+    id: "cryptoAddress",
+    field: "method",
+    headerName: "Payment Gateway",
+    type: "text",
+    // headerAlign: "center",
+    width: 116,
+    accessor: "method",
   },
   {
-    Header: 'Payment Details',
-    accessor: 'method',
-    accessor: (method) => <PaymentModal method={method} />,
+    field: "method",
+    headerName: "Payment Details",
+    type: "text",
+    // headerAlign: "center",
+    width: 116,
+    // accessor: (method) => <PaymentModal method={method} />,
+    accessor: "method",
   },
   {
-    Header: 'Status',
-    accessor: 'status',
-    accessor: ({ status }) => <DepositState status={status} />,
+    field: "status",
+    headerName: "Status",
+    type: "text",
+    // headerAlign: "center",
+    width: 116,
+    backgroundColor: "green",
+    renderCell: (props) => {
+      return (
+        <button
+          style={{
+            backgroundColor: props.row.status === "Approved" ? "green" : "red",
+            border: "none",
+            width: "100%",
+          }}
+        >
+          {props.row.status}
+        </button>
+      );
+    },
+    // accessor: ({ status }) => <DepositState status={status} />,
+    accessor: "status",
   },
   {
-    Header: 'Action',
-    accessor: 'status',
-    accessor: (status) => <ApproveDeposit status={status} />,
+    field: "action",
+    headerName: "Action",
+    width: 116,
+    // accessor: (status) => <ApproveDeposit status={status} />,
+    accessor: "status",
+    renderCell: (props) => {
+      return (
+        <div style={{ display: checkIfApproved(props.row.status) }}>
+          <button
+            style={{
+              backgroundColor: "green",
+              border: "none",
+              width: "50%",
+            }}
+          >
+            Accept
+          </button>
+
+          <button
+            style={{
+              backgroundColor: "red",
+              border: "none",
+              width: "50%",
+            }}
+          >
+            Decline
+          </button>
+        </div>
+      );
+    },
   },
-]
+];

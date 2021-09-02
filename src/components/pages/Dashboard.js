@@ -18,6 +18,7 @@ import Finaces from "./Finaces";
 import Calculator from "../layouts/Calculator";
 import News from "../pages/News";
 import LeaderBoard from "./LeaderBoard";
+import useInterval from "./../hooks/useInterval";
 
 const Dashboard = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -33,12 +34,17 @@ const Dashboard = () => {
   const myRef3 = useRef("");
 
   // Action creators
-  const { getWebData, setIsTrading, setDefaultSelectedStock } = useActions();
+  const {
+    getWebData,
+    setIsTrading,
+    setDefaultSelectedStock,
+    getCurrentProfile,
+  } = useActions();
 
   // Redux state data
   const { webData } = useSelector((state) => state.web);
 
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user, userId } = useSelector((state) => state.auth);
   // const { currentSelectedStock } = useSelector((state) => state.stock);
 
   const closeSetlevIsh = () => {
@@ -54,16 +60,6 @@ const Dashboard = () => {
       );
     } else if (user && user.wallet <= 0) {
       message.warning(`You do not have enough money in your wallet`);
-    }
-  };
-
-  const handleSellStock = () => {
-    if (user && user.isTrading) {
-      message.warning(
-        `AutoCopy Trader is Active, Turn off AutoCopy Trader to trade manually`
-      );
-    } else if (user && user.wallet <= 0) {
-      message.warning(`You need to make a Deposit in your wallet.`);
     }
   };
 
@@ -85,6 +81,10 @@ const Dashboard = () => {
     getWebData();
     setDefaultSelectedStock();
   }, []);
+
+  // useInterval(() => {
+  //   user && getCurrentProfile(userId);
+  // }, 10000);
 
   useEffect(() => {
     [...asideList].forEach((tab) => {
@@ -153,8 +153,6 @@ const Dashboard = () => {
               levIsh={levIsh}
               setLevIsh={setLevIsh}
               closeSetlevIsh={closeSetlevIsh}
-              handleBuyStock={handleBuyStock}
-              handleSellStock={handleSellStock}
               data={webData}
             />
           )}

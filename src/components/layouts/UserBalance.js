@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useActions } from '../hooks/useActions'
-import { useSelector } from 'react-redux'
 import { message } from 'antd'
 
 const UserBalance = ({ singleUser, error }) => {
@@ -15,9 +14,8 @@ const UserBalance = ({ singleUser, error }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (error) {
-      console.log('not waiting')
       message.error('Identity Approval Was Not Successful')
-    } else { 
+    } else {
       await singleUserBalance(_id, state)
       setstate({
         pulseType: '',

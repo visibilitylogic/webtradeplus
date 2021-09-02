@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { useTable, useSortBy, usePagination } from 'react-table'
 import { useActions } from '../hooks/useActions'
 
@@ -16,6 +16,7 @@ const BasicTable = ({
     getVerifieddetails,
     singleUserDeposit,
     getSingleWithdrawals,
+    getAllUserTrades,
   } = useActions()
   const columns = useMemo(() => column, [
     column,
@@ -82,75 +83,44 @@ const BasicTable = ({
         <tbody {...getTableBodyProps()}>
           {page.map((row) => {
             prepareRow(row)
-            if (type === 'EveryUser') {
-              return (
-                <tr
-                  {...row.getRowProps()}
-                  onClick={() => {
-                    getSingleProfile(row.original)
-                    setDisplayC(true)
-                  }}
-                >
-                  {row.cells.map((cell) => {
-                    return (
-                      <td
-                        style={{
-                          maxHeight: '20px',
-                          height: '15px',
-                          cursor: 'pointer',
-                        }}
-                        onClick={() => {
-                          setUserLevel(
-                            user.isAdmin
-                              ? 'isAdmin'
-                              : user.isManager
-                              ? 'isManager'
-                              : 'none',
-                          )
-                        }}
-                        {...cell.getCellProps()}
-                      >
-                        {cell.render('Cell')}
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            } else if (
-              type === 'singlepayment' ||
-              type === 'verifiedUsers' ||
-              type === 'withdrawal'
-            ) {
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td
-                        style={{ maxHeight: '20px', height: '15px' }}
-                        {...cell.getCellProps()}
-                        onClick={() => {
-                          singleUserDeposit(row.original._id)
-                          getVerifieddetails(row.original)
-                          getSingleWithdrawals(row.original._id)
-                        }}
-                      >
-                        {cell.render('Cell')}
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            } else {
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                    )
-                  })}
-                </tr>
-              )
-            }
+
+            return (
+              <tr
+                {...row.getRowProps()}
+                onClick={() => {
+                  getSingleProfile(row.original)
+                  setDisplayC(true)
+                  singleUserDeposit(row.original._id)
+                  getVerifieddetails(row.original)
+                  getSingleWithdrawals(row.original._id)
+                  getAllUserTrades(row.original._id)
+                }}
+              >
+                {row.cells.map((cell) => {
+                  return (
+                    <td
+                      style={{
+                        maxHeight: '20px',
+                        height: '15px',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => {
+                        setUserLevel(
+                          user.isAdmin
+                            ? 'isAdmin'
+                            : user.isManager
+                            ? 'isManager'
+                            : 'none',
+                        )
+                      }}
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render('Cell')}
+                    </td>
+                  )
+                })}
+              </tr>
+            )
           })}
         </tbody>
       </table>

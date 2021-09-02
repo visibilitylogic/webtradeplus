@@ -26,6 +26,7 @@ import { singleUserWithdrawal } from './singleUserWithdrawal'
 import EstimatedBallance from './EstimatedBallance'
 import UserHeader from './UserHeader'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
+import CustomTable from '../../helpers/customTable/CustomTable'
 
 const ManagerContents = (props) => {
   const data = [
@@ -47,6 +48,7 @@ const ManagerContents = (props) => {
     allTrades,
     allUsers,
     singleDeposit,
+    userTrades,
     userAutoCopyTrade,
     tradeApproval,
     singleUser,
@@ -92,41 +94,10 @@ const ManagerContents = (props) => {
   const [state, setstate] = useState('')
 
   //
-  //setAutoTrade
-  // const [trade, setTrade] = useState({
-  //   id: user._id,
-  //   authEnabled: false,
-  // })
-  const [notification, setNotification] = useState({
-    id: user._id,
-    notificationEnabled: user.notificationsEnabled,
-  })
-  const [auth, setAuth] = useState({
-    id: user._id,
-    authEnabled: false,
-    // user.notificationsEnabled,
-  })
 
-  console.log(singleWithdrawals)
+  console.log(singleUser)
 
-  console.log(allSingleDeposits)
-  // auth
-  const setAuth0 = useCallback(() => {
-    setAuth(!auth)
-    // setAuthEnabled({
-    //   id: user._id,
-    //   notificationEnabled: !user.notificationsEnabled,
-    // })
-  }, [auth])
-
-  // notification
-  const setNotifications = useCallback(() => {
-    setNotification(!notification)
-    setNotificationEnabled({
-      id: user._id,
-      notificationEnabled: !user.notificationsEnabled,
-    })
-  }, [notification])
+  console.log(userTrades)
 
   const deleteAutoCopyTrade = async () => {
     setLoading(true)
@@ -177,18 +148,9 @@ const ManagerContents = (props) => {
     setPayments(false)
     setSecu(false)
     setOrderT(false)
-    ;(async () => {
-      const { data } = await axios(
-        `https://trade-backend-daari.ondigitalocean.app/api/trade/deposit/${singleUser._id}`,
-      )
-      setCurrentDeposit(data)
-    })()
   }
 
-  console.log(currentDeposit)
-
   const handleSetWithd = () => {
-    getSingleWithdrawals(singleUser._id)
     setWithd(true)
     setCard(false)
     setBal(false)
@@ -248,26 +210,6 @@ const ManagerContents = (props) => {
     setWithd(false)
   }
 
-  const handleUpdateWalletBalance = (user) => {
-    if (loading) {
-      setText('Updating...')
-    } else if (!credit && parseInt(amount) > user.wallet) {
-      message.error(
-        'This transaction is not valid as it will result in a negative balance',
-      )
-    } else {
-      updateWalletBalance({
-        id: user.id,
-        amount,
-        action: credit,
-      })
-
-      setText('Saved')
-      message.success('Balance updated')
-      window.location.reload()
-    }
-  }
-
   const handleDeleteUser = (id) => {
     if (error) {
       message.error('Try again')
@@ -278,9 +220,9 @@ const ManagerContents = (props) => {
     }
   }
 
-  useEffect(() => {
-    getUserAutoCopyTrade(user._id)
-  }, [])
+  // useEffect(() => {
+  //   getUserAutoCopyTrade(singleUser._id)
+  // }, [])
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
@@ -329,11 +271,7 @@ const ManagerContents = (props) => {
           </div>
         </div>
       </div>
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="bank-transfers"
-        style={{ marginLeft: '4%' }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="bank-transfers">
         {bankTransfers && bankTransfers.length > 0 && (
           <TableContainer>
             <BasicTable
@@ -346,28 +284,28 @@ const ManagerContents = (props) => {
         )}
       </div>
 
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="payments"
-        style={{ marginLeft: '4%' }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="payments">
         {allDeposits && allDeposits.length > 0 && (
-          <TableContainer>
-            <BasicTable
+          <>
+            <CustomTable
               allUsers={allDeposits}
               user={user}
               column={depositHeader}
               type="deposit"
             />
-          </TableContainer>
+            {/* <TableContainer>
+              <BasicTable
+                allUsers={allDeposits}
+                user={user}
+                column={depositHeader}
+                type="deposit"
+              />
+            </TableContainer> */}
+          </>
         )}
       </div>
 
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="subscriptions"
-        style={{ marginLeft: '4%' }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="subscriptions">
         <table>
           <tbody>
             <tr>
@@ -391,29 +329,27 @@ const ManagerContents = (props) => {
           </tbody>
         </table>
       </div>
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="identity"
-        style={{ marginLeft: '4%' }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="identity">
         {allVerifiedUsers && allVerifiedUsers.length > 0 && (
-          <TableContainer>
-            <BasicTable
-              allUsers={allVerifiedUsers}
-              user={user}
-              column={allVerifiedUsersHeader}
-              type="verifiedUsers"
-            />
-          </TableContainer>
+          <CustomTable
+            allUsers={allVerifiedUsers}
+            user={user}
+            column={allVerifiedUsersHeader}
+            type="verifiedUsers"
+          />
+          // <TableContainer>
+          //   <BasicTable
+          //     allUsers={allVerifiedUsers}
+          //     user={user}
+          //     column={allVerifiedUsersHeader}
+          //     type="verifiedUsers"
+          //   />
+          // </TableContainer>
         )}
       </div>
 
       {/* Table */}
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="users"
-        style={{ marginLeft: '4%' }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="users">
         {!displayC && allUsers && allUsers.length > 0 && (
           <div className="first-sec">
             <TableContainer>
@@ -511,12 +447,8 @@ const ManagerContents = (props) => {
                     {/* left hand side of user profile */}
                     {singleUser && (
                       <SingleUser
-                        setNotifications={setNotifications}
-                        setAuth0={setAuth0}
                         singleUser={singleUser}
-                        checked2={auth.authEnabled}
                         setDisplayC={setDisplayC}
-                        checked={notification.notificationsEnabled}
                       />
                     )}
                   </div>
@@ -882,6 +814,7 @@ const ManagerContents = (props) => {
                         {singleUser && (
                           <UserArea
                             singleUser={singleUser}
+                            user={user}
                             setEditProfile={setEditProfile}
                             handleDeleteUser={handleDeleteUser}
                           />
@@ -931,6 +864,17 @@ const ManagerContents = (props) => {
                         )}
                       </div>
                     </div>
+                    {orderT && userTrades <= 0 ? (
+                      <div className="d-flex justify-content-center align-items-center">
+                        <h2 className="p-2 m-2">No Order History</h2>
+                      </div>
+                    ) : (
+                      <BasicTable
+                        allUsers={userTrades}
+                        column={allTradesHeader}
+                        type="withdrawal"
+                      />
+                    )}
                   </div>
                 </div>
               )}
@@ -968,11 +912,7 @@ const ManagerContents = (props) => {
           </div>
         )}
       </div>
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="orders"
-        style={{ marginLeft: '4%' }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="orders">
         {allTrades && allTrades.length > 0 && (
           <TableContainer>
             <BasicTable
@@ -983,11 +923,7 @@ const ManagerContents = (props) => {
           </TableContainer>
         )}
       </div>
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="withdraw"
-        style={{ marginLeft: '4%' }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="withdraw">
         {allWithdrawals && allWithdrawals.length > 0 && (
           <TableContainer>
             <BasicTable
