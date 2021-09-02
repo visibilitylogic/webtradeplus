@@ -73,7 +73,7 @@ const UserArea = ({ setEditProfile, singleUser }) => {
               onClick={() => {
                 confirmAlert({
                   title: 'DELETE USER',
-                  message: `Are you sure you want to delete ${name}`,
+                  message: `Are you sure you want to delete ${name} ?`,
                   buttons: [
                     {
                       label: 'Delete',

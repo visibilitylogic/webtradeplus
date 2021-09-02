@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react'
 import { useTable, useSortBy, usePagination } from 'react-table'
 import { useActions } from '../hooks/useActions'
-
 import FooterComponent from './FooterComponent'
 const BasicTable = ({
   allUsers,
@@ -14,11 +13,19 @@ const BasicTable = ({
   getVerifieddetails,
   singleUserDeposit,
   getSingleWithdrawals,
+  // getCurrentProfile,
   getAllUserTrades,
-  getCurrentProfile,
 }) => {
-  const columns = column
-  const data = allUsers
+  const columns = useMemo(() => column, [])
+  const data = useMemo(() => allUsers, [])
+  const {
+    //   getSingleProfile,
+    //   getVerifieddetails,
+    //   singleUserDeposit,
+    getCurrentProfile,
+    //   getSingleWithdrawals,
+    //   getAllUserTrades,
+  } = useActions()
 
   const tableInstance = useTable(
     {
