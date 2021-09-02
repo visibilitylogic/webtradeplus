@@ -15,6 +15,7 @@ const BasicTable = ({
   singleUserDeposit,
   getSingleWithdrawals,
   getAllUserTrades,
+  getCurrentProfile,
 }) => {
   const columns = column
   const data = allUsers
