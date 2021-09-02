@@ -17,10 +17,9 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
       message.error('Failed!!!')
     } else {
       const details = {
-        id: _id,
         autoTrade: !autoTrade,
       }
-      await setAutoTrade(details)
+      await setAutoTrade(_id, details)
       setAuto(!autoTrade)
 
       message.success('Successfull')
