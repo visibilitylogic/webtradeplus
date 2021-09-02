@@ -18,22 +18,9 @@ const BasicTable = ({
     getSingleWithdrawals,
     getAllUserTrades,
   } = useActions()
-  const columns = useMemo(() => column, [
-    column,
-    type,
-    getSingleProfile,
-    getVerifieddetails,
-    singleUserDeposit,
-    getSingleWithdrawals,
-  ])
-  const data = useMemo(() => allUsers, [
-    allUsers,
-    type,
-    getSingleProfile,
-    getVerifieddetails,
-    singleUserDeposit,
-    getSingleWithdrawals,
-  ])
+  const columns = column
+  const data = allUsers
+
   const tableInstance = useTable(
     {
       columns,
@@ -139,4 +126,4 @@ const BasicTable = ({
   )
 }
 
-export default React.memo(BasicTable)
+export default BasicTable

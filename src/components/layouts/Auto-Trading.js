@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import "./AutoTrading.css";
 import { useActions } from '../hooks/useActions';
-import SuccessModal from '../Modals/SuccessModal';
+import SuccessModal from '../pages/Modals/SuccessModal';
 import {Alert, Button, Spinner, Table} from "react-bootstrap";
 import EditTrade from './EditTrade';
 import { useHistory } from 'react-router-dom';

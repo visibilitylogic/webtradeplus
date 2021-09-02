@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
-import { useActions } from '../hooks/useActions'
-import { message } from 'antd'
-import { useSelector } from 'react-redux'
+import React, { useState } from "react";
+import { useActions } from "../hooks/useActions";
+import { message } from "antd";
+import { useSelector } from "react-redux";
 
 function SingleUser({ singleUser }) {
-  const { error } = useSelector((state) => state.profile)
-  const { approveSingleUserVerify, DeactivateUser, ActivateUser } = useActions()
+  const { error } = useSelector((state) => state.profile);
+  const { approveSingleUserVerify, DeactivateUser, ActivateUser } =
+    useActions();
   const {
     name,
     country,
@@ -17,42 +18,43 @@ function SingleUser({ singleUser }) {
     isManager,
     verify,
     isActive,
-  } = singleUser
-  const [verifystate, setverifystate] = useState(verify)
-  const [activestate] = useState(isActive)
-  const [active, setActive] = useState(true)
-  const [deactivate, setdeActivate] = useState(' DEACTIVATE USER')
-  const [activate, setActivate] = useState(' ACTIVATE USER')
+  } = singleUser;
+  const [verifystate, setverifystate] = useState(verify);
+  const [active, setActive] = useState(true);
+  const [deactivate, setdeActivate] = useState(" DEACTIVATE USER");
+  const [activate, setActivate] = useState(" ACTIVATE USER");
 
   const handleApproveVerify = async () => {
     if (error) {
-      message.error('Identity Approval Was Not Successful')
+      message.error("Identity Approval Was Not Successful");
     } else {
-      await approveSingleUserVerify(_id)
-      setverifystate(!verify)
+      await approveSingleUserVerify(_id);
+      setverifystate(!verify);
       // location.window.reload()
-      message.success('Identity Was Successfully Approved')
+
+      message.success("Identity Was Successfully Approved");
     }
-  }
+  };
+
   const handleActivate = async () => {
     if (error) {
-      message.error('Activation Was Not Successful')
+      message.error("Activation Was Not Successful");
     } else {
-      await ActivateUser(_id)
-      setActive(true)
+      await ActivateUser(_id);
+      setActive(true);
 
-      message.success('Identity Was Successfully Activated')
+      message.success("Identity Was Successfully Activated");
     }
-  }
+  };
   const handleDeActivate = async () => {
     if (error) {
-      message.error('Deactivation Was Not Successful')
+      message.error("Deactivation Was Not Successful");
     } else {
-      await DeactivateUser(_id)
-      setActive(false)
-      message.success('Identity Was Successfully Deactivated')
+      await DeactivateUser(_id);
+      setActive(false);
+      message.success("Identity Was Successfully Deactivated");
     }
-  }
+  };
 
   return (
     <>
@@ -65,13 +67,13 @@ function SingleUser({ singleUser }) {
           <div className="dash-row dash-row-centralized">
             <div className="th">Last location</div>
             <div className="td">
-              {country ? country : 'No Country selected'}
+              {country ? country : "No Country selected"}
             </div>
           </div>
           <div className="dash-row dash-row-centralized">
             <div className="th">Phone</div>
             <div className="td">
-              {phoneNumber ? phoneNumber : 'No phone number attached'}
+              {phoneNumber ? phoneNumber : "No phone number attached"}
             </div>
           </div>
           <div className="dash-row dash-row-centralized">
@@ -90,11 +92,11 @@ function SingleUser({ singleUser }) {
               <span
                 className={
                   verifystate
-                    ? 'bg-success p-2  text-light'
-                    : 'text-light p-2 bg-danger'
+                    ? "bg-success p-2  text-light"
+                    : "text-light p-2 bg-danger"
                 }
               >
-                {verifystate ? 'VERIFIED' : 'PENDING'}
+                {verifystate ? "VERIFIED" : "PENDING"}
               </span>
 
               {!verifystate ? (
@@ -114,32 +116,32 @@ function SingleUser({ singleUser }) {
 
           <div className="dash-row dash-row-centralized">
             <div className="th">Created date</div>
-            <div className="td">{time ? time.slice(0, 10) : ''}</div>
+            <div className="td">{time ? time.slice(0, 10) : ""}</div>
           </div>
           <div className="dash-row dash-row-centralized">
             <div className="th">
               {isManager
-                ? 'MANAGER STATUS '
+                ? "MANAGER STATUS "
                 : isAdmin
-                ? 'ADMIN STATUS'
-                : 'USER STATUS'}
+                ? "ADMIN STATUS"
+                : "USER STATUS"}
             </div>
             <div className="td">
               <div className="d-flex justify-content-between align-items-center">
                 <div
                   className={
                     active
-                      ? 'text-light p-2 bg-success mr-2'
-                      : 'text-light p-2 bg-danger mr-2'
+                      ? "text-light p-2 bg-success mr-2"
+                      : "text-light p-2 bg-danger mr-2"
                   }
                 >
-                  <a>{active ? 'ACTIVE' : 'INACTIVE'}</a>
+                  <a>{active ? "ACTIVE" : "INACTIVE"}</a>
                 </div>
                 <div
                   className={
                     active
-                      ? 'text-light p-2 bg-danger'
-                      : 'text-light p-2 bg-success'
+                      ? "text-light p-2 bg-danger"
+                      : "text-light p-2 bg-success"
                   }
                   onClick={active ? handleDeActivate : handleActivate}
                 >
@@ -153,7 +155,7 @@ function SingleUser({ singleUser }) {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default SingleUser
+export default SingleUser;

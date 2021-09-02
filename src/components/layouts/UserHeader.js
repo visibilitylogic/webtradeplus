@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ReactCountryFlag from 'react-country-flag'
 import { useActions } from '../hooks/useActions'
 import CountryList from 'react-select-country-list'
@@ -6,11 +6,7 @@ import { useSelector } from 'react-redux'
 import { set } from 'date-fns'
 
 const UserHeader = ({ singleUser }) => {
-  // const { singleUser } = useSelector((state) => state.profile)
-  const { checkUserOnlineStatus, getSingleWithdrawals } = useActions()
-
   const { email, country, name, img, _id, isOnline } = singleUser
-  const [userState, setUserState] = useState(isOnline)
 
   return (
     <>
@@ -39,7 +35,7 @@ const UserHeader = ({ singleUser }) => {
               </div>
               <div className="email font-size-14">{email}</div>
               <div className="dash-row dash-row-centralized font-size-12">
-                <div className="ml-2">
+                {/* <div className="ml-2">
                   <ReactCountryFlag
                     countryCode="US"
                     svg
@@ -48,7 +44,7 @@ const UserHeader = ({ singleUser }) => {
                       height: '2em',
                     }}
                   />
-                </div>
+                </div> */}
                 <div className="country text-uppercase">{country}</div>
               </div>
             </div>

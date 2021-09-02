@@ -8546,7 +8546,7 @@ body {
   width: 10%;
   height: 10%;
   background: #54ac40;
-  position: absolute;
+  position: relative;
   top: 173px;
   transition: all 0.5s ease-in-out;
 }
@@ -8568,4 +8568,44 @@ body {
   font-weight: 500;
   white-space: nowrap;
   text-overflow: clip;
+}
+
+.MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--withRenderer, .MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--editing {
+  justify-content: left;
+}
+
+.MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--withRenderer, .MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--editing {
+  justify-content: left !important;
+}
+.MuiDataGrid-root .MuiDataGrid-columnHeaderDraggableContainer {
+  width: 146%;
+  display: flex;
+}
+
+.MuiDataGrid-root .MuiDataGrid-columnHeaderTitleContainer {
+  flex: 1;
+  display: flex;
+  padding: 0 -46px;
+  overflow: hidden;
+  min-width: 0;
+  align-items: center;
+  white-space: nowrap;
+}
+.MuiDataGrid-root .MuiDataGrid-columnHeaderTitle {
+  overflow: hidden;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: clip;
+  font-size: 14px;
+  text-align: left;
+  padding: 0;
+}
+
+.MuiDataGrid-root .MuiDataGrid-columnHeaderTitle {
+  overflow: hidden;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: clip;
+  white-space: normal;
+  line-height: 16px;
 }

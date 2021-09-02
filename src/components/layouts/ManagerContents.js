@@ -22,11 +22,12 @@ import UserBalance from './UserBalance'
 import UserArea from './UserArea'
 import SingleUser from './SingleUser'
 import { paymentHeader } from './paymentHeader'
-import { singleUserWithdrawal } from './singleUserWithdrawal'
 import EstimatedBallance from './EstimatedBallance'
 import UserHeader from './UserHeader'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 import CustomTable from '../../helpers/customTable/CustomTable'
+import { singleUserWithdrawal } from './singleWithdrawalStatuss'
+import { getAllUsers } from '../../store/action-creators/profileActions'
 
 const ManagerContents = (props) => {
   const data = [
@@ -63,6 +64,7 @@ const ManagerContents = (props) => {
     updateWalletBalance,
     setNotificationEnabled, // expecting end point
     deleteUser,
+    getAllUsers,
     getUserAutoCopyTrade,
     addUserAutoCopyTrade,
     deleteUserAutoCopyTrade,
@@ -95,9 +97,7 @@ const ManagerContents = (props) => {
 
   //
 
-  console.log(singleUser)
-
-  console.log(userTrades)
+  console.log(singleWithdrawals)
 
   const deleteAutoCopyTrade = async () => {
     setLoading(true)
@@ -220,9 +220,10 @@ const ManagerContents = (props) => {
     }
   }
 
-  // useEffect(() => {
-  //   getUserAutoCopyTrade(singleUser._id)
-  // }, [])
+  useEffect(() => {
+    getAllUsers()
+  }, [singleUser])
+
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
@@ -336,6 +337,7 @@ const ManagerContents = (props) => {
             user={user}
             column={allVerifiedUsersHeader}
             type="verifiedUsers"
+            key={allVerifiedUsers}
           />
           // <TableContainer>
           //   <BasicTable
@@ -349,7 +351,7 @@ const ManagerContents = (props) => {
       </div>
 
       {/* Table */}
-      <div className="manager-tab-dtls" manager-tab-dtls="users">
+      <div className="manager-tab-dtls" manager-tab-dtls="users" style={{marginLeft:'5%'}}>
         {!displayC && allUsers && allUsers.length > 0 && (
           <div className="first-sec">
             <TableContainer>
@@ -359,6 +361,7 @@ const ManagerContents = (props) => {
                 setUserLevel={setUserLevel}
                 user={user}
                 column={Columns}
+                key={allUsers}
                 type="EveryUser"
               />
             </TableContainer>
@@ -410,16 +413,16 @@ const ManagerContents = (props) => {
               >
                 Orders
               </div>
-              <div
+              {/* <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetSecu}
                 className={secu ? 'live' : ''}
               >
                 Security
-              </div>
+              </div> */}
             </div>
             <div className="user-dtls-tab-dtls">
-              {card && (
+              {card && singleUser && (
                 <div dash-user-dtls-tab-dtls="card">
                   <div className="dtls-sec">
                     <div className="dash-row dash-row-centralized header">
@@ -459,6 +462,7 @@ const ManagerContents = (props) => {
                           allUsers={currentDeposit}
                           column={depositHeader}
                           type="currentDeposit"
+                          user={user}
                         />
                       )}
                     </div>
@@ -827,12 +831,18 @@ const ManagerContents = (props) => {
                         <h2 className="p-2 m-2">No Withdrawal</h2>
                       </div>
                     ) : (
-                      <BasicTable
+                      <CustomTable
                         allUsers={singleWithdrawals}
                         user={user}
                         column={singleUserWithdrawal}
                         type="withdrawal"
                       />
+                      // <BasicTable
+                      //   allUsers={singleWithdrawals}
+                      //   user={user}
+                      //   column={singleUserWithdrawal}
+                      //   type="withdrawal"
+                      // />
                     )}
                     {/* sdfdsj */}
                   </div>
@@ -914,25 +924,36 @@ const ManagerContents = (props) => {
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="orders">
         {allTrades && allTrades.length > 0 && (
-          <TableContainer>
-            <BasicTable
-              allUsers={allTrades}
-              column={allTradesHeader}
-              type="trades"
-            />
-          </TableContainer>
+          <CustomTable
+            allUsers={allTrades}
+            column={allTradesHeader}
+            type="trades"
+          />
+          // <TableContainer>
+          //   <BasicTable
+          //     allUsers={allTrades}
+          //     column={allTradesHeader}
+          //     type="trades"
+          //   />
+          // </TableContainer>
         )}
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="withdraw">
         {allWithdrawals && allWithdrawals.length > 0 && (
-          <TableContainer>
-            <BasicTable
-              allUsers={allWithdrawals}
-              user={user}
-              column={withdrawalHeader}
-              type="withdrawal"
-            />
-          </TableContainer>
+          <CustomTable
+            allUsers={allWithdrawals}
+            user={user}
+            column={withdrawalHeader}
+            type="withdrawal"
+          />
+          // <TableContainer>
+          //   <BasicTable
+          // allUsers={allWithdrawals}
+          // user={user}
+          // column={withdrawalHeader}
+          // type="withdrawal"
+          //   />
+          // </TableContainer>
         )}
       </div>
 
@@ -959,7 +980,7 @@ ManagerContents.propTypes = {
   setEditProfile: PropTypes.func.isRequired,
 }
 
-export default React.memo(ManagerContents)
+export default ManagerContents
 
 const TableContainer = styled.div`
   background: white;
