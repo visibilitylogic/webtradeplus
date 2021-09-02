@@ -6,6 +6,7 @@ import { message } from "antd";
 import "./Orders.css";
 import Spinner from "./Spinner";
 import { getProfitOrLoss } from "../../helpers/getProfitOrLoss";
+import { calculatePandL } from "../../helpers/calculatePandL";
 
 const spinnerStyle = {
   height: "100%",
@@ -19,28 +20,17 @@ const Orders = (props) => {
   const { buysell, setBuysell } = props;
 
   const { user } = useSelector((state) => state.auth);
-  const { userTrades, error, loading, tradeProfit } = useSelector(
-    (state) => state.profile
-  );
-  const { allStockAssets, currentSelectedStock, defaultSelectedStock } =
-    useSelector((state) => state.stock);
+  const { userTrades, error, loading } = useSelector((state) => state.profile);
+  const { allStockAssets } = useSelector((state) => state.stock);
   const { activeTrade } = useSelector((state) => state.profile);
   const { webData } = useSelector((state) => state.web);
 
-  const profit = getProfitOrLoss(
-    activeTrade,
-    currentSelectedStock,
-    defaultSelectedStock >= 0
-  );
-
-  console.log(tradeProfit);
   const {
     getAllUserTrades,
     deleteUserTrade,
     closeUserBuyTrade,
     closeUserSellTrade,
     setCurrentlyActiveTrade,
-    setTradeProfit,
   } = useActions();
 
   const handleDeleteUserTrade = (tradeId) => {
@@ -58,27 +48,24 @@ const Orders = (props) => {
   const handleCloseUserTrade = (trade, closeRate) => {
     if (error) {
       message.error("Trade could not be closed");
-      return;
-    }
-
-    if (trade.tag === "buy") {
-      closeUserBuyTrade(trade._id, {
-        closeRateOfAsset: closeRate,
-      });
-      setTradeProfit(trade.profit);
-      setCurrentlyActiveTrade({});
     } else {
-      closeUserSellTrade(trade._id, {
-        closeRateOfAsset: closeRate,
-      });
-      setTradeProfit(trade.profit);
+      if (trade.tag === "sell") {
+        closeUserSellTrade(trade._id, {
+          closeRateOfAsset: closeRate,
+        });
+      } else {
+        closeUserBuyTrade(trade._id, {
+          closeRateOfAsset: closeRate,
+        });
+      }
       setCurrentlyActiveTrade({});
-    }
+      setTimeout(
+        () => message.success("Your trade has been closed successfully"),
+        5000
+      );
 
-    setTimeout(
-      () => message.success("Your trade has been closed successfully"),
-      5000
-    );
+      setTimeout(() => window.location.reload(), 6000);
+    }
   };
 
   useInterval(() => {
@@ -199,18 +186,16 @@ const Orders = (props) => {
                                   <td
                                     style={{
                                       color:
-                                        asset.price - item.openRateOfAsset < 0
+                                        calculatePandL(item, asset) < 0
                                           ? "red"
                                           : "#54ac40",
                                     }}
                                   >
-                                    {asset.price - item.openRateOfAsset > 0 &&
-                                      "+"}
-                                    {new Intl.NumberFormat("en-US").format(
-                                      (asset.price - item.openRateOfAsset)
-                                        .toString()
-                                        .slice(0, 8)
-                                    )}
+                                    {calculatePandL(item, asset) > 0 && "+"}
+
+                                    {new Intl.NumberFormat("en-US")
+                                      .format(calculatePandL(item, asset))
+                                      .slice(0, 8)}
                                   </td>
                                   <td>
                                     {new Intl.NumberFormat("en-US").format(
@@ -254,15 +239,19 @@ const Orders = (props) => {
                                       className="fas fa-trash trashS"
                                       onClick={() => {
                                         if (item.tag === "buy") {
-                                          closeUserBuyTrade(
-                                            item._id,
-                                            asset.price
-                                          );
+                                          if (item.isOpen) {
+                                            closeUserBuyTrade(
+                                              item._id,
+                                              asset.price
+                                            );
+                                          }
                                         } else {
-                                          closeUserSellTrade(
-                                            item._id,
-                                            asset.price
-                                          );
+                                          if (item.isOpen) {
+                                            closeUserSellTrade(
+                                              item._id,
+                                              asset.price
+                                            );
+                                          }
                                         }
                                         handleDeleteUserTrade(item._id);
                                       }}
@@ -287,10 +276,6 @@ const Orders = (props) => {
 
 Orders.propTypes = {
   buysell: PropTypes.bool,
-  orders: PropTypes.array.isRequired,
-  getRate: PropTypes.func.isRequired,
-  closeOrder: PropTypes.func.isRequired,
-  delOrder: PropTypes.func.isRequired,
   setBuysell: PropTypes.func.isRequired,
 };
 

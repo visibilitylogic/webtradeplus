@@ -5,6 +5,7 @@ import SubSidebar from "../layouts/SubSidebar";
 import Orders from "../utils/Orders";
 import TradingViewWidget, { Themes } from "react-tradingview-widget";
 import BuyStockModal from "../utils/modals/trading/BuyStock";
+import { message } from "antd";
 import { useActions } from "../hooks/useActions";
 import SellStockModal from "../utils/modals/trading/SellStock";
 import useInterval from "../hooks/useInterval";
@@ -23,8 +24,6 @@ const Board = (props) => {
     levIsh,
     closeSetlevIsh,
     handleTrading,
-    handleBuyStock,
-    handleSellStock,
     orders,
     setOrders,
     buysell,
@@ -72,52 +71,34 @@ const Board = (props) => {
     }
   };
 
-  const closeOrder = (id, amount, newAmount) => () => {
-    setTotalUp(0);
-
-    let b = 0;
-    localStorage.setItem("total", b);
-    (async () => {
-      let response = await fetch(
-        `https://trade-backend-daari.ondigitalocean.app/api/trade/close/${id}/${amount}/${newAmount}`
+  const handleOpenBuyStock = () => {
+    if (user && user.autoTrade) {
+      message.warning(
+        `AutoCopy Trader is Active, Turn off AutoCopy Trader to trade manually`
       );
-      let value = id;
-
-      let arr = orders;
-
-      arr = arr.filter((i) => i._id === id);
-
-      setOrders(arr);
-      setTotalUp(0);
-
-      let a = { orders: arr };
-      let b = 0;
-      localStorage.setItem("total", b);
-
-      localStorage.setItem("orders", JSON.stringify(a));
-    })();
+    } else if (user && (user.wallet <= 0 || userMargin > user.wallet)) {
+      message.warning(`You need to make a deposit to buy the stock`);
+    } else if (user && !user.liveTrade) {
+      message.warning("Live Trade is turned off. Contact Admin");
+    } else {
+      setBuyStock(true);
+      setSellStock(false);
+    }
   };
 
-  const delOrder = (id) => () => {
-    (async () => {
-      let response = await fetch(
-        `https://trade-backend-daari.ondigitalocean.app/api/trade/del/${id}`
+  const handleOpenSellStock = () => {
+    if (user && user.autoTrade) {
+      message.warning(
+        `AutoCopy Trader is Active, Turn off AutoCopy Trader to trade manually`
       );
-      let value = id;
-
-      let arr = orders;
-
-      arr = arr.filter((i) => i._id === id);
-
-      setOrders(arr);
-      setTotalUp(0);
-
-      let b = 0;
-      localStorage.setItem("total", b);
-      let a = { orders: arr };
-
-      localStorage.setItem("orders", JSON.stringify(a));
-    })();
+    } else if (user && (user.wallet <= 0 || userMargin > user.wallet)) {
+      message.warning(`You need to make a deposit to buy the stock`);
+    } else if (user && !user.liveTrade) {
+      message.warning("Live Trade is turned off. Contact Admin");
+    } else {
+      setSellStock(true);
+      setBuyStock(false);
+    }
   };
 
   // A custom hook for rerendering the dashboard component after 10 secondays
@@ -149,7 +130,10 @@ const Board = (props) => {
                       color: parseFloat(profitOrLoss) >= 0 ? "#54ac40" : "red",
                     }}
                   >
-                    P/L = {parseFloat(profitOrLoss)}
+                    P/L ={" "}
+                    {new Intl.NumberFormat("en-US")
+                      .format(parseFloat(profitOrLoss))
+                      .slice(0, 8)}
                   </h1>
                 </div>
                 {/* TradingView Widget BEGIN */}
@@ -201,7 +185,7 @@ const Board = (props) => {
                     <span className="amount">
                       {user && user.currency === "USD"
                         ? "$"
-                        : user && user.currency}{" "}
+                        : user && user.currency}
                       <input
                         className="input"
                         type="number"
@@ -283,16 +267,15 @@ const Board = (props) => {
                   <div className="actions">
                     <div
                       className={
-                        user && !user.liveTrade
+                        user &&
+                        (!user.liveTrade || user.autoTrade || user.wallet < 0)
                           ? "buy credit turnG"
                           : "buy credit"
                       }
-                      onClick={() => {
-                        setBuyStock(true);
-                        setSellStock(false);
-                      }}
+                      onClick={handleOpenBuyStock}
                     >
-                      <div className="dtl" onClick={closeSetlevIsh}>
+                      <div className="dtl">
+                        {/* onClick={closeSetlevIsh} */}
                         <svg
                           id="Capa_1"
                           enableBackground="new 0 0 512 512"
@@ -313,14 +296,15 @@ const Board = (props) => {
                     <div
                       // className="sell"
                       className={
-                        user && !user.liveTrade ? "sell turnR" : "sell"
+                        user &&
+                        (!user.liveTrade || user.autoTrade || user.wallet < 0)
+                          ? "sell turnR"
+                          : "sell"
                       }
-                      onClick={() => {
-                        setSellStock(true);
-                        setBuyStock(false);
-                      }}
+                      onClick={handleOpenSellStock}
                     >
-                      <div className="dtl" onClick={closeSetlevIsh}>
+                      <div className="dtl">
+                        {/* onClick={closeSetlevIsh} */}
                         <svg
                           id="Capa_1"
                           enableBackground="new 0 0 512 512"
@@ -368,13 +352,15 @@ const Board = (props) => {
                           width="76px"
                           height="94px"
                           viewBox="0 0 76 94"
-                          id={user.autoTrade ? "bulb" : "bulbOff"}
-                          className={user.autoTrade ? "bulb" : "bulbOff"}
+                          id={user && user.autoTrade ? "bulb" : "bulbOff"}
+                          className={
+                            user && user.autoTrade ? "bulb" : "bulbOff"
+                          }
                           onclick="void(0);"
                         >
                           <path d="M76,37.037 C76,59.939 55.6428571,75.427 55.6428571,93.5 L20.3571429,93.5 C20.3571429,75.427 0,59.9335 0,37.037 C0,13.1505 18.9891429,0 37.9782857,0 C56.9891429,0 76,13.167 76,37.037 L76,37.037 Z" />
                         </svg>
-                        <div id={user.autoTrade ? "glow" : "glowOff"} />
+                        <div id={user && user.autoTrade ? "glow" : "glowOff"} />
                         <svg
                           width="32px"
                           height="33px"
@@ -387,14 +373,15 @@ const Board = (props) => {
                     }
                   </div>
                 ) : (
-                  <div className="actions1 credit" onClick={closeSetlevIsh}>
+                  <div className="actions1 credit">
+                    {/* onClick={closeSetlevIsh} */}
                     <div
                       className={
                         user && user.isTrading
                           ? "buy credit turnG"
                           : "buy credit"
                       }
-                      onClick={handleBuyStock}
+                      onClick={handleOpenBuyStock}
                     >
                       <div className="dtl">
                         <svg
@@ -416,7 +403,7 @@ const Board = (props) => {
                     </div>
                     <div
                       className={user && user.isTrading ? "sell turnR" : "sell"}
-                      onClick={handleSellStock}
+                      onClick={handleOpenSellStock}
                     >
                       <div className="dtl">
                         <svg
@@ -437,7 +424,7 @@ const Board = (props) => {
                       </div>
                     </div>
 
-                    {user ? (
+                    {/* {user ? (
                       <>
                         <div>
                           <svg
@@ -461,20 +448,14 @@ const Board = (props) => {
                           </svg>
                         </div>
                       </>
-                    ) : null}
+                    ) : null} */}
                   </div>
                 )}
               </div>
               <div></div>
             </div>
           </div>
-          <Orders
-            orders={orders}
-            delOrder={delOrder}
-            closeOrder={closeOrder}
-            buysell={buysell}
-            setBuysell={setBuysell}
-          />
+          <Orders buysell={buysell} setBuysell={setBuysell} />
         </div>
         {buyStock && (
           <section className="buy-option" style={{ display: "block" }}>
@@ -520,11 +501,9 @@ Board.propTypes = {
   buysell: PropTypes.bool.isRequired,
   setBuysell: PropTypes.func.isRequired,
   handleTrading: PropTypes.func.isRequired,
-  setTotalUp: PropTypes.func.isRequired,
   levIsh: PropTypes.bool.isRequired,
   setLevIsh: PropTypes.func.isRequired,
   closeSetlevIsh: PropTypes.func.isRequired,
   handleBuyStock: PropTypes.func.isRequired,
-  handleSellStock: PropTypes.func.isRequired,
   data: PropTypes.object,
 };

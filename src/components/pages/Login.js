@@ -16,7 +16,7 @@ const Login = ({ data }) => {
 
   const { email, password } = formInput;
 
-  const { authError, isAuthenticated, user } = useSelector(
+  const { authError, isAuthenticated, user, userId } = useSelector(
     (state) => state.auth
   );
 

@@ -333,25 +333,30 @@ export const approveDeposit = (details) => async (dispatch) => {
 
   const body = JSON.stringify(details);
 
-  try {
-    await axios
-      .put(`${BASE_URL}/api/deposit/approve`, body, config)
-      .then((res) => {
-        getAllDeposits();
-        dispatch({
-          type: actionTypes.APPROVE_DEPOSIT,
-        });
-      })
-      .catch((err) =>
-        err.response === undefined ? false : console.error(err.response.data)
-      );
-  } catch (error) {
-    dispatch({
-      type: actionTypes.PROFILE_ERROR,
-      payload: error.message,
-    });
-  }
+  // try {
+  //   await axios.put(`${BASE_URL}/api/deposit/approve`, body, config);
+  // dispatch({
+  //   type: actionTypes.APPROVE_DEPOSIT,
+  // });
+  await axios
+    .put(`${BASE_URL}/api/deposit/approve`, body, config)
+    .then((res) => {
+      getAllDeposits();
+      dispatch({
+        type: actionTypes.APPROVE_DEPOSIT,
+      });
+    })
+    .catch((err) =>
+      err.response === undefined ? false : console.error(err.response.data)
+    );
 };
+// catch (error) {
+//   dispatch({
+//     type: actionTypes.PROFILE_ERROR,
+//     payload: error.message,
+//   });
+// }
+// };
 
 export const declineDeposit = (details) => async (dispatch) => {
   const config = {
