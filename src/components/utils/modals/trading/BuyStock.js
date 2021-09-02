@@ -19,20 +19,25 @@ const BuyStockModal = (props) => {
     setBuysell,
   } = props;
 
-  const { user } = useSelector((state) => state.auth);
+  const { user, userId } = useSelector((state) => state.auth);
   const { currentSelectedStock, defaultSelectedStock } = useSelector(
     (state) => state.stock
   );
   const { error, userMargin } = useSelector((state) => state.profile);
   const { webData } = useSelector((state) => state.web);
 
-  const { purchaseStockAsset, setCurrentlyActiveTrade, setUserMargin } =
-    useActions();
+  const {
+    purchaseStockAsset,
+    setCurrentlyActiveTrade,
+    setUserMargin,
+    getCurrentProfile,
+  } = useActions();
 
   const handleStockPurchase = (event) => {
     event.preventDefault();
-
-    if (error) {
+    if (userMargin > user.wallet) {
+      message.error("You do not have enough money in your wallet");
+    } else if (error) {
       message.error("Error processing your stock purchase");
     } else {
       purchaseStockAsset(user._id, {
@@ -64,10 +69,11 @@ const BuyStockModal = (props) => {
         loss: 0,
       });
       message.success("Your stock has been successfully purchased");
+      getCurrentProfile(userId && userId);
       setCurrentlyActiveTrade(
         Object.keys(currentSelectedStock).length > 0
-          ? { ...currentSelectedStock, margin: userMargin }
-          : { ...defaultSelectedStock, margin: userMargin }
+          ? { ...currentSelectedStock, margin: userMargin, tag: "buy" }
+          : { ...defaultSelectedStock, margin: userMargin, tag: "buy" }
       );
       setBuysell(true);
     }

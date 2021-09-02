@@ -73,7 +73,7 @@ const DashboardFooter = ({ setSupport }) => {
           >
             &nbsp;P/L:{" "}
             {user && user.currency === "USD" ? "$" : user && user.currency}
-            {new Intl.NumberFormat("en-US").format(profitOrLoss).slice(0, 8)}
+            {new Intl.NumberFormat("en-US").format(profitOrLoss)}
             &nbsp;
           </p>{" "}
           |
