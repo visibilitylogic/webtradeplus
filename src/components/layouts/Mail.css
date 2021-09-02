@@ -8546,7 +8546,7 @@ body {
   width: 10%;
   height: 10%;
   background: #54ac40;
-  position: absolute;
+  position: relative;
   top: 173px;
   transition: all 0.5s ease-in-out;
 }
