@@ -18,22 +18,25 @@ const BasicTable = ({
     getSingleWithdrawals,
     getAllUserTrades,
   } = useActions()
-  const columns = useMemo(() => column, [
-    column,
-    type,
-    getSingleProfile,
-    getVerifieddetails,
-    singleUserDeposit,
-    getSingleWithdrawals,
-  ])
-  const data = useMemo(() => allUsers, [
-    allUsers,
-    type,
-    getSingleProfile,
-    getVerifieddetails,
-    singleUserDeposit,
-    getSingleWithdrawals,
-  ])
+  const columns = column
+  // , [
+  //   column,
+  //   useMemo(()
+  //   type,
+  //   getSingleProfile,
+  //   getVerifieddetails,
+  //   singleUserDeposit,
+  //   getSingleWithdrawals,
+  // ])
+  const data = allUsers
+  // useMemo(() => allUsers, [
+  //   allUsers,
+  //   type,
+  //   getSingleProfile,
+  //   getVerifieddetails,
+  //   singleUserDeposit,
+  //   getSingleWithdrawals,
+  // ])
   const tableInstance = useTable(
     {
       columns,

@@ -220,9 +220,6 @@ const ManagerContents = (props) => {
     }
   }
 
-  // useEffect(() => {
-  //   getUserAutoCopyTrade(singleUser._id)
-  // }, [])
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
@@ -959,7 +956,7 @@ ManagerContents.propTypes = {
   setEditProfile: PropTypes.func.isRequired,
 }
 
-export default React.memo(ManagerContents)
+export default ManagerContents
 
 const TableContainer = styled.div`
   background: white;

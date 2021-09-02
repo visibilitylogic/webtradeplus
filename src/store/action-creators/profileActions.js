@@ -642,8 +642,9 @@ export const singleUserBalance = (userId, data) => async (dispatch) => {
     },
   }
   const body = JSON.stringify(data)
+
   try {
-    await axios.post(`${BASE_URL}/api/users/pulse/${userId}`, body, config)
+    await axios.put(`${BASE_URL}/api/users/pulse/${userId}`, body, config)
 
     dispatch({
       type: actionTypes.SINGLE_USER_BALANCE,

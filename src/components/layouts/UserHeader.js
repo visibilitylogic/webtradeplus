@@ -39,7 +39,7 @@ const UserHeader = ({ singleUser }) => {
               </div>
               <div className="email font-size-14">{email}</div>
               <div className="dash-row dash-row-centralized font-size-12">
-                <div className="ml-2">
+                {/* <div className="ml-2">
                   <ReactCountryFlag
                     countryCode="US"
                     svg
@@ -48,7 +48,7 @@ const UserHeader = ({ singleUser }) => {
                       height: '2em',
                     }}
                   />
-                </div>
+                </div> */}
                 <div className="country text-uppercase">{country}</div>
               </div>
             </div>
