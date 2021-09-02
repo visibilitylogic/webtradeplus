@@ -836,22 +836,21 @@ const ManagerContents = (props) => {
                         <h2 className="p-2 m-2">No Withdrawal</h2>
                       </div>
                     ) : (
-                      // <CustomTable
-                      //   allUsers={singleWithdrawals}
-                      //   user={user}
-                      //   column={singleUserWithdrawal}
-                      //   type="withdrawal"
-                      // />
-                      <BasicTable
+                      <CustomTable
                         allUsers={singleWithdrawals}
                         user={user}
                         column={singleUserWithdrawal}
                         type="withdrawal"
-
-
-
                       />
+                      // <BasicTable
+                      //   allUsers={singleWithdrawals}
+                      //   user={user}
+                      //   column={singleUserWithdrawal}
+                      //   type="withdrawal"
+
+                      // />
                     )}
+
                     {/* sdfdsj */}
                   </div>
                 </div>
