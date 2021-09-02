@@ -224,7 +224,6 @@ const ManagerContents = (props) => {
     getAllUsers()
   }, [singleUser])
 
-  console.log(allUsers)
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
