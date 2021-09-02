@@ -10,14 +10,19 @@ const BasicTable = ({
   user,
   column,
   type,
+  getSingleProfile,
+  getVerifieddetails,
+  singleUserDeposit,
+  getSingleWithdrawals,
+  getAllUserTrades,
 }) => {
-  const {
-    getSingleProfile,
-    getVerifieddetails,
-    singleUserDeposit,
-    getSingleWithdrawals,
-    getAllUserTrades,
-  } = useActions()
+  // const {
+  //   getSingleProfile,
+  //   getVerifieddetails,
+  //   singleUserDeposit,
+  //   getSingleWithdrawals,
+  //   getAllUserTrades,
+  // } = useActions()
   const columns = column
   const data = allUsers
 

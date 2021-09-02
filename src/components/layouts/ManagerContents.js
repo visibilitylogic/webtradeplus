@@ -68,8 +68,14 @@ const ManagerContents = (props) => {
     getUserAutoCopyTrade,
     addUserAutoCopyTrade,
     deleteUserAutoCopyTrade,
+    getSingleProfile,
+    getVerifieddetails,
+    singleUserDeposit,
     getSingleWithdrawals,
+    getAllUserTrades,
   } = useActions()
+
+  // ***********************************************BASIC TABLE**************************************
 
   const [loading, setLoading] = useState(false)
   const [profitLoss, setProfitLoss] = useState(false)
@@ -95,10 +101,6 @@ const ManagerContents = (props) => {
   const [currentDeposit, setCurrentDeposit] = useState([])
   const [state, setstate] = useState('')
 
-  //
-
-  console.log(singleWithdrawals)
-
   const deleteAutoCopyTrade = async () => {
     setLoading(true)
 
@@ -117,7 +119,7 @@ const ManagerContents = (props) => {
     if (error) {
       message.error('Error Adding Auto-Trade')
     } else {
-      addUserAutoCopyTrade(payload)
+      await addUserAutoCopyTrade(payload)
       setProfitLoss(false)
       setMarket('')
       setAmount(0)
@@ -210,19 +212,23 @@ const ManagerContents = (props) => {
     setWithd(false)
   }
 
-  const handleDeleteUser = (id) => {
+  const handleDeleteUser = async (value) => {
     if (error) {
       message.error('Try again')
     } else {
-      deleteUser({ id })
+      await deleteUser(value)
       message.success('User was successfully deleted from the database')
-      history.push('/dashboard/manager')
+      // history.push('/dashboard/manager')
+      // window.location.replace('dashboard/manager')
     }
   }
 
   useEffect(() => {
+    console.log(33)
     getAllUsers()
   }, [singleUser])
+
+  //************************************************************************************8****USER AREA */
 
   return (
     <div className="manager-tabs-details">
@@ -280,6 +286,11 @@ const ManagerContents = (props) => {
               user={user}
               column={bankTransferHeader}
               type="transfer"
+              getSingleProfile={getSingleProfile}
+              getVerifieddetails={getVerifieddetails}
+              singleUserDeposit={singleUserDeposit}
+              getSingleWithdrawals={getSingleWithdrawals}
+              getAllUserTrades={getAllUserTrades}
             />
           </TableContainer>
         )}
@@ -363,6 +374,11 @@ const ManagerContents = (props) => {
                 column={Columns}
                 key={allUsers}
                 type="EveryUser"
+                getSingleProfile={getSingleProfile}
+                getVerifieddetails={getVerifieddetails}
+                singleUserDeposit={singleUserDeposit}
+                getSingleWithdrawals={getSingleWithdrawals}
+                getAllUserTrades={getAllUserTrades}
               />
             </TableContainer>
           </div>
@@ -463,6 +479,11 @@ const ManagerContents = (props) => {
                           column={depositHeader}
                           type="currentDeposit"
                           user={user}
+                          getSingleProfile={getSingleProfile}
+                          getVerifieddetails={getVerifieddetails}
+                          singleUserDeposit={singleUserDeposit}
+                          getSingleWithdrawals={getSingleWithdrawals}
+                          getAllUserTrades={getAllUserTrades}
                         />
                       )}
                     </div>
@@ -647,7 +668,7 @@ const ManagerContents = (props) => {
                               onClick={() =>
                                 submitAutoCopyTrade({
                                   profitLoss,
-                                  singleUser,
+                                  userId: singleUser._id,
                                   market,
                                   amount: parseFloat(amount),
                                   asset,

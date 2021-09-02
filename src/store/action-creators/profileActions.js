@@ -555,6 +555,7 @@ export const deleteUser = (id) => async (dispatch) => {
   }
 
   const body = JSON.stringify(id)
+  console.log(body)
   try {
     await axios.delete(`${BASE_URL}/api/users/remove`, body, config)
     dispatch({
