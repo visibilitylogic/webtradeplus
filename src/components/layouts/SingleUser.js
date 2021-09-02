@@ -19,7 +19,6 @@ function SingleUser({ singleUser }) {
     isActive,
   } = singleUser
   const [verifystate, setverifystate] = useState(verify)
-  const [activestate] = useState(isActive)
   const [active, setActive] = useState(true)
   const [deactivate, setdeActivate] = useState(' DEACTIVATE USER')
   const [activate, setActivate] = useState(' ACTIVATE USER')

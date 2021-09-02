@@ -22,11 +22,11 @@ import UserBalance from './UserBalance'
 import UserArea from './UserArea'
 import SingleUser from './SingleUser'
 import { paymentHeader } from './paymentHeader'
-import { singleUserWithdrawal } from './singleUserWithdrawal'
 import EstimatedBallance from './EstimatedBallance'
 import UserHeader from './UserHeader'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 import CustomTable from '../../helpers/customTable/CustomTable'
+import { singleUserWithdrawal } from './singleWithdrawalStatuss'
 
 const ManagerContents = (props) => {
   const data = [
@@ -95,9 +95,7 @@ const ManagerContents = (props) => {
 
   //
 
-  console.log(singleUser)
-
-  console.log(userTrades)
+  console.log(singleWithdrawals)
 
   const deleteAutoCopyTrade = async () => {
     setLoading(true)
@@ -220,9 +218,6 @@ const ManagerContents = (props) => {
     }
   }
 
-  // useEffect(() => {
-  //   getUserAutoCopyTrade(singleUser._id)
-  // }, [])
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
@@ -410,13 +405,13 @@ const ManagerContents = (props) => {
               >
                 Orders
               </div>
-              <div
+              {/* <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetSecu}
                 className={secu ? 'live' : ''}
               >
                 Security
-              </div>
+              </div> */}
             </div>
             <div className="user-dtls-tab-dtls">
               {card && (
@@ -959,7 +954,7 @@ ManagerContents.propTypes = {
   setEditProfile: PropTypes.func.isRequired,
 }
 
-export default React.memo(ManagerContents)
+export default ManagerContents
 
 const TableContainer = styled.div`
   background: white;

@@ -39,7 +39,7 @@ export const Columns = [
 
   {
     Header: 'Balance',
-    accessor: 'estimatedBalance',
+    accessor: 'wallet',
   },
   {
     id: 'autoTrade',
