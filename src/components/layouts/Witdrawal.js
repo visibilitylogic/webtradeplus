@@ -1,13 +1,14 @@
 import React from 'react'
-
-function Witdrawal({ withdrawInfo }) {
+import WithdrawalModal from './WithdrawalModal'
+function Witdrawal(props) {
+  console.log(props,'iii')
   return (
     <a
-    //   onClick={() =>
-    //     withdrawInfo.status ? (
-    //       <PaymentDetails withdrawInfo={cryptoAddress} />
-    //     ) : null
-    //   }
+      // onClick={() =>
+      //   props.status ? (
+      //     <WithdrawalModal withdrawInfo={props} />
+      //   ) : null
+      // }
     >
       Show details
     </a>

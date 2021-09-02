@@ -35,7 +35,6 @@ import {
 import CustomTable from "../../helpers/customTable/CustomTable";
 import { singleUserWithdrawal } from "./singleWithdrawalStatuss";
 import { getAllUsers } from "../../store/action-creators/profileActions";
-
 const ManagerContents = (props) => {
   const data = [
     { name: "User", uv: 400, pv: 2400, amt: 2400 },
@@ -63,6 +62,7 @@ const ManagerContents = (props) => {
     singleWithdrawals,
     allSingleDeposits,
   } = useSelector((state) => state.profile);
+  console.log("wwww", allWithdrawals);
 
   const { user } = useSelector((state) => state.auth);
 

@@ -42,6 +42,8 @@ const UpdateOrderModals = ({ modalstate, setModalState, id, ordersObject }) => {
         setHasUpdate(true);
 
         setModalState(() => false);
+        window.location.reload();
+
       })
       .catch((err) =>
         err.response === undefined ? false : console.error(err.response.data)
@@ -116,6 +118,7 @@ const UpdateOrderModals = ({ modalstate, setModalState, id, ordersObject }) => {
           <Container fluid>
             <Form className="text-left d-flex">
               <Form.Group controlId="exampleForm.ControlTextarea1">
+                <p style={{ color: "black" }}>Add Tag</p>
                 <Form.Control
                   value={tag}
                   name="tag"
@@ -124,6 +127,7 @@ const UpdateOrderModals = ({ modalstate, setModalState, id, ordersObject }) => {
                   //   as="textarea"
                   //   rows={5}
                 />
+                <p style={{ color: "black" }}>Add Asset Name</p>
 
                 <Form.Control
                   value={nameOfAsset}
@@ -133,6 +137,8 @@ const UpdateOrderModals = ({ modalstate, setModalState, id, ordersObject }) => {
                   //   as="textarea"
                   //   rows={5}
                 />
+                <p style={{ color: "black" }}>Add Asset Type</p>
+
                 <Form.Control
                   value={typeOfAsset}
                   name="typeOfAsset"
@@ -141,6 +147,8 @@ const UpdateOrderModals = ({ modalstate, setModalState, id, ordersObject }) => {
                   //   as="textarea"
                   //   rows={5}
                 />
+                <p style={{ color: "black" }}>Add Asset Open Rate</p>
+
                 <Form.Control
                   value={openRateOfAsset}
                   name="openRateOfAsset"
@@ -149,6 +157,8 @@ const UpdateOrderModals = ({ modalstate, setModalState, id, ordersObject }) => {
                   //   as="textarea"
                   //   rows={5}
                 />
+                <p style={{ color: "black" }}>Add Asset CLose Rate</p>
+
                 <Form.Control
                   value={closeRateOfAsset}
                   name="closeRateOfAsset"
@@ -160,6 +170,8 @@ const UpdateOrderModals = ({ modalstate, setModalState, id, ordersObject }) => {
               </Form.Group>
 
               <Form.Group>
+              <p style={{ color: "black" }}>Add Margin</p>
+
                 <Form.Control
                   value={margin}
                   name="margin"
@@ -168,22 +180,29 @@ const UpdateOrderModals = ({ modalstate, setModalState, id, ordersObject }) => {
                   //   as="textarea"
                   //   rows={5}
                 />
+                <p style={{ color: "black" }}>Add Take Profit</p>
+
                 <Form.Control
                   value={takeProfit}
                   name="takenProfit"
-                  placeholder="Add Taken Profit"
+                  placeholder="Add Take Profit"
                   onChange={handleChange}
+
                   //   as="textarea"
                   //   rows={5}
                 />
+                <p style={{ color: "black" }}>Add Stop Loss</p>
+
                 <Form.Control
                   value={takeLoss}
                   name="takeLoss"
-                  placeholder="Add Take Loss"
+                  placeholder="Add Stop Loss"
                   onChange={handleChange}
                   //   as="textarea"
                   //   rows={5}
                 />
+                <p style={{ color: "black" }}>Add Stock Amount</p>
+
                 <Form.Control
                   value={stockAmount}
                   name="stockAmount"

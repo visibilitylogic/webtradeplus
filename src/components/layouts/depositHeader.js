@@ -45,9 +45,9 @@ export const depositHeader = [
     accessor: ({ amount }) => amount,
   },
   {
-    id: 'cryptoAddress',
+    id: 'method',
     Header: 'Payment Gateway',
-    accessor: 'cryptoAddress',
+    accessor: 'method',
   },
   {
     Header: 'Payment Details',

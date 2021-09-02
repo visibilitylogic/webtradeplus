@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import Witdrawal from './Witdrawal'
 export const withdrawalHeader = [
   {
     id: 'Ref',
@@ -16,12 +17,17 @@ export const withdrawalHeader = [
   },
   {
     Header: 'Withdrawal Method',
-    accessor: '',
+    accessor: 'methodDetails',
+    accessor: ({ methodDetails }) => { 
+      methodDetails.map((i)=><p></p>)
+    }
+      
+
   },
   {
     Header: 'Withdrawal Info',
     accessor: 'withdrawInfo',
-    // accessor: ({ withdrawInfo }) => <Witdrawal withdrawInfo={withdrawInfo} />,
+    accessor: ({ withdrawInfo }) => <Witdrawal withdrawInfo={withdrawInfo} />,
   },
   {
     id: 'Date',

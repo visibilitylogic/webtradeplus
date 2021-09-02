@@ -1,3 +1,5 @@
+import UpdateOrderComponent from "./util/UpdateOrderComponent";
+
 import { format } from "date-fns";
 export const allTradesHeader = [
   {
@@ -89,8 +91,32 @@ export const allTradesHeader = [
   {
     Header: "Action",
     accessor: "icon",
-    accessor: ({ _id }) => (
-      <button className={" text-center bg-primary text-light"}>{"EDIT"}</button>
-    ),
+
+    accessor: ({
+      _id,
+      tag,
+      nameOfAsset,
+      typeOfAsset,
+      openRateOfAsset,
+      closeRateOfAsset,
+      margin,
+      takeProfit,
+      takeLoss,
+      stockAmount,
+    }) => {
+      let trade = {
+        _id,
+        tag,
+        nameOfAsset,
+        typeOfAsset,
+        openRateOfAsset,
+        closeRateOfAsset,
+        margin,
+        takeProfit,
+        takeLoss,
+        stockAmount,
+      };
+      return <UpdateOrderComponent props={trade} />;
+    },
   },
 ];

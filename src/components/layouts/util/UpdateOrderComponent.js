@@ -3,6 +3,7 @@ import UpdateOrderModals from "../util/orderModal";
 
 const UpdateOrderComponent = ({ props }) => {
   const [modalstate, setmodalstate] = useState(false);
+  console.log(props._id,'ssep')
   return (
     <div>
       <button
