@@ -3,9 +3,7 @@ import React, { useState, useEffect } from 'react'
 function DepositState({ status }) {
   const [pendingState, set] = useState(status)
 
-  // useEffect(() => {
-  //   set(status)
-  // }, [pendingState])
+  
 
   console.log(pendingState)
   return (

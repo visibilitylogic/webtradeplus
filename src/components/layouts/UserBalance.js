@@ -6,26 +6,26 @@ const UserBalance = ({ singleUser, error }) => {
   const { _id } = singleUser
   const { singleUserBalance } = useActions()
   const [state, setstate] = useState({
-    pulseType: '',
+    pulseType: 'bonus',
     profitLoss: false,
-    amount: '',
+    amount: 0,
   })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (error) {
-      console.log('not waiting')
       message.error('Identity Approval Was Not Successful')
     } else {
       await singleUserBalance(_id, state)
       setstate({
         pulseType: '',
-        profitLoss: '',
-        amount: '',
+        profitLoss: false,
+        amount: 0,
       })
       message.success('Successfully Approved')
     }
   }
+
   return (
     <>
       {singleUser && (
@@ -68,7 +68,7 @@ const UserBalance = ({ singleUser, error }) => {
                   name="selectType"
                   value={state.profitLoss}
                   onChange={(e) =>
-                    setstate({ ...state, profitLoss: e.target.value })
+                    setstate({ ...state, profitLoss: Boolean(e.target.value) })
                   }
                 >
                   <option value="true">Credit</option>
@@ -89,7 +89,7 @@ const UserBalance = ({ singleUser, error }) => {
                   placeholder="0.00"
                   value={state.amount}
                   onChange={(e) =>
-                    setstate({ ...state, amount: e.target.value })
+                    setstate({ ...state, amount: Number(e.target.value) })
                   }
                 />
               </div>

@@ -1,11 +1,6 @@
 import { format } from 'date-fns'
+import SinglePayment from './SinglePayment'
 export const paymentHeader = [
-  {
-    id: 'User',
-    Header: 'User',
-    accessor: 'user',
-  },
-
   {
     Header: 'Ref',
     accessor: 'Ref',
@@ -20,37 +15,44 @@ export const paymentHeader = [
   },
   {
     Header: 'Status',
-    accessor: 'satus',
+    accessor: 'status',
+    accessor: ({ status }) => (
+      <p
+        className={
+          status === 'Pending'
+            ? 'bg-danger text-light   text-center'
+            : 'bg-success text-light   text-center '
+        }
+      >
+        {status}
+      </p>
+    ),
   },
   {
     Header: 'Amount Paid',
-    accessor: '',
-  },
-  {
-    Header: 'Fees',
-    accessor: 'fees',
-  },
-  {
-    id: 'Wallet Received',
-    Header: 'Amount',
     accessor: 'amount',
+  },
+  {
+    Header: 'Method',
+    accessor: 'method',
+  },
+  {
+    id: 'Fees',
+    Header: 'Fee',
+    accessor: 'fee',
   },
 
   {
-    Header: 'Amount Recieved',
-    accessor: '',
-  },
-  
-  {
-    Header: 'Payment Gateway',
-    accessor: '',
+    Header: 'State',
+    accessor: 'yourState',
   },
   {
-    Header: 'Proof',
-    accessor: '',
+    Header: 'Country',
+    accessor: 'yourCountry',
   },
   {
     Header: 'Action',
-    accessor: '',
+    accessor: 'status',
+    accessor: ({ status }) => <SinglePayment status={status} />,
   },
 ]

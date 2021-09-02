@@ -72,6 +72,7 @@ export const singleUserWithdrawal = [
     headerName: "Proof",
     accessor: "",
   },
+
   {
     field: "status",
     width: 180,

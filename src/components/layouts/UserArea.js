@@ -10,24 +10,27 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
   const { isAdmin, isManager, _id, autoTrade, liveTrade } = singleUser
   const [livestate, setLiveState] = useState(liveTrade)
   const [auto, setAuto] = useState(autoTrade)
+  const [state, setstate] = useState(false)
+  const [state2, setstate2] = useState(false)
   const { setLiveTrade, setAutoTrade } = useActions()
 
   const setTradeFunc = async () => {
+    setstate2(true)
     if (error) {
       message.error('Failed!!!')
     } else {
       const details = {
-        id: _id,
-        autoTrade: !autoTrade,
+        autoTrade: !auto,
       }
-      await setAutoTrade(details)
-      setAuto(!autoTrade)
-
+      await setAutoTrade(_id, details)
+      setAuto(!auto)
       message.success('Successfull')
     }
+    setstate2(false)
   }
 
   const setToggles = async () => {
+    setstate(true)
     if (error) {
       message.error('Failed')
     } else {
@@ -36,7 +39,8 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
         liveTrade: !liveTrade,
       }
       await setLiveTrade(details)
-      setLiveState(!liveTrade)
+      await setstate(false)
+      setLiveState(!livestate)
       message.success(' Successful')
     }
   }
@@ -68,6 +72,7 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
                 <Switch
                   onChange={setToggles}
                   checked={livestate}
+                  disabled={state}
                   className="react-switch"
                   onColor="#54AC40"
                   uncheckedIcon={false}
@@ -84,6 +89,7 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
                 <Switch
                   onChange={setTradeFunc}
                   checked={auto}
+                  disabled={state2}
                   className="react-switch"
                   onColor="#54AC40"
                   uncheckedIcon={false}
@@ -99,7 +105,7 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
   )
 }
 
-export default React.memo(UserArea)
+export default UserArea
 
 const UserAreaContainer = styled.div`
   display: flex;

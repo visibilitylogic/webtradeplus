@@ -1,51 +1,45 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useHistory } from "react-router-dom";
-import { Container, Card, Form, Row, Col, Table } from "react-bootstrap";
-import { Button, Tag, DatePicker, message } from "antd";
-import { useSelector } from "react-redux";
-import { useActions } from "../hooks/useActions";
-import PropTypes from "prop-types";
-import axios from "axios";
-import Moment from "react-moment";
-import styled from "styled-components";
-import "moment-timezone";
-import EditAutoCopyTrade from "../utils/EditAutoCopyTrade";
-import BasicTable from "./BasicTable";
-import { Columns } from "./TableHeader";
-import { depositHeader } from "./depositHeader";
-import { withdrawalHeader } from "./withdrawalHeader";
-import { allTradesHeader } from "./allTradesHeader";
-import { allVerifiedUsersHeader } from "./allVerifiedUsersHeader";
-import { bankTransferHeader } from "./bankTransferHeader";
-import { tradeApprovalHeader } from "./tradeApprovalHeader";
-import UserBalance from "./UserBalance";
-import UserArea from "./UserArea";
-import SingleUser from "./SingleUser";
-import { paymentHeader } from "./paymentHeader";
-import { singleUserWithdrawal } from "./singleUserWithdrawal";
-import EstimatedBallance from "./EstimatedBallance";
-import UserHeader from "./UserHeader";
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-} from "recharts";
-import CustomTable from "../../helpers/customTable/CustomTable";
+import React, { useState, useEffect, useCallback } from 'react'
+import { useHistory } from 'react-router-dom'
+import { Container, Card, Form, Row, Col, Table } from 'react-bootstrap'
+import { Button, Tag, DatePicker, message } from 'antd'
+import { useSelector } from 'react-redux'
+import { useActions } from '../hooks/useActions'
+import PropTypes from 'prop-types'
+import axios from 'axios'
+import Moment from 'react-moment'
+import styled from 'styled-components'
+import 'moment-timezone'
+import EditAutoCopyTrade from '../utils/EditAutoCopyTrade'
+import BasicTable from './BasicTable'
+import { Columns } from './TableHeader'
+import { depositHeader } from './depositHeader'
+import { withdrawalHeader } from './withdrawalHeader'
+import { allTradesHeader } from './allTradesHeader'
+import { allVerifiedUsersHeader } from './allVerifiedUsersHeader'
+import { bankTransferHeader } from './bankTransferHeader'
+import { tradeApprovalHeader } from './tradeApprovalHeader'
+import UserBalance from './UserBalance'
+import UserArea from './UserArea'
+import SingleUser from './SingleUser'
+import { paymentHeader } from './paymentHeader'
+import EstimatedBallance from './EstimatedBallance'
+import UserHeader from './UserHeader'
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
+import CustomTable from '../../helpers/customTable/CustomTable'
+import { singleUserWithdrawal } from './singleWithdrawalStatuss'
+import { getAllUsers } from '../../store/action-creators/profileActions'
 
 const ManagerContents = (props) => {
   const data = [
-    { name: "User", uv: 400, pv: 2400, amt: 2400 },
-    { name: "Deposit", uv: 100, pv: 200, amt: 2500 },
-    { name: "KYC", uv: 300, pv: 1400, amt: 1400 },
-    { name: "Orders", uv: 600, pv: 6400, amt: 6400 },
-    { name: "Withdrawal", uv: 400, pv: 2400, amt: 2400 },
-  ];
+    { name: 'User', uv: 400, pv: 2400, amt: 2400 },
+    { name: 'Deposit', uv: 100, pv: 200, amt: 2500 },
+    { name: 'KYC', uv: 300, pv: 1400, amt: 1400 },
+    { name: 'Orders', uv: 600, pv: 6400, amt: 6400 },
+    { name: 'Withdrawal', uv: 400, pv: 2400, amt: 2400 },
+  ]
 
-  const history = useHistory();
-  const { displayC, setDisplayC, setEditProfile } = props;
+  const history = useHistory()
+  const { displayC, setDisplayC, setEditProfile } = props
   const {
     error,
     allDeposits,
@@ -61,232 +55,181 @@ const ManagerContents = (props) => {
     singleUser,
     singleWithdrawals,
     allSingleDeposits,
-  } = useSelector((state) => state.profile);
+  } = useSelector((state) => state.profile)
 
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth)
 
   // ACTION CREATORS
   const {
     updateWalletBalance,
     setNotificationEnabled, // expecting end point
     deleteUser,
+    getAllUsers,
     getUserAutoCopyTrade,
     addUserAutoCopyTrade,
     deleteUserAutoCopyTrade,
     getSingleWithdrawals,
-  } = useActions();
+  } = useActions()
 
-  const [loading, setLoading] = useState(false);
-  const [profitLoss, setProfitLoss] = useState(false);
-  const [market, setMarket] = useState("");
-  const [amount, setAmount] = useState(0);
-  const [asset, setAsset] = useState("");
-  const [bal, setBal] = useState(false);
-  const [execution, setExecution] = useState(false);
-  const [withd, setWithd] = useState(false);
-  const [secu, setSecu] = useState(false);
-  const [card, setCard] = useState(true);
-  const [payments, setPayments] = useState(false);
-  const [orderT, setOrderT] = useState(false);
-  const [text, setText] = useState("");
-  const [checkDate, setCheckDate] = useState(false);
-  const [copyTradeBtn, setCopyTradeBtn] = useState(true);
-  const [schedule, setSchedule] = useState(false);
-  const [credit, setCredit] = useState(true);
-  const [scheduledTime, setScheduledTime] = useState("");
-  const [decline, setDecline] = useState(false);
-  const [declinedMessage, setDeclinedMessage] = useState("");
-  const [userLevel, setUserLevel] = useState("");
-  const [currentDeposit, setCurrentDeposit] = useState([]);
-  const [state, setstate] = useState("");
+  const [loading, setLoading] = useState(false)
+  const [profitLoss, setProfitLoss] = useState(false)
+  const [market, setMarket] = useState('')
+  const [amount, setAmount] = useState(0)
+  const [asset, setAsset] = useState('')
+  const [bal, setBal] = useState(false)
+  const [execution, setExecution] = useState(false)
+  const [withd, setWithd] = useState(false)
+  const [secu, setSecu] = useState(false)
+  const [card, setCard] = useState(true)
+  const [payments, setPayments] = useState(false)
+  const [orderT, setOrderT] = useState(false)
+  const [text, setText] = useState('')
+  const [checkDate, setCheckDate] = useState(false)
+  const [copyTradeBtn, setCopyTradeBtn] = useState(true)
+  const [schedule, setSchedule] = useState(false)
+  const [credit, setCredit] = useState(true)
+  const [scheduledTime, setScheduledTime] = useState('')
+  const [decline, setDecline] = useState(false)
+  const [declinedMessage, setDeclinedMessage] = useState('')
+  const [userLevel, setUserLevel] = useState('')
+  const [currentDeposit, setCurrentDeposit] = useState([])
+  const [state, setstate] = useState('')
 
   //
-  //setAutoTrade
-  // const [trade, setTrade] = useState({
-  //   id: user._id,
-  //   authEnabled: false,
-  // })
-  const [notification, setNotification] = useState({
-    id: user._id,
-    notificationEnabled: user.notificationsEnabled,
-  });
-  const [auth, setAuth] = useState({
-    id: user._id,
-    authEnabled: false,
-    // user.notificationsEnabled,
-  });
 
-  console.log(singleWithdrawals);
-
-  console.log(userTrades);
-  // auth
-  const setAuth0 = useCallback(() => {
-    setAuth(!auth);
-    // setAuthEnabled({
-    //   id: user._id,
-    //   notificationEnabled: !user.notificationsEnabled,
-    // })
-  }, [auth]);
-
-  // notification
-  const setNotifications = useCallback(() => {
-    setNotification(!notification);
-    setNotificationEnabled({
-      id: user._id,
-      notificationEnabled: !user.notificationsEnabled,
-    });
-  }, [notification]);
+  console.log(singleWithdrawals)
 
   const deleteAutoCopyTrade = async () => {
-    setLoading(true);
+    setLoading(true)
 
     if (error) {
-      message.error("Error Deleting Auto-trade");
+      message.error('Error Deleting Auto-trade')
     } else {
-      deleteUserAutoCopyTrade(user._id);
-      message.success("Successfully Deleted Auto-trade");
+      deleteUserAutoCopyTrade(user._id)
+      message.success('Successfully Deleted Auto-trade')
     }
 
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
   const submitAutoCopyTrade = async (payload) => {
-    setLoading(true);
+    setLoading(true)
     if (error) {
-      message.error("Error Adding Auto-Trade");
+      message.error('Error Adding Auto-Trade')
     } else {
-      addUserAutoCopyTrade(payload);
-      setProfitLoss(false);
-      setMarket("");
-      setAmount(0);
-      setAsset("");
-      setScheduledTime("");
-      message.success("Successfully Added Auto-trade");
+      addUserAutoCopyTrade(payload)
+      setProfitLoss(false)
+      setMarket('')
+      setAmount(0)
+      setAsset('')
+      setScheduledTime('')
+      message.success('Successfully Added Auto-trade')
     }
 
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
   const onChangeDate = (value, dateString) => {
-    setCheckDate(false);
+    setCheckDate(false)
     if (new Date(dateString) < new Date(new Date().setHours(0, 0, 0, 0))) {
-      setCopyTradeBtn(true);
+      setCopyTradeBtn(true)
     } else if (
       new Date(dateString) >= new Date(new Date().setHours(0, 0, 0, 0))
     ) {
-      setCopyTradeBtn(false);
+      setCopyTradeBtn(false)
     }
-  };
+  }
 
   const handleSetCard = () => {
-    setCard(true);
-    setWithd(false);
-    setBal(false);
-    setExecution(false);
-    setPayments(false);
-    setSecu(false);
-    setOrderT(false);
-  };
+    setCard(true)
+    setWithd(false)
+    setBal(false)
+    setExecution(false)
+    setPayments(false)
+    setSecu(false)
+    setOrderT(false)
+  }
 
   const handleSetWithd = () => {
-    setWithd(true);
-    setCard(false);
-    setBal(false);
-    setExecution(false);
-    setPayments(false);
-    setSecu(false);
-    setOrderT(false);
-  };
+    setWithd(true)
+    setCard(false)
+    setBal(false)
+    setExecution(false)
+    setPayments(false)
+    setSecu(false)
+    setOrderT(false)
+  }
 
   const handleSetBal = () => {
-    setBal(true);
-    setCard(false);
-    setExecution(false);
-    setPayments(false);
-    setSecu(false);
-    setWithd(false);
-    setOrderT(false);
-  };
+    setBal(true)
+    setCard(false)
+    setExecution(false)
+    setPayments(false)
+    setSecu(false)
+    setWithd(false)
+    setOrderT(false)
+  }
 
   const handleSetSecu = () => {
-    setSecu(true);
-    setBal(false);
-    setCard(false);
-    setExecution(false);
-    setPayments(false);
-    setWithd(false);
-    setOrderT(false);
-  };
+    setSecu(true)
+    setBal(false)
+    setCard(false)
+    setExecution(false)
+    setPayments(false)
+    setWithd(false)
+    setOrderT(false)
+  }
 
   const handleSetOrder = () => {
-    setOrderT(true);
-    setSecu(false);
-    setBal(false);
-    setCard(false);
-    setExecution(false);
-    setPayments(false);
-    setWithd(false);
-  };
+    setOrderT(true)
+    setSecu(false)
+    setBal(false)
+    setCard(false)
+    setExecution(false)
+    setPayments(false)
+    setWithd(false)
+  }
 
   const handleSetExecution = () => {
-    setExecution(true);
-    setOrderT(false);
-    setSecu(false);
-    setBal(false);
-    setCard(false);
-    setPayments(false);
-    setWithd(false);
-  };
+    setExecution(true)
+    setOrderT(false)
+    setSecu(false)
+    setBal(false)
+    setCard(false)
+    setPayments(false)
+    setWithd(false)
+  }
 
   const handleSetPayments = () => {
-    setPayments(true);
-    setExecution(false);
-    setOrderT(false);
-    setSecu(false);
-    setBal(false);
-    setCard(false);
-    setWithd(false);
-  };
-
-  const handleUpdateWalletBalance = (user) => {
-    if (loading) {
-      setText("Updating...");
-    } else if (!credit && parseInt(amount) > user.wallet) {
-      message.error(
-        "This transaction is not valid as it will result in a negative balance"
-      );
-    } else {
-      updateWalletBalance({
-        id: user.id,
-        amount,
-        action: credit,
-      });
-
-      setText("Saved");
-      message.success("Balance updated");
-      window.location.reload();
-    }
-  };
+    setPayments(true)
+    setExecution(false)
+    setOrderT(false)
+    setSecu(false)
+    setBal(false)
+    setCard(false)
+    setWithd(false)
+  }
 
   const handleDeleteUser = (id) => {
     if (error) {
-      message.error("Try again");
+      message.error('Try again')
     } else {
-      deleteUser({ id });
-      message.success("User was successfully deleted from the database");
-      history.push("/dashboard/manager");
+      deleteUser({ id })
+      message.success('User was successfully deleted from the database')
+      history.push('/dashboard/manager')
     }
-  };
+  }
 
-  // useEffect(() => {
-  //   getUserAutoCopyTrade(singleUser._id)
-  // }, [])
+  useEffect(() => {
+    getAllUsers()
+  }, [singleUser])
+
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
         <div className="dash-row dash-row-centralized">
           <div className="split-50">
-            <h3 style={{ fontWeight: "normal" }}>
+            <h3 style={{ fontWeight: 'normal' }}>
               Statistics - 04/02/2021 to 13/02/2021
             </h3>
           </div>
@@ -302,7 +245,7 @@ const ManagerContents = (props) => {
           </LineChart>
         </div>
 
-        <div className="dash-row" style={{ margin: "15px 0" }}>
+        <div className="dash-row" style={{ margin: '15px 0' }}>
           <div className="into-6">
             <h5 className="text-uppercase">New user</h5>
             <h2>{allUsers.length}</h2>
@@ -329,11 +272,7 @@ const ManagerContents = (props) => {
           </div>
         </div>
       </div>
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="bank-transfers"
-        style={{ marginLeft: "4%" }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="bank-transfers">
         {bankTransfers && bankTransfers.length > 0 && (
           <TableContainer>
             <BasicTable
@@ -346,11 +285,7 @@ const ManagerContents = (props) => {
         )}
       </div>
 
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="payments"
-        style={{ marginLeft: "4%" }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="payments">
         {allDeposits && allDeposits.length > 0 && (
           <>
             <CustomTable
@@ -371,11 +306,7 @@ const ManagerContents = (props) => {
         )}
       </div>
 
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="subscriptions"
-        style={{ marginLeft: "4%" }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="subscriptions">
         <table>
           <tbody>
             <tr>
@@ -399,17 +330,14 @@ const ManagerContents = (props) => {
           </tbody>
         </table>
       </div>
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="identity"
-        style={{ marginLeft: "4%" }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="identity">
         {allVerifiedUsers && allVerifiedUsers.length > 0 && (
           <CustomTable
             allUsers={allVerifiedUsers}
             user={user}
             column={allVerifiedUsersHeader}
             type="verifiedUsers"
+            key={allVerifiedUsers}
           />
           // <TableContainer>
           //   <BasicTable
@@ -423,11 +351,7 @@ const ManagerContents = (props) => {
       </div>
 
       {/* Table */}
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="users"
-        style={{ marginLeft: "4%" }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="users">
         {!displayC && allUsers && allUsers.length > 0 && (
           <div className="first-sec">
             <TableContainer>
@@ -437,6 +361,7 @@ const ManagerContents = (props) => {
                 setUserLevel={setUserLevel}
                 user={user}
                 column={Columns}
+                key={allUsers}
                 type="EveryUser"
               />
             </TableContainer>
@@ -444,10 +369,10 @@ const ManagerContents = (props) => {
         )}
 
         {displayC && (
-          <div className="second-sec" style={{ display: "block" }}>
-            <div className="user-dtls-tab" style={{ display: "block" }}>
+          <div className="second-sec" style={{ display: 'block' }}>
+            <div className="user-dtls-tab" style={{ display: 'block' }}>
               <div
-                className={card ? "live" : ""}
+                className={card ? 'live' : ''}
                 onClick={handleSetCard}
                 dash-user-dtls-tab="card"
               >
@@ -456,48 +381,48 @@ const ManagerContents = (props) => {
               <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetBal}
-                className={bal ? "live" : ""}
+                className={bal ? 'live' : ''}
               >
                 Balances
               </div>
               <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetExecution}
-                className={execution ? "live" : ""}
+                className={execution ? 'live' : ''}
               >
                 Auto Copy Trading
               </div>
               <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetPayments}
-                className={payments ? "live" : ""}
+                className={payments ? 'live' : ''}
               >
                 Deposits
               </div>
               <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetWithd}
-                className={withd ? "live" : ""}
+                className={withd ? 'live' : ''}
               >
                 Withdrawal
               </div>
               <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetOrder}
-                className={orderT ? "live" : ""}
+                className={orderT ? 'live' : ''}
               >
                 Orders
               </div>
-              <div
+              {/* <div
                 dash-user-dtls-tab="balances"
                 onClick={handleSetSecu}
-                className={secu ? "live" : ""}
+                className={secu ? 'live' : ''}
               >
                 Security
-              </div>
+              </div> */}
             </div>
             <div className="user-dtls-tab-dtls">
-              {card && (
+              {card && singleUser && (
                 <div dash-user-dtls-tab-dtls="card">
                   <div className="dtls-sec">
                     <div className="dash-row dash-row-centralized header">
@@ -525,12 +450,8 @@ const ManagerContents = (props) => {
                     {/* left hand side of user profile */}
                     {singleUser && (
                       <SingleUser
-                        setNotifications={setNotifications}
-                        setAuth0={setAuth0}
                         singleUser={singleUser}
-                        checked2={auth.authEnabled}
                         setDisplayC={setDisplayC}
-                        checked={notification.notificationsEnabled}
                       />
                     )}
                   </div>
@@ -541,6 +462,7 @@ const ManagerContents = (props) => {
                           allUsers={currentDeposit}
                           column={depositHeader}
                           type="currentDeposit"
+                          user={user}
                         />
                       )}
                     </div>
@@ -550,7 +472,7 @@ const ManagerContents = (props) => {
               {bal && (
                 <div
                   dash-user-dtls-tab-dtls="balances"
-                  style={{ display: "block" }}
+                  style={{ display: 'block' }}
                 >
                   <div className="dtls-sec">
                     <div className="dash-row dash-row-centralized header">
@@ -582,22 +504,22 @@ const ManagerContents = (props) => {
               )}
               {execution && singleUser && (
                 // auto copying
-                <Row className="px-3" style={{ marginBottom: "10%" }}>
+                <Row className="px-3" style={{ marginBottom: '10%' }}>
                   <Col md={4} className="mt-5">
-                    <Card style={{ background: "#fff" }}>
+                    <Card style={{ background: '#fff' }}>
                       <Card.Body>
                         <h6>
-                          Current Balance:{" "}
+                          Current Balance:{' '}
                           <span
                             style={{
-                              fontSize: "1.2rem",
-                              color: "green",
-                              fontWeight: "bold",
+                              fontSize: '1.2rem',
+                              color: 'green',
+                              fontWeight: 'bold',
                             }}
                           >
                             $
-                            {new Intl.NumberFormat("en-US").format(
-                              singleUser.wallet
+                            {new Intl.NumberFormat('en-US').format(
+                              singleUser.wallet,
                             )}
                           </span>
                         </h6>
@@ -682,9 +604,9 @@ const ManagerContents = (props) => {
                                   id="default-radio"
                                   name="time"
                                   onChange={() => {
-                                    setSchedule(true);
-                                    setCopyTradeBtn(true);
-                                    setScheduledTime(null);
+                                    setSchedule(true)
+                                    setCopyTradeBtn(true)
+                                    setScheduledTime(null)
                                   }}
                                 />
                               </Col>
@@ -695,12 +617,12 @@ const ManagerContents = (props) => {
                                   id="default-radio"
                                   name="time"
                                   onChange={(e) => {
-                                    setSchedule(false);
-                                    setCheckDate((prev) => !prev);
-                                    setCopyTradeBtn((prev) => !prev);
+                                    setSchedule(false)
+                                    setCheckDate((prev) => !prev)
+                                    setCopyTradeBtn((prev) => !prev)
                                     setScheduledTime((prev) =>
-                                      prev ? new Date() : null
-                                    );
+                                      prev ? new Date() : null,
+                                    )
                                   }}
                                 />
                               </Col>
@@ -739,7 +661,7 @@ const ManagerContents = (props) => {
                                   Applying...
                                 </>
                               ) : (
-                                "Apply"
+                                'Apply'
                               )}
                             </Button>
                           </div>
@@ -751,19 +673,19 @@ const ManagerContents = (props) => {
                     <div className="autoT">
                       <div
                         style={{
-                          marginTop: "7%",
+                          marginTop: '7%',
                         }}
                       >
-                        <h4 style={{ color: "white" }}>
-                          {" "}
-                          AutoCopy Trader - Queue :{" "}
+                        <h4 style={{ color: 'white' }}>
+                          {' '}
+                          AutoCopy Trader - Queue :{' '}
                         </h4>
                       </div>
                       <div>
                         <h3
-                          style={{ color: "white" }}
-                        >{`$ ${new Intl.NumberFormat("en-US").format(
-                          singleUser.estimatedBalance
+                          style={{ color: 'white' }}
+                        >{`$ ${new Intl.NumberFormat('en-US').format(
+                          singleUser.estimatedBalance,
                         )}`}</h3>
                         <p>Estimated balance on</p>
                         <p>
@@ -795,11 +717,11 @@ const ManagerContents = (props) => {
                               <td>{data.assets}</td>
                               <td>
                                 $
-                                {new Intl.NumberFormat("en-US").format(
-                                  data.amount
+                                {new Intl.NumberFormat('en-US').format(
+                                  data.amount,
                                 )}
                               </td>
-                              <td>{data.profitLoss ? "Profit" : "Loss"}</td>
+                              <td>{data.profitLoss ? 'Profit' : 'Loss'}</td>
                               <td>
                                 <Moment format="hh:mm - DD MMMM YYYY">
                                   {data.scheduledTime}
@@ -814,20 +736,20 @@ const ManagerContents = (props) => {
                                 >
                                   <Tag
                                     color="blue"
-                                    style={{ cursor: "pointer" }}
+                                    style={{ cursor: 'pointer' }}
                                   >
                                     Edit
                                   </Tag>
                                 </EditAutoCopyTrade>
                                 <Tag
-                                  style={{ cursor: "pointer" }}
+                                  style={{ cursor: 'pointer' }}
                                   onClick={() => deleteAutoCopyTrade()}
                                   color="red"
                                 >
                                   {loading ? (
                                     <i className="fa fa-spin fa-spinner"></i>
                                   ) : (
-                                    "Delete"
+                                    'Delete'
                                   )}
                                 </Tag>
                               </td>
@@ -842,7 +764,7 @@ const ManagerContents = (props) => {
               {payments && (
                 <div
                   dash-user-dtls-tab-dtls="payments"
-                  style={{ display: "block" }}
+                  style={{ display: 'block' }}
                 >
                   <div className="dtls-sec">
                     <div className="dash-row dash-row-centralized header">
@@ -882,7 +804,7 @@ const ManagerContents = (props) => {
               {withd && (
                 <div
                   dash-user-dtls-tab-dtls="withdraw"
-                  style={{ display: "block" }}
+                  style={{ display: 'block' }}
                 >
                   <div className="dtls-sec">
                     <div className="dash-row dash-row-centralized header">
@@ -896,6 +818,7 @@ const ManagerContents = (props) => {
                         {singleUser && (
                           <UserArea
                             singleUser={singleUser}
+                            user={user}
                             setEditProfile={setEditProfile}
                             handleDeleteUser={handleDeleteUser}
                           />
@@ -929,7 +852,7 @@ const ManagerContents = (props) => {
               {orderT && (
                 <div
                   dash-user-dtls-tab-dtls="orders"
-                  style={{ display: "block" }}
+                  style={{ display: 'block' }}
                 >
                   <div className="dtls-sec">
                     <div className="dash-row dash-row-centralized header">
@@ -951,6 +874,17 @@ const ManagerContents = (props) => {
                         )}
                       </div>
                     </div>
+                    {orderT && userTrades <= 0 ? (
+                      <div className="d-flex justify-content-center align-items-center">
+                        <h2 className="p-2 m-2">No Order History</h2>
+                      </div>
+                    ) : (
+                      <BasicTable
+                        allUsers={userTrades}
+                        column={allTradesHeader}
+                        type="withdrawal"
+                      />
+                    )}
                   </div>
                 </div>
               )}
@@ -958,7 +892,7 @@ const ManagerContents = (props) => {
               {secu && (
                 <div
                   dash-user-dtls-tab-dtls="security"
-                  style={{ display: "block" }}
+                  style={{ display: 'block' }}
                 >
                   <div className="dtls-sec">
                     <div className="dash-row dash-row-centralized header">
@@ -988,11 +922,7 @@ const ManagerContents = (props) => {
           </div>
         )}
       </div>
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="orders"
-        style={{ marginLeft: "4%" }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="orders">
         {allTrades && allTrades.length > 0 && (
           <CustomTable
             allUsers={allTrades}
@@ -1008,11 +938,7 @@ const ManagerContents = (props) => {
           // </TableContainer>
         )}
       </div>
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="withdraw"
-        style={{ marginLeft: "4%" }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="withdraw">
         {allWithdrawals && allWithdrawals.length > 0 && (
           <CustomTable
             allUsers={allWithdrawals}
@@ -1045,16 +971,16 @@ const ManagerContents = (props) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
 ManagerContents.propTypes = {
   displayC: PropTypes.bool,
   setDisplayC: PropTypes.func.isRequired,
   setEditProfile: PropTypes.func.isRequired,
-};
+}
 
-export default React.memo(ManagerContents);
+export default ManagerContents
 
 const TableContainer = styled.div`
   background: white;
@@ -1099,4 +1025,4 @@ const TableContainer = styled.div`
   table tr:hover {
     background-color: #ddd;
   }
-`;
+`

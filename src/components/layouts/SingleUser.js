@@ -20,7 +20,6 @@ function SingleUser({ singleUser }) {
     isActive,
   } = singleUser;
   const [verifystate, setverifystate] = useState(verify);
-  const [activestate] = useState(isActive);
   const [active, setActive] = useState(true);
   const [deactivate, setdeActivate] = useState(" DEACTIVATE USER");
   const [activate, setActivate] = useState(" ACTIVATE USER");
@@ -32,6 +31,7 @@ function SingleUser({ singleUser }) {
       await approveSingleUserVerify(_id);
       setverifystate(!verify);
       // location.window.reload()
+
       message.success("Identity Was Successfully Approved");
     }
   };

@@ -28,12 +28,12 @@ const DashboardFooter = ({ setSupport }) => {
         parseFloat(activeTrade.margin) +
         parseFloat(profitOrLoss) -
         parseFloat(activeTrade.margin)
-      : 0;
+      : balance;
 
   const freeMargin =
     Object.keys(activeTrade).length > 0
       ? balance + (parseFloat(profitOrLoss) - parseFloat(activeTrade.margin))
-      : 0;
+      : balance;
 
   return (
     <footer className="dash-footer">
@@ -71,7 +71,8 @@ const DashboardFooter = ({ setSupport }) => {
                   : "red",
             }}
           >
-            &nbsp;P/L: {user && user.currency}
+            &nbsp;P/L:{" "}
+            {user && user.currency === "USD" ? "$" : user && user.currency}
             {new Intl.NumberFormat("en-US").format(profitOrLoss).slice(0, 8)}
             &nbsp;
           </p>{" "}

@@ -1,16 +1,17 @@
-import { useState, Fragment, useEffect } from "react";
-import ManagerHeader from "../layouts/ManagerHeader";
-import { useSelector } from "react-redux";
-import { useActions } from "../hooks/useActions";
-import "./Dashboard.css";
-import EditProfile from "../utils/modals/EditProfile";
-import ManagerContents from "../layouts/ManagerContents";
+import { useState, Fragment, useEffect } from 'react'
+import ManagerHeader from '../layouts/ManagerHeader'
+import { useSelector } from 'react-redux'
+import { useActions } from '../hooks/useActions'
+import './Dashboard.css'
+import EditProfile from '../utils/modals/EditProfile'
+import ManagerContents from '../layouts/ManagerContents'
 
 const Manager = () => {
-  const { user, userId } = useSelector((state) => state.auth);
+  const { user, userId } = useSelector((state) => state.auth)
+  const { singleUser } = useSelector((state) => state.profile)
 
-  const [displayC, setDisplayC] = useState(false);
-  const [editProfile, setEditProfile] = useState(false);
+  const [displayC, setDisplayC] = useState(false)
+  const [editProfile, setEditProfile] = useState(false)
 
   const {
     getAllWithdrawals,
@@ -19,29 +20,29 @@ const Manager = () => {
     getAllUsers,
     getAllDeposits,
     getAllVerifiedUsers,
-  } = useActions();
+  } = useActions()
 
   useEffect(() => {
-    getAllWithdrawals();
-    getAllOrders();
-    getAllUsers();
-    getAllDeposits();
-    getAllTrades();
-    getAllVerifiedUsers();
-  }, []);
+    getAllWithdrawals()
+    getAllOrders()
+    getAllUsers()
+    getAllDeposits()
+    getAllTrades()
+    getAllVerifiedUsers()
+  }, [singleUser])
 
   useEffect(() => {
     if (user) {
-      const script = document.createElement("script");
-      script.src = "https://cdn.jsdelivr.net/gh/codabae/hostjs/dashUPPER15.js";
-      script.async = true;
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/gh/codabae/hostjs/dashUPPER15.js'
+      script.async = true
 
-      document.body.appendChild(script);
+      document.body.appendChild(script)
     }
-  }, []);
+  }, [user])
 
   return (
-    <Fragment>
+    <>
       <div
         className="full-width manager-section"
         style={{ paddingLeft: 0, paddingRight: 0 }}
@@ -51,18 +52,19 @@ const Manager = () => {
           displayC={displayC}
           setDisplayC={setDisplayC}
           setEditProfile={setEditProfile}
+          singleUser={singleUser}
         />
       </div>
       {editProfile && (
         <section
           className="withdraw-modal-box personal-data-modal"
-          style={{ display: "block" }}
+          style={{ display: 'block' }}
         >
           <EditProfile setEditProfile={setEditProfile} />
         </section>
       )}
-    </Fragment>
-  );
-};
+    </>
+  )
+}
 
-export default Manager;
+export default Manager
