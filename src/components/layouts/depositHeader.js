@@ -1,11 +1,10 @@
 import { format } from "date-fns";
+import ApproveDeposit from "./util/DepositComponent";
+
 // import ApproveDeposit from "./ApproveDeposit";
 // import PaymentModal from "./PaymentModal";
 // import DepositState from "./DepositState";
 
-const checkIfApproved = (status) => {
-  return status === "Approved" ? "none" : "block";
-};
 export const depositHeader = [
   {
     id: "Ref",
@@ -105,15 +104,16 @@ export const depositHeader = [
     backgroundColor: "green",
     renderCell: (props) => {
       return (
-        <button
+        <p
           style={{
             backgroundColor: props.row.status === "Approved" ? "green" : "red",
             border: "none",
             width: "100%",
+            textAlign: "center",
           }}
         >
           {props.row.status}
-        </button>
+        </p>
       );
     },
     // accessor: ({ status }) => <DepositState status={status} />,
@@ -126,29 +126,8 @@ export const depositHeader = [
     // accessor: (status) => <ApproveDeposit status={status} />,
     accessor: "status",
     renderCell: (props) => {
-      return (
-        <div style={{ display: checkIfApproved(props.row.status) }}>
-          <button
-            style={{
-              backgroundColor: "green",
-              border: "none",
-              width: "50%",
-            }}
-          >
-            Accept
-          </button>
-
-          <button
-            style={{
-              backgroundColor: "red",
-              border: "none",
-              width: "50%",
-            }}
-          >
-            Decline
-          </button>
-        </div>
-      );
+      console.log(`props`, props);
+      return <ApproveDeposit details={props.row} />;
     },
   },
 ];

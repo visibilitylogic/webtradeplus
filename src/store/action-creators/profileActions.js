@@ -334,10 +334,18 @@ export const approveDeposit = (details) => async (dispatch) => {
   const body = JSON.stringify(details);
 
   try {
-    await axios.put(`${BASE_URL}/api/deposit/approve`, body, config);
-    dispatch({
-      type: actionTypes.APPROVE_DEPOSIT,
-    });
+    const response = await axios.put(
+      `${BASE_URL}/api/deposit/approve`,
+      body,
+      config
+    );
+
+    if (response.status === 200) {
+      getAllDeposits();
+      dispatch({
+        type: actionTypes.APPROVE_DEPOSIT,
+      });
+    }
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -355,8 +363,21 @@ export const declineDeposit = (details) => async (dispatch) => {
 
   const body = JSON.stringify(details);
 
+  console.log(`body`, body);
+
   try {
-    await axios.put(`${BASE_URL}/api/deposit/decline`, body, config);
+    const response = await axios.put(
+      `${BASE_URL}/api/deposit/decline`,
+      body,
+      config
+    );
+
+    if (response.status === 200) {
+      getAllDeposits();
+      dispatch({
+        type: actionTypes.APPROVE_DEPOSIT,
+      });
+    }
     dispatch({
       type: actionTypes.DECLINE_DEPOSIT,
     });
@@ -377,10 +398,19 @@ export const declineVerify = (details) => async (dispatch) => {
 
   const body = JSON.stringify(details);
   try {
-    await axios.put(`${BASE_URL}/api/verify/decline`, body, config);
-    dispatch({
-      type: actionTypes.DECLINE_VERIFY,
-    });
+    const response = await axios.put(
+      `${BASE_URL}/api/verify/decline`,
+      body,
+      config
+    );
+    console.log(`response`, response);
+    if (response.status === 200) {
+      console.log(`response..status`, response.status);
+      getAllVerifiedUsers();
+      dispatch({
+        type: actionTypes.DECLINE_VERIFY,
+      });
+    }
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -397,11 +427,21 @@ export const approveVerify = (details) => async (dispatch) => {
   };
 
   const body = JSON.stringify(details);
+
   try {
-    await axios.put(`${BASE_URL}/api/verify/approve`, body, config);
-    dispatch({
-      type: actionTypes.APPROVE_VERIFY,
-    });
+    console.log(`details`, details);
+    const response = await axios.put(
+      `${BASE_URL}/api/verify/approve`,
+      body,
+      config
+    );
+    console.log(`response`, response);
+    if (response.status === 201) {
+      getAllVerifiedUsers();
+      dispatch({
+        type: actionTypes.APPROVE_VERIFY,
+      });
+    }
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -423,6 +463,7 @@ export const approveSingleUserVerify = (details) => async (dispatch) => {
     });
   }
 };
+
 export const declineWithdrawal = (details) => async (dispatch) => {
   const config = {
     headers: {
@@ -747,6 +788,7 @@ export const getSingleDeposit = (details) => async (dispatch) => {
 };
 
 export const getAllOrders = () => async (dispatch) => {
+  console.log(`true`, true);
   try {
     const { data } = await axios.get(`${BASE_URL}/api/trade/buy/allTrade`);
 

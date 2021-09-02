@@ -1,11 +1,8 @@
 // import { format } from "date-fns";
 import AllUser from "./AllUser.js";
+import KYCActionComponent from "./util/KYCActionComponent.js";
 // import DocumentFile from "./DocumentFile.js";
 // import ApproveDoc from "./ApproveDoc";
-
-const checkIfApproved = (status) => {
-  return status === "Approved" ? "none" : "block";
-};
 
 export const allVerifiedUsersHeader = [
   {
@@ -82,30 +79,8 @@ export const allVerifiedUsersHeader = [
     headerName: "Action",
     width: 180,
     renderCell: (props) => {
-      return (
-        <div style={{ display: checkIfApproved(props.row.status) }}>
-          <button
-            style={{
-              backgroundColor: "green",
-              border: "none",
-              width: "50%",
-            }}
-          >
-            Accept
-          </button>
-
-          <button
-            style={{
-              backgroundColor: "red",
-              border: "none",
-              width: "50%",
-            }}
-          >
-            Decline
-          </button>
-        </div>
-      );
+      return <KYCActionComponent details={props.row} />;
+      // accessor: (status) => <ApproveDoc status={status} />,
     },
-    // accessor: (status) => <ApproveDoc status={status} />,
   },
 ];
