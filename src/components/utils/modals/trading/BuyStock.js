@@ -31,8 +31,9 @@ const BuyStockModal = (props) => {
 
   const handleStockPurchase = (event) => {
     event.preventDefault();
-
-    if (error) {
+    if (userMargin > user.wallet) {
+      message.error("You do not have enough money in your wallet");
+    } else if (error) {
       message.error("Error processing your stock purchase");
     } else {
       purchaseStockAsset(user._id, {

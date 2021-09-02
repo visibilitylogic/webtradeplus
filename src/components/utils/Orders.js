@@ -27,13 +27,6 @@ const Orders = (props) => {
   const { activeTrade } = useSelector((state) => state.profile);
   const { webData } = useSelector((state) => state.web);
 
-  const profit = getProfitOrLoss(
-    activeTrade,
-    currentSelectedStock,
-    defaultSelectedStock >= 0
-  );
-
-  console.log(tradeProfit);
   const {
     getAllUserTrades,
     deleteUserTrade,
@@ -42,6 +35,15 @@ const Orders = (props) => {
     setCurrentlyActiveTrade,
     setTradeProfit,
   } = useActions();
+
+  const getProfit = (openRate, marketRate) => {
+    const profit = marketRate - openRate;
+    if (profit > 0) {
+      setTradeProfit(profit);
+    } else {
+      setTradeProfit(0);
+    }
+  };
 
   const handleDeleteUserTrade = (tradeId) => {
     if (error) {
@@ -65,15 +67,15 @@ const Orders = (props) => {
       closeUserBuyTrade(trade._id, {
         closeRateOfAsset: closeRate,
       });
-      setTradeProfit(trade.profit);
+
       setCurrentlyActiveTrade({});
     } else {
       closeUserSellTrade(trade._id, {
         closeRateOfAsset: closeRate,
       });
-      setTradeProfit(trade.profit);
       setCurrentlyActiveTrade({});
     }
+    console.log(tradeProfit);
 
     setTimeout(
       () => message.success("Your trade has been closed successfully"),
@@ -242,6 +244,10 @@ const Orders = (props) => {
                                         onClick={() => {
                                           handleCloseUserTrade(
                                             item,
+                                            asset.price
+                                          );
+                                          getProfit(
+                                            item.openRateOfAsset,
                                             asset.price
                                           );
                                         }}

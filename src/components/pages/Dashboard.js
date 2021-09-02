@@ -9,7 +9,6 @@ import "./Dashboard.css";
 import Board from "./Board";
 import Manager from "./Manager";
 import Admin from "./Admin";
-import useInterval from "../hooks/useInterval";
 import DashboardFooter from "../layouts/DashboardFooter";
 import { asideList } from "./../../helpers/dataset/asideNavList";
 import OrderBook from "./OrderBook";
@@ -21,47 +20,26 @@ import News from "../pages/News";
 import LeaderBoard from "./LeaderBoard";
 
 const Dashboard = () => {
-  const token = "pk_135c1daf1b8d4130b9318fd5e8ab0e5e";
-  const fetchOrder = () => JSON.parse(localStorage.getItem("orders")) || [];
-  const [calcDisplay, setCalcDisplay] = useState(false);
-  // const {open } = useSelector(state=> state.toggle)
   const [selectedTab, setSelectedTab] = useState(0);
   const [adminSelected, setAdminSelected] = useState(false);
   const [managerSelected, setManagerSelected] = useState(false);
   const [view, setView] = useState({});
-  const [intervalId, setIntervalId] = useState(null);
-  const [intervalId1, setIntervalId1] = useState(null);
   const [totalUp, setTotalUp] = useState(0);
   const [levIsh, setLevIsh] = useState(false);
-  const [order, setOrder] = useState(fetchOrder);
   const [orders, setOrders] = useState([]);
-  const [history, setHistory] = useState([]);
   const [buysell, setBuysell] = useState(false);
-  const [data, setData] = useState({});
-  const [orderIsh, setOrderIsh] = useState({});
   const [support, setSupport] = useState(false);
 
   const myRef3 = useRef("");
 
   // Action creators
-  const {
-    getWebData,
-    setIsTrading,
-    setDefaultSelectedStock,
-    setCurrentSelectedStock,
-    getCryptoAssets,
-    getCommodityStocks,
-    getInvestorsExchange,
-    getExchangeTradedFund,
-    getForexStocks,
-    getAllStockAssets,
-  } = useActions();
+  const { getWebData, setIsTrading, setDefaultSelectedStock } = useActions();
 
   // Redux state data
   const { webData } = useSelector((state) => state.web);
 
-  const { isAuthenticated, user, userId } = useSelector((state) => state.auth);
-  const { currentSelectedStock } = useSelector((state) => state.stock);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  // const { currentSelectedStock } = useSelector((state) => state.stock);
 
   const closeSetlevIsh = () => {
     if (!user.liveTrade) {
@@ -75,7 +53,7 @@ const Dashboard = () => {
         `AutoCopy Trader is Active, Turn off AutoCopy Trader to trade manually`
       );
     } else if (user && user.wallet <= 0) {
-      message.warning(`You need to make a Deposit in your wallet.`);
+      message.warning(`You do not have enough money in your wallet`);
     }
   };
 
