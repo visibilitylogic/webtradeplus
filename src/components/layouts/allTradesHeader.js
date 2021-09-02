@@ -1,96 +1,177 @@
 import { format } from "date-fns";
+import UpdateOrderComponent from "./util/UpdateOrderComponent";
 export const allTradesHeader = [
   {
-    Header: "Ref",
+    field: "_id",
+    headerName: "Ref",
+    width: 180,
+    type: "text",
     accessor: "_id",
-    accessor: ({ _id }) => <p>{_id.slice(3, 8)}</p>,
+
+    // accessor: ({ _id }) => <p>{_id.slice(3, 8)}</p>,
   },
   {
-    Header: "Active",
-    accessor: "isOpen",
-    accessor: ({ isOpen }) => (
+    field: "isOpen",
+    headerName: "Active",
+    width: 180,
+    renderCell: (props) => {
       <p
         className={
-          isOpen === true
+          props.row.isOpen === true
             ? " text-center bg-success text-light"
             : " text-center bg-denger text-light"
         }
       >
-        {isOpen === true ? "true" : "false"}
-      </p>
-    ),
-  },
-
-  {
-    Header: "type",
-    accessor: "tag",
-    accessor: ({ tag }) => (
-      <p
-        className={
-          tag === "buy"
-            ? " text-center bg-success text-light"
-            : " text-center bg-denger text-light"
-        }
-      >
-        {tag}
-      </p>
-    ),
-  },
-  {
-    Header: "Margin",
-    accessor: "margin",
-  },
-  {
-    Header: "Profit",
-    accessor: "profit",
-    accessor: ({ profit }) => (
-      <p className={" text-center bg-success text-light"}>{profit}</p>
-    ),
-  },
-  {
-    Header: "Loss",
-    accessor: "loss",
-    accessor: ({ loss }) => (
-      <p className={" text-center bg-danger text-light"}>{loss}</p>
-    ),
-  },
-  {
-    Header: "Take Profit",
-    accessor: "takeProfit",
-  },
-  {
-    Header: "Stop Loss",
-    accessor: "takeLoss",
-  },
-  {
-    Header: "Name Of Assest",
-    accessor: "nameOfAsset",
-  },
-  {
-    Header: "Type Of Assest",
-    accessor: "typeOfAsset",
-  },
-  {
-    Header: "Open Rate",
-    accessor: "openRateOfAsset",
-  },
-  {
-    Header: "Close Rate",
-    accessor: "closeRateOfAsset",
-  },
-
-  {
-    Header: "Time",
-    accessor: "time",
-    Cell: ({ value }) => {
-      return format(new Date(value), "dd/MM/yyyy");
+        {props.row.isOpen === true ? "true" : "false"}
+      </p>;
     },
+
+    // accessor: "isOpen",
+    // accessor: ({ isOpen }) => (
+    //   <p
+    //     className={
+    //       isOpen === true
+    //         ? " text-center bg-success text-light"
+    //         : " text-center bg-denger text-light"
+    //     }
+    //   >
+    //     {isOpen === true ? "true" : "false"}
+    //   </p>
+    // ),
+  },
+
+  {
+    field: "tag",
+    headerName: "Type",
+    width: 180,
+    type: "text",
+    renderCell: (props) => {
+      <p
+        className={
+          props.row.tag === "buy"
+            ? " text-center bg-success text-light"
+            : " text-center bg-denger text-light"
+        }
+      >
+        {props.row.tag}
+      </p>;
+    },
+    // accessor: "tag",
+    // accessor: ({ tag }) => (
+    //   <p
+    //     className={
+    //       tag === "buy"
+    //         ? " text-center bg-success text-light"
+    //         : " text-center bg-denger text-light"
+    //     }
+    //   >
+    //     {tag}
+    //   </p>
+    // ),
   },
   {
-    Header: "Action",
-    accessor: "icon",
-    accessor: ({ _id }) => (
-      <button className={" text-center bg-primary text-light"}>{"EDIT"}</button>
-    ),
+    field: "margin",
+    headerName: "Margin",
+    width: 180,
+    type: "number",
+
+    // accessor: "margin",
+  },
+  {
+    field: "profit",
+    headerName: "Profit",
+    width: 180,
+    type: "number",
+    renderCell: (props) => {
+      <p className={" text-center bg-success text-light"}>
+        {props.row.profit}
+      </p>;
+    },
+    // accessor: "profit",
+    // accessor: ({ profit }) => (
+    //   <p className={" text-center bg-success text-light"}>{profit}</p>
+    // ),
+  },
+  {
+    field: "loss",
+    headerName: "Loss",
+    width: 180,
+    type: "number",
+    renderCell: (props) => {
+      <p className={" text-center bg-danger text-light"}>{props.row.loss}</p>;
+    },
+    // accessor: "loss",
+    // accessor: ({ loss }) => (
+
+    // ),
+  },
+  {
+    field: "takeProfit",
+    headerName: "Take Profit",
+    width: 180,
+    type: "number",
+
+    // accessor: "takeProfit",
+  },
+  {
+    field: "takLoss",
+    headerName: "Stop Loss",
+    type: "number",
+    width: 180,
+
+    // accessor: "takeLoss",
+  },
+  {
+    field: "nameOfAsset",
+    headerName: "Name Of Assest",
+    width: 180,
+    type: "text",
+    // accessor: "nameOfAsset",
+  },
+  {
+    field: "typeOfAsset",
+    headerName: "Type Of Assest",
+    width: 180,
+    type: "text",
+
+    // accessor: "typeOfAsset",
+  },
+  {
+    field: "openRateOfAsset",
+    headerName: "Open Rate",
+    width: 180,
+    type: "number",
+    // accessor: "openRateOfAsset",
+  },
+  {
+    field: "closeRateOfAsset",
+    headerName: "Close Rate",
+    width: 180,
+
+    // accessor: "closeRateOfAsset",
+  },
+
+  {
+    field: "time",
+    headerName: "Time",
+    width: 180,
+    type: "time",
+
+    // accessor: "time",
+    // Cell: ({ value }) => {
+    //   return format(new Date(value), "dd/MM/yyyy");
+    // },
+  },
+  {
+    field: "action",
+    headerName: "Action",
+    width: 180,
+    renderCell: (props) => {
+      return <UpdateOrderComponent props={props.row} />;
+    },
+    // accessor: "icon",
+    // accessor: ({ _id }) => (
+    //   <button className={" text-center bg-primary text-light"}>{"EDIT"}</button>
+    // ),
   },
 ];

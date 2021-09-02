@@ -1,65 +1,102 @@
-import { format } from 'date-fns'
-import ViewWithDrawalDetails from './ViewWithDrawalDetails'
-import WithdrawalStatus from './WithdrawalStatus'
+import { format } from "date-fns";
+import ViewWithDrawalDetails from "./ViewWithDrawalDetails";
+import WithdrawalStatus from "./WithdrawalStatus";
 export const withdrawalHeader = [
   {
-    id: 'Ref',
-    Header: 'Ref',
-    accessor: 'Ref',
+    field: "Ref",
+    width: 180,
+    headerName: "Ref",
+    accessor: "Ref",
   },
 
   {
-    Header: 'Name',
-    accessor: 'name',
+    field: "name",
+    width: 180,
+    headerName: "Name",
+    accessor: "name",
   },
   {
-    Header: 'Email',
-    accessor: 'email',
+    field: "email",
+    width: 180,
+    type: "email",
+    headerName: "Email",
+    accessor: "email",
   },
   {
-    Header: 'Withdrawal Method',
-    accessor: 'method',
+    field: "method",
+    width: 180,
+    headerName: "Withdrawal Method",
+    accessor: "method",
   },
   {
-    Header: 'Withdrawal Info',
-    accessor: 'withdrawInfo',
-    Cell: <ViewWithDrawalDetails />,
-  },
-
-  {
-    Header: 'Date',
-    accessor: 'time',
-    Cell: ({ value }) => {
-      return format(new Date(value), 'dd/MM/yyyy')
+    field: "Withdrawal Info",
+    width: 180,
+    headerName: "Withdrawal Info",
+    accessor: "withdrawInfo",
+    renderCell: () => {
+      return <ViewWithDrawalDetails />;
     },
   },
+
   {
-    id: 'Amount',
-    Header: 'Amount',
-    accessor: 'amount',
+    field: "time",
+    width: 180,
+    headerName: "Date",
+    accessor: "time",
+    type: "time",
+    // Cell: ({ value }) => {
+    //   return format(new Date(value), "dd/MM/yyyy");
+    // },
+  },
+  {
+    field: "amount",
+    width: 180,
+    type: "number",
+    headerName: "Amount",
+    accessor: "amount",
   },
 
   {
-    Header: 'Total',
-    accessor: 'total',
+    field: "total",
+    width: 180,
+    headerName: "Total",
+    accessor: "total",
   },
   {
-    id: 'Status',
-    Header: 'Status',
-    accessor: ({ status }) => (
+    field: "status",
+    width: 180,
+    headerName: "Status",
+    renderCell: (props) => {
       <p
         className={
-          status === 'Pending'
-            ? 'bg-danger text-light p-1  text-center'
-            : 'bg-success text-light p-1  text-center '
+          props.row.status === "Pending"
+            ? "bg-danger text-light p-1  text-center"
+            : "bg-success text-light p-1  text-center "
         }
       >
-        {status}
-      </p>
-    ),
+        {console.log(`props`, props)}
+        {props.row.status}
+      </p>;
+    },
+    // accessor: ({ status }) => (
+    //   <p
+    //     className={
+    //       status === "Pending"
+    //         ? "bg-danger text-light p-1  text-center"
+    //         : "bg-success text-light p-1  text-center "
+    //     }
+    //   >
+    //     {status}
+    //   </p>
+    // ),
   },
   {
-    Header: 'Action',
-    accessor: ({ status }) => <WithdrawalStatus status={status} />,
+    field: "status",
+    width: 180,
+    headerName: "Action",
+    renderCell: (props) => {
+      return <WithdrawalStatus status={props.row.status} />;
+    },
+    // accessor: ({ status }) =>
   },
-]
+];
