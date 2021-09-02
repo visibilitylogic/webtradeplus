@@ -831,12 +831,18 @@ const ManagerContents = (props) => {
                         <h2 className="p-2 m-2">No Withdrawal</h2>
                       </div>
                     ) : (
-                      <BasicTable
+                      <CustomTable
                         allUsers={singleWithdrawals}
                         user={user}
                         column={singleUserWithdrawal}
                         type="withdrawal"
                       />
+                      // <BasicTable
+                      //   allUsers={singleWithdrawals}
+                      //   user={user}
+                      //   column={singleUserWithdrawal}
+                      //   type="withdrawal"
+                      // />
                     )}
                     {/* sdfdsj */}
                   </div>
@@ -918,25 +924,36 @@ const ManagerContents = (props) => {
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="orders">
         {allTrades && allTrades.length > 0 && (
-          <TableContainer>
-            <BasicTable
-              allUsers={allTrades}
-              column={allTradesHeader}
-              type="trades"
-            />
-          </TableContainer>
+          <CustomTable
+            allUsers={allTrades}
+            column={allTradesHeader}
+            type="trades"
+          />
+          // <TableContainer>
+          //   <BasicTable
+          //     allUsers={allTrades}
+          //     column={allTradesHeader}
+          //     type="trades"
+          //   />
+          // </TableContainer>
         )}
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="withdraw">
         {allWithdrawals && allWithdrawals.length > 0 && (
-          <TableContainer>
-            <BasicTable
-              allUsers={allWithdrawals}
-              user={user}
-              column={withdrawalHeader}
-              type="withdrawal"
-            />
-          </TableContainer>
+          <CustomTable
+            allUsers={allWithdrawals}
+            user={user}
+            column={withdrawalHeader}
+            type="withdrawal"
+          />
+          // <TableContainer>
+          //   <BasicTable
+          // allUsers={allWithdrawals}
+          // user={user}
+          // column={withdrawalHeader}
+          // type="withdrawal"
+          //   />
+          // </TableContainer>
         )}
       </div>
 
