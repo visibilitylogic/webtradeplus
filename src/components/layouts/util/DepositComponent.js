@@ -15,9 +15,12 @@ const ApproveDeposit = ({ details }) => {
     >
       <button
         style={{
-          backgroundColor: "green",
+          backgroundColor: "#54ac40",
           border: "none",
           width: "50%",
+          fontSize: "12px",
+          color: "white",
+          fontWeight: "bolder",
         }}
         onClick={async () => {
           approveDeposit({ id: details._id, message: "success" });
@@ -33,6 +36,9 @@ const ApproveDeposit = ({ details }) => {
           backgroundColor: "red",
           border: "none",
           width: "50%",
+          fontSize: "12px",
+          color: "white",
+          fontWeight: "bolder",
         }}
         onClick={() => declineDeposit({ id: details._id, message: "failed" })}
       >

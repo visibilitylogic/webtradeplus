@@ -39,7 +39,7 @@ const CustomTable = ({
 
   console.log(`dataRows`, dataRows);
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: 526, width: "100%" }}>
       <DataGrid
         className={classes.root}
         rows={dataRows}

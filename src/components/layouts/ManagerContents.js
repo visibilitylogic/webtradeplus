@@ -351,7 +351,7 @@ const ManagerContents = (props) => {
       </div>
 
       {/* Table */}
-      <div className="manager-tab-dtls" manager-tab-dtls="users">
+      <div className="manager-tab-dtls" manager-tab-dtls="users" style={{marginLeft:'5%'}}>
         {!displayC && allUsers && allUsers.length > 0 && (
           <div className="first-sec">
             <TableContainer>

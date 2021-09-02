@@ -4,7 +4,7 @@ export const allTradesHeader = [
   {
     field: "_id",
     headerName: "Ref",
-    width: 180,
+    width: 120,
     type: "text",
     accessor: "_id",
 
@@ -13,7 +13,7 @@ export const allTradesHeader = [
   {
     field: "isOpen",
     headerName: "Active",
-    width: 180,
+    width: 120,
     renderCell: (props) => {
       <p
         className={
@@ -43,7 +43,7 @@ export const allTradesHeader = [
   {
     field: "tag",
     headerName: "Type",
-    width: 180,
+    width: 120,
     type: "text",
     renderCell: (props) => {
       <p
@@ -72,7 +72,7 @@ export const allTradesHeader = [
   {
     field: "margin",
     headerName: "Margin",
-    width: 180,
+    width: 120,
     type: "number",
 
     // accessor: "margin",
@@ -80,7 +80,7 @@ export const allTradesHeader = [
   {
     field: "profit",
     headerName: "Profit",
-    width: 180,
+    width: 120,
     type: "number",
     renderCell: (props) => {
       <p className={" text-center bg-success text-light"}>
@@ -95,7 +95,7 @@ export const allTradesHeader = [
   {
     field: "loss",
     headerName: "Loss",
-    width: 180,
+    width: 120,
     type: "number",
     renderCell: (props) => {
       <p className={" text-center bg-danger text-light"}>{props.row.loss}</p>;
@@ -108,30 +108,30 @@ export const allTradesHeader = [
   {
     field: "takeProfit",
     headerName: "Take Profit",
-    width: 180,
+    width: 120,
     type: "number",
 
     // accessor: "takeProfit",
   },
   {
-    field: "takLoss",
+    field: "takeLoss",
     headerName: "Stop Loss",
     type: "number",
-    width: 180,
+    width: 120,
 
     // accessor: "takeLoss",
   },
   {
     field: "nameOfAsset",
-    headerName: "Name Of Assest",
-    width: 180,
+    headerName: "Name",
+    width: 120,
     type: "text",
     // accessor: "nameOfAsset",
   },
   {
     field: "typeOfAsset",
-    headerName: "Type Of Assest",
-    width: 180,
+    headerName: "Type",
+    width: 120,
     type: "text",
 
     // accessor: "typeOfAsset",
@@ -139,14 +139,14 @@ export const allTradesHeader = [
   {
     field: "openRateOfAsset",
     headerName: "Open Rate",
-    width: 180,
+    width: 120,
     type: "number",
     // accessor: "openRateOfAsset",
   },
   {
     field: "closeRateOfAsset",
     headerName: "Close Rate",
-    width: 180,
+    width: 120,
 
     // accessor: "closeRateOfAsset",
   },
@@ -154,7 +154,7 @@ export const allTradesHeader = [
   {
     field: "time",
     headerName: "Time",
-    width: 180,
+    width: 120,
     type: "time",
 
     // accessor: "time",
@@ -165,7 +165,7 @@ export const allTradesHeader = [
   {
     field: "action",
     headerName: "Action",
-    width: 180,
+    width: 120,
     renderCell: (props) => {
       return <UpdateOrderComponent props={props.row} />;
     },

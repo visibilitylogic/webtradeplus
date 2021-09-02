@@ -4,33 +4,33 @@ import WithdrawalStatus from "./WithdrawalStatus";
 export const withdrawalHeader = [
   {
     field: "Ref",
-    width: 180,
+    width: 120,
     headerName: "Ref",
     accessor: "Ref",
   },
 
   {
     field: "name",
-    width: 180,
+    width: 120,
     headerName: "Name",
     accessor: "name",
   },
   {
     field: "email",
-    width: 180,
+    width: 120,
     type: "email",
     headerName: "Email",
     accessor: "email",
   },
   {
     field: "method",
-    width: 180,
+    width: 120,
     headerName: "Withdrawal Method",
     accessor: "method",
   },
   {
     field: "Withdrawal Info",
-    width: 180,
+    width: 120,
     headerName: "Withdrawal Info",
     accessor: "withdrawInfo",
     renderCell: () => {
@@ -40,7 +40,7 @@ export const withdrawalHeader = [
 
   {
     field: "time",
-    width: 180,
+    width: 120,
     headerName: "Date",
     accessor: "time",
     type: "time",
@@ -50,7 +50,7 @@ export const withdrawalHeader = [
   },
   {
     field: "amount",
-    width: 180,
+    width: 120,
     type: "number",
     headerName: "Amount",
     accessor: "amount",
@@ -58,13 +58,13 @@ export const withdrawalHeader = [
 
   {
     field: "total",
-    width: 180,
+    width: 120,
     headerName: "Total",
     accessor: "total",
   },
   {
     field: "status",
-    width: 180,
+    width: 120,
     headerName: "Status",
     renderCell: (props) => {
       <p
@@ -92,7 +92,7 @@ export const withdrawalHeader = [
   },
   {
     field: "status",
-    width: 180,
+    width: 120,
     headerName: "Action",
     renderCell: (props) => {
       return <WithdrawalStatus status={props.row.status} />;
