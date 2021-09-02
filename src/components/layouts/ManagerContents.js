@@ -22,11 +22,11 @@ import UserBalance from './UserBalance'
 import UserArea from './UserArea'
 import SingleUser from './SingleUser'
 import { paymentHeader } from './paymentHeader'
-import { singleUserWithdrawal } from './singleUserWithdrawal'
 import EstimatedBallance from './EstimatedBallance'
 import UserHeader from './UserHeader'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 import CustomTable from '../../helpers/customTable/CustomTable'
+import { singleUserWithdrawal } from './singleWithdrawalStatuss'
 
 const ManagerContents = (props) => {
   const data = [

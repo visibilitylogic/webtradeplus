@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import SingleWithdrawal from './SingleWithdrawal'
 
 export const singleUserWithdrawal = [
   {
@@ -12,21 +13,6 @@ export const singleUserWithdrawal = [
     Cell: ({ value }) => {
       return format(new Date(value), 'dd/MM/yyyy')
     },
-  },
-  {
-    Header: 'Status',
-    accessor: 'status',
-    accessor: ({ status }) => (
-      <p
-        className={
-          status === 'Pending'
-            ? 'bg-danger text-light text-center'
-            : 'bg-success text-light text-center '
-        }
-      >
-        {status}
-      </p>
-    ),
   },
 
   {
@@ -47,9 +33,25 @@ export const singleUserWithdrawal = [
     Header: 'Total',
     accessor: 'total',
   },
+  {
+    Header: 'Status',
+    accessor: 'status',
+    accessor: ({ status }) => (
+      <p
+        className={
+          status === 'Pending'
+            ? 'bg-danger text-light text-center'
+            : 'bg-success text-light text-center '
+        }
+      >
+        {status}
+      </p>
+    ),
+  },
 
   {
     Header: 'Action',
-    accessor: 'action',
+    accessor: 'status',
+    accessor: ({ status }) => <SingleWithdrawal status={status} />,
   },
 ]

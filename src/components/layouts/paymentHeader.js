@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import SinglePayment from './SinglePayment'
 export const paymentHeader = [
   {
     Header: 'Ref',
@@ -51,6 +52,7 @@ export const paymentHeader = [
   },
   {
     Header: 'Action',
-    accessor: 'action',
+    accessor: 'status',
+    accessor: ({ status }) => <SinglePayment status={status} />,
   },
 ]
