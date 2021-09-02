@@ -8596,7 +8596,7 @@ body {
   font-weight: 500;
   white-space: nowrap;
   text-overflow: clip;
-  font-size: 14px;
+  font-size: 14px  !important;
   text-align: left;
   padding: 0;
 }
@@ -8605,7 +8605,7 @@ body {
   overflow: hidden;
   font-weight: 500;
   white-space: nowrap;
-  text-overflow: clip;
-  white-space: normal;
+  text-overflow: clip !important;
+  white-space: normal  !important;;
   line-height: 16px;
 }
