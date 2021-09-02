@@ -743,14 +743,13 @@ body {
   position: relative;
   overflow-y: hidden;
 }
- 
-@media screen and (min-width: 320px) and (max-width: 480px){
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
   /* styles */
-  .dash-contents .market{
-    width:40%
+  .dash-contents .market {
+    width: 40%;
   }
 }
-
 
 .dash-contents .trade {
   height: 80vh;
@@ -7846,6 +7845,6 @@ label.custom-control-label {
   z-index: 9;
   background: transparent;
   /* color: white; */
-  left: 65%;
+  left: 60%;
   top: 5%;
 }

@@ -29,6 +29,8 @@ function ApproveDoc({ status }) {
 
       setDecline(false)
       message.success('Successfully Approved')
+      window.location.reload();
+
     }
   }
   const handledeclineVerify = async () => {
@@ -42,6 +44,8 @@ function ApproveDoc({ status }) {
       await declineVerify(details)
 
       message.success('Successfully Declined')
+      window.location.reload();
+
     }
   }
 

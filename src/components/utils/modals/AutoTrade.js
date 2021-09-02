@@ -1,25 +1,26 @@
 import { Fragment } from "react";
+import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
 import { useActions } from "../../hooks/useActions";
-import { message } from "antd";
+// import { message } from "antd";
 
-const AutoTrade = () => {
+const AutoTrade = ({ setHideAutoTradeModal }) => {
   const { setAutoTrade } = useActions();
   const { loading, user } = useSelector((state) => state.auth);
 
   const { error } = useSelector((state) => state.profile);
 
-  const handleAutoTradeEnabled = () => {
-    if (error) {
-      message.error("Enabling Auto trade failed");
-    } else {
-      setAutoTrade({
-        id: user && user._id,
-        autoTrade: user && !user.autoTrade,
-      });
-    }
-  };
+  // const handleAutoTradeEnabled = () => {
+  //   if (error) {
+  //     message.error("Enabling Auto trade failed");
+  //   } else {
+  //     setAutoTrade({
+  //       id: user && user._id,
+  //       autoTrade: user && !user.autoTrade,
+  //     });
+  //   }
+  // };
 
   return (
     <Fragment>
@@ -38,13 +39,17 @@ const AutoTrade = () => {
         <Button
           disabled={loading}
           variant="primary mt-3"
-          onClick={handleAutoTradeEnabled}
+          onClick={() => setHideAutoTradeModal(true)}
         >
           I Agree
         </Button>
       </div>
     </Fragment>
   );
+};
+
+AutoTrade.propTypes = {
+  setHideAutoTradeModal: PropTypes.func.isRequired,
 };
 
 export default AutoTrade;

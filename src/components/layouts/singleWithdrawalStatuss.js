@@ -1,57 +1,82 @@
-import { format } from 'date-fns'
-import SingleWithdrawal from './SingleWithdrawal'
+import { format } from "date-fns";
+import React from "react";
 
 export const singleUserWithdrawal = [
   {
-    Header: 'Ref',
-    accessor: 'Ref',
+    field: "user",
+    width: 180,
+    type: "text",
+    headerName: "User",
+    // accessor: 'user',
+  },
+
+  {
+    field: "Ref",
+    width: 180,
+    headerName: "Ref",
+    type: "text",
+    // accessor: 'Ref',
   },
   {
-    id: 'Date',
-    Header: 'Created Date',
-    accessor: 'time',
+    field: "time",
+    width: 180,
+    headerName: "Created Date",
+    type: "time",
+    accessor: "time",
     Cell: ({ value }) => {
-      return format(new Date(value), 'dd/MM/yyyy')
+      return format(new Date(value), "dd/MM/yyyy");
     },
   },
-
   {
-    Header: 'Fees',
-    accessor: 'fees',
+    field: "status",
+    width: 180,
+    type: "text",
+    headerName: "Status",
+    accessor: "status",
   },
   {
-    id: 'Wallet Received',
-    Header: 'Amount',
-    accessor: 'amount',
-  },
-
-  {
-    Header: 'Currency',
-    accessor: 'currency',
+    field: "Amount Paid",
+    width: 180,
+    headerName: "Amount Paid",
+    accessor: "",
   },
   {
-    Header: 'Total',
-    accessor: 'total',
+    field: "fees",
+    width: 180,
+    headerName: "Fees",
+    type: "number",
+    accessor: "fees",
   },
   {
-    Header: 'Status',
-    accessor: 'status',
-    accessor: ({ status }) => (
-      <p
-        className={
-          status === 'Pending'
-            ? 'bg-danger text-light text-center'
-            : 'bg-success text-light text-center '
-        }
-      >
-        {status}
-      </p>
-    ),
+    field: "amount",
+    width: 180,
+    headerName: "Wallet Received",
+    accessor: "amount",
   },
 
   {
-    Header: 'Action',
-    accessor: 'status',
-    accessor: ({ status }) => <SingleWithdrawal status={status} />,
+    field: "Amount Recieved",
+    width: 180,
+    headerName: "Amount Received",
+    accessor: "",
   },
-]
+  {
+    field: "Payment Gateway",
+    width: 180,
+    headerName: "Payment Gateway",
+    accessor: "",
+  },
+  {
+    field: "Proof",
+    width: 180,
+    headerName: "Proof",
+    accessor: "",
+  },
+
+  {
+    field: "status",
+    width: 180,
+    headerName: "Action",
+    accessor: "action",
+  },
+];

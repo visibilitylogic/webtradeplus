@@ -21,19 +21,25 @@ const CustomTable = ({
   column,
   type,
 }) => {
-  console.log(`allUsers`, allUsers);
-  const dataRows = allUsers.map(
-    (value) => value.userId && { ...value, id: value.userId }
-  );
-
+  let dataRows;
   const classes = useStyles();
   const [pageSize, setPageSize] = React.useState(5);
+
+  // if (type === "trades") {
+  //   return (dataRows = allUsers.map(
+  //     (value) => value.userId && { ...value, id: value.userId, action: "icon" }
+  //   ));
+  // }
+
+  dataRows = allUsers.map(
+    (value) => value.userId && { ...value, id: value.userId }
+  );
 
   // const {allUsers} = useSelector(state => state.profile)
 
   console.log(`dataRows`, dataRows);
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: 526, width: "100%" }}>
       <DataGrid
         className={classes.root}
         rows={dataRows}

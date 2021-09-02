@@ -1,7 +1,7 @@
 import * as actionTypes from "../action-types";
 
 const initialState = {
-  // profile: null,
+  profile: null,
   error: null,
   loading: true,
   depositAmount: 0,
@@ -29,6 +29,13 @@ const initialState = {
 
 export default function profileReducer(state = initialState, action) {
   switch (action.type) {
+    // case actionTypes.GET_CURRENT_PROFILE:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     profile: action.payload,
+    //     error: null,
+    //   };
     case actionTypes.GET_BANK_PAYMENT_METHOD:
       return {
         ...state,

@@ -65,8 +65,8 @@ const SellStockModal = (props) => {
       message.success("Your stock has been successfully sold");
       setCurrentlyActiveTrade(
         Object.keys(currentSelectedStock).length > 0
-          ? { ...currentSelectedStock, margin: userMargin }
-          : { ...defaultSelectedStock, margin: userMargin }
+          ? { ...currentSelectedStock, margin: userMargin, tag: "sell" }
+          : { ...defaultSelectedStock, margin: userMargin, tag: "sell" }
       );
       setBuysell(true);
     }

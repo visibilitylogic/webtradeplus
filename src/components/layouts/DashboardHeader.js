@@ -36,7 +36,7 @@ import CryptoStepSix from "../utils/modals/deposit/crypto-steps/CryptoStepSix";
 const DashboardHeader = ({ support, setSupport, data }) => {
   const history = useHistory();
   const { user, loading } = useSelector((state) => state.auth);
-  const { activeTrade } = useSelector((state) => state.profile);
+  const { profile, activeTrade } = useSelector((state) => state.profile);
   const { isDarkMode } = useSelector((state) => state.theme);
 
   const { logout, setCurrentSelectedStock } = useActions();
@@ -50,6 +50,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
   const [cryptoStepSix, setCryptoStepSix] = useState(false);
   const [openVerification, setOpenVerification] = useState(false);
   const [openForex, setOpenForex] = useState(false);
+  const [hideAutoTradeModal, setHideAutoTradeModal] = useState(false);
 
   const [paymentDetails, handlePaymentDetails] = useFormInput({
     bankName: "",
@@ -550,8 +551,11 @@ const DashboardHeader = ({ support, setSupport, data }) => {
           </section>
         )}
         {/* {user && user.autoTrade && (
-          <div className="levC1" style={{ display: "block" }}>
-            <AutoTrade />
+          <div
+            className="levC1"
+            style={{ display: hideAutoTradeModal ? "none" : "block" }}
+          >
+            <AutoTrade setHideAutoTradeModal={setHideAutoTradeModal} />
           </div>
         )} */}
         <CryptoStepSix

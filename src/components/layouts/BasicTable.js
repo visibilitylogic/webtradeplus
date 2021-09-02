@@ -16,13 +16,6 @@ const BasicTable = ({
   getSingleWithdrawals,
   getAllUserTrades,
 }) => {
-  // const {
-  //   getSingleProfile,
-  //   getVerifieddetails,
-  //   singleUserDeposit,
-  //   getSingleWithdrawals,
-  //   getAllUserTrades,
-  // } = useActions()
   const columns = column
   const data = allUsers
 
@@ -75,44 +68,72 @@ const BasicTable = ({
         <tbody {...getTableBodyProps()}>
           {page.map((row) => {
             prepareRow(row)
-
-            return (
-              <tr
-                {...row.getRowProps()}
-                onClick={() => {
-                  getSingleProfile(row.original)
-                  setDisplayC(true)
-                  singleUserDeposit(row.original._id)
-                  getVerifieddetails(row.original)
-                  getSingleWithdrawals(row.original._id)
-                  getAllUserTrades(row.original._id)
-                }}
-              >
-                {row.cells.map((cell) => {
-                  return (
-                    <td
-                      style={{
-                        maxHeight: '20px',
-                        height: '15px',
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => {
-                        setUserLevel(
-                          user.isAdmin
-                            ? 'isAdmin'
-                            : user.isManager
-                            ? 'isManager'
-                            : 'none',
-                        )
-                      }}
-                      {...cell.getCellProps()}
-                    >
-                      {cell.render('Cell')}
-                    </td>
-                  )
-                })}
-              </tr>
-            )
+            if (type === 'EveryUser') {
+              return (
+                <tr
+                  {...row.getRowProps()}
+                  onClick={() => {
+                    getSingleWithdrawals(row.original._id)
+                    getCurrentProfile(row.original._id)
+                    setDisplayC(true)
+                    getSingleProfile(row.original)
+                    singleUserDeposit(row.original._id)
+                    getVerifieddetails(row.original)
+                    getAllUserTrades(row.original._id)
+                  }}
+                >
+                  {row.cells.map((cell) => {
+                    return (
+                      <td
+                        style={{ maxHeight: '20px', height: '15px' }}
+                        onClick={() => {
+                          setUserLevel(
+                            user.isAdmin
+                              ? 'isAdmin'
+                              : user.isManager
+                              ? 'isManager'
+                              : 'none',
+                          )
+                        }}
+                        {...cell.getCellProps()}
+                      >
+                        {cell.render('Cell')}
+                      </td>
+                    )
+                  })}
+                </tr>
+              )
+            } else if (type === 'verifiedUsers') {
+              return (
+                <tr
+                  {...row.getRowProps()}
+                  onClick={() => {
+                    getVerifieddetails(row.original)
+                  }}
+                >
+                  {row.cells.map((cell) => {
+                    return (
+                      <td
+                        style={{ maxHeight: '20px', height: '15px' }}
+                        {...cell.getCellProps()}
+                      >
+                        {cell.render('Cell')}
+                      </td>
+                    )
+                  })}
+                </tr>
+              )
+            } else {
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    )
+                  })}
+                </tr>
+              )
+            }
           })}
         </tbody>
       </table>
