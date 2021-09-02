@@ -39,7 +39,7 @@ const Manager = () => {
 
       document.body.appendChild(script)
     }
-  }, [])
+  }, [user])
 
   return (
     <>
@@ -52,6 +52,7 @@ const Manager = () => {
           displayC={displayC}
           setDisplayC={setDisplayC}
           setEditProfile={setEditProfile}
+          singleUser={singleUser}
         />
       </div>
       {editProfile && (

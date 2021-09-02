@@ -30,6 +30,7 @@ function SingleUser({ singleUser }) {
       await approveSingleUserVerify(_id)
       setverifystate(!verify)
       // location.window.reload()
+
       message.success('Identity Was Successfully Approved')
     }
   }
