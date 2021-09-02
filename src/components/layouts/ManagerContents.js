@@ -75,36 +75,38 @@ const ManagerContents = (props) => {
     getUserAutoCopyTrade,
     addUserAutoCopyTrade,
     deleteUserAutoCopyTrade,
+    getSingleProfile,
+    getVerifieddetails,
+    singleUserDeposit,
     getSingleWithdrawals,
-  } = useActions();
+    getAllUserTrades,
+  } = useActions()
 
-  const [loading, setLoading] = useState(false);
-  const [profitLoss, setProfitLoss] = useState(false);
-  const [market, setMarket] = useState("");
-  const [amount, setAmount] = useState(0);
-  const [asset, setAsset] = useState("");
-  const [bal, setBal] = useState(false);
-  const [execution, setExecution] = useState(false);
-  const [withd, setWithd] = useState(false);
-  const [secu, setSecu] = useState(false);
-  const [card, setCard] = useState(true);
-  const [payments, setPayments] = useState(false);
-  const [orderT, setOrderT] = useState(false);
-  const [text, setText] = useState("");
-  const [checkDate, setCheckDate] = useState(false);
-  const [copyTradeBtn, setCopyTradeBtn] = useState(true);
-  const [schedule, setSchedule] = useState(false);
-  const [credit, setCredit] = useState(true);
-  const [scheduledTime, setScheduledTime] = useState("");
-  const [decline, setDecline] = useState(false);
-  const [declinedMessage, setDeclinedMessage] = useState("");
-  const [userLevel, setUserLevel] = useState("");
-  const [currentDeposit, setCurrentDeposit] = useState([]);
-  const [state, setstate] = useState("");
+  // ***********************************************BASIC TABLE**************************************
 
-  //
-
-  console.log(singleWithdrawals);
+  const [loading, setLoading] = useState(false)
+  const [profitLoss, setProfitLoss] = useState(false)
+  const [market, setMarket] = useState('')
+  const [amount, setAmount] = useState(0)
+  const [asset, setAsset] = useState('')
+  const [bal, setBal] = useState(false)
+  const [execution, setExecution] = useState(false)
+  const [withd, setWithd] = useState(false)
+  const [secu, setSecu] = useState(false)
+  const [card, setCard] = useState(true)
+  const [payments, setPayments] = useState(false)
+  const [orderT, setOrderT] = useState(false)
+  const [text, setText] = useState('')
+  const [checkDate, setCheckDate] = useState(false)
+  const [copyTradeBtn, setCopyTradeBtn] = useState(true)
+  const [schedule, setSchedule] = useState(false)
+  const [credit, setCredit] = useState(true)
+  const [scheduledTime, setScheduledTime] = useState('')
+  const [decline, setDecline] = useState(false)
+  const [declinedMessage, setDeclinedMessage] = useState('')
+  const [userLevel, setUserLevel] = useState('')
+  const [currentDeposit, setCurrentDeposit] = useState([])
+  const [state, setstate] = useState('')
 
   const deleteAutoCopyTrade = async () => {
     setLoading(true);
@@ -124,13 +126,13 @@ const ManagerContents = (props) => {
     if (error) {
       message.error("Error Adding Auto-Trade");
     } else {
-      addUserAutoCopyTrade(payload);
-      setProfitLoss(false);
-      setMarket("");
-      setAmount(0);
-      setAsset("");
-      setScheduledTime("");
-      message.success("Successfully Added Auto-trade");
+      await addUserAutoCopyTrade(payload)
+      setProfitLoss(false)
+      setMarket('')
+      setAmount(0)
+      setAsset('')
+      setScheduledTime('')
+      message.success('Successfully Added Auto-trade')
     }
 
     setLoading(false);
@@ -217,19 +219,23 @@ const ManagerContents = (props) => {
     setWithd(false);
   };
 
-  const handleDeleteUser = (id) => {
+  const handleDeleteUser = async (value) => {
     if (error) {
       message.error("Try again");
     } else {
-      deleteUser({ id });
-      message.success("User was successfully deleted from the database");
-      history.push("/dashboard/manager");
+      await deleteUser(value)
+      message.success('User was successfully deleted from the database')
+      // history.push('/dashboard/manager')
+       window.location.replace('dashboard/manager')
     }
   };
 
-  useEffect(() => {
-    getAllUsers();
-  }, [singleUser]);
+  // useEffect(() => {
+  //   console.log(33)
+  //   getAllUsers()
+  // }, [singleUser])
+
+  //************************************************************************************8****USER AREA */
 
   return (
     <div className="manager-tabs-details">
@@ -287,6 +293,11 @@ const ManagerContents = (props) => {
               user={user}
               column={bankTransferHeader}
               type="transfer"
+              getSingleProfile={getSingleProfile}
+              getVerifieddetails={getVerifieddetails}
+              singleUserDeposit={singleUserDeposit}
+              getSingleWithdrawals={getSingleWithdrawals}
+              getAllUserTrades={getAllUserTrades}
             />
           </TableContainer>
         )}
@@ -367,6 +378,11 @@ const ManagerContents = (props) => {
                 column={Columns}
                 key={allUsers}
                 type="EveryUser"
+                getSingleProfile={getSingleProfile}
+                getVerifieddetails={getVerifieddetails}
+                singleUserDeposit={singleUserDeposit}
+                getSingleWithdrawals={getSingleWithdrawals}
+                getAllUserTrades={getAllUserTrades}
               />
             </TableContainer>
           </div>
@@ -467,6 +483,11 @@ const ManagerContents = (props) => {
                           column={depositHeader}
                           type="currentDeposit"
                           user={user}
+                          getSingleProfile={getSingleProfile}
+                          getVerifieddetails={getVerifieddetails}
+                          singleUserDeposit={singleUserDeposit}
+                          getSingleWithdrawals={getSingleWithdrawals}
+                          getAllUserTrades={getAllUserTrades}
                         />
                       )}
                     </div>
@@ -651,7 +672,7 @@ const ManagerContents = (props) => {
                               onClick={() =>
                                 submitAutoCopyTrade({
                                   profitLoss,
-                                  singleUser,
+                                  userId: singleUser._id,
                                   market,
                                   amount: parseFloat(amount),
                                   asset,

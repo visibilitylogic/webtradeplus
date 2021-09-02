@@ -4,7 +4,7 @@ import { message } from 'antd'
 
 const UserBalance = ({ singleUser, error }) => {
   const { _id } = singleUser
-  const { singleUserBalance } = useActions()
+  const { singleUserBalance, getAllUsers } = useActions()
   const [state, setstate] = useState({
     pulseType: 'bonus',
     profitLoss: false,
@@ -24,6 +24,7 @@ const UserBalance = ({ singleUser, error }) => {
       })
       message.success('Successfully Approved')
     }
+    setTimeout(getAllUsers, 200)
   }
 
   return (

@@ -5,10 +5,8 @@ import { useActions } from '../hooks/useActions'
 
 const SinglePayment = ({ status }) => {
   const { approveWithdrawal, declineWithdrawal } = useActions()
-  const { singleUserVerifedDetails, error } = useSelector(
-    (state) => state.profile,
-  )
-  const { userId } = singleUserVerifedDetails
+  const { singleUser, error } = useSelector((state) => state.profile)
+  const { _id } = singleUser
   const [accept, setAccept] = useState('Accept')
   const [decline, setDecline] = useState('Declined')
 
@@ -17,7 +15,7 @@ const SinglePayment = ({ status }) => {
       message.error('Identity Approval Was Not Successful')
     } else {
       const details = {
-        id: userId,
+        id: _id,
         message: 'Withdrawal has been approved',
       }
       await approveWithdrawal(details)
@@ -33,7 +31,7 @@ const SinglePayment = ({ status }) => {
       message.error('Decline  Was Not Successful')
     } else {
       const details = {
-        id: userId,
+        id: _id,
         message: 'withdrawal has been declined',
       }
       await declineWithdrawal(details)

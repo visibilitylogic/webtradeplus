@@ -4,15 +4,17 @@ import Switch from 'react-switch'
 import { useSelector } from 'react-redux'
 import { useActions } from '../hooks/useActions'
 import { message } from 'antd'
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
-const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
+const UserArea = ({ setEditProfile, singleUser }) => {
   const { error } = useSelector((state) => state.profile)
-  const { isAdmin, isManager, _id, autoTrade, liveTrade } = singleUser
+  const { isAdmin, isManager, _id, autoTrade, liveTrade, name } = singleUser
   const [livestate, setLiveState] = useState(liveTrade)
   const [auto, setAuto] = useState(autoTrade)
   const [state, setstate] = useState(false)
   const [state2, setstate2] = useState(false)
-  const { setLiveTrade, setAutoTrade } = useActions()
+  const { setLiveTrade, setAutoTrade, deleteUser } = useActions()
 
   const setTradeFunc = async () => {
     setstate2(true)
@@ -44,7 +46,15 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
       message.success(' Successful')
     }
   }
-
+  const handleDeleteUser = async () => {
+    if (error) {
+      message.error('Try again')
+    } else {
+      const details = { id: _id }
+      await deleteUser(details)
+      message.success('User was successfully deleted from the database')
+    }
+  }
   return (
     <>
       {singleUser && (
@@ -60,7 +70,22 @@ const UserArea = ({ handleDeleteUser, setEditProfile, singleUser }) => {
 
             <i
               className="delete-profile fas  fa-2x fa-user-minus"
-              onClick={() => handleDeleteUser(_id)}
+              onClick={() => {
+                confirmAlert({
+                  title: 'DELETE USER',
+                  message: `Are you sure you want to delete ${name} ?`,
+                  buttons: [
+                    {
+                      label: 'Delete',
+                      onClick: () => handleDeleteUser(_id),
+                    },
+                    {
+                      label: 'No',
+                      onClick: () => null,
+                    },
+                  ],
+                })
+              }}
             />
           </div>
           <div className="d-flex justify-content-flex-start w-75 mx-auto flex-column align-items-center">
