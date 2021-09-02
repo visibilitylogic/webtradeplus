@@ -219,14 +219,14 @@ const ManagerContents = (props) => {
       await deleteUser(value)
       message.success('User was successfully deleted from the database')
       // history.push('/dashboard/manager')
-      // window.location.replace('dashboard/manager')
+       window.location.replace('dashboard/manager')
     }
   }
 
-  useEffect(() => {
-    console.log(33)
-    getAllUsers()
-  }, [singleUser])
+  // useEffect(() => {
+  //   console.log(33)
+  //   getAllUsers()
+  // }, [singleUser])
 
   //************************************************************************************8****USER AREA */
 
