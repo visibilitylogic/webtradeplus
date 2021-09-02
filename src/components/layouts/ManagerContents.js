@@ -27,6 +27,7 @@ import UserHeader from './UserHeader'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 import CustomTable from '../../helpers/customTable/CustomTable'
 import { singleUserWithdrawal } from './singleWithdrawalStatuss'
+import { getAllUsers } from '../../store/action-creators/profileActions'
 
 const ManagerContents = (props) => {
   const data = [
@@ -63,6 +64,7 @@ const ManagerContents = (props) => {
     updateWalletBalance,
     setNotificationEnabled, // expecting end point
     deleteUser,
+    getAllUsers,
     getUserAutoCopyTrade,
     addUserAutoCopyTrade,
     deleteUserAutoCopyTrade,
@@ -218,6 +220,10 @@ const ManagerContents = (props) => {
     }
   }
 
+  useEffect(() => {
+    getAllUsers()
+  }, [singleUser])
+
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
@@ -331,6 +337,7 @@ const ManagerContents = (props) => {
             user={user}
             column={allVerifiedUsersHeader}
             type="verifiedUsers"
+            key={allVerifiedUsers}
           />
           // <TableContainer>
           //   <BasicTable
@@ -354,6 +361,7 @@ const ManagerContents = (props) => {
                 setUserLevel={setUserLevel}
                 user={user}
                 column={Columns}
+                key={allUsers}
                 type="EveryUser"
               />
             </TableContainer>
@@ -414,7 +422,7 @@ const ManagerContents = (props) => {
               </div> */}
             </div>
             <div className="user-dtls-tab-dtls">
-              {card && (
+              {card && singleUser && (
                 <div dash-user-dtls-tab-dtls="card">
                   <div className="dtls-sec">
                     <div className="dash-row dash-row-centralized header">
@@ -454,6 +462,7 @@ const ManagerContents = (props) => {
                           allUsers={currentDeposit}
                           column={depositHeader}
                           type="currentDeposit"
+                          user={user}
                         />
                       )}
                     </div>
