@@ -7,6 +7,7 @@ import { LOGOUT } from "./store/action-types";
 import { useActions } from "./components/hooks/useActions";
 import { useSelector } from "react-redux";
 import { store } from "./store";
+import ScrollToView from "./components/utils/ScrollToView";
 
 function App() {
   const { userId } = useSelector((state) => state.auth);
@@ -39,9 +40,11 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
-        <Routes />
-      </div>
+      <ScrollToView>
+        <div className="App">
+          <Routes />
+        </div>
+      </ScrollToView>
     </Router>
   );
 }

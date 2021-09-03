@@ -1,4 +1,4 @@
-import { useEffect, Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import Homepage from "../pages/Homepage";
 import Login from "../pages/Login";
@@ -6,10 +6,9 @@ import Register from "../pages/Register";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import { useSelector } from "react-redux";
-import { useActions } from "../hooks/useActions";
 import Dashboard from "../pages/Dashboard";
-import DashboardFooter from "../layouts/DashboardFooter";
 import Admin from "../pages/Admin";
+import ForgotPassword from "../pages/ForgotPassword";
 
 import PrivateRoute from "./PrivateRoute";
 
@@ -18,6 +17,24 @@ const Routes = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   const [toggleRegister, setToggleRegister] = useState(false);
+
+  useEffect(() => {
+    switch (window.location.pathname) {
+      case "/":
+      case "/login":
+        if (toggleRegister) {
+          setToggleRegister(false);
+        }
+        break;
+      case "/signup":
+        if (!toggleRegister) {
+          setToggleRegister(true);
+        }
+        break;
+      default:
+        break;
+    }
+  }, [toggleRegister]);
 
   return (
     <Fragment>
@@ -33,24 +50,32 @@ const Routes = () => {
       <div style={{ background: "#f2f2f2" }}>
         <Switch>
           <Route
+            path={["/", "/login"]}
             exact
-            path="/"
-            render={(props) => (
-              <Homepage {...props} toggleRegister={toggleRegister} />
+            component={(props) => (
+              <Login
+                {...props}
+                data={webData}
+                setToggleRegister={setToggleRegister}
+              />
             )}
           />
           <Route
-            path="/login"
-            component={(props) => <Login {...props} data={webData} />}
-          />
-          <Route
             path="/signup"
-            render={(props) => <Register {...props} data={webData} />}
+            exact
+            render={(props) => (
+              <Register
+                {...props}
+                data={webData}
+                setToggleRegister={setToggleRegister}
+              />
+            )}
           />
-          <PrivateRoute path={`/dashboard`} component={Dashboard}/>
-          <PrivateRoute path={`/dashboard/:slug`} exact component={Admin}/>
+          <Route exact path="/forgot-password" component={ForgotPassword} />
           <PrivateRoute path={`/dashboard`} component={Dashboard} />
-          <PrivateRoute path={`/dashboard/admin/:slug`}  component={Admin} />
+          <PrivateRoute path={`/dashboard/:slug`} exact component={Admin} />
+          <PrivateRoute path={`/dashboard`} component={Dashboard} />
+          <PrivateRoute path={`/dashboard/admin/:slug`} component={Admin} />
         </Switch>
       </div>
       {!isAuthenticated && <Footer data={webData} />}

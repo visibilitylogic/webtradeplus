@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
@@ -48,24 +49,28 @@ const Orders = (props) => {
   const handleCloseUserTrade = (trade, closeRate) => {
     if (error) {
       message.error("Trade could not be closed");
-    } else {
-      if (trade.tag === "sell") {
-        closeUserSellTrade(trade._id, {
-          closeRateOfAsset: closeRate,
-        });
-      } else {
-        closeUserBuyTrade(trade._id, {
-          closeRateOfAsset: closeRate,
-        });
-      }
-      setCurrentlyActiveTrade({});
-      setTimeout(
-        () => message.success("Your trade has been closed successfully"),
-        5000
-      );
-
-      setTimeout(() => window.location.reload(), 6000);
+      return;
     }
+
+    if (trade.tag === "buy") {
+      closeUserBuyTrade(trade._id, {
+        closeRateOfAsset: closeRate,
+      });
+
+      setCurrentlyActiveTrade({});
+    } else {
+      closeUserSellTrade(trade._id, {
+        closeRateOfAsset: closeRate,
+      });
+      setCurrentlyActiveTrade({});
+    }
+
+    setTimeout(
+      () => message.success("Your trade has been closed successfully"),
+      5000
+    );
+
+    // setTimeout(() => window.location.reload(), 6000);
   };
 
   useInterval(() => {
@@ -78,13 +83,9 @@ const Orders = (props) => {
   return (
     <div
       className="order orders-table"
-      style={
-        buysell
-          ? { height: "65vh", overflow: "auto" }
-          : { height: "15vh", overflow: "auto" }
-      }
+      style={{ height: buysell ? "65vh" : "15vh", overflow: "auto" }}
     >
-      <div className="dtls">
+      <div className="dtls" style={{ height: "100%" }}>
         <span
           className="text"
           onClick={() => {
@@ -179,25 +180,39 @@ const Orders = (props) => {
                                 }
                               })
                               .map((asset, index) => (
-                                <>
+                                <Fragment>
                                   <td key={index}>
-                                    {asset.price.toString().slice(0, 8)}
+                                    {item.isOpen
+                                      ? asset.price.toString().slice(0, 8)
+                                      : "-----"}
                                   </td>
                                   <td
                                     style={{
                                       color:
+                                        item.isOpen &&
                                         calculatePandL(item, asset) < 0
                                           ? "red"
-                                          : "#54ac40",
+                                          : item.isOpen &&
+                                            calculatePandL(item, asset) > 0
+                                          ? "#54ac40"
+                                          : "#fff",
                                     }}
                                   >
-                                    {calculatePandL(item, asset) > 0 && "+"}
+                                    {item.isOpen &&
+                                      calculatePandL(item, asset) > 0 &&
+                                      "+"}
 
-                                    {new Intl.NumberFormat("en-US")
-                                      .format(calculatePandL(item, asset))
-                                      .slice(0, 8)}
+                                    {item.isOpen
+                                      ? new Intl.NumberFormat("en-US")
+                                          .format(calculatePandL(item, asset))
+                                          .slice(0, 8)
+                                      : "-----"}
                                   </td>
-                                  <td>
+                                  <td
+                                    style={{
+                                      color: item.profit ? "#54ac40" : "red",
+                                    }}
+                                  >
                                     {new Intl.NumberFormat("en-US").format(
                                       item.profit.toString().slice(0, 6)
                                     )}
@@ -239,19 +254,15 @@ const Orders = (props) => {
                                       className="fas fa-trash trashS"
                                       onClick={() => {
                                         if (item.tag === "buy") {
-                                          if (item.isOpen) {
-                                            closeUserBuyTrade(
-                                              item._id,
-                                              asset.price
-                                            );
-                                          }
+                                          closeUserBuyTrade(
+                                            item._id,
+                                            asset.price
+                                          );
                                         } else {
-                                          if (item.isOpen) {
-                                            closeUserSellTrade(
-                                              item._id,
-                                              asset.price
-                                            );
-                                          }
+                                          closeUserSellTrade(
+                                            item._id,
+                                            asset.price
+                                          );
                                         }
                                         handleDeleteUserTrade(item._id);
                                       }}
@@ -259,11 +270,27 @@ const Orders = (props) => {
                                       {" "}
                                     </i>
                                   </td>
-                                </>
+                                </Fragment>
                               ))}
                         </tr>
                       ))
-                    : ""}
+                    : limitTradeList.length === 0 && (
+                        <tr>
+                          <td
+                            colSpan="10"
+                            rowSpan="10"
+                            align="center"
+                            style={{
+                              minWidth: "100%",
+                              fontWeight: "bold",
+                              margin: "0 auto",
+                              textAlign: "center",
+                            }}
+                          >
+                            There are no trade history
+                          </td>
+                        </tr>
+                      )}
                 </tbody>
               </table>
             </div>

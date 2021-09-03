@@ -143,7 +143,7 @@ const Withdrawals = ({ setWithdraw, country }) => {
                 value={widthdrawalMethod}
                 onChange={(e) => setWidthdrawalMethod(e.target.value)}
               >
-                <option disabled>Choose your method</option>
+                <option>Choose your method</option>
 
                 {(bankPaymentMethods.length > 0 ||
                   cryptoPaymentMethods.length) &&
