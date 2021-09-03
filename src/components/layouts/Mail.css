@@ -8609,3 +8609,30 @@ body {
   white-space: normal  !important;;
   line-height: 16px;
 }
+
+.tv-ticker-item-last__body {
+  display: flex;
+  margin-top: 8px;
+  line-height: 1;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  height: 32px;
+  overflow: hidden;
+  color: #131722;
+  flex-direction: column;
+  height: 70vh;
+}
+
+.infocurrency-wrapper .badge-code {
+  /* text-align: left; */
+  display: inline-block;
+  background: #f14700;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 3px 10px;
+  border-radius: 40px;
+  display: flex;
+  margin-left: 0;
+  width: fit-content;
+}

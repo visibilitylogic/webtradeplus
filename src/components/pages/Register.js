@@ -12,7 +12,7 @@ import { sponsors } from "./../../helpers/dataset/sponsors";
 import PasswordVisibility from "../utils/PasswordVisibility";
 import { RiskTaking, RiskWarning } from "../utils/Risks";
 
-const Register = ({ data }) => {
+const Register = ({ data, setToggleRegister }) => {
   const [formInput, handleFormInput] = useFormInput({
     name: "",
     lastname: "",
@@ -205,7 +205,9 @@ const Register = ({ data }) => {
                 <div className="signup text-center">
                   <p className="forget">
                     Already have an account?
-                    <Link to="/">&nbsp; Login</Link>
+                    <Link to="/" onClick={() => setToggleRegister(false)}>
+                      &nbsp; Login
+                    </Link>
                   </p>
                 </div>
               </div>
@@ -239,4 +241,5 @@ export default Register;
 
 Register.propTypes = {
   data: PropTypes.object,
+  setToggleRegister: PropTypes.func.isRequired,
 };

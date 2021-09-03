@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import PropTypes from "prop-types";
 import useFormInput from "../hooks/useFormInput";
 import { useActions } from "../hooks/useActions";
 import { Link, Redirect } from "react-router-dom";
@@ -8,7 +9,7 @@ import PasswordVisibility from "../utils/PasswordVisibility";
 import { RiskTaking, RiskWarning } from "../utils/Risks";
 import { useSelector } from "react-redux";
 
-const Login = ({ data }) => {
+const Login = ({ data, setToggleRegister }) => {
   const [formInput, handleFormInput] = useFormInput({
     email: "",
     password: "",
@@ -16,9 +17,7 @@ const Login = ({ data }) => {
 
   const { email, password } = formInput;
 
-  const { authError, isAuthenticated, user, userId } = useSelector(
-    (state) => state.auth
-  );
+  const { authError, isAuthenticated } = useSelector((state) => state.auth);
 
   const { loginUser } = useActions();
 
@@ -63,9 +62,9 @@ const Login = ({ data }) => {
               <div className="pb-3">
                 <Button
                   variant="primary"
-                  style={{
-                    background: data ? data.yourMainColor : "",
-                  }}
+                  // style={{
+                  //   background: data ? data.yourMainColor : "",
+                  // }}
                   type="submit"
                   className="w-100"
                 >
@@ -75,7 +74,7 @@ const Login = ({ data }) => {
             </Form>
             <div>
               <p className="forget text-center mb-3">
-                <Link to="/forgot_password" className="backtologin">
+                <Link to="/forgot-password" className="backtologin">
                   Forgot Password?
                 </Link>
               </p>
@@ -83,7 +82,9 @@ const Login = ({ data }) => {
             <div className="signup text-center">
               <p className="forget">
                 Don't have account?
-                <Link to="/signup">&nbsp; Register</Link>
+                <Link to="/signup" onClick={() => setToggleRegister(true)}>
+                  &nbsp; Register
+                </Link>
               </p>
             </div>
           </div>
@@ -93,6 +94,11 @@ const Login = ({ data }) => {
       <RiskWarning />
     </Fragment>
   );
+};
+
+Login.propTypes = {
+  data: PropTypes.object,
+  setToggleRegister: PropTypes.func.isRequired,
 };
 
 export default Login;
