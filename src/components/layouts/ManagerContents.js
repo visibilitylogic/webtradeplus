@@ -48,7 +48,6 @@ const ManagerContents = (props) => {
     allTrades,
     allUsers,
     singleDeposit,
-
     userTrades,
     userAutoCopyTrade,
     tradeApproval,
@@ -79,7 +78,6 @@ const ManagerContents = (props) => {
   /***********************************************BASIC TABLE**************************************/
   //  const [singleUser, setSingleUser] = useState({})
   useEffect(() => {
-    console.log('Im waiting to get rerendered')
     getAllUsers()
   }, [singleUser])
 
@@ -89,10 +87,6 @@ const ManagerContents = (props) => {
   //     setSingleUser({ ...singleUsers })
   //   }
   // }, [singleUsers])
-
-  console.log('Im manager component, I want to be rerendered')
-
-  // console.log(singleUsers)
 
   const [loading, setLoading] = useState(false)
   const [profitLoss, setProfitLoss] = useState(false)
@@ -245,7 +239,8 @@ const ManagerContents = (props) => {
   // }, [singleUser])
 
   //************************************************************************************8****USER AREA */
-
+  console.log(allDeposits)
+  console.log(singleUser)
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
