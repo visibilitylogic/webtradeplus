@@ -180,15 +180,33 @@ export default function profileReducer(state = initialState, action) {
     //     singleUser: approveState,
     //     error: null,
     //   }
-    // case actionTypes.SET_LIVE_TRADE:
-    //   const newLive_TRADE = state.singleUser
-    //   newLive_TRADE.liveTrade = !newLive_TRADE.liveTrade
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     singleUser: newLive_TRADE,
-    //     error: null,
-    //   }
+    case actionTypes.SET_LIVE_TRADE:
+      const newAllUsers = state.allUsers
+      newAllUsers.map((user) =>
+        user._id === action.payload._id ? { user: action.payload } : user,
+      )
+
+      return {
+        ...state,
+        loading: false,
+        allUser: newAllUsers,
+        singleUser: action.payload,
+        error: null,
+      }
+
+    case actionTypes.SET_AUTO_TRADE:
+      const newUsers = state.allUsers
+      const userAuto = newUsers.find((user) => user._id == action.payload[1])
+      const z = action.payload[0]
+      userAuto.autoTrade = z
+
+      return {
+        ...state,
+        loading: false,
+        allUser: [...newUsers],
+        singleUser: { ...userAuto },
+        error: null,
+      }
 
     case actionTypes.GET_ALL_VERIFIED_USERS:
       return {

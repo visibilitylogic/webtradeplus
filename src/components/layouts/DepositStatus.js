@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
 import { message } from 'antd'
 
-export function DepositStatus({ status }) {
-  const [depositState, setdepositState] = useState({
-    id: status._id,
-    status: status.status,
-  })
+import { useActions } from '../hooks/useActions'
+const { approveDeposit, declineDepositForManager } = useActions()
 
-  const handleApproveDeposit = async (depositState) => {
+export function DepositStatus({ status }) {
+  const { _id } = status
+  const [depositState] = useState(status.status)
+
+  const handleApproveDeposit = async () => {
     try {
-      await setdepositState({
-        id: depositState.id,
-        status: 'success',
+      await approveDeposit({
+        id: _id,
+        message: 'successfull approved',
       })
+
       message.success('Deposit Was Successfully Approved')
     } catch (error) {
       message.error('Deposit Not Approved')
@@ -21,7 +23,7 @@ export function DepositStatus({ status }) {
 
   return (
     <button
-      disabled={depositState.status === 'Approved'}
+      disabled={depositState === 'Approved'}
       onClick={handleApproveDeposit}
       className={
         depositState.status === 'Pending' || depositState.status === 'Declined'
@@ -29,43 +31,32 @@ export function DepositStatus({ status }) {
           : 'btn btn-success'
       }
     >
-      {depositState.status}
+      {depositState}
     </button>
   )
 }
 
 export function DepositCancel({ status }) {
-  const [depositCancel, setdepositCancel] = useState({
-    id: status._id,
-    status: status.status,
-  })
+  const [depositCancel] = useState(status.status)
 
-  const handlesetdepositCancel = async (depositCancel) => {
+  const handlesetdepositCancel = async () => {
     try {
-      await setdepositCancel({
-        id: depositCancel.id,
-        status: 'cancelled',
+      await declineDepositForManager({
+        id: _id,
+        message: 'cancelled',
       })
       message.success('Deposit Was Successfully Cancelled')
     } catch (error) {
       message.error('Something went Wrong')
     }
   }
-  if (
-    depositCancel.status === 'Declined' ||
-    depositCancel.status === 'Pending'
-  ) {
+  if (depositCancel === 'Pending') {
     return (
       <button
         onClick={handlesetdepositCancel}
-        className={
-          depositCancel.status === 'Pending' ||
-          depositCancel.status === 'Declined'
-            ? 'btn btn-danger'
-            : ''
-        }
+        className={depositCancel === 'Declined' ? 'btn btn-danger' : ''}
       >
-        {depositCancel.status}
+        Decline
       </button>
     )
   } else return null

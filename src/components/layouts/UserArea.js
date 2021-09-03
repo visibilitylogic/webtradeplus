@@ -14,7 +14,7 @@ const UserArea = ({ setEditProfile }) => {
   const [auto, setAuto] = useState(autoTrade)
   const [state, setstate] = useState(false)
   const [state2, setstate2] = useState(false)
-  const { setLiveTrade, setAutoTrade, deleteUser } = useActions()
+  const { setLiveTrade, setAutoTrade, deleteAUser } = useActions()
 
   const setTradeFunc = async () => {
     setstate2(true)
@@ -46,12 +46,13 @@ const UserArea = ({ setEditProfile }) => {
       message.success(' Successful')
     }
   }
-  const handleDeleteUser = async () => {
+  async function handleDeleteUser() {
     if (error) {
       message.error('Try again')
     } else {
       const details = { id: _id }
-      await deleteUser(details)
+
+      await deleteAUser(JSON.stringify(details))
       message.success('User was successfully deleted from the database')
     }
   }
