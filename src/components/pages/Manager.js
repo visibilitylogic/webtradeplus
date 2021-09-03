@@ -29,7 +29,7 @@ const Manager = () => {
     getAllDeposits()
     getAllTrades()
     getAllVerifiedUsers()
-  }, [singleUser])
+  }, [])
 
   useEffect(() => {
     if (user) {

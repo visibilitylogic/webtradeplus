@@ -27,6 +27,9 @@ function ApproveDeposit({ status }) {
       setDecline(false)
 
       message.success('Identity Was Successfully Approved')
+
+      window.location.reload();
+
     }
   }
   const handleDeclineDeposit = async () => {
@@ -45,6 +48,8 @@ function ApproveDeposit({ status }) {
       setDecline('Declined')
 
       message.success('Deposited was declined')
+      window.location.reload();
+
     }
   }
 

@@ -8,7 +8,7 @@ const SingleWithdrawal = ({ status }) => {
   const { singleUserVerifedDetails, error } = useSelector(
     (state) => state.profile,
   )
-  const { userId } = singleUserVerifedDetails
+  const { _id } = singleUserVerifedDetails
   const [accept, setAccept] = useState('Accept')
   const [decline, setDecline] = useState('Declined')
 
@@ -17,7 +17,7 @@ const SingleWithdrawal = ({ status }) => {
       message.error('Identity Approval Was Not Successful')
     } else {
       const details = {
-        id: userId,
+        id: _id,
         message: 'Withdrawal has been approved',
       }
       await approveWithdrawal(details)
@@ -33,7 +33,7 @@ const SingleWithdrawal = ({ status }) => {
       message.error('Decline  Was Not Successful')
     } else {
       const details = {
-        id: userId,
+        id: _id,
         message: 'withdrawal has been declined',
       }
       await declineWithdrawal(details)
