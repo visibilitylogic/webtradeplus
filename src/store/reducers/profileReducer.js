@@ -1,4 +1,4 @@
-import * as actionTypes from "../action-types";
+import * as actionTypes from '../action-types'
 
 const initialState = {
   profile: null,
@@ -19,13 +19,13 @@ const initialState = {
   userTrades: [],
   activeTrade: {},
   userMargin: 1,
-  singleUser: null,
+  singleUser: null, //made a change here
   singleWithdrawals: [],
   allSingleDeposits: [],
   DepositApproval: {},
   singleUserVerifedDetails: {},
   tradeProfit: 0,
-};
+}
 
 export default function profileReducer(state = initialState, action) {
   switch (action.type) {
@@ -42,27 +42,27 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         bankPaymentMethods: action.payload,
         error: null,
-      };
+      }
     case actionTypes.GET_CRYPTO_PAYMENT_METHOD:
       return {
         ...state,
         loading: false,
         cryptoPaymentMethods: action.payload,
         error: null,
-      };
+      }
 
     case actionTypes.SET_DEPOSIT_AMOUNT:
       return {
         ...state,
         depositAmount: action.payload,
         error: null,
-      };
+      }
     case actionTypes.APPROVE_DEPOSIT:
       return {
         ...state,
         DepositApproval: action.payload,
         error: null,
-      };
+      }
     // case actionTypes.GET_SINGLE_DEPOSIT:
     //   return {
     //     ...state,
@@ -75,7 +75,7 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         withdrawalAmount: action.payload,
         error: null,
-      };
+      }
 
     case actionTypes.GET_ALL_WITHDRAWALS:
       return {
@@ -83,24 +83,24 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         allWithdrawals: action.payload,
         bankTransfers: state.allWithdrawals.filter(
-          (withdrawal) => withdrawal.method === "Bank Transfer"
+          (withdrawal) => withdrawal.method === 'Bank Transfer',
         ),
         error: null,
-      };
+      }
     case actionTypes.GET_SINGLE_WITHDRAWALS:
       return {
         ...state,
         loading: false,
         singleWithdrawals: action.payload,
         error: null,
-      };
+      }
     case actionTypes.GET_SINGLE_DETAILS:
       return {
         ...state,
         loading: false,
         singleUser: action.payload,
         error: null,
-      };
+      }
 
     case actionTypes.GET_ALL_ORDERS:
       return {
@@ -108,7 +108,7 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         user: action.payload,
         error: null,
-      };
+      }
 
     case actionTypes.GET_ALL_USERS:
       return {
@@ -116,21 +116,21 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         allUsers: action.payload,
         error: null,
-      };
+      }
     case actionTypes.GET_CURRENT_PROFILE:
       return {
         ...state,
         loading: false,
         profile: action.payload,
         error: null,
-      };
+      }
     case actionTypes.GET_VERFIED_DETAILS:
       return {
         ...state,
         loading: false,
         singleUserVerifedDetails: action.payload,
         error: null,
-      };
+      }
 
     case actionTypes.GET_ALL_DEPOSITS:
       return {
@@ -138,7 +138,7 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         allDeposits: action.payload,
         error: null,
-      };
+      }
 
     case actionTypes.PROCESS_DEPOSIT_SUCCESS:
       return {
@@ -146,7 +146,7 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         allDeposits: [...state.allDeposits, action.payload],
         error: null,
-      };
+      }
 
     case actionTypes.GET_SINGLE_USER_DEPOSITS:
       return {
@@ -154,14 +154,14 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         allSingleDeposits: action.payload,
         error: null,
-      };
+      }
     case actionTypes.GET_ALL_TRADES:
       return {
         ...state,
         loading: false,
         allTrades: action.payload,
         error: null,
-      };
+      }
     // case actionTypes.SET_AUTO_TRADE:
     //   const newUserState = state.singleUser
     //   newUserState.autoTrade = action.payload
@@ -196,49 +196,49 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         allVerifiedUsers: action.payload,
         error: null,
-      };
+      }
     case actionTypes.USER_AUTO_COPY_TRADE:
       return {
         ...state,
         loading: false,
         userAutoCopyTrade: action.payload,
         error: null,
-      };
+      }
     case actionTypes.GET_ALL_USER_TRADES:
       return {
         ...state,
         loading: false,
         userTrades: action.payload,
         error: null,
-      };
+      }
     case actionTypes.CURRENTLY_ACTIVE_TRADE:
       return {
         ...state,
         loading: false,
         activeTrade: action.payload,
         error: null,
-      };
+      }
     case actionTypes.SET_USER_MARGIN:
       return {
         ...state,
         loading: false,
         userMargin: action.payload,
-      };
+      }
 
     case actionTypes.SET_TRADE_PROFIT:
       return {
         ...state,
         loading: false,
         tradeProfit: action.payload,
-      };
+      }
 
     case actionTypes.PROFILE_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
-      };
+      }
     default:
-      return state;
+      return state
   }
 }

@@ -7,8 +7,8 @@ import { message } from 'antd'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
-const UserArea = ({ setEditProfile, singleUser }) => {
-  const { error } = useSelector((state) => state.profile)
+const UserArea = ({ setEditProfile }) => {
+  const { error, singleUser } = useSelector((state) => state.profile)
   const { isAdmin, isManager, _id, autoTrade, liveTrade, name } = singleUser
   const [livestate, setLiveState] = useState(liveTrade)
   const [auto, setAuto] = useState(autoTrade)
@@ -57,75 +57,75 @@ const UserArea = ({ setEditProfile, singleUser }) => {
   }
   return (
     <>
-      {singleUser && (
-        <UserAreaContainer>
-          <h3 className="text-center">
-            {isAdmin ? 'ADMIN' : isManager ? 'Manager' : 'USER'}
-          </h3>
-          <div className="d-flex justify-content-flex-start w-75  align-items-center mb-3">
-            <i
-              className="fas fa-2x fa-edit mr-auto"
-              onClick={() => setEditProfile(true)}
-            />
+      {/* {singleUsers && ( */}
+      <UserAreaContainer>
+        <h3 className="text-center">
+          {isAdmin ? 'ADMIN' : isManager ? 'Manager' : 'USER'}
+        </h3>
+        <div className="d-flex justify-content-flex-start w-75  align-items-center mb-3">
+          <i
+            className="fas fa-2x fa-edit mr-auto"
+            onClick={() => setEditProfile(true)}
+          />
 
-            <i
-              className="delete-profile fas  fa-2x fa-user-minus"
-              onClick={() => {
-                confirmAlert({
-                  title: 'DELETE USER',
-                  message: `Are you sure you want to delete ${name} ?`,
-                  buttons: [
-                    {
-                      label: 'Delete',
-                      onClick: () => handleDeleteUser(_id),
-                    },
-                    {
-                      label: 'No',
-                      onClick: () => null,
-                    },
-                  ],
-                })
-              }}
-            />
-          </div>
-          <div className="d-flex justify-content-flex-start w-75 mx-auto flex-column align-items-center">
-            <div className="d-flex  w-100 justify-content-flex-start align-items-center">
-              <div className="mr-auto">
-                <h6>Live Trade</h6>
-              </div>
-              <div>
-                <Switch
-                  onChange={setToggles}
-                  checked={livestate}
-                  disabled={state}
-                  className="react-switch"
-                  onColor="#54AC40"
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                  offColor="#000000"
-                />
-              </div>
+          <i
+            className="delete-profile fas  fa-2x fa-user-minus"
+            onClick={() => {
+              confirmAlert({
+                title: 'DELETE USER',
+                message: `Are you sure you want to delete ${name} ?`,
+                buttons: [
+                  {
+                    label: 'Delete',
+                    onClick: () => handleDeleteUser(_id),
+                  },
+                  {
+                    label: 'No',
+                    onClick: () => null,
+                  },
+                ],
+              })
+            }}
+          />
+        </div>
+        <div className="d-flex justify-content-flex-start w-75 mx-auto flex-column align-items-center">
+          <div className="d-flex  w-100 justify-content-flex-start align-items-center">
+            <div className="mr-auto">
+              <h6>Live Trade</h6>
             </div>
-            <div className="d-flex  w-100 justify-content-flex-start align-items-center">
-              <div className="mr-auto">
-                <h6>Auto Trade</h6>
-              </div>
-              <div>
-                <Switch
-                  onChange={setTradeFunc}
-                  checked={auto}
-                  disabled={state2}
-                  className="react-switch"
-                  onColor="#54AC40"
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                  offColor="#000000"
-                />
-              </div>
+            <div>
+              <Switch
+                onChange={setToggles}
+                checked={livestate}
+                disabled={state}
+                className="react-switch"
+                onColor="#54AC40"
+                uncheckedIcon={false}
+                checkedIcon={false}
+                offColor="#000000"
+              />
             </div>
           </div>
-        </UserAreaContainer>
-      )}
+          <div className="d-flex  w-100 justify-content-flex-start align-items-center">
+            <div className="mr-auto">
+              <h6>Auto Trade</h6>
+            </div>
+            <div>
+              <Switch
+                onChange={setTradeFunc}
+                checked={auto}
+                disabled={state2}
+                className="react-switch"
+                onColor="#54AC40"
+                uncheckedIcon={false}
+                checkedIcon={false}
+                offColor="#000000"
+              />
+            </div>
+          </div>
+        </div>
+      </UserAreaContainer>
+      {/* )} */}
     </>
   )
 }

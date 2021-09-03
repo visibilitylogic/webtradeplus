@@ -25,7 +25,7 @@ const Manager = () => {
   useEffect(() => {
     getAllWithdrawals()
     getAllOrders()
-    getAllUsers()
+    // getAllUsers()
     getAllDeposits()
     getAllTrades()
     getAllVerifiedUsers()
