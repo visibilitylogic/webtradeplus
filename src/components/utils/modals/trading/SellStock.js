@@ -31,8 +31,12 @@ const SellStockModal = (props) => {
   const handleStockSale = (event) => {
     event.preventDefault();
 
-    if (error) {
-      message.error("Error processing your stock Sale");
+    if (userMargin.toString().trim() === "" || parseFloat(userMargin) < 1) {
+      message.error("Stock amount cannot be empty or zero");
+    } else if (userMargin > user.wallet) {
+      message.error("You do not have enough money in your wallet");
+    } else if (error) {
+      message.error("Error processing your stock purchase");
     } else {
       sellStockAsset(user._id, {
         userId: user._id,

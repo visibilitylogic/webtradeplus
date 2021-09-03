@@ -1011,12 +1011,9 @@ export const closeUserSellTrade = (tradeId, data) => async (dispatch) => {
   };
 
   const body = JSON.stringify(data);
+
   try {
-    await axios.put(
-      `${BASE_URL}/api/trade/sell/closeTrade/${tradeId}`,
-      body,
-      config
-    );
+    await axios.put(`/api/trade/buy/closeTrade/${tradeId}`, body, config);
 
     dispatch({
       type: actionTypes.CLOSE_USER_SELL_TRADE,
