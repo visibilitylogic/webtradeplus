@@ -30,6 +30,7 @@ const Dashboard = () => {
   const [orders, setOrders] = useState([]);
   const [buysell, setBuysell] = useState(false);
   const [support, setSupport] = useState(false);
+  const [timer, setTimer] = useState(new Date());
 
   const myRef3 = useRef("");
 
@@ -82,9 +83,9 @@ const Dashboard = () => {
     setDefaultSelectedStock();
   }, []);
 
-  // useInterval(() => {
-  //   user && getCurrentProfile(userId);
-  // }, 10000);
+  useInterval(() => {
+    setTimer(new Date());
+  }, 1000);
 
   useEffect(() => {
     [...asideList].forEach((tab) => {
@@ -238,7 +239,7 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <DashboardFooter setSupport={setSupport} />
+      <DashboardFooter setSupport={setSupport} timer={timer} />
     </div>
   );
 };

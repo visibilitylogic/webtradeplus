@@ -9,7 +9,7 @@ import { message } from "antd";
 import { useActions } from "../hooks/useActions";
 import SellStockModal from "../utils/modals/trading/SellStock";
 import useInterval from "../hooks/useInterval";
-import { getProfitOrLoss } from "../../helpers/getProfitOrLoss";
+import { getProfitOrLoss, getPandL } from "../../helpers/getProfitOrLoss";
 
 const Board = (props) => {
   const [sellStock, setSellStock] = useState(false);
@@ -19,39 +19,23 @@ const Board = (props) => {
   const [stopLossAmount, setStopLossAmount] = useState("");
   const [buyStock, setBuyStock] = useState(false);
 
-  const {
-    setLevIsh,
-    levIsh,
-    closeSetlevIsh,
-    handleTrading,
-    orders,
-    setOrders,
-    buysell,
-    setTotalUp,
-    setBuysell,
-    data,
-  } = props;
+  const { setLevIsh, levIsh, buysell, setBuysell, data } = props;
 
   const { user, loading } = useSelector((state) => state.auth);
-  const { userMargin, activeTrade } = useSelector((state) => state.profile);
-  const { currentSelectedStock, defaultSelectedStock } = useSelector(
-    (state) => state.stock
-  );
+  const { userMargin, openTrades } = useSelector((state) => state.profile);
+  const { currentSelectedStock, defaultSelectedStock, allStockAssets } =
+    useSelector((state) => state.stock);
 
   // Action creators
   const {
-    purchaseStockAsset,
+    getAllUserTrades,
     setDefaultSelectedStock,
     setCurrentSelectedStock,
     getAllStockAssets,
     setUserMargin,
   } = useActions();
 
-  const profitOrLoss = getProfitOrLoss(
-    activeTrade,
-    currentSelectedStock,
-    defaultSelectedStock
-  );
+  const profitOrLoss = getPandL(openTrades, allStockAssets);
 
   const getRate = () => {
     if (Object.keys(defaultSelectedStock).length > 0) {
@@ -106,6 +90,7 @@ const Board = (props) => {
 
   useInterval(() => {
     getAllStockAssets();
+    getAllUserTrades(user && user._id);
 
     if (Object.keys(currentSelectedStock).length > 0) {
       setCurrentSelectedStock(currentSelectedStock);
@@ -124,17 +109,22 @@ const Board = (props) => {
           <div className="trade">
             <div className="dash-row">
               <div className="chart">
-                <div className="ChartPL">
-                  <h1
-                    style={{
-                      color: parseFloat(profitOrLoss) >= 0 ? "#54ac40" : "red",
-                    }}
-                  >
-                    P/L ={" "}
-                    {new Intl.NumberFormat("en-US")
-                      .format(parseFloat(profitOrLoss))
-                      .slice(0, 8)}
-                  </h1>
+                <div className="chartPandL">
+                  <h2>
+                    <span style={{ color: "#aaa", fontWeight: 300 }}>
+                      P/L ={" "}
+                    </span>
+                    <span
+                      style={{
+                        color:
+                          parseFloat(profitOrLoss) >= 0 ? "#54ac40" : "red",
+                      }}
+                    >
+                      {new Intl.NumberFormat("en-US")
+                        .format(parseFloat(profitOrLoss))
+                        .slice(0, 8)}
+                    </span>
+                  </h2>
                 </div>
                 {/* TradingView Widget BEGIN */}
                 <div className="tradingview-widget-container">
@@ -322,8 +312,7 @@ const Board = (props) => {
                         <span className="text">SELL</span>
                       </div>
                     </div>
-                    {
-                      /* <div>
+                    <div>
                       <h5
                         style={{
                           color: "white",
@@ -339,15 +328,15 @@ const Board = (props) => {
                         <label className="switch">
                           <input
                             type="checkbox"
-                            defaultChecked={user && user.isTrading}
-                            onChange={handleTrading}
+                            defaultChecked={user && user.autoTrade}
+                            // onChange={handleTrading}
+                            disabled={!user.autoTrade}
                           />
                           <span className="slider round" />
                         </label>
                       </div>
-                    </div> */
-
-                      <div>
+                    </div>
+                    {/* <div>
                         <svg
                           width="76px"
                           height="94px"
@@ -369,8 +358,7 @@ const Board = (props) => {
                         >
                           <path d="M29.3333333,0 L2.66666667,0 C1.19466667,0 0,1.232 0,2.75 C0,4.268 1.19466667,5.5 2.66666667,5.5 L29.3333333,5.5 C30.8053333,5.5 32,4.268 32,2.75 C32,1.232 30.8053333,0 29.3333333,0 L29.3333333,0 Z M29.3333333,11 L2.66666667,11 C1.19466667,11 0,12.232 0,13.75 C0,15.268 1.19466667,16.5 2.66666667,16.5 L29.3333333,16.5 C30.8053333,16.5 32,15.268 32,13.75 C32,12.232 30.8053333,11 29.3333333,11 L29.3333333,11 Z M30.6666667,22 L1.33333333,22 L9.072,31.1245 C10.0853333,32.3125 11.552,33 13.088,33 L18.9173333,33 C20.4533333,33 21.9146667,32.3125 22.928,31.1245 L30.6666667,22 L30.6666667,22 Z" />
                         </svg>
-                      </div>
-                    }
+                      </div> */}
                   </div>
                 ) : (
                   <div className="actions1 credit">
@@ -500,10 +488,7 @@ export default Board;
 Board.propTypes = {
   buysell: PropTypes.bool.isRequired,
   setBuysell: PropTypes.func.isRequired,
-  handleTrading: PropTypes.func.isRequired,
   levIsh: PropTypes.bool.isRequired,
   setLevIsh: PropTypes.func.isRequired,
-  closeSetlevIsh: PropTypes.func.isRequired,
-  handleBuyStock: PropTypes.func.isRequired,
   data: PropTypes.object,
 };

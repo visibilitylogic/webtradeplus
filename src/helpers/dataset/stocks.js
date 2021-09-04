@@ -13,7 +13,7 @@ export const stockAssets = [
   },
   {
     id: 4,
-    name: "COMMODITY",
+    name: "COMMODITIES",
   },
   {
     id: 5,
