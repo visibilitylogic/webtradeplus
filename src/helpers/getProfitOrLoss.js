@@ -1,35 +1,3 @@
-// export const getProfitOrLoss = (
-//   activeTrade,
-//   currentSelectedStock,
-//   defaultSelectedStock
-// ) => {
-//   if (Object.keys(activeTrade).length > 0) {
-//     if (Object.keys(currentSelectedStock).length > 0) {
-//       if (activeTrade.tag === "sell") {
-//         if (activeTrade.price < currentSelectedStock.price) {
-//           return -Math.abs(currentSelectedStock.price - activeTrade.price);
-//         } else if (activeTrade.price > currentSelectedStock.price) {
-//           return Math.abs(currentSelectedStock.price - activeTrade.price);
-//         } else {
-//           return currentSelectedStock.price - activeTrade.price;
-//         }
-//       }
-//     } else if (Object.keys(defaultSelectedStock).length > 0) {
-//       if (activeTrade.tag === "sell") {
-//         if (activeTrade.price < currentSelectedStock.price) {
-//           return -Math.abs(currentSelectedStock.price - activeTrade.price);
-//         } else if (activeTrade.price > currentSelectedStock.price) {
-//           return Math.abs(currentSelectedStock.price - activeTrade.price);
-//         } else {
-//           return currentSelectedStock.price - activeTrade.price;
-//         }
-//       }
-//     }
-//   } else {
-//     return 0;
-//   }
-// };
-
 export const getProfitOrLoss = (activeTrade, currentStock, defaultStock) => {
   if (Object.keys(activeTrade).length > 0) {
     if (activeTrade.tag === "sell") {
@@ -60,4 +28,30 @@ export const getProfitOrLoss = (activeTrade, currentStock, defaultStock) => {
   } else {
     return 0;
   }
+};
+
+export const getPandL = (openTrades, assetRate) => {
+  let profitLoss = 0;
+  for (let i = 0; i < openTrades.length; i++) {
+    for (let k = 0; k < assetRate.length; k++) {
+      if (assetRate[k].symbol === openTrades[i].nameOfAsset) {
+        if (openTrades[i].tag === "sell") {
+          if (openTrades[i].openRateOfAsset < assetRate[k].price) {
+            profitLoss += -Math.abs(
+              assetRate[k].price - openTrades[i].openRateOfAsset
+            );
+          } else if (openTrades[i].openRateOfAsset > assetRate[k].price) {
+            profitLoss += Math.abs(
+              assetRate[k].price - openTrades[i].openRateOfAsset
+            );
+          } else {
+            profitLoss += assetRate[k].price - openTrades[i].openRateOfAsset;
+          }
+        } else {
+          profitLoss += assetRate[k].price - openTrades[i].openRateOfAsset;
+        }
+      }
+    }
+  }
+  return profitLoss;
 };

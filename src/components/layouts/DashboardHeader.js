@@ -28,15 +28,18 @@ import Support from "../utils/modals/Support";
 import WithdrawalSettings from "../utils/modals/withdrawal/WithdrawalSettings";
 import BankPaymentForm from "../utils/modals/withdrawal/BankPaymentForm";
 import CryptoPaymentForm from "../utils/modals/withdrawal/CryptoPaymentForm";
-import AutoTrade from "../utils/modals/AutoTrade";
+// import AutoTrade from "../utils/modals/AutoTrade";
 import { useActions } from "../hooks/useActions";
 import Withdrawals from "../utils/modals/withdrawal/Withdrawals";
 import CryptoStepSix from "../utils/modals/deposit/crypto-steps/CryptoStepSix";
+import { tradesMargin } from "./../../helpers/getOpenTradesMargin";
 
 const DashboardHeader = ({ support, setSupport, data }) => {
   const history = useHistory();
   const { user, loading } = useSelector((state) => state.auth);
-  const { profile, activeTrade } = useSelector((state) => state.profile);
+  const { profile, activeTrade, openTrades } = useSelector(
+    (state) => state.profile
+  );
   const { isDarkMode } = useSelector((state) => state.theme);
 
   const { logout, setCurrentSelectedStock } = useActions();
@@ -66,6 +69,13 @@ const DashboardHeader = ({ support, setSupport, data }) => {
   });
 
   const balance = user && user.wallet + user.bonus;
+
+  // const openTradesMargin =
+  //   openTrades.length > 0
+  //     ? openTrades.reduce((sum, currentVal) => sum + currentVal.margin, 0)
+  //     : 0;
+
+  const openTradesMargin = tradesMargin(openTrades);
 
   //   MODAL STATES
   const [showCredit, setShowCredit] = useState(false);
@@ -125,7 +135,10 @@ const DashboardHeader = ({ support, setSupport, data }) => {
             <ul className="stock-nav-list mb-0">
               {stocks.map((stock) => (
                 <li
-                  style={{ color: isDarkMode ? "#fff" : "#000" }}
+                  style={{
+                    color: isDarkMode ? "#fff" : "#000",
+                    width: stock.id === 4 ? 120 : undefined,
+                  }}
                   onClick={() => {
                     setSelectedStock(stock.id);
                     setOpenForex(true);
@@ -322,9 +335,9 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                     {user && user.currency === "USD"
                       ? "$"
                       : user && user.currency}
-                    {Object.keys(activeTrade).length > 0
+                    {openTrades.length > 0
                       ? new Intl.NumberFormat("en-US")
-                          .format(balance - activeTrade.margin)
+                          .format(balance - openTradesMargin)
                           .slice(0, 9)
                       : new Intl.NumberFormat("en-US")
                           .format(balance)
@@ -439,9 +452,9 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                         {user && user.currency === "USD"
                           ? "$"
                           : user && user.currency}
-                        {Object.keys(activeTrade).length > 0
+                        {openTrades.length > 0
                           ? new Intl.NumberFormat("en-US")
-                              .format(balance - activeTrade.margin)
+                              .format(balance - openTradesMargin)
                               .slice(0, 9)
                           : new Intl.NumberFormat("en-US")
                               .format(balance)
@@ -455,9 +468,9 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                       {user && user.currency === "USD"
                         ? "$"
                         : user && user.currency}
-                      {Object.keys(activeTrade).length > 0
+                      {openTrades.length > 0
                         ? new Intl.NumberFormat("en-US")
-                            .format(balance - activeTrade.margin)
+                            .format(balance - openTradesMargin)
                             .slice(0, 9)
                         : new Intl.NumberFormat("en-US")
                             .format(balance)

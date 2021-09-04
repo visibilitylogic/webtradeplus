@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
+import Spinner from "../utils/Spinner";
 
 function OrderBook() {
   const { getOrder } = useActions();
@@ -14,6 +15,15 @@ function OrderBook() {
   useEffect(() => {
     getOrder(user && user._id);
   }, []);
+
+  const spinnerStyle = {
+    height: "100%",
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
   const bodyDisplay = () => {
     switch (display) {
       case "order-book":
@@ -86,18 +96,23 @@ function OrderBook() {
                             fontSize: "13px",
                           }}
                         >
-                          tag
+                          direction
                         </p>
                       </td>
                       <td style={{ paddingTop: "2%" }}>
-                        <span className="order_span">{data.margin} </span>
+                        <span className="order_span">
+                          {user && user.currency === "USD"
+                            ? "$"
+                            : user && user.currency}
+                          {data.margin}{" "}
+                        </span>
                         <p
                           style={{
                             color: "rgb(165 167 173)",
                             fontSize: "13px",
                           }}
                         >
-                          margin
+                          units
                         </p>
                       </td>
                       <td style={{ paddingTop: "2%" }}>
@@ -239,18 +254,23 @@ function OrderBook() {
                             fontSize: "13px",
                           }}
                         >
-                          tag
+                          direction
                         </p>
                       </td>
                       <td style={{ paddingTop: "2%" }}>
-                        <span className="order_span">{data.margin} </span>
+                        <span className="order_span">
+                          {user && user.currency === "USD"
+                            ? "$"
+                            : user && user.currency}
+                          {data.margin}{" "}
+                        </span>
                         <p
                           style={{
                             color: "rgb(165 167 173)",
                             fontSize: "13px",
                           }}
                         >
-                          margin
+                          units
                         </p>
                       </td>
                       <td style={{ paddingTop: "2%" }}>
@@ -321,91 +341,91 @@ function OrderBook() {
             </div>
           );
         }
-      case "auto_trades":
-        if (trade_orders.length > 0 && loading) {
-          return (
-            <table style={{ width: "100%" }}>
-              <tbody style={{ textAlign: "left" }}>
-                {trade_orders &&
-                  trade_orders.map((data) => (
-                    <tr
-                      style={{
-                        paddingTop: "4px",
-                        borderBottom: ".1px solid #4a4a4d",
-                        marginBottom: "-30px",
-                      }}
-                      className="tableRoww"
-                      key={data.id}
-                    >
-                      <td style={{ paddingTop: "2%" }}>
-                        <span className="order_span">
-                          {" "}
-                          {data.time &&
-                            data.time.split("T")[1].slice(0, 8)}{" "}
-                        </span>
-                        <p
-                          style={{
-                            color: "rgb(165 167 173)",
-                            fontSize: "13px",
-                          }}
-                        >
-                          {data.time && data.time.split("T")[0]}
-                        </p>
-                      </td>
-                      <td style={{ paddingTop: "2%" }}>
-                        <span className="order_span">{data.nameOfAsset} </span>
-                        <p
-                          style={{
-                            color: "rgb(165 167 173)",
-                            fontSize: "13px",
-                          }}
-                        >
-                          Asset{" "}
-                        </p>
-                      </td>
-                      <td style={{ paddingTop: "2%" }}>
-                        <span className="order_span">
-                          {data.openRateOfAsset}{" "}
-                        </span>
-                        <p
-                          style={{
-                            color: "rgb(165 167 173)",
-                            fontSize: "13px",
-                          }}
-                        >
-                          amount
-                        </p>
-                      </td>
-                      <td style={{ paddingTop: "2%" }}>
-                        <span
-                          className="order_span"
-                          style={{
-                            color: data.tag === "buy" ? "green" : "red",
-                          }}
-                        >
-                          {data.tag}{" "}
-                        </span>
-                        <p
-                          style={{
-                            color: "rgb(165 167 173)",
-                            fontSize: "13px",
-                          }}
-                        >
-                          tag
-                        </p>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          );
-        } else {
-          return (
-            <div style={{ marginTop: "20%" }}>
-              <h1 style={{ color: "white" }}> No Autorade History</h1>
-            </div>
-          );
-        }
+      // case "auto_trades":
+      //   if (trade_orders.length > 0 && loading) {
+      //     return (
+      //       <table style={{ width: "100%" }}>
+      //         <tbody style={{ textAlign: "left" }}>
+      //           {trade_orders &&
+      //             trade_orders.map((data) => (
+      //               <tr
+      //                 style={{
+      //                   paddingTop: "4px",
+      //                   borderBottom: ".1px solid #4a4a4d",
+      //                   marginBottom: "-30px",
+      //                 }}
+      //                 className="tableRoww"
+      //                 key={data.id}
+      //               >
+      //                 <td style={{ paddingTop: "2%" }}>
+      //                   <span className="order_span">
+      //                     {" "}
+      //                     {data.time &&
+      //                       data.time.split("T")[1].slice(0, 8)}{" "}
+      //                   </span>
+      //                   <p
+      //                     style={{
+      //                       color: "rgb(165 167 173)",
+      //                       fontSize: "13px",
+      //                     }}
+      //                   >
+      //                     {data.time && data.time.split("T")[0]}
+      //                   </p>
+      //                 </td>
+      //                 <td style={{ paddingTop: "2%" }}>
+      //                   <span className="order_span">{data.nameOfAsset} </span>
+      //                   <p
+      //                     style={{
+      //                       color: "rgb(165 167 173)",
+      //                       fontSize: "13px",
+      //                     }}
+      //                   >
+      //                     Asset{" "}
+      //                   </p>
+      //                 </td>
+      //                 <td style={{ paddingTop: "2%" }}>
+      //                   <span className="order_span">
+      //                     {data.openRateOfAsset}{" "}
+      //                   </span>
+      //                   <p
+      //                     style={{
+      //                       color: "rgb(165 167 173)",
+      //                       fontSize: "13px",
+      //                     }}
+      //                   >
+      //                     amount
+      //                   </p>
+      //                 </td>
+      //                 <td style={{ paddingTop: "2%" }}>
+      //                   <span
+      //                     className="order_span"
+      //                     style={{
+      //                       color: data.tag === "buy" ? "green" : "red",
+      //                     }}
+      //                   >
+      //                     {data.tag}{" "}
+      //                   </span>
+      //                   <p
+      //                     style={{
+      //                       color: "rgb(165 167 173)",
+      //                       fontSize: "13px",
+      //                     }}
+      //                   >
+      //                     tag
+      //                   </p>
+      //                 </td>
+      //               </tr>
+      //             ))}
+      //         </tbody>
+      //       </table>
+      //     );
+      //   } else {
+      //     return (
+      //       <div style={{ marginTop: "20%" }}>
+      //         <h1 style={{ color: "white" }}> No Autorade History</h1>
+      //       </div>
+      //     );
+      //   }
       default:
         break;
     }
@@ -446,16 +466,16 @@ function OrderBook() {
             >
               Trading History
             </a>
-            <a
+            {/* <a
               className={display === "auto_trades" ? "active" : " "}
               onClick={() => setDisplay("auto_trades")}
               href="#!"
             >
               {" "}
               Auto Trades
-            </a>
+            </a> */}
           </div>
-          {loading && <div>Loading...</div>}
+          {loading && <Spinner style={spinnerStyle} />}
           <div
             style={{
               display: "flex",

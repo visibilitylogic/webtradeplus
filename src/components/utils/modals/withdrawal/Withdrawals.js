@@ -3,15 +3,24 @@ import { useActions } from "../../../hooks/useActions";
 import { useSelector } from "react-redux";
 import { message } from "antd";
 import PropTypes from "prop-types";
+import { tradesMargin } from "./../../../../helpers/getOpenTradesMargin";
 
 const Withdrawals = ({ setWithdraw, country }) => {
   const [widthdrawalMethod, setWidthdrawalMethod] = useState("");
   const [withdrawalDetails, setWithdrawalDetails] = useState({});
 
   const { webData } = useSelector((state) => state.web);
-  const { withdrawalAmount, bankPaymentMethods, cryptoPaymentMethods } =
-    useSelector((state) => state.profile);
+  const {
+    withdrawalAmount,
+    bankPaymentMethods,
+    cryptoPaymentMethods,
+    openTrades,
+  } = useSelector((state) => state.profile);
   const { user } = useSelector((state) => state.auth);
+
+  const balance = user && user.wallet + user.bonus;
+
+  const openTradesMargin = tradesMargin(openTrades);
 
   const {
     processWithdrawal,
@@ -25,7 +34,7 @@ const Withdrawals = ({ setWithdraw, country }) => {
   const amount = withdrawalAmount - percent;
 
   const handleProcessWithdrawal = () => {
-    if (withdrawalAmount > user.wallet) {
+    if (withdrawalAmount > balance) {
       message.error("Insufficient withdrawal Amount");
     } else {
       processWithdrawal({
@@ -66,7 +75,7 @@ const Withdrawals = ({ setWithdraw, country }) => {
               <span className="font-size-11">
                 {user && user.currency === "USD" ? "$" : user && user.currency}
                 {`${new Intl.NumberFormat("en-US")
-                  .format(user && user.wallet + user.bonus + user.profit)
+                  .format(balance - openTradesMargin)
                   .slice(0, 9)}`}
               </span>
             </a>
