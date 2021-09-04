@@ -15,7 +15,7 @@ export const allTradesHeader = [
         className={
           isOpen === true
             ? " text-center bg-success text-light"
-            : " text-center bg-denger text-light"
+            : " text-center bg-danger text-light"
         }
       >
         {isOpen === true ? "true" : "false"}
@@ -31,7 +31,7 @@ export const allTradesHeader = [
         className={
           tag === "buy"
             ? " text-center bg-success text-light"
-            : " text-center bg-denger text-light"
+            : " text-center bg-danger text-light"
         }
       >
         {tag}

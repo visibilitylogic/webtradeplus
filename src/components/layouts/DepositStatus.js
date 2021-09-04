@@ -1,72 +1,64 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { message } from 'antd'
+import { useSelector } from 'react-redux'
+import { useActions } from '../hooks/useActions'
 
-export function DepositStatus({ status }) {
-  const [depositState, setdepositState] = useState({
-    id: status._id,
-    status: status.status,
-  })
+const DepositStatus = ({ status }) => {
+  const { approveDepositForManager, declineDepositForManager } = useActions()
+  const { error } = useSelector((state) => state.profile)
+  const { _id } = status
 
-  const handleApproveDeposit = async (depositState) => {
-    try {
-      await setdepositState({
-        id: depositState.id,
-        status: 'success',
-      })
-      message.success('Deposit Was Successfully Approved')
-    } catch (error) {
-      message.error('Deposit Not Approved')
-    }
-  }
+  const [accept, setAccept] = useState('Accept')
+  const [decline, setDecline] = useState('Declined')
 
-  return (
-    <button
-      disabled={depositState.status === 'Approved'}
-      onClick={handleApproveDeposit}
-      className={
-        depositState.status === 'Pending' || depositState.status === 'Declined'
-          ? 'btn btn-danger'
-          : 'btn btn-success'
+  const handleApproDeposit = async () => {
+    if (error) {
+      message.error('Identity Approval Was Not Successful')
+    } else {
+      const details = {
+        id: _id,
+        message: 'Deposit has been approved',
       }
-    >
-      {depositState.status}
-    </button>
-  )
-}
+      await approveDepositForManager(details)
+      setAccept(null)
 
-export function DepositCancel({ status }) {
-  const [depositCancel, setdepositCancel] = useState({
-    id: status._id,
-    status: status.status,
-  })
+      setDecline(null)
 
-  const handlesetdepositCancel = async (depositCancel) => {
-    try {
-      await setdepositCancel({
-        id: depositCancel.id,
-        status: 'cancelled',
-      })
-      message.success('Deposit Was Successfully Cancelled')
-    } catch (error) {
-      message.error('Something went Wrong')
+      message.success('Deposit approved')
     }
   }
-  if (
-    depositCancel.status === 'Declined' ||
-    depositCancel.status === 'Pending'
-  ) {
-    return (
-      <button
-        onClick={handlesetdepositCancel}
-        className={
-          depositCancel.status === 'Pending' ||
-          depositCancel.status === 'Declined'
-            ? 'btn btn-danger'
-            : ''
-        }
-      >
-        {depositCancel.status}
-      </button>
-    )
-  } else return null
+  const handleDeclineDeposit = async () => {
+    if (error) {
+      message.error('Decline  Was Not Successful')
+    } else {
+      const details = {
+        id: _id,
+        message: 'withdrawal has been declined',
+      }
+      await declineDepositForManager(details)
+      setAccept('accept')
+      setDecline(null)
+
+      message.success('withdrawal was declined')
+    }
+  }
+  return status.status === 'Pending' ? (
+    <div className="d-flex flex-column" style={{ fontSize: '8px' }}>
+      <div onClick={handleApproDeposit}>
+        <a className="text-light text-center p-0 bg-success mb-1">{accept}</a>
+      </div>
+      <div onClick={handleDeclineDeposit}>
+        <a className="text-light text-center bg-danger mb-0">{decline}</a>
+      </div>
+    </div>
+  ) : status.status === 'Declined' ? (
+    <a
+      className="text-light text-center p-0 bg-success mb-1"
+      onClick={handleApproDeposit}
+    >
+      Approve
+    </a>
+  ) : null
 }
+
+export default DepositStatus

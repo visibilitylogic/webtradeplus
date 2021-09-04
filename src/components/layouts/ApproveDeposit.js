@@ -1,79 +1,64 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { message } from 'antd'
 import { useSelector } from 'react-redux'
 import { useActions } from '../hooks/useActions'
-import { message } from 'antd'
 
-function ApproveDeposit({ status }) {
+const ApproveDeposit = ({ status }) => {
+  const { approveDepositForManager, declineDepositForManager } = useActions()
   const { error } = useSelector((state) => state.profile)
-  const [ApproveState, setApproveState] = useState(status.status)
+  const { _id } = status
+
   const [accept, setAccept] = useState('Accept')
-  const [pending, setPending] = useState('Pending')
   const [decline, setDecline] = useState('Declined')
-  const { approveDeposit, declineDeposit } = useActions()
 
-  const handleApproveDeposit = async () => {
-    console.log(status)
-
+  const handleApproDeposit = async () => {
     if (error) {
       message.error('Identity Approval Was Not Successful')
     } else {
       const details = {
-        id: status._id,
-        message: 'Deposit was Approved',
+        id: _id,
+        message: 'Deposit has been approved',
       }
-      await approveDeposit(details)
+      await approveDepositForManager(details)
       setAccept(null)
-      setPending(false)
-      setDecline(false)
 
-      message.success('Identity Was Successfully Approved')
+      setDecline(null)
 
-      window.location.reload();
-
+      message.success('Deposit approved')
     }
   }
   const handleDeclineDeposit = async () => {
-    console.log(status)
-
     if (error) {
-      message.error('Identity Approval Was Not Successful')
+      message.error('Decline  Was Not Successful')
     } else {
       const details = {
-        id: status._id,
-        message: 'Deposit has been declined',
+        id: _id,
+        message: 'withdrawal has been declined',
       }
-      await declineDeposit(details)
-      setAccept(null)
-      setPending(false)
-      setDecline('Declined')
+      await declineDepositForManager(details)
+      setAccept('accept')
+      setDecline(null)
 
-      message.success('Deposited was declined')
-      window.location.reload();
-
+      message.success('withdrawal was declined')
     }
   }
-
   return status.status === 'Pending' ? (
     <div className="d-flex flex-column" style={{ fontSize: '8px' }}>
-      <div onClick={handleApproveDeposit}>
-        <a className="text-light text-center p-0 bg-success mb-1">
-          {accept ? accept : null}
-        </a>
+      <div onClick={handleApproDeposit}>
+        <a className="text-light text-center p-0 bg-success mb-1">{accept}</a>
       </div>
       <div onClick={handleDeclineDeposit}>
-        <a className="text-light text-center bg-danger mb-0">
-          {ApproveState ? decline : null}
-        </a>
+        <a className="text-light text-center bg-danger mb-0">{decline}</a>
       </div>
     </div>
   ) : status.status === 'Declined' ? (
     <a
       className="text-light text-center p-0 bg-success mb-1"
-      onClick={handleApproveDeposit}
+      onClick={handleApproDeposit}
     >
-      {accept}
+      Approve
     </a>
   ) : null
 }
 
-export default React.memo(ApproveDeposit)
+export default ApproveDeposit

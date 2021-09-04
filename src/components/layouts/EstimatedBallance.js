@@ -2,9 +2,8 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 function EstimatedBallance() {
-  const { singleUser } = useSelector((state) => state.profile)
+  const { singleUser} = useSelector((state) => state.profile)
   const { wallet } = singleUser
-  console.log('Estimated balance')
   return (
     <>
       <div className="estimated-card">

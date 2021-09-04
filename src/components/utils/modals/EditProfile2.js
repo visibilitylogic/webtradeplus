@@ -4,17 +4,12 @@ import { Button, message } from 'antd'
 import { countryList as profileCountryList } from '../../../helpers/dataset/countryList'
 import { useActions } from '../../hooks/useActions'
 import useFormInput from '../../hooks/useFormInput'
-import { useSelector } from 'react-redux';
-import {useState,useEffect} from "react"
+import { useSelector } from 'react-redux'
 
 const EditProfile = ({ setEditProfile }) => {
-  const { runPassword,  updateProfile } = useActions()
+  const { runPassword, updateProfile: editProfile } = useActions()
   const { error,singleUser } = useSelector((state) => state.profile)
-const {name, email,country,currency,language,isAdmin,isManager,
-_id}= singleUser;
-const [active, setactive] = useState(true)
-
-
+const {name, email,country,currency,language,isAdmin,isManager}= singleUser;
 
   const [profileDetails, handleProfileDetails] = useFormInput({
     yourName: name,
@@ -24,8 +19,9 @@ const [active, setactive] = useState(true)
     yourCurrency: currency,
     yourPassword: '',
     yourPasswordConfirm: '',
-    userLevel: isAdmin? "admin": isManager? "manager": "User",
+    userLevel: isAdmin ? isAdmin : isManager? isManager:"Standard User",
   })
+
 
   const {
     yourName,
@@ -37,53 +33,44 @@ const [active, setactive] = useState(true)
     yourPasswordConfirm,
     userLevel,
   } = profileDetails
-
-  useEffect(()=>{
-handleRunPassword()
-  },[ yourPassword,yourPasswordConfirm])
+console.log(profileDetails)
 
   const { user } = useSelector((state) => state.auth)
 
-  const handleRunPassword =  ()  => {
-    if(yourPassword ==="" || yourPassword ==="") return null
+
+  const handleRunPassword = () => {
     if (yourPassword !== yourPasswordConfirm) {
       message.error('Password must match')
     } else if (error) {
       message.error('Problems updating profile')
     } else {
-       message.success("password Match")
-       setactive(true)
+      runPassword({
+        id: user._id,
+        password: yourPassword,
+        name: yourName,
+        email: yourEmailAddress,
+        phoneNumber: user.phoneNumber,
+      })
     }
   }
 
-  const handleEditProfile = async () => {
-      //    await  runPassword({
-      //   id: _id,
-      //   password: yourPassword,
-      //   name: yourName,
-      //   email: yourEmailAddress,
-      //   phoneNumber: user.phoneNumber,
-      // })
-try {
-   if (error) {
+  const handleEditProfile = () => {
+    handleRunPassword()
+
+    if (error) {
       message.error('problems updating profile')
     } else {
-     await  updateProfile({
-        id: _id,
-         password: yourPassword,
+      editProfile({
+        id: user._id,
         name: yourName,
         language: yourLanguage,
         country: userCountry,
         currency: yourCurrency,
-         setRole: userLevel,
+        setRole: userLevel,
       })
 
       message.success('Profile was successfully updated')
     }
-} catch (error) {
-  console.log(error)
-}
-   
   }
   return (
     <div className="withdraw-modal personal-modal">
@@ -189,7 +176,6 @@ try {
                     id="yourPasswordConfirm"
                   />
                 </Form.Group>
-                {/* <small>{passwordCheck}</small> */}
               </Col>
             </Row>
             <Form.Group controlId="exampleForm.ControlSelect5">
@@ -200,7 +186,7 @@ try {
                 onChange={handleProfileDetails}
               >
                 <option value="none">Select User Level</option>
-                <option value="user">Standard User</option>
+                <option value="none">Standard User</option>
                 <option value="isManager">Manager</option>
                 <option value="isAdmin">Admin User</option>
               </Form.Control>
@@ -210,9 +196,8 @@ try {
                 type={'dashed'}
                 // style={{ background: web.yourMainColor }}
                 onClick={handleEditProfile}
-                 variant="primary"
+                variant="primary"
                 className="mb-4"
-                
               >
                 Save
               </Button>

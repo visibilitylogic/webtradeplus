@@ -160,8 +160,12 @@ export const setAutoTrade = (id, details) => async (dispatch) => {
   const body = JSON.stringify(details);
   try {
     await axios.put(`${BASE_URL}/api/users/autotrade/${id}`, body, config);
+    // console.log(data)
+
+    const f = [details.autoTrade, id];
     dispatch({
       type: actionTypes.SET_AUTO_TRADE,
+      payload: f,
     });
   } catch (error) {
     dispatch({
@@ -222,11 +226,18 @@ export const setLiveTrade = (details) => async (dispatch) => {
   const body = JSON.stringify(details);
 
   try {
-    await axios.put(`${BASE_URL}/api/profile/liveTrade`, body, config);
-
-    dispatch({
-      type: actionTypes.SET_LIVE_TRADE,
-    });
+    const { data } = await axios.put(
+      `${BASE_URL}/api/profile/liveTrade`,
+      body,
+      config
+    );
+    console.log(data);
+    if (data) {
+      dispatch({
+        type: actionTypes.SET_LIVE_TRADE,
+        payload: data,
+      });
+    }
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -333,30 +344,35 @@ export const approveDeposit = (details) => async (dispatch) => {
 
   const body = JSON.stringify(details);
 
-  // try {
-  //   await axios.put(`${BASE_URL}/api/deposit/approve`, body, config);
-  // dispatch({
-  //   type: actionTypes.APPROVE_DEPOSIT,
-  // });
-  await axios
-    .put(`${BASE_URL}/api/deposit/approve`, body, config)
-    .then((res) => {
-      getAllDeposits();
-      dispatch({
-        type: actionTypes.APPROVE_DEPOSIT,
-      });
-    })
-    .catch((err) =>
-      err.response === undefined ? false : console.error(err.response.data)
+  try {
+    const { data } = await axios.put(
+      `${BASE_URL}/api/deposit/approve`,
+      body,
+      config
     );
+    console.log(data);
+    dispatch({
+      type: actionTypes.APPROVE_DEPOSIT,
+      payload: data,
+    });
+    // await axios
+    //   .put(`${BASE_URL}/api/deposit/approve`, body, config)
+    //   .then((res) => {
+    //     getAllDeposits()
+    //     dispatch({
+    //       type: actionTypes.APPROVE_DEPOSIT,
+    //     })
+    //   })
+    //   .catch((err) =>
+    //     err.response === undefined ? false : console.error(err.response.data),
+    //   )
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
 };
-// catch (error) {
-//   dispatch({
-//     type: actionTypes.PROFILE_ERROR,
-//     payload: error.message,
-//   });
-// }
-// };
 
 export const declineDeposit = (details) => async (dispatch) => {
   const config = {
@@ -373,7 +389,7 @@ export const declineDeposit = (details) => async (dispatch) => {
     await axios
       .put(`${BASE_URL}/api/deposit/decline`, body, config)
       .then((res) => {
-        getAllDeposits();
+        // getAllDeposits()
         dispatch({
           type: actionTypes.APPROVE_DEPOSIT,
         });
@@ -384,6 +400,63 @@ export const declineDeposit = (details) => async (dispatch) => {
 
     dispatch({
       type: actionTypes.DECLINE_DEPOSIT,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+// only for manger
+export const declineDepositForManager = (details) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify(details);
+
+  try {
+    const { data } = await axios.put(
+      `${BASE_URL}/api/deposit/decline`,
+      body,
+      config
+    );
+    dispatch({
+      type: actionTypes.APPROVE_DECLINE_DEPOSIT,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const approveDepositForManager = (details) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify(details);
+
+  try {
+    const { data } = await axios.put(
+      `${BASE_URL}/api/deposit/approve`,
+      body,
+      config
+    );
+    console.log(data);
+    console.log(data.approveDeposit.status);
+    dispatch({
+      type: actionTypes.APPROVE_SINGLE_DEPOSIT,
+      payload: data,
     });
   } catch (error) {
     dispatch({
@@ -405,7 +478,7 @@ export const declineVerify = (details) => async (dispatch) => {
     await axios
       .put(`${BASE_URL}/api/verify/decline`, body, config)
       .then((res) => {
-        getAllVerifiedUsers();
+        // getAllVerifiedUsers()
         dispatch({
           type: actionTypes.DECLINE_VERIFY,
         });
@@ -432,7 +505,7 @@ export const approveVerify = (details) => async (dispatch) => {
     await axios
       .put(`${BASE_URL}/api/verify/approve`, body, config)
       .then((res) => {
-        getAllVerifiedUsers();
+        // getAllVerifiedUsers()
         dispatch({
           type: actionTypes.APPROVE_VERIFY,
         });
@@ -489,10 +562,73 @@ export const approveWithdrawal = (details) => async (dispatch) => {
 
   const body = JSON.stringify(details);
   try {
-    await axios.put(`${BASE_URL}/api/withdraw/approve`, body, config);
+    const { data } = await axios.put(
+      `${BASE_URL}/api/withdraw/approve`,
+      body,
+      config
+    );
     dispatch({
       type: actionTypes.APPROVE_WITHDRAWAL,
     });
+
+    console.log(data);
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+// for manager only
+
+export const declineManagerWithdrawal = (details) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify(details);
+  try {
+    const { data } = await axios.put(
+      `${BASE_URL}/api/withdraw/decline`,
+      body,
+      config
+    );
+    dispatch({
+      type: actionTypes.DECLINE_MANAGER_WITHDRAWAL,
+      type: data,
+    });
+    console.log(data);
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const approveMAnagerWithdrawal = (details) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify(details);
+  try {
+    const { data } = await axios.put(
+      `${BASE_URL}/api/withdraw/approve`,
+      body,
+      config
+    );
+    dispatch({
+      type: actionTypes.APPROVE_MANAGER_WITHDRAWAL,
+      payload: data,
+    });
+
+    console.log(data);
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -585,7 +721,7 @@ export const removeManager = (id) => async (dispatch) => {
   }
 };
 
-export const deleteUser = (id) => async (dispatch) => {
+export const deleteAUser = (id) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -595,6 +731,7 @@ export const deleteUser = (id) => async (dispatch) => {
   const body = JSON.stringify(id);
   try {
     await axios.delete(`${BASE_URL}/api/users/remove`, body, config);
+
     dispatch({
       type: actionTypes.DELETE_USER,
     });
@@ -686,11 +823,17 @@ export const singleUserBalance = (userId, data) => async (dispatch) => {
   const body = JSON.stringify(data);
 
   try {
-    await axios.put(`${BASE_URL}/api/users/pulse/${userId}`, body, config);
+    const { data } = await axios.put(
+      `${BASE_URL}/api/users/pulse/${userId}`,
+      body,
+      config
+    );
 
     dispatch({
       type: actionTypes.SINGLE_USER_BALANCE,
+      payload: data,
     });
+    console.log(data);
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -889,6 +1032,8 @@ export const getUserAutoCopyTrade = (userId) => async (dispatch) => {
       type: actionTypes.USER_AUTO_COPY_TRADE,
       payload: data,
     });
+
+    console.log(data);
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -906,10 +1051,15 @@ export const addUserAutoCopyTrade = (data) => async (dispatch) => {
 
   const body = JSON.stringify(data);
   try {
-    await axios.post(`${BASE_URL}/api/autocopytrade`, body, config);
-
+    const { data } = await axios.post(
+      `${BASE_URL}/api/autocopytrade`,
+      body,
+      config
+    );
+    console.log(data);
     dispatch({
       type: actionTypes.ADD_USER_AUTO_COPY_TRADE,
+      payload: data,
     });
   } catch (error) {
     dispatch({

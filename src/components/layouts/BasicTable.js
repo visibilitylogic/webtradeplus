@@ -16,8 +16,8 @@ const BasicTable = ({
   // getCurrentProfile,
   getAllUserTrades,
 }) => {
-  const columns = useMemo(() => column, [])
-  const data = useMemo(() => allUsers, [])
+  const columns =  column
+  const data = allUsers
   const {
     //   getSingleProfile,
     //   getVerifieddetails,
@@ -83,6 +83,7 @@ const BasicTable = ({
                   onClick={() => {
                     getSingleWithdrawals(row.original._id)
                     getCurrentProfile(row.original._id)
+
                     setDisplayC(true)
                     getSingleProfile(row.original)
                     singleUserDeposit(row.original._id)
@@ -111,12 +112,14 @@ const BasicTable = ({
                   })}
                 </tr>
               )
-            } else if (type === 'verifiedUsers') {
+            } else if (type === 'deposit') {
               return (
                 <tr
                   {...row.getRowProps()}
                   onClick={() => {
-                    getVerifieddetails(row.original)
+                    // alert('from deposit')
+                    // getSingleDepositFromtheList(row.original.id)
+                    // getVerifieddetails(row.original)
                   }}
                 >
                   {row.cells.map((cell) => {
