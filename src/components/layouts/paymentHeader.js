@@ -19,7 +19,7 @@ export const paymentHeader = [
     accessor: ({ status }) => (
       <p
         className={
-          status === 'Pending'
+          status === 'Pending' || status === 'Declined'
             ? 'bg-danger text-light   text-center'
             : 'bg-success text-light   text-center '
         }
@@ -53,6 +53,6 @@ export const paymentHeader = [
   {
     Header: 'Action',
     accessor: 'status',
-    accessor: ({ status }) => <SinglePayment status={status} />,
+    accessor: (status) => <SinglePayment status={status} />,
   },
 ]

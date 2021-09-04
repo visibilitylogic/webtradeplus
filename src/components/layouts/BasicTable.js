@@ -16,8 +16,8 @@ const BasicTable = ({
   // getCurrentProfile,
   getAllUserTrades,
 }) => {
-  const columns = useMemo(() => column, [])
-  const data = useMemo(() => allUsers, [])
+  const columns =  column
+  const data = allUsers
   const {
     //   getSingleProfile,
     //   getVerifieddetails,
@@ -117,7 +117,7 @@ const BasicTable = ({
                 <tr
                   {...row.getRowProps()}
                   onClick={() => {
-                    alert('from deposit')
+                    // alert('from deposit')
                     // getSingleDepositFromtheList(row.original.id)
                     // getVerifieddetails(row.original)
                   }}

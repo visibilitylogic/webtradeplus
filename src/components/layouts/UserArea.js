@@ -46,7 +46,7 @@ const UserArea = ({ setEditProfile }) => {
       message.success(' Successful')
     }
   }
-  async function handleDeleteUser() {
+  const handleDeleteAUser = async () => {
     if (error) {
       message.error('Try again')
     } else {
@@ -78,7 +78,7 @@ const UserArea = ({ setEditProfile }) => {
                 buttons: [
                   {
                     label: 'Delete',
-                    onClick: () => handleDeleteUser(_id),
+                    onClick: () => handleDeleteAUser(_id),
                   },
                   {
                     label: 'No',

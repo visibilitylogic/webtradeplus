@@ -57,7 +57,17 @@ export const depositHeader = [
   {
     Header: 'Status',
     accessor: 'status',
-    accessor: ({ status }) => <DepositState status={status} />,
+    accessor: ({ status }) => (
+      <p
+        className={
+          status === 'Pending' || status === 'Declined'
+            ? 'bg-danger text-light   text-center'
+            : 'bg-success text-light   text-center '
+        }
+      >
+        {status}
+      </p>
+    ),
   },
   {
     Header: 'Action',

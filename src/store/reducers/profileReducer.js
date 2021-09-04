@@ -25,6 +25,7 @@ const initialState = {
   DepositApproval: {},
   singleUserVerifedDetails: {},
   tradeProfit: 0,
+  autoTradeData: [],
 }
 
 export default function profileReducer(state = initialState, action) {
@@ -57,18 +58,80 @@ export default function profileReducer(state = initialState, action) {
         depositAmount: action.payload,
         error: null,
       }
-    case actionTypes.APPROVE_DEPOSIT:
+
+    case actionTypes.APPROVE_SINGLE_DEPOSIT:
+      const newDeposits = state.allDeposits
+      const newsINGLEDeposits = state.allSingleDeposits
+      const sing = newDeposits.find(
+        (dep) => dep._id === action.payload.approveDeposit._id,
+      )
+      sing.status = action.payload.approveDeposit.status
+      const single = newsINGLEDeposits.find(
+        (depo) => depo._id == action.payload.approveDeposit._id,
+      )
+      single.status = action.payload.approveDeposit.status
+
       return {
         ...state,
+        allDeposits: [...newDeposits], // [...newDeposits]
         DepositApproval: action.payload,
-        error: null,
+        allSingleDeposits: [...newsINGLEDeposits],
       }
-    // case actionTypes.GET_SINGLE_DEPOSIT:
-    //   return {
-    //     ...state,
-    //     singleDeposit: action.payload,
-    //     error: null,
-    //   }
+    case actionTypes.APPROVE_MANAGER_WITHDRAWAL:
+      const newWithdraw = state.allWithdrawals
+      const newsINGLEWithdraw = state.singleWithdrawals
+      const singW = newWithdraw.find(
+        (dep) => dep._id === action.payload.approvedWithdraw._id,
+      )
+      singW.status = action.payload.approvedWithdraw.status
+      const singleW = newsINGLEWithdraw.find(
+        (depo) => depo._id == action.payload.approvedWithdraw._id,
+      )
+      singleW.status = action.payload.approvedWithdraw.status
+
+      return {
+        ...state,
+        allWithdrawals: [...newWithdraw], // [...newDeposits]
+        DepositApproval: action.payload,
+        singleWithdrawals: [...newsINGLEWithdraw],
+      }
+
+    case actionTypes.DECLINE_MANAGER_WITHDRAWAL:
+      const newWithdraws = state.allWithdrawals
+      const newsINGLEWithdraws = state.singleWithdrawals
+      const singWs = newWithdraws.find(
+        (dep) => dep._id === action.payload.declinedWithdraw._id,
+      )
+      singWs.status = action.payload.declinedWithdraw.status
+      const singles = newsINGLEWithdraws.find(
+        (depo) => depo._id == action.payload.declinedWithdraw._id,
+      )
+      singles.status = action.payload.declinedWithdraw.status
+
+      return {
+        ...state,
+        allWithdrawals: [...newWithdraws], // [...newDeposits]
+        DepositApproval: action.payload,
+        singleWithdrawals: [...newsINGLEWithdraws],
+      }
+    case actionTypes.APPROVE_DECLINE_DEPOSIT:
+      const newDeposit = state.allDeposits
+      const newsINGLEDeposit = state.allSingleDeposits
+      const decline = newDeposit.find(
+        (dep) => dep._id === action.payload.declinedDeposite._id,
+      )
+      decline.status = action.payload.declinedDeposite.status
+      const singlewith = newsINGLEDeposit.find(
+        (depos) => depos._id == action.payload.declinedDeposite._id,
+      )
+      singlewith.status = action.payload.declinedDeposite.status
+
+      return {
+        ...state,
+        allDeposits: [...newDeposit], // [...newDeposits]
+        DepositApproval: action.payload,
+        allSingleDeposits: [...newsINGLEDeposit],
+      }
 
     case actionTypes.SET_WITHDRAWAL_AMOUNT:
       return {
@@ -208,6 +271,34 @@ export default function profileReducer(state = initialState, action) {
         error: null,
       }
 
+    case actionTypes.SINGLE_USER_BALANCE:
+      const balanceState = state.singleUser
+      balanceState.wallet = action.payload.wallet
+      balanceState.profit = action.payload.profit
+      balanceState.deposit = action.payload.deposit
+      balanceState.bonus = action.payload.bonus
+
+      return {
+        ...state,
+        loading: false,
+        singleUser: { ...balanceState },
+        error: null,
+      }
+    case actionTypes.ADD_USER_AUTO_COPY_TRADE:
+      const autoState = state.singleUser
+      autoState.currentBalance = action.payload.currentBalance
+
+      // balanceState.amount = action.payload.amount
+      // balanceState.deposit = action.payload.deposit
+      // balanceState.bonus = action.payload.bonus
+
+      return {
+        ...state,
+        loading: false,
+        singleUser: { ...autoState },
+        autoTradeData: [...state.autoTradeData, action.payload],
+        error: null,
+      }
     case actionTypes.GET_ALL_VERIFIED_USERS:
       return {
         ...state,
