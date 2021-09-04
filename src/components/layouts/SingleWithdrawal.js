@@ -4,11 +4,9 @@ import { useSelector } from 'react-redux'
 import { useActions } from '../hooks/useActions'
 
 const SingleWithdrawal = ({ status }) => {
-  const { approveWithdrawal, declineWithdrawal } = useActions()
-  const { singleUserVerifedDetails, error } = useSelector(
-    (state) => state.profile,
-  )
-  const { _id } = singleUserVerifedDetails
+  const { approveMAnagerWithdrawal, declineManagerWithdrawal } = useActions()
+  const { error } = useSelector((state) => state.profile)
+  const { _id } = status
   const [accept, setAccept] = useState('Accept')
   const [decline, setDecline] = useState('Declined')
 
@@ -20,7 +18,7 @@ const SingleWithdrawal = ({ status }) => {
         id: _id,
         message: 'Withdrawal has been approved',
       }
-      await approveWithdrawal(details)
+      await approveMAnagerWithdrawal(details)
       setAccept(null)
 
       setDecline(null)
@@ -36,14 +34,14 @@ const SingleWithdrawal = ({ status }) => {
         id: _id,
         message: 'withdrawal has been declined',
       }
-      await declineWithdrawal(details)
+      await declineManagerWithdrawal(details)
       setAccept('accept')
       setDecline(null)
 
       message.success('withdrawal was declined')
     }
   }
-  return status === 'Pending' ? (
+  return status.status === 'Pending' ? (
     <div className="d-flex flex-column" style={{ fontSize: '8px' }}>
       <div onClick={handleApproWithdraw}>
         <a className="text-light text-center p-0 bg-success mb-1">{accept}</a>
@@ -52,7 +50,7 @@ const SingleWithdrawal = ({ status }) => {
         <a className="text-light text-center bg-danger mb-0">{decline}</a>
       </div>
     </div>
-  ) : status === 'Declined' ? (
+  ) : status.status === 'Declined' ? (
     <a
       className="text-light text-center p-0 bg-success mb-1"
       onClick={handleApproWithdraw}

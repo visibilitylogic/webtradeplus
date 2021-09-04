@@ -1,82 +1,63 @@
-import { format } from "date-fns";
-import React from "react";
+import { format } from 'date-fns'
+import SingleWithdrawal from './SingleWithdrawal'
 
 export const singleUserWithdrawal = [
   {
-    field: "user",
-    width: 180,
-    type: "text",
-    headerName: "User",
-    // accessor: 'user',
-  },
+    Header: 'Ref',
 
-  {
-    field: "Ref",
-    width: 180,
-    headerName: "Ref",
-    type: "text",
-    // accessor: 'Ref',
+    accessor: 'Ref',
   },
   {
-    field: "time",
-    width: 180,
-    headerName: "Created Date",
-    type: "time",
-    accessor: "time",
+    Header: 'Created Date',
+    accessor: 'time',
     Cell: ({ value }) => {
-      return format(new Date(value), "dd/MM/yyyy");
+      return format(new Date(value), 'dd/MM/yyyy')
     },
   },
   {
-    field: "status",
-    width: 180,
-    type: "text",
-    headerName: "Status",
-    accessor: "status",
+    id: 'status',
+    Header: 'Status',
+    width: 100,
+    accessor: ({ status }) => (
+      <p
+        className={
+          status === 'Pending' || status === 'Declined'
+            ? 'bg-danger text-light   text-center'
+            : 'bg-success text-light   text-center '
+        }
+      >
+        {status}
+      </p>
+    ),
   },
   {
-    field: "Amount Paid",
-    width: 180,
-    headerName: "Amount Paid",
-    accessor: "",
+    Header: 'Amount Paid',
+    accessor: 'amount',
   },
   {
-    field: "fees",
-    width: 180,
-    headerName: "Fees",
-    type: "number",
-    accessor: "fees",
+    Header: 'Fees',
+    type: 'number',
+    accessor: 'fees',
   },
+  // {
+  //   Header: 'Wallet Received',
+  //   accessor: 'wallet',
+  // },
+
+  // {
+  //   field: 'Amount Recieved',
+  //   width: 180,
+  //   Header: 'Amount Received',
+  //   accessor: '',
+  // },
   {
-    field: "amount",
-    width: 180,
-    headerName: "Wallet Received",
-    accessor: "amount",
+    Header: 'Payment Gateway',
+    accessor: 'PaymentGateway',
   },
 
   {
-    field: "Amount Recieved",
-    width: 180,
-    headerName: "Amount Received",
-    accessor: "",
+    Header: 'Action',
+    accessor: 'status',
+    accessor: (status) => <SingleWithdrawal status={status} />,
   },
-  {
-    field: "Payment Gateway",
-    width: 180,
-    headerName: "Payment Gateway",
-    accessor: "",
-  },
-  {
-    field: "Proof",
-    width: 180,
-    headerName: "Proof",
-    accessor: "",
-  },
-
-  {
-    field: "status",
-    width: 180,
-    headerName: "Action",
-    accessor: "action",
-  },
-];
+]

@@ -21,11 +21,11 @@ import { tradeApprovalHeader } from './tradeApprovalHeader'
 import UserBalance from './UserBalance'
 import UserArea from './UserArea'
 import SingleUser from './SingleUser'
+import { autocopyHeader } from './autocopyHeader'
 import { paymentHeader } from './paymentHeader'
 import EstimatedBallance from './EstimatedBallance'
 import UserHeader from './UserHeader'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
-import CustomTable from '../../helpers/customTable/CustomTable'
 import { singleUserWithdrawal } from './singleWithdrawalStatuss'
 import { getAllUsers } from '../../store/action-creators/profileActions'
 const ManagerContents = (props) => {
@@ -54,8 +54,11 @@ const ManagerContents = (props) => {
     singleUser,
     singleWithdrawals,
     allSingleDeposits,
+    autoTradeData,
   } = useSelector((state) => state.profile)
-  console.log('wwww', allWithdrawals)
+
+  console.log(singleWithdrawals)
+  console.log(allWithdrawals)
 
   const { user } = useSelector((state) => state.auth)
 
@@ -118,12 +121,13 @@ const ManagerContents = (props) => {
     if (error) {
       message.error('Error Deleting Auto-trade')
     } else {
-      deleteUserAutoCopyTrade(user._id)
+      deleteUserAutoCopyTrade(singleUser._id)
       message.success('Successfully Deleted Auto-trade')
     }
 
     setLoading(false)
   }
+  console.log(allDeposits)
 
   const submitAutoCopyTrade = async (payload) => {
     setLoading(true)
@@ -240,7 +244,7 @@ const ManagerContents = (props) => {
 
   //************************************************************************************8****USER AREA */
   console.log(allDeposits)
-  console.log(singleUser)
+
   return (
     <div className="manager-tabs-details">
       <div className="manager-tab-dtls" manager-tab-dtls="statistics">
@@ -314,7 +318,7 @@ const ManagerContents = (props) => {
               allUsers={allDeposits}
               user={user}
               column={depositHeader}
-              type="deposit"
+              type="payment"
             />
           </TableContainer>
         )}
@@ -538,7 +542,7 @@ const ManagerContents = (props) => {
                     <Card style={{ background: '#fff' }}>
                       <Card.Body>
                         <h6>
-                          Current Balance:{' '}
+                          Wallet Balance:{' '}
                           <span
                             style={{
                               fontSize: '1.2rem',
@@ -733,13 +737,13 @@ const ManagerContents = (props) => {
                           <th>Asset</th>
                           <th>Amount</th>
                           <th>P/L</th>
-                          <th>Date</th>
+                          <th>Time</th>
                           <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {userAutoCopyTrade.length > 0 &&
-                          userAutoCopyTrade.map((data, index) => (
+                        {autoTradeData.length > 0 &&
+                          autoTradeData.map((data, index) => (
                             <tr key={index}>
                               <td>{index + 1}</td>
                               <td>{data.market}</td>
@@ -753,7 +757,7 @@ const ManagerContents = (props) => {
                               <td>{data.profitLoss ? 'Profit' : 'Loss'}</td>
                               <td>
                                 <Moment format="hh:mm - DD MMMM YYYY">
-                                  {data.scheduledTime}
+                                  {data.date}
                                 </Moment>
                               </td>
                               <td>
@@ -772,7 +776,9 @@ const ManagerContents = (props) => {
                                 </EditAutoCopyTrade>
                                 <Tag
                                   style={{ cursor: 'pointer' }}
-                                  onClick={() => deleteAutoCopyTrade()}
+                                  onClick={() =>
+                                    deleteAutoCopyTrade(singleUser._id)
+                                  }
                                   color="red"
                                 >
                                   {loading ? (
@@ -861,19 +867,12 @@ const ManagerContents = (props) => {
                         <h2 className="p-2 m-2">No Withdrawal</h2>
                       </div>
                     ) : (
-                      <CustomTable
+                      <BasicTable
                         allUsers={singleWithdrawals}
                         user={user}
                         column={singleUserWithdrawal}
                         type="withdrawal"
                       />
-                      // <BasicTable
-                      //   allUsers={singleWithdrawals}
-                      //   user={user}
-                      //   column={singleUserWithdrawal}
-                      //   type="withdrawal"
-
-                      // />
                     )}
 
                     {/* sdfdsj */}
