@@ -24,8 +24,7 @@ const initialState = {
   allSingleDeposits: [],
   DepositApproval: {},
   singleUserVerifedDetails: {},
-  tradeProfit: 0,
-  autoTradeData: [],
+  openTrades: [],
 }
 
 export default function profileReducer(state = initialState, action) {
@@ -323,6 +322,7 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         loading: false,
         userTrades: action.payload,
+        openTrades: state.userTrades.filter((trade) => trade.isOpen),
         error: null,
       }
     case actionTypes.CURRENTLY_ACTIVE_TRADE:
@@ -337,13 +337,6 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         loading: false,
         userMargin: action.payload,
-      }
-
-    case actionTypes.SET_TRADE_PROFIT:
-      return {
-        ...state,
-        loading: false,
-        tradeProfit: action.payload,
       }
 
     case actionTypes.PROFILE_ERROR:

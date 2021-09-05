@@ -7848,3 +7848,16 @@ label.custom-control-label {
   left: 60%;
   top: 5%;
 }
+
+.chartPandL {
+  position: absolute;
+  z-index: 9;
+  background: transparent;
+  /* color: white; */
+  left: 62%;
+  top: 5px;
+}
+
+.chartPandL h2 {
+  font-size: 1.5rem;
+}
