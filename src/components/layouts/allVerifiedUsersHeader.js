@@ -17,11 +17,10 @@ export const allVerifiedUsersHeader = [
 
   {
     Header: 'Status',
-
     accessor: ({ status }) => (
       <p
         className={
-          status === 'Pending'
+          status === 'Pending' || status === 'Declined'
             ? 'bg-danger text-light  text-center'
             : 'bg-success text-light  text-center '
         }
@@ -47,6 +46,7 @@ export const allVerifiedUsersHeader = [
   },
   {
     Header: 'Action',
+    accessor: 'status',
     accessor: (status) => <ApproveDoc status={status} />,
   },
 ]

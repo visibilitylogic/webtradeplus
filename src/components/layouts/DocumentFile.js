@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Container, Modal } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 
-function DocumentFile() {
+const DocumentFile = () => {
   const { singleUserVerifedDetails } = useSelector((state) => state.profile)
   const { name, phoneNumber, address } = singleUserVerifedDetails
 
@@ -50,7 +50,7 @@ export default React.memo(DocumentFile)
 const TextHeader = styled.div`
   .text-container {
     display: flex;
-    justify-content: ;
+    justify-content: center;
     align-items: center;
   }
   .text-container h6 {
