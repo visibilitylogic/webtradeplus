@@ -4,6 +4,8 @@ import { useActions } from "../../../hooks/useActions";
 import { useSelector } from "react-redux";
 import { getRate } from "../../../../helpers/getRate";
 import { message } from "antd";
+import { animateBalance } from "../../../../helpers/animateBalance";
+import { tradesMargin } from "../../../../helpers/getOpenTradesMargin";
 
 const BuyStockModal = (props) => {
   const {
@@ -23,7 +25,9 @@ const BuyStockModal = (props) => {
   const { currentSelectedStock, defaultSelectedStock } = useSelector(
     (state) => state.stock
   );
-  const { error, userMargin } = useSelector((state) => state.profile);
+  const { error, userMargin, openTrades } = useSelector(
+    (state) => state.profile
+  );
   const { webData } = useSelector((state) => state.web);
 
   const {
@@ -32,6 +36,10 @@ const BuyStockModal = (props) => {
     setUserMargin,
     getCurrentProfile,
   } = useActions();
+
+  const openTradesMargin = tradesMargin(openTrades);
+
+  const balance = user && user.wallet + user.bonus - openTradesMargin;
 
   const handleStockPurchase = (event) => {
     event.preventDefault();
@@ -71,7 +79,8 @@ const BuyStockModal = (props) => {
         loss: 0,
       });
       message.success("Your stock has been successfully purchased");
-      getCurrentProfile(userId && userId);
+      animateBalance("balance", balance, balance - userMargin, 3000);
+      // getCurrentProfile(user && user._id)
       setCurrentlyActiveTrade(
         Object.keys(currentSelectedStock).length > 0
           ? { ...currentSelectedStock, margin: userMargin, tag: "buy" }

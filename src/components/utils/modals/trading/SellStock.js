@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { useActions } from "../../../hooks/useActions";
 import { getRate } from "../../../../helpers/getRate";
 import { message } from "antd";
+import { tradesMargin } from "../../../../helpers/getOpenTradesMargin";
+import { animateBalance } from "../../../../helpers/animateBalance";
 
 const SellStockModal = (props) => {
   const {
@@ -19,14 +21,21 @@ const SellStockModal = (props) => {
   } = props;
 
   const { user } = useSelector((state) => state.auth);
-  const { error, userMargin } = useSelector((state) => state.profile);
+  const { error, userMargin, openTrades } = useSelector(
+    (state) => state.profile
+  );
   const { currentSelectedStock, defaultSelectedStock } = useSelector(
     (state) => state.stock
   );
   const { webData } = useSelector((state) => state.web);
 
+  // Action Creators
   const { sellStockAsset, setCurrentlyActiveTrade, setUserMargin } =
     useActions();
+
+  const openTradesMargin = tradesMargin(openTrades);
+
+  const balance = user && user.wallet + user.bonus - openTradesMargin;
 
   const handleStockSale = (event) => {
     event.preventDefault();
@@ -67,6 +76,7 @@ const SellStockModal = (props) => {
         loss: 0,
       });
       message.success("Your stock has been successfully sold");
+      animateBalance("balance", balance, balance - userMargin, 3000);
       setCurrentlyActiveTrade(
         Object.keys(currentSelectedStock).length > 0
           ? { ...currentSelectedStock, margin: userMargin, tag: "sell" }
