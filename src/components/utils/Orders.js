@@ -6,7 +6,6 @@ import useInterval from "../hooks/useInterval";
 import { message } from "antd";
 import "./Orders.css";
 import Spinner from "./Spinner";
-import { getProfitOrLoss } from "../../helpers/getProfitOrLoss";
 import { calculatePandL } from "../../helpers/calculatePandL";
 
 const spinnerStyle = {
@@ -29,8 +28,7 @@ const Orders = (props) => {
   const {
     getAllUserTrades,
     deleteUserTrade,
-    closeUserBuyTrade,
-    closeUserSellTrade,
+    closeUserTrade,
     setCurrentlyActiveTrade,
   } = useActions();
 
@@ -52,25 +50,15 @@ const Orders = (props) => {
       return;
     }
 
-    if (trade.tag === "buy") {
-      closeUserBuyTrade(trade._id, {
-        closeRateOfAsset: closeRate,
-      });
-
-      setCurrentlyActiveTrade({});
-    } else {
-      closeUserSellTrade(trade._id, {
-        closeRateOfAsset: closeRate,
-      });
-      setCurrentlyActiveTrade({});
-    }
+    closeUserTrade(trade._id, {
+      closeRateOfAsset: closeRate,
+    });
+    setCurrentlyActiveTrade({});
 
     setTimeout(
       () => message.success("Your trade has been closed successfully"),
       5000
     );
-
-    // setTimeout(() => window.location.reload(), 6000);
   };
 
   useInterval(() => {
@@ -210,7 +198,12 @@ const Orders = (props) => {
                                   </td>
                                   <td
                                     style={{
-                                      color: item.profit ? "#54ac40" : "red",
+                                      color:
+                                        item.profit > 0
+                                          ? "#54ac40"
+                                          : item.loss > 0
+                                          ? "red"
+                                          : "#fff",
                                     }}
                                   >
                                     {new Intl.NumberFormat("en-US").format(
@@ -253,17 +246,12 @@ const Orders = (props) => {
                                     <i
                                       className="fas fa-trash trashS"
                                       onClick={() => {
-                                        if (item.tag === "buy") {
-                                          closeUserBuyTrade(
-                                            item._id,
-                                            asset.price
-                                          );
-                                        } else {
-                                          closeUserSellTrade(
-                                            item._id,
-                                            asset.price
-                                          );
+                                        if (item.isOpen) {
+                                          closeUserTrade(item._id, {
+                                            closeRateOfAsset: asset.price,
+                                          });
                                         }
+
                                         handleDeleteUserTrade(item._id);
                                       }}
                                     >
