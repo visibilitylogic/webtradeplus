@@ -47,7 +47,6 @@ const ManagerContents = (props) => {
     bankTransfers,
     allTrades,
     allUsers,
-    singleDeposit,
     userTrades,
     userAutoCopyTrade,
     tradeApproval,
@@ -66,7 +65,6 @@ const ManagerContents = (props) => {
   const {
     updateWalletBalance,
     setNotificationEnabled, // expecting end point
-    deleteUser,
     getAllUsers,
     getUserAutoCopyTrade,
     addUserAutoCopyTrade,
@@ -76,20 +74,15 @@ const ManagerContents = (props) => {
     singleUserDeposit,
     getSingleWithdrawals,
     getAllUserTrades,
+    getAllDeposits,
   } = useActions()
 
   /***********************************************BASIC TABLE**************************************/
   //  const [singleUser, setSingleUser] = useState({})
   useEffect(() => {
     getAllUsers()
+    // getAllDeposits()
   }, [singleUser])
-
-  // useEffect(() => {
-  //   console.log('hi from useEfect')
-  //   if (singleUsers) {
-  //     setSingleUser({ ...singleUsers })
-  //   }
-  // }, [singleUsers])
 
   const [loading, setLoading] = useState(false)
   const [profitLoss, setProfitLoss] = useState(false)
@@ -226,21 +219,6 @@ const ManagerContents = (props) => {
     setCard(false)
     setWithd(false)
   }
-
-  const handleDeleteUser = async (value) => {
-    if (error) {
-      message.error('Try again')
-    } else {
-      await deleteUser(value)
-      message.success('User was successfully deleted from the database')
-      history.push('/')
-    }
-  }
-
-  // useEffect(() => {
-  //   console.log(33)
-  //   getAllUsers()
-  // }, [singleUser])
 
   //************************************************************************************8****USER AREA */
   console.log(allDeposits)
@@ -468,7 +446,6 @@ const ManagerContents = (props) => {
                             // toggle={toggle}
                             singleUser={singleUser}
                             setEditProfile={setEditProfile}
-                            handleDeleteUser={handleDeleteUser}
                           />
                         )}
                       </div>
@@ -521,7 +498,6 @@ const ManagerContents = (props) => {
                           <UserArea
                             singleUser={singleUser}
                             setEditProfile={setEditProfile}
-                            handleDeleteUser={handleDeleteUser}
                           />
                         )}
                       </div>
@@ -814,7 +790,6 @@ const ManagerContents = (props) => {
                           <UserArea
                             singleUser={singleUser}
                             setEditProfile={setEditProfile}
-                            handleDeleteUser={handleDeleteUser}
                           />
                         )}
                       </div>
@@ -856,7 +831,6 @@ const ManagerContents = (props) => {
                             singleUser={singleUser}
                             user={user}
                             setEditProfile={setEditProfile}
-                            handleDeleteUser={handleDeleteUser}
                           />
                         )}
                       </div>
@@ -900,7 +874,6 @@ const ManagerContents = (props) => {
                           <UserArea
                             singleUser={singleUser}
                             setEditProfile={setEditProfile}
-                            handleDeleteUser={handleDeleteUser}
                           />
                         )}
                       </div>
@@ -942,7 +915,6 @@ const ManagerContents = (props) => {
                           <UserArea
                             singleUser={singleUser}
                             setEditProfile={setEditProfile}
-                            handleDeleteUser={handleDeleteUser}
                           />
                         )}
                       </div>

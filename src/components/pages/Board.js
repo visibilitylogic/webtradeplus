@@ -330,7 +330,7 @@ const Board = (props) => {
                             type="checkbox"
                             defaultChecked={user && user.autoTrade}
                             // onChange={handleTrading}
-                            disabled={!user.autoTrade}
+                            disabled={true}
                           />
                           <span className="slider round" />
                         </label>
