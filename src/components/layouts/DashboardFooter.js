@@ -6,6 +6,7 @@ import SwitchButton from "../utils/SwitchButton";
 import { useSelector } from "react-redux";
 import { getPandL } from "../../helpers/getProfitOrLoss";
 import { tradesMargin } from "./../../helpers/getOpenTradesMargin";
+import { getUserBalance } from "./../../helpers/getUserBalance";
 
 const DashboardFooter = ({ setSupport, timer }) => {
   const { user } = useSelector((state) => state.auth);
@@ -14,9 +15,9 @@ const DashboardFooter = ({ setSupport, timer }) => {
 
   const profitOrLoss = getPandL(openTrades, allStockAssets);
 
-  const balance = user && user.wallet + user.bonus;
-
   const openTradesMargin = tradesMargin(openTrades);
+
+  const balance = getUserBalance(user, openTradesMargin);
 
   const equity =
     openTrades.length > 0
@@ -76,9 +77,7 @@ const DashboardFooter = ({ setSupport, timer }) => {
             <span>
               {user && user.currency === "USD" ? "$" : user && user.currency}
               {openTrades.length > 0
-                ? new Intl.NumberFormat("en-US")
-                    .format(balance - openTradesMargin)
-                    .slice(0, 9)
+                ? new Intl.NumberFormat("en-US").format(balance).slice(0, 9)
                 : new Intl.NumberFormat("en-US")
                     .format(balance)
                     .slice(0, 9)}{" "}
