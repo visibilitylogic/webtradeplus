@@ -6,8 +6,10 @@ import useInterval from "../hooks/useInterval";
 import { message } from "antd";
 import "./Orders.css";
 import Spinner from "./Spinner";
-import { getProfitOrLoss } from "../../helpers/getProfitOrLoss";
+import { tradesMargin } from "../../helpers/getOpenTradesMargin";
 import { calculatePandL } from "../../helpers/calculatePandL";
+import { animateBalance } from "../../helpers/animateBalance";
+import { getUserBalance } from "../../helpers/getUserBalance";
 
 const spinnerStyle = {
   height: "100%",
@@ -21,7 +23,9 @@ const Orders = (props) => {
   const { buysell, setBuysell } = props;
 
   const { user } = useSelector((state) => state.auth);
-  const { userTrades, error, loading } = useSelector((state) => state.profile);
+  const { userTrades, openTrades, error, loading } = useSelector(
+    (state) => state.profile
+  );
   const { allStockAssets } = useSelector((state) => state.stock);
   const { activeTrade } = useSelector((state) => state.profile);
   const { webData } = useSelector((state) => state.web);
@@ -29,10 +33,13 @@ const Orders = (props) => {
   const {
     getAllUserTrades,
     deleteUserTrade,
-    closeUserBuyTrade,
-    closeUserSellTrade,
+    closeUserTrade,
     setCurrentlyActiveTrade,
   } = useActions();
+
+  const openTradesMargin = tradesMargin(openTrades);
+
+  const balance = getUserBalance(user, openTradesMargin);
 
   const handleDeleteUserTrade = (tradeId) => {
     if (error) {
@@ -52,25 +59,19 @@ const Orders = (props) => {
       return;
     }
 
-    if (trade.tag === "buy") {
-      closeUserBuyTrade(trade._id, {
-        closeRateOfAsset: closeRate,
-      });
-
-      setCurrentlyActiveTrade({});
-    } else {
-      closeUserSellTrade(trade._id, {
-        closeRateOfAsset: closeRate,
-      });
-      setCurrentlyActiveTrade({});
-    }
+    closeUserTrade(trade._id, {
+      closeRateOfAsset: closeRate,
+    });
+    setCurrentlyActiveTrade({});
 
     setTimeout(
       () => message.success("Your trade has been closed successfully"),
       5000
     );
 
-    // setTimeout(() => window.location.reload(), 6000);
+    setTimeout(() => {
+      animateBalance("balance", balance, balance + trade.margin, 3000);
+    }, 6000);
   };
 
   useInterval(() => {
@@ -210,7 +211,12 @@ const Orders = (props) => {
                                   </td>
                                   <td
                                     style={{
-                                      color: item.profit ? "#54ac40" : "red",
+                                      color:
+                                        item.profit > 0
+                                          ? "#54ac40"
+                                          : item.loss > 0
+                                          ? "red"
+                                          : "#fff",
                                     }}
                                   >
                                     {new Intl.NumberFormat("en-US").format(
@@ -253,17 +259,12 @@ const Orders = (props) => {
                                     <i
                                       className="fas fa-trash trashS"
                                       onClick={() => {
-                                        if (item.tag === "buy") {
-                                          closeUserBuyTrade(
-                                            item._id,
-                                            asset.price
-                                          );
-                                        } else {
-                                          closeUserSellTrade(
-                                            item._id,
-                                            asset.price
-                                          );
+                                        if (item.isOpen) {
+                                          closeUserTrade(item._id, {
+                                            closeRateOfAsset: asset.price,
+                                          });
                                         }
+
                                         handleDeleteUserTrade(item._id);
                                       }}
                                     >

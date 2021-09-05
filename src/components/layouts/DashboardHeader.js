@@ -33,13 +33,12 @@ import { useActions } from "../hooks/useActions";
 import Withdrawals from "../utils/modals/withdrawal/Withdrawals";
 import CryptoStepSix from "../utils/modals/deposit/crypto-steps/CryptoStepSix";
 import { tradesMargin } from "./../../helpers/getOpenTradesMargin";
+import { getUserBalance } from "../../helpers/getUserBalance";
 
 const DashboardHeader = ({ support, setSupport, data }) => {
   const history = useHistory();
   const { user, loading } = useSelector((state) => state.auth);
-  const { profile, activeTrade, openTrades } = useSelector(
-    (state) => state.profile
-  );
+  const { userMargin, openTrades } = useSelector((state) => state.profile);
   const { isDarkMode } = useSelector((state) => state.theme);
 
   const { logout, setCurrentSelectedStock } = useActions();
@@ -53,7 +52,8 @@ const DashboardHeader = ({ support, setSupport, data }) => {
   const [cryptoStepSix, setCryptoStepSix] = useState(false);
   const [openVerification, setOpenVerification] = useState(false);
   const [openForex, setOpenForex] = useState(false);
-  const [hideAutoTradeModal, setHideAutoTradeModal] = useState(false);
+  // const [hideAutoTradeModal, setHideAutoTradeModal] = useState(false);
+  const [showCredit, setShowCredit] = useState(false);
 
   const [paymentDetails, handlePaymentDetails] = useFormInput({
     bankName: "",
@@ -68,17 +68,9 @@ const DashboardHeader = ({ support, setSupport, data }) => {
     yourCity: "",
   });
 
-  const balance = user && user.wallet + user.bonus;
-
-  // const openTradesMargin =
-  //   openTrades.length > 0
-  //     ? openTrades.reduce((sum, currentVal) => sum + currentVal.margin, 0)
-  //     : 0;
-
   const openTradesMargin = tradesMargin(openTrades);
 
-  //   MODAL STATES
-  const [showCredit, setShowCredit] = useState(false);
+  const balance = getUserBalance(user, openTradesMargin);
 
   const handleLogout = () => {
     logout();
@@ -106,10 +98,6 @@ const DashboardHeader = ({ support, setSupport, data }) => {
       setOpenVerification(true);
     }
   };
-
-  // useInterval(() => {
-  //   loadUser(user && userId);
-  // }, 10000);
 
   return (
     !loading && (
@@ -331,17 +319,21 @@ const DashboardHeader = ({ support, setSupport, data }) => {
             <NavDropdown
               title={
                 <div className="account-wrapper">
-                  <h6 className="mb-0">
-                    {user && user.currency === "USD"
-                      ? "$"
-                      : user && user.currency}
-                    {openTrades.length > 0
-                      ? new Intl.NumberFormat("en-US")
-                          .format(balance - openTradesMargin)
-                          .slice(0, 9)
-                      : new Intl.NumberFormat("en-US")
-                          .format(balance)
-                          .slice(0, 9)}
+                  <h6 className="mb-0 d-flex">
+                    <span>
+                      {user && user.currency === "USD"
+                        ? "$"
+                        : user && user.currency}
+                    </span>
+                    <span id="balance">
+                      {openTrades.length > 0
+                        ? new Intl.NumberFormat("en-US")
+                            .format(balance)
+                            .slice(0, 9)
+                        : new Intl.NumberFormat("en-US")
+                            .format(balance)
+                            .slice(0, 9)}
+                    </span>
                   </h6>
                 </div>
               }
@@ -454,7 +446,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                           : user && user.currency}
                         {openTrades.length > 0
                           ? new Intl.NumberFormat("en-US")
-                              .format(balance - openTradesMargin)
+                              .format(balance)
                               .slice(0, 9)
                           : new Intl.NumberFormat("en-US")
                               .format(balance)
@@ -470,7 +462,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                         : user && user.currency}
                       {openTrades.length > 0
                         ? new Intl.NumberFormat("en-US")
-                            .format(balance - openTradesMargin)
+                            .format(balance)
                             .slice(0, 9)
                         : new Intl.NumberFormat("en-US")
                             .format(balance)

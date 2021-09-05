@@ -1160,7 +1160,7 @@ export const ActivateUser = (userId) => async (dispatch) => {
   }
 }
 
-export const closeUserBuyTrade = (tradeId, data) => async (dispatch) => {
+export const closeUserTrade = (tradeId, data) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -1186,28 +1186,32 @@ export const closeUserBuyTrade = (tradeId, data) => async (dispatch) => {
   }
 }
 
-export const closeUserSellTrade = (tradeId, data) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }
+// export const closeUserSellTrade = (tradeId, data) => async (dispatch) => {
+//   const config = {
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   };
 
-  const body = JSON.stringify(data)
+//   const body = JSON.stringify(data);
 
-  try {
-    await axios.put(`${BASE_URL}/api/trade/closeTrade/${tradeId}`, body, config)
+//   try {
+//     await axios.put(
+//       `${BASE_URL}/api/trade/closeTrade/${tradeId}`,
+//       body,
+//       config
+//     );
 
-    dispatch({
-      type: actionTypes.CLOSE_USER_SELL_TRADE,
-    })
-  } catch (error) {
-    dispatch({
-      type: actionTypes.PROFILE_ERROR,
-      payload: error.message,
-    })
-  }
-}
+//     dispatch({
+//       type: actionTypes.CLOSE_USER_SELL_TRADE,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: actionTypes.PROFILE_ERROR,
+//       payload: error.message,
+//     });
+//   }
+// };
 
 export const setCurrentlyActiveTrade = (trade) => (dispatch) => {
   dispatch({
