@@ -4,17 +4,17 @@ import { useActions } from '../hooks/useActions'
 import { message } from 'antd'
 import DeclineModal from './DeclineModal'
 
-import { Container, Modal, Form, Button } from 'react-bootstrap'
-
-function ApproveDoc({ status }) {
-  const { declineVerify, approveVerify } = useActions()
-  const { singleUserVerifedDetails, error } = useSelector(
+const ApproveDoc = ({ status }) => {
+  const { ManagerdeclineVerify, managerApproveVerify } = useActions()
+  // const { singleUserVerifedDetails } = useSelector((state) => state.profile)
+  const { error, singleUserVerifedDetails } = useSelector(
     (state) => state.profile,
   )
-  const { userId } = singleUserVerifedDetails
-  const [accept, setAccept] = useState('Accept')
-  const [decline, setDecline] = useState('Declined')
+  const { userId } = status
   const [modalstate, setmodalstate] = useState(false)
+  console.log(singleUserVerifedDetails)
+  const [accept, setAccept] = useState('Accept')
+  const [decline, setDecline] = useState('Decline')
 
   const handleapproveVerify = async () => {
     if (error) {
@@ -24,13 +24,11 @@ function ApproveDoc({ status }) {
         id: userId,
         message: 'Document was succesffully approved',
       }
-      await approveVerify(details)
+      await managerApproveVerify(details)
       setAccept(null)
 
       setDecline(false)
       message.success('Successfully Approved')
-      window.location.reload();
-
     }
   }
   const handledeclineVerify = async () => {
@@ -41,37 +39,48 @@ function ApproveDoc({ status }) {
         id: userId,
         message: 'Document was succesffully approved',
       }
-      await declineVerify(details)
+      await ManagerdeclineVerify(details)
 
       message.success('Successfully Declined')
-      window.location.reload();
-
     }
   }
-
-  return status === 'Pending' ? (
-    <div className="d-flex flex-column" style={{ fontSize: '8px' }}>
-      <div onClick={handleapproveVerify}>
-        <a className="text-light text-center p-0 bg-success mb-1">
-          {accept ? accept : null}
+  // console.log(modalstate)
+  return (
+    <>
+      {status.status === 'Pending' ? (
+        <div className="d-flex flex-column" style={{ fontSize: '8px' }}>
+          <div onClick={handleapproveVerify}>
+            <a className="text-light text-center p-0 bg-success mb-1">
+              {accept ? accept : null}
+            </a>
+          </div>
+          <div
+            onClick={handledeclineVerify}
+            //  setmodalstate(true)
+            // {}
+          >
+            {/* <DeclineModal
+              status={status}
+              modalstate={modalstate}
+              // setModalState={setmodalstate}
+            /> */}
+            <a className="text-light text-center bg-danger mb-0">
+              {status ? decline : null}
+            </a>
+          </div>
+        </div>
+      ) : status.status === 'Declined' || status.status === 'Pending' ? (
+        <a
+          className="text-light text-center p-0 bg-success mb-1"
+          href="#"
+          onClick={handleapproveVerify}
+        >
+          {accept}
         </a>
-      </div>
-      <div onClick={handledeclineVerify}>
-        <a className="text-light text-center bg-danger mb-0">
-          {status ? decline : null}
-        </a>
-      </div>
-    </div>
-  ) : status === 'Declined' || status === 'Pending' ? (
-    <a
-      className="text-light text-center p-0 bg-success mb-1"
-      onClick={setmodalstate(true)}
-      // onClick={handleapproveVerify}
-    >
-      <DeclineModal modalstate={modalstate} status={status} />
-      {accept}
-    </a>
-  ) : null
+      ) : null}
+    </>
+  )
 }
 
-export default ApproveDoc
+export default React.memo(ApproveDoc)
+//

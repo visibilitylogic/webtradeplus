@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ReactCountryFlag from 'react-country-flag'
-import { useActions } from '../hooks/useActions'
+
 import CountryList from 'react-select-country-list'
 import { useSelector } from 'react-redux'
-import { set } from 'date-fns'
 
-const UserHeader = ({ singleUser }) => {
-  const { email, country, name, img, _id, isOnline } = singleUser
+const UserHeader = () => {
+  const { singleUser } = useSelector((state) => state.profile)
+  const { email, country, name, img, isOnline } = singleUser
 
   return (
     <>

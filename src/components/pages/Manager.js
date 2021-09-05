@@ -8,7 +8,6 @@ import ManagerContents from '../layouts/ManagerContents'
 
 const Manager = () => {
   const { user, userId } = useSelector((state) => state.auth)
-  const { singleUser } = useSelector((state) => state.profile)
 
   const [displayC, setDisplayC] = useState(false)
   const [editProfile, setEditProfile] = useState(false)
@@ -39,7 +38,7 @@ const Manager = () => {
 
       document.body.appendChild(script)
     }
-  }, [user])
+  }, [])
 
   return (
     <>
@@ -52,7 +51,6 @@ const Manager = () => {
           displayC={displayC}
           setDisplayC={setDisplayC}
           setEditProfile={setEditProfile}
-          singleUser={singleUser}
         />
       </div>
       {editProfile && (

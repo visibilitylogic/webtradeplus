@@ -56,11 +56,9 @@ const ManagerContents = (props) => {
     autoTradeData,
   } = useSelector((state) => state.profile)
 
-  console.log(singleWithdrawals)
-  console.log(allWithdrawals)
-
   const { user } = useSelector((state) => state.auth)
 
+  console.log(singleUser)
   // ACTION CREATORS
   const {
     updateWalletBalance,
@@ -120,7 +118,6 @@ const ManagerContents = (props) => {
 
     setLoading(false)
   }
-  console.log(allDeposits)
 
   const submitAutoCopyTrade = async (payload) => {
     setLoading(true)
@@ -221,7 +218,6 @@ const ManagerContents = (props) => {
   }
 
   //************************************************************************************8****USER AREA */
-  console.log(allDeposits)
 
   return (
     <div className="manager-tabs-details">
@@ -328,18 +324,10 @@ const ManagerContents = (props) => {
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="identity">
         {allVerifiedUsers && allVerifiedUsers.length > 0 && (
-          // <CustomTable
-          //   allUsers={allVerifiedUsers}
-          //   user={user}
-          //   column={allVerifiedUsersHeader}
-          //   type="verifiedUsers"
-          //   key={allVerifiedUsers}
-          // />
           <TableContainer>
             <BasicTable
               allUsers={allVerifiedUsers}
               user={user}
-              key={allVerifiedUsers}
               column={allVerifiedUsersHeader}
               type="verifiedUsers"
             />

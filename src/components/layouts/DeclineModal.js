@@ -1,34 +1,41 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { Container, Modal, Form, Button } from "react-bootstrap";
-import { message } from "antd";
-import { useSelector } from "react-redux";
-import { useActions } from "../hooks/useActions";
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Container, Modal, Form, Button } from 'react-bootstrap'
+import { message } from 'antd'
+import { useSelector } from 'react-redux'
+import { useActions } from '../hooks/useActions'
 
-const DeclineModal = ({ modalstate, status, setModalState }) => {
-  const [declinedMessage, setDeclinedMessage] = useState("");
-  const { declineVerify } = useActions();
-  const { error } = useSelector((state) => state.profile);
+const DeclineModal = ({
+  modalstate,
+  status,
+  // setModalState,
+  handledeclineVerify,
+  setmodalstate,
+}) => {
+  const [declinedMessage, setDeclinedMessage] = useState('')
+  const { ManagerdeclineVerify } = useActions()
+  const { error } = useSelector((state) => state.profile)
+  const [state, setstate] = useState(modalstate)
 
   const handledecline = async () => {
     if (error) {
-      message.error("Denial Was Not Successful");
+      message.error('Denial Was Not Successful')
     } else {
       const details = {
         id: status.userId,
         message: declinedMessage,
-      };
+      }
 
-      declineVerify(details);
-      setDeclinedMessage("");
+      ManagerdeclineVerify(details)
+      setDeclinedMessage('')
 
       //   setDecline(false);
-      message.success("Identity Was Successfully Declined");
+      message.success('Identity Was Successfully Declined')
     }
-  };
-
+  }
+  console.log(state)
   if (!modalstate) {
-    return null;
+    return null
   } else if (modalstate) {
     return (
       <>
@@ -45,7 +52,7 @@ const DeclineModal = ({ modalstate, status, setModalState }) => {
             <Container fluid>
               <Form className="text-left">
                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                  <Form.Label className="py-4" style={{ color: "#fff" }}>
+                  <Form.Label className="py-4" style={{ color: '#fff' }}>
                     Write below the reason for rejection
                   </Form.Label>
                   <Form.Control
@@ -59,7 +66,7 @@ const DeclineModal = ({ modalstate, status, setModalState }) => {
                   <Button
                     variant="primary "
                     className="mr-2"
-                    onClick={() => setModalState(() => false)}
+                    onClick={() => setstate(!state)}
                   >
                     Cancel
                   </Button>
@@ -72,14 +79,14 @@ const DeclineModal = ({ modalstate, status, setModalState }) => {
           </Modal.Body>
         </Modal>
       </>
-    );
+    )
   }
-};
+}
 
-export default React.memo(DeclineModal);
+export default React.memo(DeclineModal)
 
 const ModalHeader = styled.div`
 display: 'flex',
 justifyContent: 'center',
 alignItems: 'center',
-`;
+`
