@@ -65,34 +65,37 @@ export default function profileReducer(state = initialState, action) {
       const sing = newDeposits.find(
         (dep) => dep._id === action.payload.approveDeposit._id,
       )
-      sing.status = action.payload.approveDeposit.status
-      const single = newsINGLEDeposits.find(
-        (depo) => depo._id == action.payload.approveDeposit._id,
-      )
-      single.status = action.payload.approveDeposit.status
+      const single = newsINGLEDeposits.find((depo) => {
+        if (depo._id == action.payload.approveDeposit._id) {
+          return (single.status = action.payload.approveDeposit.status)
+        }
+      })
 
+      sing.status = action.payload.approveDeposit.status
       return {
         ...state,
-        allDeposits: [...newDeposits], // [...newDeposits]
-        DepositApproval: action.payload,
+        allDeposits: [...newDeposits, sing], // [...newDeposits]
+        // DepositApproval: action.payload,
         allSingleDeposits: [...newsINGLEDeposits],
       }
+
     case actionTypes.APPROVE_MANAGER_WITHDRAWAL:
       const newWithdraw = state.allWithdrawals
       const newsINGLEWithdraw = state.singleWithdrawals
       const singW = newWithdraw.find(
         (dep) => dep._id === action.payload.approvedWithdraw._id,
       )
+      const singleW = newsINGLEWithdraw.find((depo) => {
+        if (depo._id == action.payload.approvedWithdraw._id) {
+          return (singleW.status = action.payload.approvedWithdraw.status)
+        }
+      })
       singW.status = action.payload.approvedWithdraw.status
-      const singleW = newsINGLEWithdraw.find(
-        (depo) => depo._id == action.payload.approvedWithdraw._id,
-      )
-      singleW.status = action.payload.approvedWithdraw.status
 
       return {
         ...state,
         allWithdrawals: [...newWithdraw], // [...newDeposits]
-        DepositApproval: action.payload,
+        // DepositApproval: action.payload,
         singleWithdrawals: [...newsINGLEWithdraw],
       }
 
@@ -103,17 +106,19 @@ export default function profileReducer(state = initialState, action) {
         (dep) => dep._id === action.payload.declinedWithdraw._id,
       )
       singWs.status = action.payload.declinedWithdraw.status
-      const singles = newsINGLEWithdraws.find(
-        (depo) => depo._id == action.payload.declinedWithdraw._id,
-      )
-      singles.status = action.payload.declinedWithdraw.status
+      const singles = newsINGLEWithdraws.find((depo) => {
+        if (depo._id == action.payload.declinedWithdraw._id) {
+          return (singles.status = action.payload.declinedWithdraw.status)
+        }
+      })
 
       return {
         ...state,
         allWithdrawals: [...newWithdraws], // [...newDeposits]
-        DepositApproval: action.payload,
+
         singleWithdrawals: [...newsINGLEWithdraws],
       }
+
     case actionTypes.APPROVE_DECLINE_DEPOSIT:
       const newDeposit = state.allDeposits
       const newsINGLEDeposit = state.allSingleDeposits
@@ -121,15 +126,15 @@ export default function profileReducer(state = initialState, action) {
         (dep) => dep._id === action.payload.declinedDeposite._id,
       )
       decline.status = action.payload.declinedDeposite.status
-      const singlewith = newsINGLEDeposit.find(
-        (depos) => depos._id == action.payload.declinedDeposite._id,
-      )
-      singlewith.status = action.payload.declinedDeposite.status
+      const singlewith = newsINGLEDeposit.find((depos) => {
+        if (depos._id == action.payload.declinedDeposite._id) {
+          return (singlewith.status = action.payload.declinedDeposite.status)
+        }
+      })
 
       return {
         ...state,
         allDeposits: [...newDeposit], // [...newDeposits]
-        DepositApproval: action.payload,
         allSingleDeposits: [...newsINGLEDeposit],
       }
 

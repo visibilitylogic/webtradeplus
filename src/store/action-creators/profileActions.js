@@ -596,7 +596,7 @@ export const declineManagerWithdrawal = (details) => async (dispatch) => {
     )
     dispatch({
       type: actionTypes.DECLINE_MANAGER_WITHDRAWAL,
-      type: data,
+      payload: data,
     })
     console.log(data)
   } catch (error) {
@@ -921,7 +921,6 @@ export const getSingleDeposit = (details) => async (dispatch) => {
 }
 
 export const getAllOrders = () => async (dispatch) => {
-  console.log(`true`, true)
   try {
     const { data } = await axios.get(`${BASE_URL}/api/trade/buy/allTrade`)
 

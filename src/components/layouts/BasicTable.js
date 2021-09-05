@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import { useTable, useSortBy, usePagination } from 'react-table'
+import { getAllDeposits } from '../../store/action-creators/profileActions'
 import { useActions } from '../hooks/useActions'
 import FooterComponent from './FooterComponent'
 const BasicTable = ({
@@ -9,22 +10,24 @@ const BasicTable = ({
   user,
   column,
   type,
-  getSingleProfile,
-  getVerifieddetails,
-  singleUserDeposit,
-  getSingleWithdrawals,
-  // getCurrentProfile,
-  getAllUserTrades,
+  // getSingleProfile,
+  // getVerifieddetails,
+  // singleUserDeposit,
+  // getSingleWithdrawals,
+  // // getCurrentProfile,
+  // getAllUserTrades,
 }) => {
-  const columns =  column
+  const columns = column
   const data = allUsers
   const {
-    //   getSingleProfile,
-    //   getVerifieddetails,
-    //   singleUserDeposit,
+    getSingleProfile,
+    getVerifieddetails,
+    singleUserDeposit,
     getCurrentProfile,
-    //   getSingleWithdrawals,
-    //   getAllUserTrades,
+    getSingleWithdrawals,
+    getAllUserTrades,
+    getAllUsers,
+    getAllDeposits,
   } = useActions()
 
   const tableInstance = useTable(
@@ -83,7 +86,6 @@ const BasicTable = ({
                   onClick={() => {
                     getSingleWithdrawals(row.original._id)
                     getCurrentProfile(row.original._id)
-
                     setDisplayC(true)
                     getSingleProfile(row.original)
                     singleUserDeposit(row.original._id)
@@ -117,9 +119,9 @@ const BasicTable = ({
                 <tr
                   {...row.getRowProps()}
                   onClick={() => {
-                    // alert('from deposit')
-                    // getSingleDepositFromtheList(row.original.id)
-                    // getVerifieddetails(row.original)
+                    getAllUsers()
+                    getAllDeposits()
+                    getVerifieddetails(row.original)
                   }}
                 >
                   {row.cells.map((cell) => {
@@ -136,7 +138,12 @@ const BasicTable = ({
               )
             } else {
               return (
-                <tr {...row.getRowProps()}>
+                <tr
+                  {...row.getRowProps()}
+                  onClick={() => {
+                    getVerifieddetails(row.original)
+                  }}
+                >
                   {row.cells.map((cell) => {
                     return (
                       <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
