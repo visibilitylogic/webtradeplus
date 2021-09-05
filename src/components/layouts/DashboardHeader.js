@@ -33,7 +33,7 @@ import { useActions } from "../hooks/useActions";
 import Withdrawals from "../utils/modals/withdrawal/Withdrawals";
 import CryptoStepSix from "../utils/modals/deposit/crypto-steps/CryptoStepSix";
 import { tradesMargin } from "./../../helpers/getOpenTradesMargin";
-import { animateBalance } from "./../../helpers/animateBalance";
+import { getUserBalance } from "../../helpers/getUserBalance";
 
 const DashboardHeader = ({ support, setSupport, data }) => {
   const history = useHistory();
@@ -70,7 +70,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
 
   const openTradesMargin = tradesMargin(openTrades);
 
-  const balance = user && user.wallet + user.bonus - openTradesMargin;
+  const balance = getUserBalance(user, openTradesMargin);
 
   const handleLogout = () => {
     logout();
