@@ -4,7 +4,6 @@ import SingleWithdrawal from './SingleWithdrawal'
 export const singleUserWithdrawal = [
   {
     Header: 'Ref',
-
     accessor: 'Ref',
   },
   {
@@ -15,9 +14,8 @@ export const singleUserWithdrawal = [
     },
   },
   {
-    id: 'status',
+    // id: 'status',
     Header: 'Status',
-    width: 100,
     accessor: ({ status }) => (
       <p
         className={
@@ -39,17 +37,7 @@ export const singleUserWithdrawal = [
     type: 'number',
     accessor: 'fees',
   },
-  // {
-  //   Header: 'Wallet Received',
-  //   accessor: 'wallet',
-  // },
 
-  // {
-  //   field: 'Amount Recieved',
-  //   width: 180,
-  //   Header: 'Amount Received',
-  //   accessor: '',
-  // },
   {
     Header: 'Payment Gateway',
     accessor: 'PaymentGateway',
