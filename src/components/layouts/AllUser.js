@@ -137,4 +137,4 @@ export const AllUser = () => {
     </>
   )
 }
-export default AllUser
+export default React.memo(AllUser)

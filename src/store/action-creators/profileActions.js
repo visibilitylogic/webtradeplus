@@ -76,7 +76,6 @@ export const processDeposit = (details) => async (dispatch) => {
     },
   };
 
-  console.log(`details`, details);
   const body = JSON.stringify(details);
 
   try {
@@ -160,7 +159,6 @@ export const setAutoTrade = (id, details) => async (dispatch) => {
   const body = JSON.stringify(details);
   try {
     await axios.put(`${BASE_URL}/api/users/autotrade/${id}`, body, config);
-    // console.log(data)
 
     const f = [details.autoTrade, id];
     dispatch({
@@ -231,7 +229,6 @@ export const setLiveTrade = (details) => async (dispatch) => {
       body,
       config
     );
-    console.log(data);
     if (data) {
       dispatch({
         type: actionTypes.SET_LIVE_TRADE,
@@ -350,7 +347,6 @@ export const approveDeposit = (details) => async (dispatch) => {
       body,
       config
     );
-    console.log(data);
     dispatch({
       type: actionTypes.APPROVE_DEPOSIT,
       payload: data,
@@ -382,8 +378,6 @@ export const declineDeposit = (details) => async (dispatch) => {
   };
 
   const body = JSON.stringify(details);
-
-  console.log(`body`, body);
 
   try {
     await axios
@@ -452,8 +446,6 @@ export const approveDepositForManager = (details) => async (dispatch) => {
       body,
       config
     );
-    console.log(data);
-    console.log(data.approveDeposit.status);
     dispatch({
       type: actionTypes.APPROVE_SINGLE_DEPOSIT,
       payload: data,
@@ -501,7 +493,6 @@ export const approveVerify = (details) => async (dispatch) => {
   const body = JSON.stringify(details);
 
   try {
-    console.log(`details`, details);
     await axios
       .put(`${BASE_URL}/api/verify/approve`, body, config)
       .then((res) => {
@@ -518,6 +509,7 @@ export const approveVerify = (details) => async (dispatch) => {
   }
 };
 
+// to verify a user by manager
 export const approveSingleUserVerify = (details) => async (dispatch) => {
   try {
     await axios.put(`${BASE_URL}/api/users/verify/${details}`);
@@ -570,8 +562,6 @@ export const approveWithdrawal = (details) => async (dispatch) => {
     dispatch({
       type: actionTypes.APPROVE_WITHDRAWAL,
     });
-
-    console.log(data);
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -600,7 +590,6 @@ export const declineManagerWithdrawal = (details) => async (dispatch) => {
       type: actionTypes.DECLINE_MANAGER_WITHDRAWAL,
       payload: data,
     });
-    console.log(data);
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -629,6 +618,56 @@ export const approveMAnagerWithdrawal = (details) => async (dispatch) => {
     });
 
     console.log(data);
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const managerApproveVerify = (details) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify(details);
+
+  try {
+    await axios.put(`${BASE_URL}/api/verify/approve`, body, config);
+    const value = details.id;
+
+    dispatch({
+      type: actionTypes.MANAGER_APPROVE_VERIFY,
+      payload: value,
+    });
+    console.log(value);
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const ManagerdeclineVerify = (details) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify(details);
+  try {
+    await axios.put(`${BASE_URL}/api/verify/decline`, body, config);
+    const value = details.id;
+    dispatch({
+      type: actionTypes.MANAGER_DECLINE_VERIFY,
+      payload: value,
+    });
+    console.log(value);
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -833,7 +872,6 @@ export const singleUserBalance = (userId, data) => async (dispatch) => {
       type: actionTypes.SINGLE_USER_BALANCE,
       payload: data,
     });
-    console.log(data);
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -1031,8 +1069,6 @@ export const getUserAutoCopyTrade = (userId) => async (dispatch) => {
       type: actionTypes.USER_AUTO_COPY_TRADE,
       payload: data,
     });
-
-    console.log(data);
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -1055,7 +1091,6 @@ export const addUserAutoCopyTrade = (data) => async (dispatch) => {
       body,
       config
     );
-    console.log(data);
     dispatch({
       type: actionTypes.ADD_USER_AUTO_COPY_TRADE,
       payload: data,

@@ -143,6 +143,13 @@ export default function profileReducer(state = initialState, action) {
         withdrawalAmount: action.payload,
         error: null,
       }
+    case actionTypes.UPDATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        // allUsers: [newAllUser],
+        singleUser: action.payload,
+        error: null,
+      }
 
     case actionTypes.GET_ALL_WITHDRAWALS:
       return {
@@ -308,6 +315,32 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         loading: false,
         allVerifiedUsers: action.payload,
+        error: null,
+      }
+    case actionTypes.MANAGER_APPROVE_VERIFY:
+      const newVerify = state.allVerifiedUsers
+      newVerify.map((single) => {
+        if (single.userId == action.payload) {
+          return (single.status = 'Approved')
+        }
+      })
+      return {
+        ...state,
+        loading: false,
+        allVerifiedUsers: [...newVerify],
+        error: null,
+      }
+    case actionTypes.MANAGER_DECLINE_VERIFY:
+      const newDeclineVerify = state.allVerifiedUsers
+      newDeclineVerify.map((single) => {
+        if (single.userId == action.payload) {
+          return (single.status = 'Declined')
+        }
+      })
+      return {
+        ...state,
+        loading: false,
+        allVerifiedUsers: [...newDeclineVerify],
         error: null,
       }
     case actionTypes.USER_AUTO_COPY_TRADE:

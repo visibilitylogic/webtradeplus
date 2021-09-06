@@ -10,12 +10,22 @@ import { useState, useEffect } from "react";
 const EditProfile = ({ setEditProfile }) => {
   const { runPassword, updateProfile } = useActions();
   const { error, singleUser } = useSelector((state) => state.profile);
-  const { name, email, country, currency, language, isAdmin, isManager, _id } =
-    singleUser;
+  const {
+    name,
+    email,
+    country,
+    currency,
+    language,
+    isAdmin,
+    isManager,
+    lastname,
+    _id,
+  } = singleUser;
   const [active, setactive] = useState(true);
 
   const [profileDetails, handleProfileDetails] = useFormInput({
-    yourName: name,
+    yourFirstName: name,
+    yourLastName: lastname,
     yourEmailAddress: email,
     userCountry: country,
     yourLanguage: language,
@@ -26,7 +36,8 @@ const EditProfile = ({ setEditProfile }) => {
   });
 
   const {
-    yourName,
+    yourFirstName,
+    yourLastName,
     yourEmailAddress,
     userCountry,
     yourLanguage,
@@ -39,8 +50,6 @@ const EditProfile = ({ setEditProfile }) => {
   useEffect(() => {
     handleRunPassword();
   }, [yourPassword, yourPasswordConfirm]);
-
-  const { user } = useSelector((state) => state.auth);
 
   const handleRunPassword = () => {
     if (yourPassword === "" || yourPassword === "") return null;
@@ -55,28 +64,34 @@ const EditProfile = ({ setEditProfile }) => {
   };
 
   const handleEditProfile = async () => {
-    //    await  runPassword({
-    //   id: _id,
-    //   password: yourPassword,
-    //   name: yourName,
-    //   email: yourEmailAddress,
-    //   phoneNumber: user.phoneNumber,
-    // })
     try {
       if (error) {
         message.error("problems updating profile");
       } else {
         await updateProfile({
           id: _id,
-          password: yourPassword,
-          name: yourName,
+          email: yourEmailAddress,
           language: yourLanguage,
-          country: userCountry,
           currency: yourCurrency,
+          name: yourFirstName,
+          lastname: yourLastName,
+          password: yourPassword,
+          country: userCountry,
           setRole: userLevel,
         });
 
         message.success("Profile was successfully updated");
+        handleProfileDetails({
+          yourFirstName: "",
+          yourLastName: "",
+          yourEmailAddress: "",
+          userCountry: "",
+          yourLanguage: "",
+          yourCurrency: "",
+          yourPassword: "",
+          yourPasswordConfirm: "",
+          userLevel: "",
+        });
       }
     } catch (error) {
       console.log(error);
@@ -93,14 +108,28 @@ const EditProfile = ({ setEditProfile }) => {
                 <Form.Group>
                   <Form.Control
                     type="text"
-                    placeholder="Your Name"
-                    name="yourName"
-                    id="yourName"
-                    defaultValue={yourName}
+                    placeholder="Your First Name"
+                    name="yourFirstName"
+                    id="yourFirstName"
+                    defaultValue={yourFirstName}
                     onChange={handleProfileDetails}
                   />
                 </Form.Group>
               </Col>
+              <Col xs={12} md={6}>
+                <Form.Group>
+                  <Form.Control
+                    type="text"
+                    placeholder="Your Last Name"
+                    name="yourLastName"
+                    id="yourLastName"
+                    defaultValue={yourLastName}
+                    onChange={handleProfileDetails}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
               <Col xs={12} md={6}>
                 <Form.Group>
                   <Form.Control
@@ -113,19 +142,22 @@ const EditProfile = ({ setEditProfile }) => {
                   />
                 </Form.Group>
               </Col>
+              <Col xs={12} md={6}>
+                <Form.Group>
+                  <Form.Control
+                    as="select"
+                    name="userCountry"
+                    value={userCountry}
+                    onChange={handleProfileDetails}
+                  >
+                    {profileCountryList.map((country, index) => (
+                      <option key={index}>{country}</option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
             </Row>
-            <Form.Group>
-              <Form.Control
-                as="select"
-                name="userCountry"
-                value={userCountry}
-                onChange={handleProfileDetails}
-              >
-                {profileCountryList.map((country) => (
-                  <option>{country}</option>
-                ))}
-              </Form.Control>
-            </Form.Group>
+
             <Row>
               <Col xs={12} md={6}>
                 <Form.Group>
@@ -169,6 +201,7 @@ const EditProfile = ({ setEditProfile }) => {
                     value={yourPassword}
                     onChange={handleProfileDetails}
                     type="password"
+                    defaultValue=" "
                     placeholder="Your New Password"
                     id="yourPassword"
                   />
@@ -196,8 +229,8 @@ const EditProfile = ({ setEditProfile }) => {
                 value={userLevel}
                 onChange={handleProfileDetails}
               >
-                <option value="none">Select User Level</option>
-                <option value="user">Standard User</option>
+                <option value="">Select User Level</option>
+                <option value="none">Standard User</option>
                 <option value="isManager">Manager</option>
                 <option value="isAdmin">Admin User</option>
               </Form.Control>
