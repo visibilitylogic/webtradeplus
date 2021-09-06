@@ -3,11 +3,14 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { message } from "antd";
 import { useSelector } from "react-redux";
+import { useActions } from "../../hooks/useActions";
 import { countryList as profileCountryList } from "../../../helpers/dataset/countryList";
 
 const PersonalData = ({ web, setPersonalData }) => {
   const { user } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.profile);
+
+  const { updateProfile } = useActions();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -31,8 +34,6 @@ const PersonalData = ({ web, setPersonalData }) => {
     yourPasswordConfirm,
   } = formData;
 
-  const { updateProfile } = useSelector((state) => state.auth);
-
   const handleUpdateProfile = () => {
     if (yourPassword !== yourPasswordConfirm) {
       message.error("Password must match");
@@ -44,13 +45,13 @@ const PersonalData = ({ web, setPersonalData }) => {
 
     updateProfile({
       id: user._id,
-      name: name,
-      lastname: lastname,
-      email: email,
-      phoneNumber: phoneNumber,
-      country: country,
-      currency: currency,
-      newPassword: yourPassword,
+      name,
+      lastname,
+      email,
+      phoneNumber,
+      country,
+      currency,
+      password: yourPassword,
     });
 
     message.success("Profile was successfully updated");
@@ -65,6 +66,11 @@ const PersonalData = ({ web, setPersonalData }) => {
     if (user) {
       setFormData({
         name: user.name ? user.name : "",
+        lastname: user.lastname ? user.lastname : "",
+        email: user.email ? user.email : "",
+        currency: user.currency ? user.currency : "",
+        country: user.country ? user.country : "",
+        phoneNumber: user.phoneNumber ? user.phoneNumber : "",
       });
     }
   }, [user]);
@@ -150,7 +156,7 @@ const PersonalData = ({ web, setPersonalData }) => {
                   <Form.Control
                     as="select"
                     name="currency"
-                    defaultValue={currency}
+                    value={currency}
                     onChange={handleUserInfo}
                   >
                     <option value="$">Select Currency</option>
