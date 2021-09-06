@@ -1089,6 +1089,8 @@ export const addUserAutoCopyTrade = (data) => async (dispatch) => {
       body,
       config,
     )
+
+    console.log(data.amount)
     dispatch({
       type: actionTypes.ADD_USER_AUTO_COPY_TRADE,
       payload: data,

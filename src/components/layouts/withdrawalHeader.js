@@ -47,12 +47,11 @@ export const withdrawalHeader = [
   },
 
   {
-    id: 'Date',
     Header: 'Time',
     accessor: 'time',
-    // accessor: ({ value }) => {
-    //   return format(new Date(value), 'dd/MM/yyyy')
-    // },
+    Cell: ({ value }) => {
+      return format(new Date(value), 'dd/MM/yyyy')
+    },
   },
   {
     id: 'Amount',

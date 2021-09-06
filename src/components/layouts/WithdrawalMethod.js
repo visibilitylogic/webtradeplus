@@ -2,11 +2,10 @@ import React from 'react'
 
 function WithdrawalMethod({ methodDetails }) {
   console.log(methodDetails)
-  console.log(methodDetails.methodDetails)
+  console.log(methodDetails)
   return (
     <div>
-      csc
-      {/* {methodDetails.methodDetails.map((item, index) => (
+      {/* {methodDetails.map((item, index) => (
         <p key={index}>{item}</p>
       ))} */}
     </div>
