@@ -43,7 +43,7 @@ export const updateProfile = (profile) => async (dispatch) => {
   const body = JSON.stringify(profile);
 
   try {
-    await axios.put(`${BASE_URL}/api/profile/update/user`, body, config);
+    await axios.put(`${BASE_URL}/api/profile/update`, body, config);
     dispatch({
       type: actionTypes.UPDATE_PROFILE_SUCCESS,
     });
