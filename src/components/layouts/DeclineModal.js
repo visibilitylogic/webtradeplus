@@ -5,44 +5,35 @@ import { message } from 'antd'
 import { useSelector } from 'react-redux'
 import { useActions } from '../hooks/useActions'
 
-const DeclineModal = ({
-  modalstate,
-  status,
-  // setModalState,
-  handledeclineVerify,
-  setmodalstate,
-}) => {
+const DeclineModal = ({ modalstate, status, handledeclineVerify }) => {
   const [declinedMessage, setDeclinedMessage] = useState('')
   const { ManagerdeclineVerify } = useActions()
   const { error } = useSelector((state) => state.profile)
   const [state, setstate] = useState(modalstate)
 
-  const handledecline = async () => {
-    if (error) {
-      message.error('Denial Was Not Successful')
-    } else {
-      const details = {
-        id: status.userId,
-        message: declinedMessage,
-      }
+  // const handledecline = async () => {
+  //   if (error) {
+  //     message.error('Denial Was Not Successful')
+  //   } else {
+  //     const details = {
+  //       id: status.userId,
+  //       message: declinedMessage,
+  //     }
 
-      ManagerdeclineVerify(details)
-      setDeclinedMessage('')
+  //     ManagerdeclineVerify(details)
+  //     setDeclinedMessage('')
 
-      //   setDecline(false);
-      message.success('Identity Was Successfully Declined')
-    }
-  }
+  //     //   setDecline(false);
+  //     message.success('Identity Was Successfully Declined')
+  //   }
+  // }
   console.log(state)
-  if (!modalstate) {
+  if (!state) {
     return null
-  } else if (modalstate) {
+  } else if (state) {
     return (
       <>
-        <Modal
-          show={modalstate}
-          aria-labelledby="contained-modal-title-vcenter"
-        >
+        <Modal show={state} aria-labelledby="contained-modal-title-vcenter">
           <ModalHeader>
             <Modal.Header>
               <h5 className="py-2 text-capitalize">Decline Identity</h5>
@@ -70,7 +61,7 @@ const DeclineModal = ({
                   >
                     Cancel
                   </Button>
-                  <Button variant="primary" onClick={() => handledecline()}>
+                  <Button variant="primary" onClick={() => handledeclineVerify}>
                     Confirm
                   </Button>
                 </div>
