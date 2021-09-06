@@ -41,9 +41,14 @@ export const updateProfile = (profile) => async (dispatch) => {
   const body = JSON.stringify(profile)
 
   try {
-    await axios.put(`${BASE_URL}/api/profile/update`, body, config)
+    const { data } = await axios.put(
+      `${BASE_URL}/api/profile/update`,
+      body,
+      config,
+    )
     dispatch({
       type: actionTypes.UPDATE_PROFILE_SUCCESS,
+      payload: data,
     })
   } catch (error) {
     dispatch({
@@ -1085,7 +1090,6 @@ export const addUserAutoCopyTrade = (data) => async (dispatch) => {
       config,
     )
 
-    console.log(data.amount)
     dispatch({
       type: actionTypes.ADD_USER_AUTO_COPY_TRADE,
       payload: data,
