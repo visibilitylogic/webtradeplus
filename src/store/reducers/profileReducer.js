@@ -218,7 +218,7 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        allDeposits: [...state.allDeposits, action.payload],
+        allDeposits: [action.payload, ...state.allDeposits],
         error: null,
       }
 

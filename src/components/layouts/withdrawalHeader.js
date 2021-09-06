@@ -1,6 +1,7 @@
 import { format } from 'date-fns'
 import ViewWithDrawalDetails from './ViewWithDrawalDetails'
 import Witdrawal from './Witdrawal'
+import WithdrawalMethod from './WithdrawalMethod'
 export const withdrawalHeader = [
   {
     id: 'Ref',
@@ -19,9 +20,9 @@ export const withdrawalHeader = [
   {
     Header: 'Withdrawal Method',
     accessor: 'methodDetails',
-    accessor: ({ methodDetails }) => {
-      methodDetails.map((i, index) => <p key={index}>{i}</p>)
-    },
+    accessor: ({ methodDetails }) => (
+      <WithdrawalMethod methodDetails={methodDetails} />
+    ),
   },
   {
     Header: 'Withdrawal Info',
@@ -49,9 +50,9 @@ export const withdrawalHeader = [
     id: 'Date',
     Header: 'Time',
     accessor: 'time',
-    Cell: ({ value }) => {
-      return format(new Date(value), 'dd/MM/yyyy')
-    },
+    // accessor: ({ value }) => {
+    //   return format(new Date(value), 'dd/MM/yyyy')
+    // },
   },
   {
     id: 'Amount',

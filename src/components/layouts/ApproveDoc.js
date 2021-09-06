@@ -6,16 +6,15 @@ import DeclineModal from './DeclineModal'
 
 const ApproveDoc = ({ status }) => {
   const { ManagerdeclineVerify, managerApproveVerify } = useActions()
-  // const { singleUserVerifedDetails } = useSelector((state) => state.profile)
+
   const { error, singleUserVerifedDetails } = useSelector(
     (state) => state.profile,
   )
   const { userId } = status
   const [modalstate, setmodalstate] = useState(false)
-  console.log(singleUserVerifedDetails)
   const [accept, setAccept] = useState('Accept')
   const [decline, setDecline] = useState('Decline')
-
+  console.log(modalstate)
   const handleapproveVerify = async () => {
     if (error) {
       message.error('Identity Approval Was Not Successful')
@@ -44,6 +43,7 @@ const ApproveDoc = ({ status }) => {
       message.success('Successfully Declined')
     }
   }
+
   // console.log(modalstate)
   return (
     <>
@@ -55,15 +55,12 @@ const ApproveDoc = ({ status }) => {
             </a>
           </div>
           <div
-            onClick={handledeclineVerify}
-            //  setmodalstate(true)
+            onClick={
+              // () => setmodalstate(true)
+              handledeclineVerify
+            }
             // {}
           >
-            {/* <DeclineModal
-              status={status}
-              modalstate={modalstate}
-              // setModalState={setmodalstate}
-            /> */}
             <a className="text-light text-center bg-danger mb-0">
               {status ? decline : null}
             </a>
@@ -78,6 +75,13 @@ const ApproveDoc = ({ status }) => {
           {accept}
         </a>
       ) : null}
+
+      {/* <DeclineModal
+        status={status}
+        modalstate={modalstate}
+        setModalState={setmodalstate}
+        handledeclineVerify={handledeclineVerify}
+      /> */}
     </>
   )
 }

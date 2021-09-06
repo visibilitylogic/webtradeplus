@@ -57,8 +57,7 @@ const ManagerContents = (props) => {
   } = useSelector((state) => state.profile)
 
   const { user } = useSelector((state) => state.auth)
-
-  console.log(singleUser)
+  console.log(2222)
   // ACTION CREATORS
   const {
     updateWalletBalance,
@@ -961,7 +960,7 @@ ManagerContents.propTypes = {
   setEditProfile: PropTypes.func.isRequired,
 }
 
-export default ManagerContents
+export default React.memo(ManagerContents)
 
 const TableContainer = styled.div`
   background: white;

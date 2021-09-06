@@ -52,7 +52,7 @@ const UserArea = ({ setEditProfile }) => {
     } else {
       const details = { id: _id }
 
-      await deleteAUser(JSON.stringify(details))
+      await deleteAUser(details)
       message.success('User was successfully deleted from the database')
     }
   }
