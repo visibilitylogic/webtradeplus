@@ -83,7 +83,7 @@ const BuyStockModal = (props) => {
         loss: 0,
       });
       message.success(
-        `Your ${
+        ` ${
           Object.keys(currentSelectedStock).length > 0
             ? currentSelectedStock.symbol
             : defaultSelectedStock.symbol
