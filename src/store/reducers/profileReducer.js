@@ -238,24 +238,17 @@ export default function profileReducer(state = initialState, action) {
         allTrades: action.payload,
         error: null,
       }
-    // case actionTypes.SET_AUTO_TRADE:
-    //   const newUserState = state.singleUser
-    //   newUserState.autoTrade = action.payload
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     singleUser: newUserState,
-    //     error: null,
-    //   }
-    // case actionTypes.APPROVE_SINGLE_VERIFY:
-    //   const approveState = state.singleUser
-    //   approveState.autoTrade = action.payload
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     singleUser: approveState,
-    //     error: null,
-    //   }
+    case actionTypes.DELETE_USER:
+      const allnewUser = state.allUsers
+      const index = allnewUser.findIndex((el) => el._id == action.payload)
+      const nextUser = allnewUser[index + 1]
+      return {
+        ...state,
+        loading: false,
+        singleUser: { ...nextUser },
+        error: null,
+      }
+
     case actionTypes.SET_LIVE_TRADE:
       const newAllUsers = state.allUsers
       newAllUsers.map((user) =>

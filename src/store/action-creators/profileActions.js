@@ -769,12 +769,12 @@ export const deleteAUser = (id) => async (dispatch) => {
     },
   }
 
-  const body = JSON.stringify(id)
   try {
-    await axios.delete(`${BASE_URL}/api/users/remove`, body, config)
+    await axios.delete(`${BASE_URL}/api/users/${id}`, config)
 
     dispatch({
       type: actionTypes.DELETE_USER,
+      payload: id,
     })
   } catch (error) {
     dispatch({
