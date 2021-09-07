@@ -22,6 +22,7 @@ const BasicTable = ({
     getAllUserTrades,
     getAllUsers,
     getAllDeposits,
+    getUserAutoCopyTrade
   } = useActions()
 
   const tableInstance = useTable(
@@ -85,6 +86,7 @@ const BasicTable = ({
                     singleUserDeposit(row.original._id)
                     getVerifieddetails(row.original)
                     getAllUserTrades(row.original._id)
+                    getUserAutoCopyTrade(row.original._id)
                   }}
                 >
                   {row.cells.map((cell) => {

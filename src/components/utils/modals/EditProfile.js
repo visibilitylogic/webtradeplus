@@ -21,7 +21,7 @@ const EditProfile = ({ setEditProfile }) => {
     lastname,
     _id,
   } = singleUser
-  console.log(singleUser)
+  
   const [active, setactive] = useState(true)
 
   const [profileDetails, handleProfileDetails] = useFormInput({
@@ -82,7 +82,8 @@ const EditProfile = ({ setEditProfile }) => {
         })
 
         message.success('Profile was successfully updated')
-        handleProfileDetails({
+
+        profileDetails({
           yourFirstName: '',
           yourLastName: '',
           yourEmailAddress: '',
@@ -112,7 +113,7 @@ const EditProfile = ({ setEditProfile }) => {
                     placeholder="Your First Name"
                     name="yourFirstName"
                     id="yourFirstName"
-                    defaultValue={yourFirstName}
+                    value={yourFirstName}
                     onChange={handleProfileDetails}
                   />
                 </Form.Group>
@@ -124,7 +125,7 @@ const EditProfile = ({ setEditProfile }) => {
                     placeholder="Your Last Name"
                     name="yourLastName"
                     id="yourLastName"
-                    defaultValue={yourLastName}
+                    value={yourLastName}
                     onChange={handleProfileDetails}
                   />
                 </Form.Group>
@@ -138,7 +139,7 @@ const EditProfile = ({ setEditProfile }) => {
                     placeholder="Your Email Address"
                     name="yourEmailAddress"
                     id="yourEmailAddress"
-                    defaultValue={yourEmailAddress}
+                    value={yourEmailAddress}
                     onChange={handleProfileDetails}
                   />
                 </Form.Group>
@@ -181,7 +182,7 @@ const EditProfile = ({ setEditProfile }) => {
                   <Form.Control
                     as="select"
                     name="yourCurrency"
-                    defaultValue={yourCurrency}
+                    value={yourCurrency}
                     onChange={handleProfileDetails}
                   >
                     <option value="$">Select Currency</option>

@@ -1,14 +1,13 @@
-import { useState } from "react";
-import UpdateOrderModals from "../util/orderModal";
+import { useState } from 'react'
+import UpdateOrderModals from '../util/orderModal'
 
 const UpdateOrderComponent = ({ props }) => {
-  const [modalstate, setmodalstate] = useState(false);
-  console.log(props._id,'ssep')
+  const [modalstate, setmodalstate] = useState(false)
   return (
     <div>
       <button
-        className={" text-center bg-primary text-light"}
-        style={{ border: "none" }}
+        className={' text-center bg-primary text-light'}
+        style={{ border: 'none' }}
         onClick={() => setmodalstate(() => true)}
       >
         Edit
@@ -20,7 +19,7 @@ const UpdateOrderComponent = ({ props }) => {
         ordersObject={props}
       />
     </div>
-  );
-};
+  )
+}
 
-export default UpdateOrderComponent;
+export default UpdateOrderComponent

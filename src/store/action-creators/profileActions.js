@@ -769,7 +769,7 @@ export const deleteAUser = (id) => async (dispatch) => {
     },
   }
 
-  const body = JSON.stringify(id)
+  const body = id
   try {
     await axios.delete(`${BASE_URL}/api/users/remove`, body, config)
 
@@ -1061,7 +1061,7 @@ export const getAllVerifiedUsers = () => async (dispatch) => {
 
 export const getUserAutoCopyTrade = (userId) => async (dispatch) => {
   try {
-    const { data } = await axios(`${BASE_URL}/api/autocopytrade/${userId}`)
+    const { data } = await axios.get(`${BASE_URL}/api/autocopytrade/${userId}`)
 
     dispatch({
       type: actionTypes.USER_AUTO_COPY_TRADE,
@@ -1094,6 +1094,34 @@ export const addUserAutoCopyTrade = (data) => async (dispatch) => {
       type: actionTypes.ADD_USER_AUTO_COPY_TRADE,
       payload: data,
     })
+    console.log(data)
+  } catch (error) {
+    dispatch({
+      type: actionTypes.PROFILE_ERROR,
+      payload: error.message,
+    })
+  }
+}
+export const editUserAutoCopyTrade = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+
+  const body = JSON.stringify(data)
+  try {
+    const { data } = await axios.post(
+      `${BASE_URL}/api/autocopytrade`,
+      body,
+      config,
+    )
+
+    dispatch({
+      type: actionTypes.EDIT_USER_AUTO_COPY_TRADE,
+      payload: data,
+    })
+    console.log(data)
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -1107,6 +1135,7 @@ export const deleteUserAutoCopyTrade = (userId) => async (dispatch) => {
     await axios.delete(`${BASE_URL}/api/autocopytrade/${userId}`)
     dispatch({
       type: actionTypes.DELETE_USER_AUTO_COPY_TRADE,
+      payload: userId,
     })
   } catch (error) {
     dispatch({
