@@ -4954,7 +4954,7 @@ dash-navbar .account .account-profile .profile {
 }
 
 .orderBtn {
-  width: 40%;
+  width: 60%;
   padding: 10px;
   font-size: 10px;
   margin: 7px;
@@ -8486,8 +8486,6 @@ body {
   z-index: 2;
 }
 
-
-
 .frame {
   position: absolute;
   top: 60%;
@@ -8523,8 +8521,8 @@ body {
   opacity: 0;
   fill: #999;
 }
-.bulbOff{
-  fill:#999;
+.bulbOff {
+  fill: #999;
   transition: all 0.5s ease-in-out;
   cursor: pointer;
   position: relative;
@@ -8557,7 +8555,12 @@ body {
   width: 18px !important;
 }
 
-.MuiDataGrid-root .MuiDataGrid-columnHeader--alignRight .MuiDataGrid-columnHeaderDraggableContainer, .MuiDataGrid-root .MuiDataGrid-columnHeader--alignRight .MuiDataGrid-columnHeaderTitleContainer {
+.MuiDataGrid-root
+  .MuiDataGrid-columnHeader--alignRight
+  .MuiDataGrid-columnHeaderDraggableContainer,
+.MuiDataGrid-root
+  .MuiDataGrid-columnHeader--alignRight
+  .MuiDataGrid-columnHeaderTitleContainer {
   flex-direction: row !important;
 }
 .MuiDataGrid-root .MuiDataGrid-cell--textRight {
@@ -8570,11 +8573,13 @@ body {
   text-overflow: clip;
 }
 
-.MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--withRenderer, .MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--editing {
+.MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--withRenderer,
+.MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--editing {
   justify-content: left;
 }
 
-.MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--withRenderer, .MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--editing {
+.MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--withRenderer,
+.MuiDataGrid-root .MuiDataGrid-cell--textRight.MuiDataGrid-cell--editing {
   justify-content: left !important;
 }
 .MuiDataGrid-root .MuiDataGrid-columnHeaderDraggableContainer {
@@ -8596,7 +8601,7 @@ body {
   font-weight: 500;
   white-space: nowrap;
   text-overflow: clip;
-  font-size: 14px  !important;
+  font-size: 14px !important;
   text-align: left;
   padding: 0;
 }
@@ -8606,7 +8611,7 @@ body {
   font-weight: 500;
   white-space: nowrap;
   text-overflow: clip !important;
-  white-space: normal  !important;;
+  white-space: normal !important;
   line-height: 16px;
 }
 

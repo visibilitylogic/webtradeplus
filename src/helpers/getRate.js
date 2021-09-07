@@ -8,9 +8,11 @@ export const getRate = (
     return ((margin / defaultSelectedStock.price) * leverage)
       .toString()
       .slice(0, 8);
-  } else {
+  } else if (Object.keys(currentSelectedStock).length > 0) {
     return ((margin / currentSelectedStock.price) * leverage)
       .toString()
       .slice(0, 8);
+  } else {
+    return 0;
   }
 };

@@ -1132,6 +1132,13 @@ export const getAllUserTrades = (userId) => async (dispatch) => {
     });
   }
 };
+
+export const clearOpenTrades = () => (dispatch) => {
+  dispatch({
+    type: actionTypes.CLEAR_OPEN_TRADES,
+  });
+};
+
 export const DeactivateUser = (userId) => async (dispatch) => {
   try {
     await axios.put(`${BASE_URL}/api/users/deactivate/${userId}`);

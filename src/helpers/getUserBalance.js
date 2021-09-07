@@ -1,2 +1,1 @@
-export const getUserBalance = (user, margin) =>
-  user && user.wallet + user.bonus - margin;
+export const getUserBalance = (user) => (user ? user.wallet + user.bonus : 0);

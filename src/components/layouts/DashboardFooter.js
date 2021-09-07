@@ -1,3 +1,4 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { FaRegGem } from "react-icons/fa";
 import { BsChat } from "react-icons/bs";
@@ -7,17 +8,22 @@ import { useSelector } from "react-redux";
 import { getPandL } from "../../helpers/getProfitOrLoss";
 import { tradesMargin } from "./../../helpers/getOpenTradesMargin";
 import { getUserBalance } from "./../../helpers/getUserBalance";
+import { getActiveTradeMargin } from "./../../helpers/getActiveTradeMargin";
+import useInterval from "../hooks/useInterval";
 
-const DashboardFooter = ({ setSupport, timer }) => {
+const DashboardFooter = ({ setSupport }) => {
   const { user } = useSelector((state) => state.auth);
-  const { openTrades } = useSelector((state) => state.profile);
+  const { openTrades, activeTrade } = useSelector((state) => state.profile);
   const { allStockAssets } = useSelector((state) => state.stock);
+  const [timer, setTimer] = useState(new Date());
 
   const profitOrLoss = getPandL(openTrades, allStockAssets);
 
-  const openTradesMargin = tradesMargin(openTrades);
+  const activeTradeMargin = getActiveTradeMargin(activeTrade);
 
-  const balance = getUserBalance(user, openTradesMargin);
+  const balance = getUserBalance(user) - activeTradeMargin;
+
+  const openTradesMargin = tradesMargin(openTrades);
 
   const equity =
     openTrades.length > 0
@@ -59,6 +65,10 @@ const DashboardFooter = ({ setSupport, timer }) => {
 
   // const getMarketPrices = allStockAssets.length > 0 && allStockAssets.filter();
 
+  useInterval(() => {
+    setTimer(new Date());
+  }, 1000);
+
   return (
     <footer className="dash-footer">
       <div className="footer-left-side">
@@ -75,13 +85,12 @@ const DashboardFooter = ({ setSupport, timer }) => {
           <p>
             <span>Balance: </span>
             <span>
-              {user && user.currency === "USD" ? "$" : user && user.currency}
-              {openTrades.length > 0
-                ? new Intl.NumberFormat("en-US").format(balance).slice(0, 9)
-                : new Intl.NumberFormat("en-US")
-                    .format(balance)
-                    .slice(0, 9)}{" "}
-              |
+              <span>
+                {user && user.currency === "USD" ? "$" : user && user.currency}
+              </span>
+              <span className="balance">
+                {new Intl.NumberFormat("en-US").format(balance).slice(0, 8)} |
+              </span>
             </span>
           </p>
           <p>
@@ -102,14 +111,14 @@ const DashboardFooter = ({ setSupport, timer }) => {
               {openTrades.length > 0
                 ? new Intl.NumberFormat("en-US").format(profitOrLoss)
                 : 0}
-              &nbsp; <span style={{ color: "#fff" }}>|</span>
+              <span style={{ color: "#fff" }}> | </span>
             </span>
-          </p>{" "}
+          </p>
           <p>
             <span>&nbsp;Equity: </span>
             <span>
               {user && user.currency === "USD" ? "$" : user && user.currency}
-              {new Intl.NumberFormat("en-US").format(equity).slice(0, 9)}
+              {new Intl.NumberFormat("en-US").format(equity).slice(0, 8)}
               &nbsp;|
             </span>
           </p>
@@ -124,7 +133,7 @@ const DashboardFooter = ({ setSupport, timer }) => {
             <span>&nbsp;Free Margin: </span>
             <span>
               {user && user.currency === "USD" ? "$" : user && user.currency}
-              {new Intl.NumberFormat("en-US").format(freeMargin).slice(0, 9)}
+              {new Intl.NumberFormat("en-US").format(freeMargin).slice(0, 8)}
             </span>
           </p>
         </div>
@@ -147,7 +156,6 @@ const DashboardFooter = ({ setSupport, timer }) => {
 
 DashboardFooter.propTypes = {
   setSupport: PropTypes.func.isRequired,
-  timer: PropTypes.func.isRequired,
 };
 
 export default DashboardFooter;

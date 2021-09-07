@@ -5,6 +5,8 @@ import { getRate } from "../../../../helpers/getRate";
 import { message } from "antd";
 import { tradesMargin } from "../../../../helpers/getOpenTradesMargin";
 import { animateBalance } from "../../../../helpers/animateBalance";
+import { getActiveTradeMargin } from "../../../../helpers/getActiveTradeMargin";
+import { getUserBalance } from "./../../../../helpers/getUserBalance";
 
 const SellStockModal = (props) => {
   const {
@@ -21,7 +23,7 @@ const SellStockModal = (props) => {
   } = props;
 
   const { user } = useSelector((state) => state.auth);
-  const { error, userMargin, openTrades } = useSelector(
+  const { error, userMargin, openTrades, activeTrade } = useSelector(
     (state) => state.profile
   );
   const { currentSelectedStock, defaultSelectedStock } = useSelector(
@@ -33,9 +35,11 @@ const SellStockModal = (props) => {
   const { sellStockAsset, setCurrentlyActiveTrade, setUserMargin } =
     useActions();
 
-  const openTradesMargin = tradesMargin(openTrades);
+  // const openTradesMargin = tradesMargin(openTrades);
 
-  const balance = user && user.wallet + user.bonus - openTradesMargin;
+  const activeTradeMargin = getActiveTradeMargin(activeTrade);
+
+  const balance = getUserBalance(user) - activeTradeMargin;
 
   const handleStockSale = (event) => {
     event.preventDefault();
@@ -75,7 +79,13 @@ const SellStockModal = (props) => {
         profit: 0,
         loss: 0,
       });
-      message.success("Your stock has been successfully sold");
+      message.success(
+        `Your ${
+          Object.keys(currentSelectedStock).length > 0
+            ? currentSelectedStock.symbol
+            : defaultSelectedStock.symbol
+        } has been successfully sold`
+      );
       animateBalance("balance", balance, balance - userMargin, 3000);
       setCurrentlyActiveTrade(
         Object.keys(currentSelectedStock).length > 0
