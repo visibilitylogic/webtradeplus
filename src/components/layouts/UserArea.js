@@ -46,13 +46,14 @@ const UserArea = ({ setEditProfile }) => {
       message.success(' Successful')
     }
   }
-  const handleDeleteAUser = async () => {
+  const handleDeleteAUser = () => {
+    console.log(singleUser)
     if (error) {
       message.error('Try again')
     } else {
       const details = { id: _id }
 
-      await deleteAUser(details)
+      deleteAUser(details)
       message.success('User was successfully deleted from the database')
     }
   }
@@ -71,22 +72,26 @@ const UserArea = ({ setEditProfile }) => {
 
           <i
             className="delete-profile fas  fa-2x fa-user-minus"
-            onClick={() => {
-              confirmAlert({
-                title: 'DELETE USER',
-                message: `Are you sure you want to delete ${name} ?`,
-                buttons: [
-                  {
-                    label: 'Delete',
-                    onClick: () => handleDeleteAUser(_id),
-                  },
-                  {
-                    label: 'No',
-                    onClick: () => null,
-                  },
-                ],
-              })
-            }}
+            onClick={
+              handleDeleteAUser
+
+              //   () => {
+              //   confirmAlert({
+              //     title: 'DELETE USER',
+              //     message: `Are you sure you want to delete ${name} ?`,
+              //     buttons: [
+              //       {
+              //         label: 'Delete',
+              //         onClick: () => handleDeleteAUser(),
+              //       },
+              //       {
+              //         label: 'No',
+              //         onClick: () => null,
+              //       },
+              //     ],
+              //   })
+              // }
+            }
           />
         </div>
         <div className="d-flex justify-content-flex-start w-75 mx-auto flex-column align-items-center">

@@ -21,14 +21,13 @@ import { tradeApprovalHeader } from './tradeApprovalHeader'
 import UserBalance from './UserBalance'
 import UserArea from './UserArea'
 import SingleUser from './SingleUser'
-import { autocopyHeader } from './autocopyHeader'
 import { paymentHeader } from './paymentHeader'
 import EstimatedBallance from './EstimatedBallance'
 import UserHeader from './UserHeader'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 import { singleUserWithdrawal } from './singleWithdrawalStatuss'
-import { getAllUsers } from '../../store/action-creators/profileActions'
 import { allSubcriptionHeader } from './allSubcriptionHeader'
+
 const ManagerContents = (props) => {
   const data = [
     { name: 'User', uv: 400, pv: 2400, amt: 2400 },
@@ -54,16 +53,13 @@ const ManagerContents = (props) => {
     singleUser,
     singleWithdrawals,
     allSingleDeposits,
-    autoTradeData,
     allSubscription,
   } = useSelector((state) => state.profile)
 
   const { user } = useSelector((state) => state.auth)
-  console.log(autoTradeData)
+
   // ACTION CREATORS
   const {
-    updateWalletBalance,
-    setNotificationEnabled, // expecting end point
     getAllUsers,
     getUserAutoCopyTrade,
     addUserAutoCopyTrade,
@@ -73,14 +69,12 @@ const ManagerContents = (props) => {
     singleUserDeposit,
     getSingleWithdrawals,
     getAllUserTrades,
-    getAllDeposits,
   } = useActions()
 
   /***********************************************BASIC TABLE**************************************/
   //  const [singleUser, setSingleUser] = useState({})
   useEffect(() => {
     getAllUsers()
-    // getAllDeposits()
   }, [singleUser])
 
   const [loading, setLoading] = useState(false)
@@ -107,13 +101,13 @@ const ManagerContents = (props) => {
   const [currentDeposit, setCurrentDeposit] = useState([])
   const [state, setstate] = useState('')
 
-  const deleteAutoCopyTrade = async () => {
+  const deleteAutoCopyTrade = async (id) => {
     setLoading(true)
 
     if (error) {
       message.error('Error Deleting Auto-trade')
     } else {
-      deleteUserAutoCopyTrade(singleUser._id)
+      deleteUserAutoCopyTrade(id)
       message.success('Successfully Deleted Auto-trade')
     }
 
@@ -318,30 +312,7 @@ const ManagerContents = (props) => {
           )
         )}
       </div>
-      {/* <div className="manager-tab-dtls" manager-tab-dtls="subscriptions">
-        <table>
-          <tbody>
-            <tr>
-              <th>ID Subscription</th>
-              <th>User</th>
-              <th>Date subscription</th>
-              <th>Number days</th>
-              <th>Subscription expire in</th>
-              <th>Type payment</th>
-              <th>Charge infos.</th>
-            </tr>
-            <tr>
-              <td />
-              <td />
-              <td />
-              <td />
-              <td />
-              <td />
-              <td />
-            </tr>
-          </tbody>
-        </table> 
-      </div>*/}
+
       <div className="manager-tab-dtls" manager-tab-dtls="identity">
         {allVerifiedUsers && allVerifiedUsers.length > 0 && (
           <TableContainer>
@@ -372,11 +343,6 @@ const ManagerContents = (props) => {
                 column={Columns}
                 key={allUsers}
                 type="EveryUser"
-                getSingleProfile={getSingleProfile}
-                getVerifieddetails={getVerifieddetails}
-                singleUserDeposit={singleUserDeposit}
-                getSingleWithdrawals={getSingleWithdrawals}
-                getAllUserTrades={getAllUserTrades}
               />
             </TableContainer>
           </div>
@@ -476,11 +442,6 @@ const ManagerContents = (props) => {
                           column={depositHeader}
                           type="currentDeposit"
                           user={user}
-                          getSingleProfile={getSingleProfile}
-                          getVerifieddetails={getVerifieddetails}
-                          singleUserDeposit={singleUserDeposit}
-                          getSingleWithdrawals={getSingleWithdrawals}
-                          getAllUserTrades={getAllUserTrades}
                         />
                       )}
                     </div>
@@ -712,7 +673,7 @@ const ManagerContents = (props) => {
                         </p>
                       </div>
                     </div>
-
+                    {console.log(singleUser)}
                     <Table responsive hover>
                       <thead>
                         <tr>
@@ -726,8 +687,8 @@ const ManagerContents = (props) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {autoTradeData &&
-                          autoTradeData.map((data, index) => (
+                        {userAutoCopyTrade &&
+                          userAutoCopyTrade.map((data, index) => (
                             <tr key={index}>
                               <td>{index + 1}</td>
                               <td>{data.market}</td>
