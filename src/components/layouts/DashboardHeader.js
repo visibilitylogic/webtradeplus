@@ -34,14 +34,22 @@ import Withdrawals from "../utils/modals/withdrawal/Withdrawals";
 import CryptoStepSix from "../utils/modals/deposit/crypto-steps/CryptoStepSix";
 import { tradesMargin } from "./../../helpers/getOpenTradesMargin";
 import { getUserBalance } from "../../helpers/getUserBalance";
+import { getActiveTradeMargin } from "./../../helpers/getActiveTradeMargin";
 
 const DashboardHeader = ({ support, setSupport, data }) => {
   const history = useHistory();
   const { user, loading } = useSelector((state) => state.auth);
-  const { userMargin, openTrades } = useSelector((state) => state.profile);
+  const { userMargin, openTrades, activeTrade } = useSelector(
+    (state) => state.profile
+  );
   const { isDarkMode } = useSelector((state) => state.theme);
 
-  const { logout, setCurrentSelectedStock } = useActions();
+  const {
+    logout,
+    setCurrentSelectedStock,
+    setCurrentlyActiveTrade,
+    clearOpenTrades,
+  } = useActions();
 
   const [selectedStock, setSelectedStock] = useState(1);
   const [personalData, setPersonalData] = useState(false);
@@ -68,14 +76,16 @@ const DashboardHeader = ({ support, setSupport, data }) => {
     yourCity: "",
   });
 
-  const openTradesMargin = tradesMargin(openTrades);
+  const activeTradeMargin = getActiveTradeMargin(activeTrade);
 
-  const balance = getUserBalance(user, openTradesMargin);
+  const balance = getUserBalance(user) - activeTradeMargin;
 
   const handleLogout = () => {
-    logout();
-
     setCurrentSelectedStock({});
+    setCurrentlyActiveTrade({});
+    clearOpenTrades();
+
+    setTimeout(() => logout(), 3000);
 
     history.push("/");
   };
@@ -325,14 +335,12 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                         ? "$"
                         : user && user.currency}
                     </span>
-                    <span id="balance">
-                      {openTrades.length > 0
+                    <span id="balance" className="balance">
+                      {user
                         ? new Intl.NumberFormat("en-US")
                             .format(balance)
                             .slice(0, 9)
-                        : new Intl.NumberFormat("en-US")
-                            .format(balance)
-                            .slice(0, 9)}
+                        : 0}
                     </span>
                   </h6>
                 </div>
@@ -409,12 +417,16 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                       REAL ACCOUNT
                     </h6>
                     <p className="amount mb-0">
-                      {user && user.currency === "USD"
-                        ? "$"
-                        : user && user.currency}
-                      {new Intl.NumberFormat("en-US").format(0)
-                        ? new Intl.NumberFormat("en-US").format(0)
-                        : new Intl.NumberFormat("en-US").format(0)}
+                      <span>
+                        {user && user.currency === "USD"
+                          ? "$"
+                          : user && user.currency}
+                      </span>
+                      <span className="balance">
+                        {new Intl.NumberFormat("en-US")
+                          .format(balance)
+                          .slice(0, 9)}
+                      </span>
                     </p>
                   </div>
                   <div>
@@ -440,17 +452,17 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                     <h6 style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                       Total ACCOUNT{" "}
                       <span style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                        <span>
+                          {user && user.currency === "USD"
+                            ? "$"
+                            : user && user.currency}
+                        </span>
                         ={" "}
-                        {user && user.currency === "USD"
-                          ? "$"
-                          : user && user.currency}
-                        {openTrades.length > 0
-                          ? new Intl.NumberFormat("en-US")
-                              .format(balance)
-                              .slice(0, 9)
-                          : new Intl.NumberFormat("en-US")
-                              .format(balance)
-                              .slice(0, 9)}
+                        <span className="balance">
+                          {new Intl.NumberFormat("en-US")
+                            .format(balance)
+                            .slice(0, 9)}
+                        </span>
                       </span>
                     </h6>
                     <p
@@ -460,13 +472,9 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                       {user && user.currency === "USD"
                         ? "$"
                         : user && user.currency}
-                      {openTrades.length > 0
-                        ? new Intl.NumberFormat("en-US")
-                            .format(balance)
-                            .slice(0, 9)
-                        : new Intl.NumberFormat("en-US")
-                            .format(balance)
-                            .slice(0, 9)}
+                      {new Intl.NumberFormat("en-US")
+                        .format(balance)
+                        .slice(0, 9)}
                     </p>
                   </div>
                   <div>

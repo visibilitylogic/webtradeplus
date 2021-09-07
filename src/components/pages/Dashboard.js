@@ -30,7 +30,6 @@ const Dashboard = () => {
   const [orders, setOrders] = useState([]);
   const [buysell, setBuysell] = useState(false);
   const [support, setSupport] = useState(false);
-  const [timer, setTimer] = useState(new Date());
 
   const myRef3 = useRef("");
 
@@ -39,14 +38,17 @@ const Dashboard = () => {
     getWebData,
     setIsTrading,
     setDefaultSelectedStock,
-    getCurrentProfile,
+    getAllStockAssets,
+    setCurrentSelectedStock,
+    getAllUserTrades,
   } = useActions();
 
   // Redux state data
   const { webData } = useSelector((state) => state.web);
 
   const { isAuthenticated, user, userId } = useSelector((state) => state.auth);
-  // const { currentSelectedStock } = useSelector((state) => state.stock);
+  const { currentSelectedStock } = useSelector((state) => state.stock);
+  const { loading } = useSelector((state) => state.profile);
 
   const closeSetlevIsh = () => {
     if (!user.liveTrade) {
@@ -75,17 +77,23 @@ const Dashboard = () => {
 
     // getIsTrading(userId);
 
-    setTimeout(() => window.location.reload(), 2000);
+    // setTimeout(() => window.location.reload(), 2000);
   };
 
   useEffect(() => {
     getWebData();
-    setDefaultSelectedStock();
+    // setDefaultSelectedStock();
   }, []);
 
   useInterval(() => {
-    setTimer(new Date());
-  }, 1000);
+    getAllStockAssets();
+
+    if (Object.keys(currentSelectedStock).length > 0) {
+      setCurrentSelectedStock(currentSelectedStock);
+    } else {
+      setDefaultSelectedStock();
+    }
+  }, 3000);
 
   useEffect(() => {
     [...asideList].forEach((tab) => {
@@ -239,7 +247,7 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <DashboardFooter setSupport={setSupport} timer={timer} />
+      <DashboardFooter setSupport={setSupport} />
     </div>
   );
 };

@@ -23,7 +23,7 @@ const Orders = (props) => {
   const { buysell, setBuysell } = props;
 
   const { user } = useSelector((state) => state.auth);
-  const { userTrades, openTrades, error, loading } = useSelector(
+  const { userTrades, userMargin, openTrades, error, loading } = useSelector(
     (state) => state.profile
   );
   const { allStockAssets } = useSelector((state) => state.stock);
@@ -49,7 +49,7 @@ const Orders = (props) => {
       setTimeout(() => {
         message.success("Trade deleted succesfully");
         setCurrentlyActiveTrade({});
-      }, 5000);
+      }, 6000);
     }
   };
 
@@ -60,23 +60,33 @@ const Orders = (props) => {
     }
 
     closeUserTrade(trade._id, {
-      closeRateOfAsset: closeRate,
+      closeRateOfAsset: closeRate.price,
     });
-    setCurrentlyActiveTrade({});
-
-    setTimeout(
-      () => message.success("Your trade has been closed successfully"),
-      5000
-    );
 
     setTimeout(() => {
-      animateBalance("balance", balance, balance + trade.margin, 3000);
+      message.success("Your trade has been closed successfully");
+      setCurrentlyActiveTrade({});
     }, 6000);
+
+    console.log(calculatePandL(trade, closeRate));
+
+    setTimeout(() => {
+      animateBalance(
+        "balance",
+        balance,
+        balance +
+          trade.margin +
+          calculatePandL(trade, closeRate) *
+            (webData ? webData.leverageAmount : 1) -
+          trade.margin,
+        3000
+      );
+    }, 7000);
   };
 
   useInterval(() => {
     !loading && getAllUserTrades(user && user._id);
-  }, 10000);
+  }, 5000);
 
   const limitTradeList =
     userTrades.length > 7 ? userTrades.slice(0, 7) : userTrades;
@@ -246,10 +256,7 @@ const Orders = (props) => {
                                       <button
                                         className="orderBtn btn-red"
                                         onClick={() => {
-                                          handleCloseUserTrade(
-                                            item,
-                                            asset.price
-                                          );
+                                          handleCloseUserTrade(item, asset);
                                         }}
                                       >
                                         CLOSE
@@ -286,6 +293,7 @@ const Orders = (props) => {
                               fontWeight: "bold",
                               margin: "0 auto",
                               textAlign: "center",
+                              padding: 10,
                             }}
                           >
                             There are no trade history

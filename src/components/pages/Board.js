@@ -88,17 +88,6 @@ const Board = (props) => {
   // A custom hook for rerendering the dashboard component after 10 secondays
   // To keep track of asset changes
 
-  useInterval(() => {
-    getAllStockAssets();
-    getAllUserTrades(user && user._id);
-
-    if (Object.keys(currentSelectedStock).length > 0) {
-      setCurrentSelectedStock(currentSelectedStock);
-    } else {
-      setDefaultSelectedStock();
-    }
-  }, 5000);
-
   return (
     !loading && (
       <Fragment>
@@ -242,12 +231,15 @@ const Board = (props) => {
                     quantity
                   </span>
                   <span className="amount">
-                    {getRate(
-                      defaultSelectedStock,
-                      currentSelectedStock,
-                      userMargin,
-                      data && data.leverageAmount
-                    )}
+                    {Object.keys(defaultSelectedStock).length > 0 ||
+                    Object.keys(currentSelectedStock).length > 0
+                      ? getRate(
+                          defaultSelectedStock,
+                          currentSelectedStock,
+                          userMargin,
+                          data && data.leverageAmount
+                        )
+                      : 0}
                   </span>
                 </div>
                 {user &&
