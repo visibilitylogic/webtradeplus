@@ -10,15 +10,9 @@ const BasicTable = ({
   user,
   column,
   type,
-  // getSingleProfile,
-  // getVerifieddetails,
-  // singleUserDeposit,
-  // getSingleWithdrawals,
-  // // getCurrentProfile,
-  // getAllUserTrades,
 }) => {
-  const columns = column
-  const data = allUsers
+  const columns = useMemo(() => column, [column])
+  const data = useMemo(() => allUsers, [allUsers])
   const {
     getSingleProfile,
     getVerifieddetails,

@@ -1,4 +1,4 @@
-import { useState, Fragment, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import ManagerHeader from '../layouts/ManagerHeader'
 import { useSelector } from 'react-redux'
 import { useActions } from '../hooks/useActions'
@@ -7,7 +7,7 @@ import EditProfile from '../utils/modals/EditProfile'
 import ManagerContents from '../layouts/ManagerContents'
 
 const Manager = () => {
-  const { user, userId } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth)
 
   const [displayC, setDisplayC] = useState(false)
   const [editProfile, setEditProfile] = useState(false)
@@ -65,4 +65,4 @@ const Manager = () => {
   )
 }
 
-export default Manager
+export default React.memo(Manager)

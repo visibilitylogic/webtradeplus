@@ -1,56 +1,56 @@
-import { Fragment, useState, useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
-import Homepage from "../pages/Homepage";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import Header from "../layouts/Header";
-import Footer from "../layouts/Footer";
-import { useSelector } from "react-redux";
-import Dashboard from "../pages/Dashboard";
-import Admin from "../pages/Admin";
-import ForgotPassword from "../pages/ForgotPassword";
+import { useState, useEffect } from 'react'
+import { Switch, Route } from 'react-router-dom'
+import Homepage from '../pages/Homepage'
+import Login from '../pages/Login'
+import Register from '../pages/Register'
+import Header from '../layouts/Header'
+import Footer from '../layouts/Footer'
+import { useSelector } from 'react-redux'
+import Dashboard from '../pages/Dashboard'
+import Admin from '../pages/Admin'
+import ForgotPassword from '../pages/ForgotPassword'
 
-import PrivateRoute from "./PrivateRoute";
+import PrivateRoute from './PrivateRoute'
 
 const Routes = () => {
-  const { webData } = useSelector((state) => state.web);
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { webData } = useSelector((state) => state.web)
+  const { isAuthenticated } = useSelector((state) => state.auth)
 
-  const [toggleRegister, setToggleRegister] = useState(false);
+  const [toggleRegister, setToggleRegister] = useState(false)
 
   useEffect(() => {
     switch (window.location.pathname) {
-      case "/":
-      case "/login":
+      case '/':
+      case '/login':
         if (toggleRegister) {
-          setToggleRegister(false);
+          setToggleRegister(false)
         }
-        break;
-      case "/signup":
+        break
+      case '/signup':
         if (!toggleRegister) {
-          setToggleRegister(true);
+          setToggleRegister(true)
         }
-        break;
+        break
       default:
-        break;
+        break
     }
-  }, [toggleRegister]);
+  }, [toggleRegister])
 
   return (
-    <Fragment>
+    <>
       {!isAuthenticated && (
         <Header
           data={webData}
-          path={toggleRegister ? "/" : "/signup"}
-          title={toggleRegister ? "Login" : "Register"}
+          path={toggleRegister ? '/' : '/signup'}
+          title={toggleRegister ? 'Login' : 'Register'}
           setToggleRegister={setToggleRegister}
         />
       )}
 
-      <div style={{ background: "#f2f2f2" }}>
+      <div style={{ background: '#f2f2f2' }}>
         <Switch>
           <Route
-            path={["/", "/login"]}
+            path={['/', '/login']}
             exact
             component={(props) => (
               <Login
@@ -79,8 +79,8 @@ const Routes = () => {
         </Switch>
       </div>
       {!isAuthenticated && <Footer data={webData} />}
-    </Fragment>
-  );
-};
+    </>
+  )
+}
 
-export default Routes;
+export default Routes

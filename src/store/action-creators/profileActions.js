@@ -43,9 +43,14 @@ export const updateProfile = (profile) => async (dispatch) => {
   const body = JSON.stringify(profile);
 
   try {
-    await axios.put(`${BASE_URL}/api/profile/update`, body, config);
+    const { data } = await axios.put(
+      `${BASE_URL}/api/profile/update`,
+      body,
+      config
+    );
     dispatch({
       type: actionTypes.UPDATE_PROFILE_SUCCESS,
+      payload: data,
     });
   } catch (error) {
     dispatch({
@@ -80,7 +85,6 @@ export const processDeposit = (details) => async (dispatch) => {
 
   try {
     const response = await axios.post(`${BASE_URL}/api/deposit`, body, config);
-
     dispatch({
       type: actionTypes.PROCESS_DEPOSIT_SUCCESS,
       payload: response.data,
@@ -1091,6 +1095,7 @@ export const addUserAutoCopyTrade = (data) => async (dispatch) => {
       body,
       config
     );
+
     dispatch({
       type: actionTypes.ADD_USER_AUTO_COPY_TRADE,
       payload: data,

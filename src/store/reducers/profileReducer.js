@@ -25,6 +25,8 @@ const initialState = {
   DepositApproval: {},
   singleUserVerifedDetails: {},
   openTrades: [],
+  autoTradeData: [],
+  allSubscription: [],
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -218,7 +220,7 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        allDeposits: [...state.allDeposits, action.payload],
+        allDeposits: [action.payload, ...state.allDeposits],
         error: null,
       };
 

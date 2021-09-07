@@ -28,6 +28,7 @@ import UserHeader from './UserHeader'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 import { singleUserWithdrawal } from './singleWithdrawalStatuss'
 import { getAllUsers } from '../../store/action-creators/profileActions'
+import { allSubcriptionHeader } from './allSubcriptionHeader'
 const ManagerContents = (props) => {
   const data = [
     { name: 'User', uv: 400, pv: 2400, amt: 2400 },
@@ -54,11 +55,11 @@ const ManagerContents = (props) => {
     singleWithdrawals,
     allSingleDeposits,
     autoTradeData,
+    allSubscription,
   } = useSelector((state) => state.profile)
 
   const { user } = useSelector((state) => state.auth)
-
-  console.log(singleUser)
+  console.log(autoTradeData)
   // ACTION CREATORS
   const {
     updateWalletBalance,
@@ -268,20 +269,21 @@ const ManagerContents = (props) => {
         </div>
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="bank-transfers">
-        {bankTransfers && bankTransfers.length > 0 && (
-          <TableContainer>
-            <BasicTable
-              allUsers={bankTransfers}
-              user={user}
-              column={bankTransferHeader}
-              type="transfer"
-              getSingleProfile={getSingleProfile}
-              getVerifieddetails={getVerifieddetails}
-              singleUserDeposit={singleUserDeposit}
-              getSingleWithdrawals={getSingleWithdrawals}
-              getAllUserTrades={getAllUserTrades}
-            />
-          </TableContainer>
+        {bankTransfers && bankTransfers.length <= 0 ? (
+          <div className="d-flex justify-content-center align-items-center">
+            <h2 className="p-2 m-2">No Bank Transfer</h2>
+          </div>
+        ) : (
+          bankTransfers && (
+            <TableContainer>
+              <BasicTable
+                allUsers={bankTransfers}
+                user={user}
+                column={bankTransferHeader}
+                type="transfer"
+              />
+            </TableContainer>
+          )
         )}
       </div>
 
@@ -299,6 +301,24 @@ const ManagerContents = (props) => {
       </div>
 
       <div className="manager-tab-dtls" manager-tab-dtls="subscriptions">
+        {allSubscription && allSubscription.length <= 0 ? (
+          <div className="d-flex justify-content-center align-items-center">
+            <h2 className="p-2 m-2">No subscriptions</h2>
+          </div>
+        ) : (
+          allSubscription && (
+            <TableContainer>
+              <BasicTable
+                allUsers={allSubscription}
+                user={user}
+                column={allSubcriptionHeader}
+                type="payment"
+              />
+            </TableContainer>
+          )
+        )}
+      </div>
+      {/* <div className="manager-tab-dtls" manager-tab-dtls="subscriptions">
         <table>
           <tbody>
             <tr>
@@ -320,8 +340,8 @@ const ManagerContents = (props) => {
               <td />
             </tr>
           </tbody>
-        </table>
-      </div>
+        </table> 
+      </div>*/}
       <div className="manager-tab-dtls" manager-tab-dtls="identity">
         {allVerifiedUsers && allVerifiedUsers.length > 0 && (
           <TableContainer>
@@ -706,7 +726,7 @@ const ManagerContents = (props) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {autoTradeData.length > 0 &&
+                        {autoTradeData &&
                           autoTradeData.map((data, index) => (
                             <tr key={index}>
                               <td>{index + 1}</td>
@@ -728,7 +748,7 @@ const ManagerContents = (props) => {
                                 <EditAutoCopyTrade
                                   id={data._id}
                                   callback={() =>
-                                    getUserAutoCopyTrade(singleUser._id)
+                                    getUserAutoCopyTrade(data._id)
                                   }
                                 >
                                   <Tag
@@ -740,9 +760,7 @@ const ManagerContents = (props) => {
                                 </EditAutoCopyTrade>
                                 <Tag
                                   style={{ cursor: 'pointer' }}
-                                  onClick={() =>
-                                    deleteAutoCopyTrade(singleUser._id)
-                                  }
+                                  onClick={() => deleteAutoCopyTrade(data._id)}
                                   color="red"
                                 >
                                   {loading ? (
@@ -961,7 +979,7 @@ ManagerContents.propTypes = {
   setEditProfile: PropTypes.func.isRequired,
 }
 
-export default ManagerContents
+export default React.memo(ManagerContents)
 
 const TableContainer = styled.div`
   background: white;

@@ -11,7 +11,8 @@ import Spinner from "../utils/Spinner";
 import useInterval from "../hooks/useInterval";
 
 function OrderBook() {
-  const { getOrder, closeUserTrade, getAllUserTrades } = useActions();
+  const { setCurrentlyActiveTrade, closeUserTrade, getAllUserTrades } =
+    useActions();
   const { user } = useSelector((state) => state.auth);
   const { webData } = useSelector((state) => state.web);
   const { error, activeTrade, openTrades, userTrades } = useSelector(
@@ -45,10 +46,10 @@ function OrderBook() {
       closeRateOfAsset: closeRate.price,
     });
 
-    setTimeout(
-      () => message.success("Your trade has been closed successfully"),
-      5000
-    );
+    setTimeout(() => {
+      message.success("Your trade has been closed successfully");
+      setCurrentlyActiveTrade({});
+    }, 6000);
 
     console.log(calculatePandL(trade, closeRate));
 
@@ -59,10 +60,11 @@ function OrderBook() {
         balance +
           trade.margin +
           calculatePandL(trade, closeRate) *
-            (webData ? webData.leverageAmount : 1),
+            (webData ? webData.leverageAmount : 1) -
+          trade.margin,
         3000
       );
-    }, 6000);
+    }, 7000);
   };
 
   const bodyDisplay = () => {
