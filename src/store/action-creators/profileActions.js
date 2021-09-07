@@ -769,7 +769,7 @@ export const deleteAUser = (id) => async (dispatch) => {
     },
   }
 
-  const body = id
+  const body = JSON.stringify(id)
   try {
     await axios.delete(`${BASE_URL}/api/users/remove`, body, config)
 
@@ -1094,34 +1094,6 @@ export const addUserAutoCopyTrade = (data) => async (dispatch) => {
       type: actionTypes.ADD_USER_AUTO_COPY_TRADE,
       payload: data,
     })
-    console.log(data)
-  } catch (error) {
-    dispatch({
-      type: actionTypes.PROFILE_ERROR,
-      payload: error.message,
-    })
-  }
-}
-export const editUserAutoCopyTrade = (data) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }
-
-  const body = JSON.stringify(data)
-  try {
-    const { data } = await axios.post(
-      `${BASE_URL}/api/autocopytrade`,
-      body,
-      config,
-    )
-
-    dispatch({
-      type: actionTypes.EDIT_USER_AUTO_COPY_TRADE,
-      payload: data,
-    })
-    console.log(data)
   } catch (error) {
     dispatch({
       type: actionTypes.PROFILE_ERROR,
@@ -1160,6 +1132,13 @@ export const getAllUserTrades = (userId) => async (dispatch) => {
     })
   }
 }
+
+export const clearOpenTrades = () => (dispatch) => {
+  dispatch({
+    type: actionTypes.CLEAR_OPEN_TRADES,
+  })
+}
+
 export const DeactivateUser = (userId) => async (dispatch) => {
   try {
     await axios.put(`${BASE_URL}/api/users/deactivate/${userId}`)

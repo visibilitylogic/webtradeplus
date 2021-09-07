@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { message } from "antd";
 import PropTypes from "prop-types";
 import { tradesMargin } from "./../../../../helpers/getOpenTradesMargin";
+import { getActiveTradeMargin } from "./../../../../helpers/getActiveTradeMargin";
+import { getUserBalance } from "./../../../../helpers/getUserBalance";
 
 const Withdrawals = ({ setWithdraw, country }) => {
   const [widthdrawalMethod, setWidthdrawalMethod] = useState("");
@@ -15,10 +17,13 @@ const Withdrawals = ({ setWithdraw, country }) => {
     bankPaymentMethods,
     cryptoPaymentMethods,
     openTrades,
+    activeTrade,
   } = useSelector((state) => state.profile);
   const { user } = useSelector((state) => state.auth);
 
-  const balance = user && user.wallet + user.bonus;
+  const activeTradeMargin = getActiveTradeMargin(activeTrade);
+
+  const balance = getUserBalance(user) - activeTradeMargin;
 
   const openTradesMargin = tradesMargin(openTrades);
 
@@ -75,7 +80,7 @@ const Withdrawals = ({ setWithdraw, country }) => {
               <span className="font-size-11">
                 {user && user.currency === "USD" ? "$" : user && user.currency}
                 {`${new Intl.NumberFormat("en-US")
-                  .format(balance - openTradesMargin)
+                  .format(balance)
                   .slice(0, 9)}`}
               </span>
             </a>

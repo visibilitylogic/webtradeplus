@@ -1,20 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
+import { message } from "antd";
 import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
+import { calculatePandL } from "../../helpers/calculatePandL";
+import { animateBalance } from "../../helpers/animateBalance";
+import { getUserBalance } from "../../helpers/getUserBalance";
+import { getActiveTradeMargin } from "../../helpers/getActiveTradeMargin";
 import Spinner from "../utils/Spinner";
+import useInterval from "../hooks/useInterval";
 
 function OrderBook() {
-  const { getOrder } = useActions();
+  const { setCurrentlyActiveTrade, closeUserTrade, getAllUserTrades } =
+    useActions();
   const { user } = useSelector((state) => state.auth);
-  const { loading, trade_orders } = useSelector((state) => state.orders);
-  const [display, setDisplay] = useState("order-book");
-  const openData =
-    trade_orders && trade_orders.filter((data) => data.isOpen === true);
-  console.log(trade_orders);
-  useEffect(() => {
-    getOrder(user && user._id);
-  }, []);
+  const { webData } = useSelector((state) => state.web);
+  const { error, activeTrade, openTrades, userTrades } = useSelector(
+    (state) => state.profile
+  );
+  const { loading } = useSelector((state) => state.orders);
+  const { allStockAssets } = useSelector((state) => state.stock);
+
+  const [display, setDisplay] = useState("open_position");
+
+  const activeTradeMargin = getActiveTradeMargin(activeTrade);
+  const balance = getUserBalance(user) - activeTradeMargin;
+
+  useInterval(() => !loading && getAllUserTrades(user && user._id));
 
   const spinnerStyle = {
     height: "100%",
@@ -24,15 +36,46 @@ function OrderBook() {
     alignItems: "center",
   };
 
+  const handleCloseUserTrade = (trade, closeRate) => {
+    if (error) {
+      message.error("Trade could not be closed");
+      return;
+    }
+
+    closeUserTrade(trade._id, {
+      closeRateOfAsset: closeRate.price,
+    });
+
+    setTimeout(() => {
+      message.success("Your trade has been closed successfully");
+      setCurrentlyActiveTrade({});
+    }, 6000);
+
+    console.log(calculatePandL(trade, closeRate));
+
+    setTimeout(() => {
+      animateBalance(
+        "balance",
+        balance,
+        balance +
+          trade.margin +
+          calculatePandL(trade, closeRate) *
+            (webData ? webData.leverageAmount : 1) -
+          trade.margin,
+        3000
+      );
+    }, 7000);
+  };
+
   const bodyDisplay = () => {
     switch (display) {
-      case "order-book":
-        if (trade_orders.length > 0) {
+      case "trading_history":
+        if (userTrades.length > 0) {
           return (
             <table style={{ width: "100%" }}>
               <tbody style={{ textAlign: "left" }}>
-                {trade_orders &&
-                  trade_orders.map((data) => (
+                {userTrades &&
+                  userTrades.map((data) => (
                     <tr
                       style={{
                         paddingTop: "4px",
@@ -185,12 +228,12 @@ function OrderBook() {
         }
 
       case "open_position":
-        if (openData.length > 0) {
+        if (openTrades.length > 0) {
           return (
             <table style={{ width: "100%" }}>
               <tbody style={{ textAlign: "left" }}>
-                {openData &&
-                  openData.map((data) => (
+                {openTrades &&
+                  openTrades.map((data) => (
                     <tr
                       style={{
                         padding: "14px 0px",
@@ -329,6 +372,29 @@ function OrderBook() {
                           status
                         </p>
                       </td>
+                      {allStockAssets.length > 0 &&
+                        allStockAssets
+                          .filter((stock) => {
+                            if (stock.symbol === data.nameOfAsset) {
+                              return true;
+                            } else {
+                              return false;
+                            }
+                          })
+                          .map((asset, index) => (
+                            <td style={{ paddingTop: "2%" }} key={index}>
+                              {data.isOpen && (
+                                <button
+                                  className="orderBtn btn-red"
+                                  onClick={() => {
+                                    handleCloseUserTrade(data, asset);
+                                  }}
+                                >
+                                  CLOSE
+                                </button>
+                              )}
+                            </td>
+                          ))}
                     </tr>
                   ))}
               </tbody>
@@ -459,9 +525,9 @@ function OrderBook() {
               Opened Positions
             </a>
             <a
-              className={display === "order-book" ? "active" : " "}
+              className={display === "trading_history" ? "active" : ""}
               dash-tab="order-book"
-              onClick={() => setDisplay("order-book")}
+              onClick={() => setDisplay("trading_history")}
               href="#!"
             >
               Trading History
@@ -475,7 +541,7 @@ function OrderBook() {
               Auto Trades
             </a> */}
           </div>
-          {loading && <Spinner style={spinnerStyle} />}
+          {/* {loading && <Spinner style={spinnerStyle} />} */}
           <div
             style={{
               display: "flex",

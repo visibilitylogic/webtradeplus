@@ -298,8 +298,9 @@ export default function profileReducer(state = initialState, action) {
         error: null,
       }
     case actionTypes.ADD_USER_AUTO_COPY_TRADE:
-      const autoState = state.userAutoCopyTrade
-      // autoState.currentBalance = action.payload.currentBalance
+      const newUser = state.singleUser
+      newUser.currentBalance = action.payload.currentBalance
+      const autoState = state.singleUser
 
       // balanceState.amount = action.payload.amount
       // balanceState.deposit = action.payload.deposit
@@ -308,7 +309,7 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        // singleUser: { ...autoState },
+        singleUser: { ...newUser },
         userAutoCopyTrade: [action.payload, ...state.userAutoCopyTrade],
         error: null,
       }
@@ -369,6 +370,14 @@ export default function profileReducer(state = initialState, action) {
         loading: false,
         userTrades: action.payload,
         openTrades: state.userTrades.filter((trade) => trade.isOpen),
+        error: null,
+      }
+    case actionTypes.CLEAR_OPEN_TRADES:
+      return {
+        ...state,
+        loading: false,
+        userTrades: [],
+        openTrades: [],
         error: null,
       }
     case actionTypes.CURRENTLY_ACTIVE_TRADE:

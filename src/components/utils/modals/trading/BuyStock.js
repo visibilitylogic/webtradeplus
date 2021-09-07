@@ -6,6 +6,8 @@ import { getRate } from "../../../../helpers/getRate";
 import { message } from "antd";
 import { animateBalance } from "../../../../helpers/animateBalance";
 import { tradesMargin } from "../../../../helpers/getOpenTradesMargin";
+import { getActiveTradeMargin } from "../../../../helpers/getActiveTradeMargin";
+import { getUserBalance } from "./../../../../helpers/getUserBalance";
 
 const BuyStockModal = (props) => {
   const {
@@ -25,7 +27,7 @@ const BuyStockModal = (props) => {
   const { currentSelectedStock, defaultSelectedStock } = useSelector(
     (state) => state.stock
   );
-  const { error, userMargin, openTrades } = useSelector(
+  const { error, userMargin, openTrades, activeTrade } = useSelector(
     (state) => state.profile
   );
   const { webData } = useSelector((state) => state.web);
@@ -37,9 +39,11 @@ const BuyStockModal = (props) => {
     getCurrentProfile,
   } = useActions();
 
-  const openTradesMargin = tradesMargin(openTrades);
+  // const openTradesMargin = tradesMargin(openTrades);
 
-  const balance = user && user.wallet + user.bonus - openTradesMargin;
+  const activeTradeMargin = getActiveTradeMargin(activeTrade);
+
+  const balance = getUserBalance(user) - activeTradeMargin;
 
   const handleStockPurchase = (event) => {
     event.preventDefault();
@@ -78,7 +82,13 @@ const BuyStockModal = (props) => {
         profit: 0,
         loss: 0,
       });
-      message.success("Your stock has been successfully purchased");
+      message.success(
+        `Your ${
+          Object.keys(currentSelectedStock).length > 0
+            ? currentSelectedStock.symbol
+            : defaultSelectedStock.symbol
+        } has been successfully purchased`
+      );
       animateBalance("balance", balance, balance - userMargin, 3000);
       // getCurrentProfile(user && user._id)
       setCurrentlyActiveTrade(
