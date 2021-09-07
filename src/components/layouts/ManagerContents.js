@@ -64,11 +64,6 @@ const ManagerContents = (props) => {
     getUserAutoCopyTrade,
     addUserAutoCopyTrade,
     deleteUserAutoCopyTrade,
-    getSingleProfile,
-    getVerifieddetails,
-    singleUserDeposit,
-    getSingleWithdrawals,
-    getAllUserTrades,
   } = useActions()
 
   /***********************************************BASIC TABLE**************************************/
