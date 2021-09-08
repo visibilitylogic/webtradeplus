@@ -254,7 +254,7 @@ const BuyStockModal = (props) => {
               currentSelectedStock,
               userMargin,
               webData && webData.leverageAmount
-            )}
+            )}{" "}
             {Object.keys(defaultSelectedStock).length > 0
               ? defaultSelectedStock.symbol
               : currentSelectedStock.symbol}
@@ -267,6 +267,7 @@ const BuyStockModal = (props) => {
         </div>
         <div className="split moved">
           <span>
+            {user && user.currency === "USD" ? "$" : user && user.currency}
             {(
               getRate(
                 defaultSelectedStock,
@@ -284,7 +285,6 @@ const BuyStockModal = (props) => {
             )
               .toString()
               .slice(0, 8)}
-            USD
           </span>
         </div>
       </div>

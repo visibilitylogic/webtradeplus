@@ -764,17 +764,18 @@ export const removeManager = (id) => async (dispatch) => {
   }
 };
 
-export const deleteAUser = (id) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
+export const deleteUserProfile = (userId) => async (dispatch) => {
+  // const config = {
+  //   method: "DELETE",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(userId),
+  // };
 
-  const body = JSON.stringify(id);
+  // const body = JSON.stringify(userId);
   try {
-    await axios.delete(`${BASE_URL}/api/users/remove`, body, config);
-
+    await axios.delete(`${BASE_URL}/api/users/${userId}`);
     dispatch({
       type: actionTypes.DELETE_USER,
     });

@@ -1,67 +1,66 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import Switch from 'react-switch'
-import { useSelector } from 'react-redux'
-import { useActions } from '../hooks/useActions'
-import { message } from 'antd'
-import { confirmAlert } from 'react-confirm-alert'
-import 'react-confirm-alert/src/react-confirm-alert.css'
+import React, { useState } from "react";
+import styled from "styled-components";
+import Switch from "react-switch";
+import { useSelector } from "react-redux";
+import { useActions } from "../hooks/useActions";
+import { message } from "antd";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 const UserArea = ({ setEditProfile }) => {
-  const { error, singleUser } = useSelector((state) => state.profile)
-  const { isAdmin, isManager, _id, autoTrade, liveTrade, name } = singleUser
-  const [livestate, setLiveState] = useState(liveTrade)
-  const [auto, setAuto] = useState(autoTrade)
-  const [state, setstate] = useState(false)
-  const [state2, setstate2] = useState(false)
-  const { setLiveTrade, setAutoTrade, deleteAUser } = useActions()
+  const { error, singleUser } = useSelector((state) => state.profile);
+  const { isAdmin, isManager, _id, autoTrade, liveTrade, name } = singleUser;
+  const [livestate, setLiveState] = useState(liveTrade);
+  const [auto, setAuto] = useState(autoTrade);
+  const [state, setstate] = useState(false);
+  const [state2, setstate2] = useState(false);
+  const { setLiveTrade, setAutoTrade, deleteUserProfile } = useActions();
 
   const setTradeFunc = async () => {
-    setstate2(true)
+    setstate2(true);
     if (error) {
-      message.error('Failed!!!')
+      message.error("Failed!!!");
     } else {
       const details = {
         autoTrade: !auto,
-      }
-      await setAutoTrade(_id, details)
-      setAuto(!auto)
-      message.success('Successfull')
+      };
+      await setAutoTrade(_id, details);
+      setAuto(!auto);
+      message.success("Successfull");
     }
-    setstate2(false)
-  }
+    setstate2(false);
+  };
 
   const setToggles = async () => {
-    setstate(true)
+    setstate(true);
     if (error) {
-      message.error('Failed')
+      message.error("Failed");
     } else {
       const details = {
         id: _id,
         liveTrade: !liveTrade,
-      }
-      await setLiveTrade(details)
-      await setstate(false)
-      setLiveState(!livestate)
-      message.success(' Successful')
+      };
+      await setLiveTrade(details);
+      await setstate(false);
+      setLiveState(!livestate);
+      message.success(" Successful");
     }
-  }
-  const handleDeleteAUser = async () => {
+  };
+  const handleDeleteUserProfile = () => {
     if (error) {
-      message.error('Try again')
-    } else {
-      const details = { id: _id }
-
-      await deleteAUser(details)
-      message.success('User was successfully deleted from the database')
+      message.error("Error!! Try again");
+      return;
     }
-  }
+
+    deleteUserProfile(_id);
+    message.success("User was successfully deleted from the database");
+  };
   return (
     <>
       {/* {singleUsers && ( */}
       <UserAreaContainer>
         <h3 className="text-center">
-          {isAdmin ? 'ADMIN' : isManager ? 'Manager' : 'USER'}
+          {isAdmin ? "ADMIN" : isManager ? "Manager" : "USER"}
         </h3>
         <div className="d-flex justify-content-flex-start w-75  align-items-center mb-3">
           <i
@@ -71,22 +70,23 @@ const UserArea = ({ setEditProfile }) => {
 
           <i
             className="delete-profile fas  fa-2x fa-user-minus"
-            onClick={() => {
-              confirmAlert({
-                title: 'DELETE USER',
-                message: `Are you sure you want to delete ${name} ?`,
-                buttons: [
-                  {
-                    label: 'Delete',
-                    onClick: () => handleDeleteAUser(_id),
-                  },
-                  {
-                    label: 'No',
-                    onClick: () => null,
-                  },
-                ],
-              })
-            }}
+            onClick={handleDeleteUserProfile}
+            // onClick={() => {
+            //   confirmAlert({
+            //     title: "DELETE USER",
+            //     message: `Are you sure you want to delete ${name} ?`,
+            //     buttons: [
+            //       {
+            //         label: "Delete",
+            //         onClick: () => deleteUserProfile(_id),
+            //       },
+            //       {
+            //         label: "No",
+            //         onClick: () => null,
+            //       },
+            //     ],
+            //   });
+            // }}
           />
         </div>
         <div className="d-flex justify-content-flex-start w-75 mx-auto flex-column align-items-center">
@@ -128,10 +128,10 @@ const UserArea = ({ setEditProfile }) => {
       </UserAreaContainer>
       {/* )} */}
     </>
-  )
-}
+  );
+};
 
-export default UserArea
+export default UserArea;
 
 const UserAreaContainer = styled.div`
   display: flex;
@@ -150,4 +150,4 @@ const UserAreaContainer = styled.div`
   .fa-edit {
     color: blue;
   }
-`
+`;
