@@ -14,7 +14,7 @@ const UserArea = ({ setEditProfile }) => {
   const [auto, setAuto] = useState(autoTrade);
   const [state, setstate] = useState(false);
   const [state2, setstate2] = useState(false);
-  const { setLiveTrade, setAutoTrade, deleteUserProfile } = useActions();
+  const { setLiveTrade, setAutoTrade, deleteAUser } = useActions();
 
   const setTradeFunc = async () => {
     setstate2(true);
@@ -46,14 +46,16 @@ const UserArea = ({ setEditProfile }) => {
       message.success(" Successful");
     }
   };
-  const handleDeleteUserProfile = () => {
+  const handleDeleteAUser = () => {
+    console.log(singleUser);
     if (error) {
-      message.error("Error!! Try again");
-      return;
-    }
+      message.error("Try again");
+    } else {
+      const details = { id: _id };
 
-    deleteUserProfile(_id);
-    message.success("User was successfully deleted from the database");
+      deleteAUser(_id);
+      message.success("User was successfully deleted from the database");
+    }
   };
   return (
     <>
@@ -70,23 +72,22 @@ const UserArea = ({ setEditProfile }) => {
 
           <i
             className="delete-profile fas  fa-2x fa-user-minus"
-            onClick={handleDeleteUserProfile}
-            // onClick={() => {
-            //   confirmAlert({
-            //     title: "DELETE USER",
-            //     message: `Are you sure you want to delete ${name} ?`,
-            //     buttons: [
-            //       {
-            //         label: "Delete",
-            //         onClick: () => deleteUserProfile(_id),
-            //       },
-            //       {
-            //         label: "No",
-            //         onClick: () => null,
-            //       },
-            //     ],
-            //   });
-            // }}
+            onClick={() => {
+              confirmAlert({
+                title: "DELETE USER",
+                message: `Are you sure you want to delete ${name} ?`,
+                buttons: [
+                  {
+                    label: "Delete",
+                    onClick: () => handleDeleteAUser(),
+                  },
+                  {
+                    label: "No",
+                    onClick: () => null,
+                  },
+                ],
+              });
+            }}
           />
         </div>
         <div className="d-flex justify-content-flex-start w-75 mx-auto flex-column align-items-center">

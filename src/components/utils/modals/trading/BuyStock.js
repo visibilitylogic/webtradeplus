@@ -1,11 +1,9 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
 import { useActions } from "../../../hooks/useActions";
 import { useSelector } from "react-redux";
 import { getRate } from "../../../../helpers/getRate";
 import { message } from "antd";
 import { animateBalance } from "../../../../helpers/animateBalance";
-import { tradesMargin } from "../../../../helpers/getOpenTradesMargin";
 import { getActiveTradeMargin } from "../../../../helpers/getActiveTradeMargin";
 import { getUserBalance } from "./../../../../helpers/getUserBalance";
 
@@ -23,21 +21,17 @@ const BuyStockModal = (props) => {
     setBuysell,
   } = props;
 
-  const { user, userId } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const { currentSelectedStock, defaultSelectedStock } = useSelector(
     (state) => state.stock
   );
-  const { error, userMargin, openTrades, activeTrade } = useSelector(
+  const { error, userMargin, activeTrade } = useSelector(
     (state) => state.profile
   );
   const { webData } = useSelector((state) => state.web);
 
-  const {
-    purchaseStockAsset,
-    setCurrentlyActiveTrade,
-    setUserMargin,
-    getCurrentProfile,
-  } = useActions();
+  const { purchaseStockAsset, setCurrentlyActiveTrade, setUserMargin } =
+    useActions();
 
   // const openTradesMargin = tradesMargin(openTrades);
 
@@ -83,7 +77,7 @@ const BuyStockModal = (props) => {
         loss: 0,
       });
       message.success(
-        `Your ${
+        ` ${
           Object.keys(currentSelectedStock).length > 0
             ? currentSelectedStock.symbol
             : defaultSelectedStock.symbol
