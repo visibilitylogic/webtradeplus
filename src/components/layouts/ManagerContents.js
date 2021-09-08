@@ -277,15 +277,21 @@ const ManagerContents = (props) => {
       </div>
 
       <div className="manager-tab-dtls" manager-tab-dtls="payments">
-        {allDeposits && allDeposits.length > 0 && (
-          <TableContainer>
-            <BasicTable
-              allUsers={allDeposits}
-              user={user}
-              column={depositHeader}
-              type="payment"
-            />
-          </TableContainer>
+        {allDeposits && allDeposits.length <= 0 ? (
+          <div className="d-flex justify-content-center align-items-center">
+            <h2 className="p-2 m-2">No Deposit</h2>
+          </div>
+        ) : (
+          allDeposits && (
+            <TableContainer>
+              <BasicTable
+                allUsers={allDeposits}
+                user={user}
+                column={depositHeader}
+                type="payment"
+              />
+            </TableContainer>
+          )
         )}
       </div>
 
@@ -309,15 +315,21 @@ const ManagerContents = (props) => {
       </div>
 
       <div className="manager-tab-dtls" manager-tab-dtls="identity">
-        {allVerifiedUsers && allVerifiedUsers.length > 0 && (
-          <TableContainer>
-            <BasicTable
-              allUsers={allVerifiedUsers}
-              user={user}
-              column={allVerifiedUsersHeader}
-              type="verifiedUsers"
-            />
-          </TableContainer>
+        {allVerifiedUsers && allVerifiedUsers.length <= 0 ? (
+          <div className="d-flex justify-content-center align-items-center">
+            <h2 className="p-2 m-2">No KYC</h2>
+          </div>
+        ) : (
+          allVerifiedUsers && (
+            <TableContainer>
+              <BasicTable
+                allUsers={allVerifiedUsers}
+                user={user}
+                column={allVerifiedUsersHeader}
+                type="verifiedUsers"
+              />
+            </TableContainer>
+          )
         )}
       </div>
 
@@ -900,15 +912,21 @@ const ManagerContents = (props) => {
         )}
       </div>
       <div className="manager-tab-dtls" manager-tab-dtls="withdraw">
-        {allWithdrawals && allWithdrawals.length > 0 && (
-          <TableContainer>
-            <BasicTable
-              allUsers={allWithdrawals}
-              user={user}
-              column={withdrawalHeader}
-              type="withdrawal"
-            />
-          </TableContainer>
+        {allWithdrawals && allWithdrawals.length <= 0 ? (
+          <div className="d-flex justify-content-center align-items-center">
+            <h2 className="p-2 m-2">No Withdrawal</h2>
+          </div>
+        ) : (
+          allWithdrawals && (
+            <TableContainer>
+              <BasicTable
+                allUsers={allWithdrawals}
+                user={user}
+                column={withdrawalHeader}
+                type="withdrawal"
+              />
+            </TableContainer>
+          )
         )}
       </div>
 
