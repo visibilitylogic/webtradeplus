@@ -263,6 +263,7 @@ const SellStockModal = (props) => {
         </div>
         <div className="split moved">
           <span>
+            {user && user.currency === "USD" ? "$" : user && user.currency}
             {(
               getRate(
                 defaultSelectedStock,
@@ -280,7 +281,6 @@ const SellStockModal = (props) => {
             )
               .toString()
               .slice(0, 8)}
-            USD
           </span>
         </div>
       </div>

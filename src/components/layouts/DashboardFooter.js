@@ -27,9 +27,7 @@ const DashboardFooter = ({ setSupport }) => {
 
   const equity =
     openTrades.length > 0
-      ? balance +
-        (parseFloat(profitOrLoss) - openTradesMargin) +
-        openTradesMargin
+      ? balance + parseFloat(profitOrLoss) + openTradesMargin
       : balance;
 
   // const equity =
@@ -41,9 +39,7 @@ const DashboardFooter = ({ setSupport }) => {
   //     : balance;
 
   const freeMargin =
-    openTrades.length > 0
-      ? balance + (parseFloat(profitOrLoss) - openTradesMargin)
-      : balance;
+    openTrades.length > 0 ? balance + parseFloat(profitOrLoss) : balance;
 
   // const openTradeAssets =
   //   openTrades.length > 0 &&
@@ -118,7 +114,9 @@ const DashboardFooter = ({ setSupport }) => {
             <span>&nbsp;Equity: </span>
             <span>
               {user && user.currency === "USD" ? "$" : user && user.currency}
-              {new Intl.NumberFormat("en-US").format(equity).slice(0, 8)}
+              <span className="balance">
+                {new Intl.NumberFormat("en-US").format(equity).slice(0, 8)}
+              </span>
               &nbsp;|
             </span>
           </p>
@@ -126,14 +124,16 @@ const DashboardFooter = ({ setSupport }) => {
             <span>&nbsp;Margin: </span>
             <span>
               {user && user.currency === "USD" ? "$" : user && user.currency}
-              {openTradesMargin} |
+              <span>{openTradesMargin} |</span>
             </span>
           </p>
           <p>
             <span>&nbsp;Free Margin: </span>
             <span>
               {user && user.currency === "USD" ? "$" : user && user.currency}
-              {new Intl.NumberFormat("en-US").format(freeMargin).slice(0, 8)}
+              <span className="balance">
+                {new Intl.NumberFormat("en-US").format(freeMargin).slice(0, 8)}
+              </span>
             </span>
           </p>
         </div>

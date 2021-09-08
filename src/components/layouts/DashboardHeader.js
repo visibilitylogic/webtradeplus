@@ -85,7 +85,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
     setCurrentlyActiveTrade({});
     clearOpenTrades();
 
-    setTimeout(() => logout(), 3000);
+    setTimeout(() => logout(), 1000);
 
     history.push("/");
   };
