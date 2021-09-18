@@ -35,7 +35,11 @@ const Board = (props) => {
     setUserMargin,
   } = useActions();
 
-  const profitOrLoss = getPandL(openTrades, allStockAssets);
+  const profitOrLoss = getPandL(
+    openTrades,
+    allStockAssets,
+    data?.leverageAmount
+  );
 
   const getRate = () => {
     if (Object.keys(defaultSelectedStock).length > 0) {
@@ -111,7 +115,7 @@ const Board = (props) => {
                     >
                       {new Intl.NumberFormat("en-US")
                         .format(parseFloat(profitOrLoss))
-                        .slice(0, 8)}
+                        .slice(0, 9)}
                     </span>
                   </h2>
                 </div>

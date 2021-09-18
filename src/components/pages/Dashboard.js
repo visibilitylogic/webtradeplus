@@ -87,6 +87,7 @@ const Dashboard = () => {
 
   useInterval(() => {
     getAllStockAssets();
+    getAllUserTrades(user && user._id);
 
     if (Object.keys(currentSelectedStock).length > 0) {
       setCurrentSelectedStock(currentSelectedStock);
