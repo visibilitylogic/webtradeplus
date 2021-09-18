@@ -14,10 +14,15 @@ import useInterval from "../hooks/useInterval";
 const DashboardFooter = ({ setSupport }) => {
   const { user } = useSelector((state) => state.auth);
   const { openTrades, activeTrade } = useSelector((state) => state.profile);
+  const { webData } = useSelector((state) => state.web);
   const { allStockAssets } = useSelector((state) => state.stock);
   const [timer, setTimer] = useState(new Date());
 
-  const profitOrLoss = getPandL(openTrades, allStockAssets);
+  const profitOrLoss = getPandL(
+    openTrades,
+    allStockAssets,
+    webData?.leverageAmount
+  );
 
   const activeTradeMargin = getActiveTradeMargin(activeTrade);
 

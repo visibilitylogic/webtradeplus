@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
+import React, { useState } from "react";
 import { message } from "antd";
 import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
@@ -7,7 +6,6 @@ import { calculatePandL } from "../../helpers/calculatePandL";
 import { animateBalance } from "../../helpers/animateBalance";
 import { getUserBalance } from "../../helpers/getUserBalance";
 import { getActiveTradeMargin } from "../../helpers/getActiveTradeMargin";
-import Spinner from "../utils/Spinner";
 import useInterval from "../hooks/useInterval";
 
 function OrderBook() {
@@ -50,8 +48,6 @@ function OrderBook() {
       message.success("Your trade has been closed successfully");
       setCurrentlyActiveTrade({});
     }, 6000);
-
-    console.log(calculatePandL(trade, closeRate));
 
     setTimeout(() => {
       animateBalance(

@@ -1,13 +1,15 @@
-export const calculatePandL = (item, marketRate) => {
+export const calculatePandL = (item, marketRate, leverage) => {
   if (item.tag === "sell") {
     if (item.openRateOfAsset < marketRate.price) {
-      return -Math.abs(marketRate.price - item.openRateOfAsset);
+      return -Math.abs(
+        ((item.margin * marketRate) / item.openRateOfAsset) * leverage
+      );
     } else if (item.openRateOfAsset > marketRate.price) {
-      return Math.abs(marketRate.price - item.openRateOfAsset);
+      Math.abs(((item.margin * marketRate) / item.openRateOfAsset) * leverage);
     } else {
-      return marketRate.price - item.openRateOfAsset;
+      return ((item.margin * marketRate) / item.openRateOfAsset) * leverage;
     }
   } else {
-    return marketRate.price - item.openRateOfAsset;
+    return ((item.margin * marketRate) / item.openRateOfAsset) * leverage;
   }
 };
