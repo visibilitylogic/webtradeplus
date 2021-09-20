@@ -166,6 +166,18 @@ const Dashboard = () => {
               data={webData}
             />
           )}
+          {managerSelected && (
+            <Fragment>
+              <Manager />
+            </Fragment>
+          )}
+
+          {/* Renders the  Admin page if user is an Admin*/}
+          {adminSelected && (
+            <Fragment>
+              <Admin />
+            </Fragment>
+          )}
 
           {/* Renders the  order book page*/}
           {selectedTab === 1 && (
@@ -233,18 +245,7 @@ const Dashboard = () => {
           )}
 
           {/* Renders the  manager page if user is a manager*/}
-          {managerSelected && (
-            <Fragment>
-              <Manager />
-            </Fragment>
-          )}
-
-          {/* Renders the  Admin page if user is an Admin*/}
-          {adminSelected && (
-            <Fragment>
-              <Admin />
-            </Fragment>
-          )}
+          
         </div>
       </section>
 

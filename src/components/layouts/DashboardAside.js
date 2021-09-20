@@ -30,24 +30,7 @@ const DashboardAside = ({
         style={{ backgroundColor: isDarkMode ? "#131722" : "#f2f2f2" }}
       >
         <ul>
-          {asideList.map((aside) => (
-            <li
-              onClick={() => {
-                setSelectedTab(aside.id);
-                setAdminSelected(false);
-                setManagerSelected(false);
-              }}
-              key={aside.id}
-            >
-              <NavLink
-                to={aside.path}
-                className={selectedTab === aside.id ? "active" : ""}
-              >
-                {React.createElement(aside.icon, { size: 20, color: "#fff" })}
-                <span style={{ whiteSpace: "pre-wrap" }}>{aside.title}</span>
-              </NavLink>
-            </li>
-          ))}
+          
            
           {user && (user.isManager || user.isAdmin) && (
             <li
@@ -85,6 +68,24 @@ const DashboardAside = ({
               </NavLink>
             </li>
           )}
+          {asideList.map((aside) => (
+            <li
+              onClick={() => {
+                setSelectedTab(aside.id);
+                setAdminSelected(false);
+                setManagerSelected(false);
+              }}
+              key={aside.id}
+            >
+              <NavLink
+                to={aside.path}
+                className={selectedTab === aside.id ? "active" : ""}
+              >
+                {React.createElement(aside.icon, { size: 20, color: "#fff" })}
+                <span style={{ whiteSpace: "pre-wrap" }}>{aside.title}</span>
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </div>
              
