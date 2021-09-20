@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
 
 const EditProfile = ({ setEditProfile }) => {
-  const { runPassword, updateProfile } = useActions()
+  const { updateProfile } = useActions()
   const { error, singleUser } = useSelector((state) => state.profile)
   const {
     name,
@@ -21,7 +21,7 @@ const EditProfile = ({ setEditProfile }) => {
     lastname,
     _id,
   } = singleUser
-  
+
   const [active, setactive] = useState(true)
 
   const [profileDetails, handleProfileDetails] = useFormInput({
@@ -83,7 +83,7 @@ const EditProfile = ({ setEditProfile }) => {
 
         message.success('Profile was successfully updated')
 
-        profileDetails({
+        handleProfileDetails({
           yourFirstName: '',
           yourLastName: '',
           yourEmailAddress: '',

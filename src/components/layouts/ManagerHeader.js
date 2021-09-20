@@ -9,6 +9,7 @@ const ManagerHeader = ({ setDisplayC }) => {
     allVerifiedUsers,
     allOrders,
     allTrades,
+    allSubscription,
     allUsers,
   } = useSelector((state) => state.profile)
 
@@ -27,22 +28,29 @@ const ManagerHeader = ({ setDisplayC }) => {
         <span>Deposits</span>
         <span className="notify">
           <small>
-            {allDeposits.length > 0 &&
-              allDeposits.filter((deposit) => deposit.status === 'Pending')
-                .length}
+            {allDeposits.length > 0
+              ? allDeposits.length > 0 &&
+                allDeposits.filter((deposit) => deposit.status === 'Pending')
+                  .length
+              : 0}
           </small>
         </span>
       </div>
       <div manager-tab="subscriptions" className="tab">
-        <span>Subscriptions</span>
+        <span>Subscription</span>
+        <span className="notify">
+          <small>{allSubscription.length}</small>
+        </span>
       </div>
       <div manager-tab="identity" className="tab">
         <span>KYC</span>
         <span className="notify">
           <small>
-            {allVerifiedUsers.length > 0 &&
-              allVerifiedUsers.filter((verify) => verify.status === 'Pending')
-                .length}
+            {allVerifiedUsers.length > 0
+              ? allVerifiedUsers.length > 0 &&
+                allVerifiedUsers.filter((verify) => verify.status === 'Pending')
+                  .length
+              : 0}
           </small>
         </span>
       </div>
@@ -66,15 +74,25 @@ const ManagerHeader = ({ setDisplayC }) => {
         <span>Withdrawals</span>
         <span className="notify">
           <small>
-            {allWithdrawals.length > 0 &&
-              allWithdrawals.filter(
-                (withdrawal) => withdrawal.status === 'Pending',
-              ).length}
+            {allWithdrawals.length > 0
+              ? allWithdrawals.length > 0 &&
+                allWithdrawals.filter(
+                  (withdrawal) => withdrawal.status === 'Pending',
+                ).length
+              : 0}
           </small>
         </span>
       </div>
       <div manager-tab="traders-approval" className="tab">
         <span>Traders Approvals</span>
+        <span className="notify">
+          <small>
+            {allOrders.length > 0
+              ? allOrders.length > 0 &&
+                allOrders.filter((order) => order.status === 'Pending').length
+              : 0}
+          </small>
+        </span>
       </div>
     </div>
   )
