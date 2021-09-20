@@ -134,7 +134,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
               {stocks.map((stock) => (
                 <li
                   style={{
-                    color: isDarkMode ? "#fff" : "#000",
+                    color: isDarkMode ? "rgb(170 170 170)" : "#000",
                     width: stock.id === 4 ? 120 : undefined,
                   }}
                   onClick={() => {
