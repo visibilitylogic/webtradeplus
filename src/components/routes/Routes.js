@@ -47,7 +47,7 @@ const Routes = () => {
         />
       )}
 
-      <div style={{ background: '#f2f2f2' }}>
+      <div style={{ background: '#f2f2f2', overflow: "auto", height: "100vh"  }}>
         <Switch>
           <Route
             path={['/', '/login']}
