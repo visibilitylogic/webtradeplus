@@ -24,6 +24,7 @@ function Finaces() {
           flexDirection: "column",
           maxWidth: "1200px",
           margin: "auto",
+          marginTop:'10%'
         }}
       >
         <div className="flex_row1">
