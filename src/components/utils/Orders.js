@@ -68,16 +68,17 @@ const Orders = (props) => {
       setCurrentlyActiveTrade({});
     }, 6000);
 
-    console.log(calculatePandL(trade, closeRate));
-
     setTimeout(() => {
       animateBalance(
         "balance",
         balance,
         balance +
           trade.margin +
-          calculatePandL(trade, closeRate) *
-            (webData ? webData.leverageAmount : 1) -
+          calculatePandL(
+            trade,
+            closeRate.price,
+            webData ? webData.leverageAmount : 1
+          ) -
           trade.margin,
         3000
       );
@@ -195,29 +196,51 @@ const Orders = (props) => {
                                   <td key={index}>
                                     {item.isOpen
                                       ? asset.price.toString().slice(0, 8)
-                                      : "-----"}
+                                      : "---"}
                                   </td>
                                   <td
                                     style={{
                                       color:
                                         item.isOpen &&
-                                        calculatePandL(item, asset) < 0
+                                        calculatePandL(
+                                          item,
+                                          asset.price,
+                                          webData ? webData.leverageAmount : 1
+                                        ) < 0
                                           ? "red"
                                           : item.isOpen &&
-                                            calculatePandL(item, asset) > 0
+                                            calculatePandL(
+                                              item,
+                                              asset.price,
+                                              webData
+                                                ? webData.leverageAmount
+                                                : 1
+                                            ) > 0
                                           ? "#54ac40"
                                           : "#fff",
                                     }}
                                   >
                                     {item.isOpen &&
-                                      calculatePandL(item, asset) > 0 &&
+                                      calculatePandL(
+                                        item,
+                                        asset.price,
+                                        webData ? webData.leverageAmount : 1
+                                      ) > 0 &&
                                       "+"}
 
                                     {item.isOpen
                                       ? new Intl.NumberFormat("en-US")
-                                          .format(calculatePandL(item, asset))
+                                          .format(
+                                            calculatePandL(
+                                              item,
+                                              asset.price,
+                                              webData
+                                                ? webData.leverageAmount
+                                                : 1
+                                            )
+                                          )
                                           .slice(0, 8)
-                                      : "-----"}
+                                      : "---"}
                                   </td>
                                   <td
                                     style={{
@@ -296,7 +319,7 @@ const Orders = (props) => {
                               padding: 10,
                             }}
                           >
-                            There are no trade history
+                            There are no open trades
                           </td>
                         </tr>
                       )}

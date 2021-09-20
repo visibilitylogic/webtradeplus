@@ -30,7 +30,33 @@
 //   }
 // };
 
-export const getPandL = (openTrades, assetRate) => {
+// export const getPandL = (openTrades, assetRate) => {
+//   let profitLoss = 0;
+//   for (let i = 0; i < openTrades.length; i++) {
+//     for (let k = 0; k < assetRate.length; k++) {
+//       if (assetRate[k].symbol === openTrades[i].nameOfAsset) {
+//         if (openTrades[i].tag === "sell") {
+//           if (openTrades[i].openRateOfAsset < assetRate[k].price) {
+//             profitLoss += -Math.abs(
+//               assetRate[k].price - openTrades[i].openRateOfAsset
+//             );
+//           } else if (openTrades[i].openRateOfAsset > assetRate[k].price) {
+//             profitLoss += Math.abs(
+//               assetRate[k].price - openTrades[i].openRateOfAsset
+//             );
+//           } else {
+//             profitLoss += assetRate[k].price - openTrades[i].openRateOfAsset;
+//           }
+//         } else {
+//           profitLoss += assetRate[k].price - openTrades[i].openRateOfAsset;
+//         }
+//       }
+//     }
+//   }
+//   return profitLoss;
+// };
+
+export const getPandL = (openTrades, assetRate, leverage = 1) => {
   let profitLoss = 0;
   for (let i = 0; i < openTrades.length; i++) {
     for (let k = 0; k < assetRate.length; k++) {
@@ -38,17 +64,27 @@ export const getPandL = (openTrades, assetRate) => {
         if (openTrades[i].tag === "sell") {
           if (openTrades[i].openRateOfAsset < assetRate[k].price) {
             profitLoss += -Math.abs(
-              assetRate[k].price - openTrades[i].openRateOfAsset
+              ((openTrades[i].margin * assetRate[k].price) /
+                openTrades[i].openRateOfAsset) *
+                leverage
             );
           } else if (openTrades[i].openRateOfAsset > assetRate[k].price) {
             profitLoss += Math.abs(
-              assetRate[k].price - openTrades[i].openRateOfAsset
+              ((openTrades[i].margin * assetRate[k].price) /
+                openTrades[i].openRateOfAsset) *
+                leverage
             );
           } else {
-            profitLoss += assetRate[k].price - openTrades[i].openRateOfAsset;
+            profitLoss +=
+              ((openTrades[i].margin * assetRate[k].price) /
+                openTrades[i].openRateOfAsset) *
+              leverage;
           }
         } else {
-          profitLoss += assetRate[k].price - openTrades[i].openRateOfAsset;
+          profitLoss +=
+            ((openTrades[i].margin * assetRate[k].price) /
+              openTrades[i].openRateOfAsset) *
+            leverage;
         }
       }
     }

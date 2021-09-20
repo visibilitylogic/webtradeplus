@@ -14,10 +14,15 @@ import useInterval from "../hooks/useInterval";
 const DashboardFooter = ({ setSupport }) => {
   const { user } = useSelector((state) => state.auth);
   const { openTrades, activeTrade } = useSelector((state) => state.profile);
+  const { webData } = useSelector((state) => state.web);
   const { allStockAssets } = useSelector((state) => state.stock);
   const [timer, setTimer] = useState(new Date());
 
-  const profitOrLoss = getPandL(openTrades, allStockAssets);
+  const profitOrLoss = getPandL(
+    openTrades,
+    allStockAssets,
+    webData?.leverageAmount
+  );
 
   const activeTradeMargin = getActiveTradeMargin(activeTrade);
 
@@ -27,9 +32,7 @@ const DashboardFooter = ({ setSupport }) => {
 
   const equity =
     openTrades.length > 0
-      ? balance +
-        (parseFloat(profitOrLoss) - openTradesMargin) +
-        openTradesMargin
+      ? balance + parseFloat(profitOrLoss) + openTradesMargin
       : balance;
 
   // const equity =
@@ -41,9 +44,7 @@ const DashboardFooter = ({ setSupport }) => {
   //     : balance;
 
   const freeMargin =
-    openTrades.length > 0
-      ? balance + (parseFloat(profitOrLoss) - openTradesMargin)
-      : balance;
+    openTrades.length > 0 ? balance + parseFloat(profitOrLoss) : balance;
 
   // const openTradeAssets =
   //   openTrades.length > 0 &&
@@ -89,9 +90,12 @@ const DashboardFooter = ({ setSupport }) => {
                 {user && user.currency === "USD" ? "$" : user && user.currency}
               </span>
               <span className="balance">
-                {new Intl.NumberFormat("en-US").format(balance).slice(0, 8)} |
+                {new Intl.NumberFormat("en-US").format(balance).slice(0, 8)} 
               </span>
+              &nbsp;<span style={{ color: "#aaaaaa" }}>|</span>
+
             </span>
+            
           </p>
           <p>
             <span>&nbsp;P/L: </span>
@@ -111,29 +115,36 @@ const DashboardFooter = ({ setSupport }) => {
               {openTrades.length > 0
                 ? new Intl.NumberFormat("en-US").format(profitOrLoss)
                 : 0}
-              <span style={{ color: "#fff" }}> | </span>
+              <span style={{ color: "#fff" }}>  </span>&nbsp;
+              <span style={{ color: "#aaaaaa" }}>|</span>
+
             </span>
           </p>
           <p>
             <span>&nbsp;Equity: </span>
             <span>
               {user && user.currency === "USD" ? "$" : user && user.currency}
-              {new Intl.NumberFormat("en-US").format(equity).slice(0, 8)}
-              &nbsp;|
+              <span className="balance">
+                {new Intl.NumberFormat("en-US").format(equity).slice(0, 8)}
+              </span>&nbsp;
+              <span style={{ color: "#aaaaaa" }}>|</span>
             </span>
           </p>
           <p>
             <span>&nbsp;Margin: </span>
             <span>
               {user && user.currency === "USD" ? "$" : user && user.currency}
-              {openTradesMargin} |
+              <span>{openTradesMargin} </span>
+              <span style={{ color: "#aaaaaa" }}>|</span>
             </span>
           </p>
           <p>
             <span>&nbsp;Free Margin: </span>
             <span>
               {user && user.currency === "USD" ? "$" : user && user.currency}
-              {new Intl.NumberFormat("en-US").format(freeMargin).slice(0, 8)}
+              <span className="balance">
+                {new Intl.NumberFormat("en-US").format(freeMargin).slice(0, 8)}
+              </span>
             </span>
           </p>
         </div>

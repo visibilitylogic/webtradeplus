@@ -25,6 +25,11 @@
 .navbar span {
   display: block;
 }
+.navbar span {
+  display: block;
+  font-size: 2rem;
+}
+
 .navbar .name {
   color: #fff;
   font-size: 13px;

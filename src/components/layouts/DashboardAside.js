@@ -30,6 +30,44 @@ const DashboardAside = ({
         style={{ backgroundColor: isDarkMode ? "#131722" : "#f2f2f2" }}
       >
         <ul>
+          
+            {/* removed this code user.isAdmin && to test my admin page */}
+          {user && user.isAdmin &&   (
+          
+          <li
+            onClick={() => {
+              setAdminSelected(true);
+              setManagerSelected(false);
+              setSelectedTab(null);
+            }}
+          >
+            <NavLink
+              to="/dashboard/admin"
+              className={adminSelected ? "active" : ""}
+            >
+              <IoSettingsOutline />
+              <span>Admin</span>
+            </NavLink>
+          </li>
+        )}
+          {user && (user.isManager || user.isAdmin) && (
+            <li
+              onClick={() => {
+                setManagerSelected(true);
+                setAdminSelected(false);
+                setSelectedTab(null);
+              }}
+            >
+              <NavLink
+                to="/dashboard/manager"
+                className={managerSelected ? "active" : ""}
+              >
+                <AiOutlinePieChart />
+                <span>Manager</span>
+              </NavLink>
+            </li>
+          )}
+         
           {asideList.map((aside) => (
             <li
               onClick={() => {
@@ -48,43 +86,6 @@ const DashboardAside = ({
               </NavLink>
             </li>
           ))}
-           
-          {user && (user.isManager || user.isAdmin) && (
-            <li
-              onClick={() => {
-                setManagerSelected(true);
-                setAdminSelected(false);
-                setSelectedTab(null);
-              }}
-            >
-              <NavLink
-                to="/dashboard/manager"
-                className={managerSelected ? "active" : ""}
-              >
-                <AiOutlinePieChart />
-                <span>Manager</span>
-              </NavLink>
-            </li>
-          )}
-          {/* removed this code user.isAdmin && to test my admin page */}
-          {user && user.isAdmin &&   (
-          
-            <li
-              onClick={() => {
-                setAdminSelected(true);
-                setManagerSelected(false);
-                setSelectedTab(null);
-              }}
-            >
-              <NavLink
-                to="/dashboard/admin"
-                className={adminSelected ? "active" : ""}
-              >
-                <IoSettingsOutline />
-                <span>Admin</span>
-              </NavLink>
-            </li>
-          )}
         </ul>
       </div>
              

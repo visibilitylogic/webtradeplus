@@ -8646,3 +8646,10 @@ body {
   margin-left: 0;
   width: fit-content;
 }
+
+.manager-tab-dtls table tr td {
+  text-align: left;
+  padding: 4px 10px;
+  font-size: 80%;
+  cursor: pointer !important;
+}
