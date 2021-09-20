@@ -335,7 +335,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                         ? "$"
                         : user && user.currency}
                     </span>
-                    <span id="balance" className="balance">
+                    <span id="balance" className="balance" style={{fontSize:'1.8rem'}}>
                       {user
                         ? new Intl.NumberFormat("en-US")
                             .format(balance)
@@ -458,7 +458,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                             : user && user.currency}
                         </span>
                         ={" "}
-                        <span className="balance">
+                        <span className="balance" >
                           {new Intl.NumberFormat("en-US")
                             .format(balance)
                             .slice(0, 9)}

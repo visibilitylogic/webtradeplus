@@ -89,7 +89,7 @@ const DashboardFooter = ({ setSupport }) => {
               <span>
                 {user && user.currency === "USD" ? "$" : user && user.currency}
               </span>
-              <span className="balance">
+              <span className="balance" >
                 {new Intl.NumberFormat("en-US").format(balance).slice(0, 8)} 
               </span>
               &nbsp;<span style={{ color: "#aaaaaa" }}>|</span>
