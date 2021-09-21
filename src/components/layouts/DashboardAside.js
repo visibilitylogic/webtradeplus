@@ -48,7 +48,7 @@ const DashboardAside = ({
               </NavLink>
             </li>
           )}
-          {user && user.isManager && (
+          {user && (user.isManager || user.isAdmin) && (
             <li
               onClick={() => {
                 setManagerSelected(true)
