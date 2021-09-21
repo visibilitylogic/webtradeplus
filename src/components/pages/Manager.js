@@ -44,21 +44,18 @@ const Manager = () => {
 
   return (
     <>
-      {user.isManager ? (
-        <div
-          className="full-width manager-section"
-          style={{ paddingLeft: 0, paddingRight: 0 }}
-        >
-          <ManagerHeader setDisplayC={setDisplayC} />
-          <ManagerContents
-            displayC={displayC}
-            setDisplayC={setDisplayC}
-            setEditProfile={setEditProfile}
-          />
-        </div>
-      ) : (
-        history.push('/')
-      )}
+      <div
+        className="full-width manager-section"
+        style={{ paddingLeft: 0, paddingRight: 0 }}
+      >
+        <ManagerHeader setDisplayC={setDisplayC} />
+        <ManagerContents
+          displayC={displayC}
+          setDisplayC={setDisplayC}
+          setEditProfile={setEditProfile}
+        />
+      </div>
+      )
       {editProfile && (
         <section
           className="withdraw-modal-box personal-data-modal"

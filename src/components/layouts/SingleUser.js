@@ -16,12 +16,11 @@ function SingleUser() {
     isAdmin,
     isManager,
     verify,
-    isActive,
   } = singleUser
   const [verifystate, setverifystate] = useState(verify)
   const [active, setActive] = useState(true)
-  const [deactivate, setdeActivate] = useState(' DEACTIVATE USER')
-  const [activate, setActivate] = useState(' ACTIVATE USER')
+  const [deactivate] = useState(' DEACTIVATE USER')
+  const [activate] = useState(' ACTIVATE USER')
 
   const handleApproveVerify = async () => {
     if (error) {
@@ -29,8 +28,6 @@ function SingleUser() {
     } else {
       await approveSingleUserVerify(_id)
       setverifystate(!verify)
-      // location.window.reload()
-
       message.success('Identity Was Successfully Approved')
     }
   }
