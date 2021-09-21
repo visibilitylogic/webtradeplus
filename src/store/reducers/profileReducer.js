@@ -187,7 +187,9 @@ export default function profileReducer(state = initialState, action) {
       }
 
     case actionTypes.GET_ALL_USERS:
-      const allUsersNew = action.payload.filter((act) => act.isAdmin !== true)
+      const allUsersNew = action.payload.filter((act) => {
+        return act.isAdmin !== true && act.isManager !== true
+      })
       return {
         ...state,
         loading: false,
