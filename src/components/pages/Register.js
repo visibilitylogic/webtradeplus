@@ -18,7 +18,7 @@ const Register = ({ data, setToggleRegister }) => {
     lastname: "",
     email: "",
     country: "",
-    phonenumber: "",
+    phoneNumber: "",
     password: "",
     repeatPassword: "",
   });
@@ -29,7 +29,7 @@ const Register = ({ data, setToggleRegister }) => {
     lastname,
     email,
     country,
-    phonenumber,
+    phoneNumber,
     password,
     repeatPassword,
   } = formInput;
@@ -46,7 +46,7 @@ const Register = ({ data, setToggleRegister }) => {
       lastname,
       email,
       country,
-      phonenumber,
+      phoneNumber,
       password,
       repeatPassword,
     });
@@ -142,11 +142,12 @@ const Register = ({ data, setToggleRegister }) => {
                   >
                     <Form.Control
                       type="number"
-                      name="phonenumber"
-                      value={phonenumber}
+                      name="phoneNumber"
+                      value={phoneNumber}
                       onChange={handleFormInput}
                       style={{ borderBottom: "1px solid #d8dbe4" }}
                       placeholder="Your Phone Number"
+                      required
                     />
                   </Form.Group>
 
