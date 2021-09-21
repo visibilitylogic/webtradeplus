@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router'
+
 import ManagerHeader from '../layouts/ManagerHeader'
 import { useSelector } from 'react-redux'
 import { useActions } from '../hooks/useActions'
@@ -8,7 +10,7 @@ import ManagerContents from '../layouts/ManagerContents'
 
 const Manager = () => {
   const { user } = useSelector((state) => state.auth)
-
+  const history = useHistory()
   const [displayC, setDisplayC] = useState(false)
   const [editProfile, setEditProfile] = useState(false)
 
@@ -42,17 +44,21 @@ const Manager = () => {
 
   return (
     <>
-      <div
-        className="full-width manager-section"
-        style={{ paddingLeft: 0, paddingRight: 0 }}
-      >
-        <ManagerHeader setDisplayC={setDisplayC} />
-        <ManagerContents
-          displayC={displayC}
-          setDisplayC={setDisplayC}
-          setEditProfile={setEditProfile}
-        />
-      </div>
+      {user.isManager ? (
+        <div
+          className="full-width manager-section"
+          style={{ paddingLeft: 0, paddingRight: 0 }}
+        >
+          <ManagerHeader setDisplayC={setDisplayC} />
+          <ManagerContents
+            displayC={displayC}
+            setDisplayC={setDisplayC}
+            setEditProfile={setEditProfile}
+          />
+        </div>
+      ) : (
+        history.push('/')
+      )}
       {editProfile && (
         <section
           className="withdraw-modal-box personal-data-modal"
