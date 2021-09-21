@@ -57,7 +57,7 @@ const ManagerContents = (props) => {
   } = useSelector((state) => state.profile)
 
   const { user } = useSelector((state) => state.auth)
-
+  console.log(allUsers)
   // ACTION CREATORS
   const {
     getAllUsers,
@@ -334,11 +334,7 @@ const ManagerContents = (props) => {
       </div>
 
       {/* Table */}
-      <div
-        className="manager-tab-dtls"
-        manager-tab-dtls="users"
-        style={{ marginLeft: '%' }}
-      >
+      <div className="manager-tab-dtls" manager-tab-dtls="users">
         {!displayC && allUsers && allUsers.length > 0 && (
           <div className="first-sec">
             <TableContainer>
@@ -354,6 +350,26 @@ const ManagerContents = (props) => {
             </TableContainer>
           </div>
         )}
+
+        {/* {!displayC && allUsers && allUsers.length <= 0 ? (
+          <div className="d-flex justify-content-center align-items-center">
+            <h2 className="p-2 m-2">No user yet</h2>
+          </div>
+        ) : (
+          <div className="first-sec">
+            <TableContainer>
+              <BasicTable
+                allUsers={allUsers}
+                setDisplayC={setDisplayC}
+                setUserLevel={setUserLevel}
+                user={user}
+                column={Columns}
+                key={allUsers}
+                type="EveryUser"
+              />
+            </TableContainer>
+          </div>
+        )} */}
 
         {displayC && (
           <div className="second-sec" style={{ display: 'block' }}>

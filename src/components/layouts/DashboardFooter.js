@@ -89,10 +89,13 @@ const DashboardFooter = ({ setSupport }) => {
               <span>
                 {user && user.currency === "USD" ? "$" : user && user.currency}
               </span>
-              <span className="balance">
-                {new Intl.NumberFormat("en-US").format(balance).slice(0, 8)} |
+              <span className="balance" >
+                {new Intl.NumberFormat("en-US").format(balance).slice(0, 8)} 
               </span>
+              &nbsp;<span style={{ color: "#aaaaaa" }}>|</span>
+
             </span>
+            
           </p>
           <p>
             <span>&nbsp;P/L: </span>
@@ -112,7 +115,9 @@ const DashboardFooter = ({ setSupport }) => {
               {openTrades.length > 0
                 ? new Intl.NumberFormat("en-US").format(profitOrLoss)
                 : 0}
-              <span style={{ color: "#fff" }}> | </span>
+              <span style={{ color: "#fff" }}>  </span>&nbsp;
+              <span style={{ color: "#aaaaaa" }}>|</span>
+
             </span>
           </p>
           <p>
@@ -121,15 +126,16 @@ const DashboardFooter = ({ setSupport }) => {
               {user && user.currency === "USD" ? "$" : user && user.currency}
               <span className="balance">
                 {new Intl.NumberFormat("en-US").format(equity).slice(0, 8)}
-              </span>
-              &nbsp;|
+              </span>&nbsp;
+              <span style={{ color: "#aaaaaa" }}>|</span>
             </span>
           </p>
           <p>
             <span>&nbsp;Margin: </span>
             <span>
               {user && user.currency === "USD" ? "$" : user && user.currency}
-              <span>{openTradesMargin} |</span>
+              <span>{openTradesMargin} </span>
+              <span style={{ color: "#aaaaaa" }}>|</span>
             </span>
           </p>
           <p>

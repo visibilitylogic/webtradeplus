@@ -226,3 +226,12 @@ form .btn.btn-primary:hover {
 .forget {
   color: #bbb;
 }
+
+/* .auth-wrapper {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding: 15px 30px;
+  margin-top: 4rem;
+  overflow: auto !important;
+  height: 100vh !important;
+} */

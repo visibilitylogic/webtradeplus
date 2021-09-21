@@ -25,6 +25,11 @@
 .navbar span {
   display: block;
 }
+.navbar span {
+  display: block;
+  font-size: 2rem;
+}
+
 .navbar .name {
   color: #fff;
   font-size: 13px;
@@ -782,3 +787,8 @@
   color: #fff !important;
   border-bottom: 2px solid rgb(82, 82, 82) !important;
 }
+
+
+/* span#balance {
+  font-size: 1.8rem !important
+} */

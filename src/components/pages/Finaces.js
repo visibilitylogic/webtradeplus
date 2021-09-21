@@ -24,6 +24,7 @@ function Finaces() {
           flexDirection: "column",
           maxWidth: "1200px",
           margin: "auto",
+          marginTop:'10%'
         }}
       >
         <div className="flex_row1">
@@ -40,28 +41,6 @@ function Finaces() {
             </h1>
           </div>
           <div>
-            <h2 className="h2P">Equity</h2>
-            <h1 classname="h11">
-              {new Intl.NumberFormat("en-US").format(user.equity).slice(0, 8)}
-            </h1>
-          </div>
-        </div>
-        <div className="flex_row1">
-          <div>
-            <h2 className="h2P">Margin</h2>
-            <h1 classname="h11">
-              {new Intl.NumberFormat("en-US").format(user.margin).slice(0, 8)}
-            </h1>
-          </div>
-          <div>
-            <h2 className="h2P">Free Margin</h2>
-            <h1 classname="h11">
-              {new Intl.NumberFormat("en-US")
-                .format(user.freeMargin)
-                .slice(0, 8)}
-            </h1>
-          </div>
-          <div>
             <div style={{ borderBottom: ".3px solid white" }}>
               <h2 className="h2P">Profit</h2>
               <h1 classname="h11" style={{ fontSize: "22px", color: "white" }}>
@@ -75,7 +54,43 @@ function Finaces() {
               </h1>
             </div>
           </div>
+          {/* <div>
+            <h2 className="h2P">Equity</h2>
+            <h1 classname="h11">
+              {new Intl.NumberFormat("en-US").format(user.equity).slice(0, 8)}
+            </h1>
+          </div> */}
         </div>
+        {/* <div className="flex_row1"> */}
+          {/* <div>
+            <h2 className="h2P">Margin</h2>
+            <h1 classname="h11">
+              {new Intl.NumberFormat("en-US").format(user.margin).slice(0, 8)}
+            </h1>
+          </div> */}
+          {/* <div>
+            <h2 className="h2P">Free Margin</h2>
+            <h1 classname="h11">
+              {new Intl.NumberFormat("en-US")
+                .format(user.freeMargin)
+                .slice(0, 8)}
+            </h1>
+          </div> */}
+          {/* <div>
+            <div style={{ borderBottom: ".3px solid white" }}>
+              <h2 className="h2P">Profit</h2>
+              <h1 classname="h11" style={{ fontSize: "22px", color: "white" }}>
+                {new Intl.NumberFormat("en-US").format(user.profit).slice(0, 8)}
+              </h1>
+            </div>
+            <div>
+              <h2 className="h2P">Loss</h2>
+              <h1 classname="h11" style={{ fontSize: "22px", color: "white" }}>
+                {new Intl.NumberFormat("en-US").format(user.loss).slice(0, 8)}
+              </h1>
+            </div>
+          </div> */}
+        {/* </div> */}
       </div>
     </div>
   );

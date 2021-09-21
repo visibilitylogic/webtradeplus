@@ -196,7 +196,7 @@ const Orders = (props) => {
                                   <td key={index}>
                                     {item.isOpen
                                       ? asset.price.toString().slice(0, 8)
-                                      : "-----"}
+                                      : "---"}
                                   </td>
                                   <td
                                     style={{
@@ -240,7 +240,7 @@ const Orders = (props) => {
                                             )
                                           )
                                           .slice(0, 8)
-                                      : "-----"}
+                                      : "---"}
                                   </td>
                                   <td
                                     style={{
@@ -319,7 +319,7 @@ const Orders = (props) => {
                               padding: 10,
                             }}
                           >
-                            There are no trade history
+                            There are no open trades
                           </td>
                         </tr>
                       )}

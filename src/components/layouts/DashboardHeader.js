@@ -134,7 +134,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
               {stocks.map((stock) => (
                 <li
                   style={{
-                    color: isDarkMode ? "#fff" : "#000",
+                    color: isDarkMode ? "rgb(170 170 170)" : "#000",
                     width: stock.id === 4 ? 120 : undefined,
                   }}
                   onClick={() => {
@@ -335,7 +335,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                         ? "$"
                         : user && user.currency}
                     </span>
-                    <span id="balance" className="balance">
+                    <span id="balance" className="balance" style={{fontSize:'1.8rem'}}>
                       {user
                         ? new Intl.NumberFormat("en-US")
                             .format(balance)
@@ -458,7 +458,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                             : user && user.currency}
                         </span>
                         ={" "}
-                        <span className="balance">
+                        <span className="balance" >
                           {new Intl.NumberFormat("en-US")
                             .format(balance)
                             .slice(0, 9)}

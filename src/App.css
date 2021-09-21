@@ -6080,7 +6080,16 @@ admin-sidebar ul li a {
 .red {
   background-color: red;
 }
+.managerAcc {
+  color: green;
+}
+.adminAcc {
+  color: blue;
+}
 
 .red-color {
   color: red;
+}
+.userAcc {
+  color: #0c121b;
 }
