@@ -60,7 +60,14 @@ export const getPandL = (openTrades, assetRate, leverage = 1) => {
   let profitLoss = 0;
   for (let i = 0; i < openTrades.length; i++) {
     for (let k = 0; k < assetRate.length; k++) {
+      // if (openTrades.length < 0) {
+      //   profitLoss = 0;
+      // }
       if (assetRate[k].symbol === openTrades[i].nameOfAsset) {
+        if (assetRate[k].price - openTrades[i].openRateOfAsset === 0) {
+          profitLoss += 0;
+        }
+
         if (openTrades[i].tag === "sell") {
           if (openTrades[i].openRateOfAsset < assetRate[k].price) {
             profitLoss += -Math.abs(
@@ -74,17 +81,21 @@ export const getPandL = (openTrades, assetRate, leverage = 1) => {
                 openTrades[i].openRateOfAsset) *
                 leverage
             );
-          } else {
-            profitLoss +=
-              ((openTrades[i].margin * assetRate[k].price) /
-                openTrades[i].openRateOfAsset) *
-              leverage;
           }
         } else {
-          profitLoss +=
-            ((openTrades[i].margin * assetRate[k].price) /
-              openTrades[i].openRateOfAsset) *
-            leverage;
+          if (openTrades[i].openRateOfAsset < assetRate[k].price) {
+            profitLoss += Math.abs(
+              ((openTrades[i].margin * assetRate[k].price) /
+                openTrades[i].openRateOfAsset) *
+                leverage
+            );
+          } else if (openTrades[i].openRateOfAsset > assetRate[k].price) {
+            profitLoss += -Math.abs(
+              ((openTrades[i].margin * assetRate[k].price) /
+                openTrades[i].openRateOfAsset) *
+                leverage
+            );
+          }
         }
       }
     }
