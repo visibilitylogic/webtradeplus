@@ -343,7 +343,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                       {user
                         ? new Intl.NumberFormat("en-US")
                             .format(balance)
-                            .slice(0, 9)
+                            .slice(0, 8)
                         : 0}
                     </span>
                   </h6>
@@ -429,7 +429,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                       <span className="balance">
                         {new Intl.NumberFormat("en-US")
                           .format(balance)
-                          .slice(0, 9)}
+                          .slice(0, 8)}
                       </span>
                     </p>
                   </div>
