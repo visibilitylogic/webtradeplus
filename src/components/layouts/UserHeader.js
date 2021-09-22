@@ -1,7 +1,5 @@
 import React from 'react'
-import ReactCountryFlag from 'react-country-flag'
-
-import CountryList from 'react-select-country-list'
+import icon from './icon.png'
 import { useSelector } from 'react-redux'
 
 const UserHeader = () => {
@@ -16,13 +14,9 @@ const UserHeader = () => {
             <div className="d-flex justify-content-center">
               <img
                 className=" image-fluid w-30"
-                src={
-                  img
-                    ? img
-                    : 'https://p.kindpng.com/picc/s/78-785827_user-profile-avatar-login-account-male-user-icon.png'
-                }
+                src={img ? img : icon}
                 alt="profile-pics"
-                style={{ width: '50px', borderRadius: '50%', height: '50px' }}
+                style={{ width: '60px', borderRadius: '50%', height: '60px' }}
               />
             </div>
             <div className="dtls">
