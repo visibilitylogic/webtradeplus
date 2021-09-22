@@ -38,56 +38,55 @@ const Admin = (props) => {
     switch (link) {
       case "/admin":
         return <AdminDashboard />;
-        break;
+
       case "/admin/auto-trading":
         return <AutoTrading />;
-        break;
+
       case "/admin/general_settings":
         return <General_setting />;
-        break;
+
       case "/admin/general_appearance":
         return <General_appearance />;
-        break;
+
       case "/admin/mail":
         return <Mail />;
-        break;
+
       case "/admin/payment":
         return <Payment />;
       case "/admin/template":
         return <Template />;
-        break;
+
       case "/admin/loginsignup":
         return <LoginSignup />;
       case "/admin/additional":
         return <Additional />;
-        break;
+
       case "/admin/trading":
         return <Trading />;
-        break;
+
       case "/admin/search":
         return <Search />;
-        break;
+
       case "/admin/bankaccounts":
         return <Bank />;
-        break;
+
       case "/admin/identity":
         return <Identity />;
-        break;
+
       case "/admin/subscriptions":
         return <Subscription />;
-        break;
+
       case "/admin/loginpage":
         return <LoginPage />;
-        break;
+
       case "/admin/mastercard":
         return <MasterCard />;
-        break;
+
       case "/admin/bitcoin":
         return <Bitcoin />;
-        break;
+
       default:
         return null;
-        break;
     }
   };
   return (
