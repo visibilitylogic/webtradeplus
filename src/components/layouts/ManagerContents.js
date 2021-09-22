@@ -57,7 +57,7 @@ const ManagerContents = (props) => {
   } = useSelector((state) => state.profile)
 
   const { user } = useSelector((state) => state.auth)
-  console.log(allUsers)
+  // console.log(allUsers)
   // ACTION CREATORS
   const {
     getAllUsers,
@@ -69,7 +69,7 @@ const ManagerContents = (props) => {
   /***********************************************BASIC TABLE**************************************/
   //  const [singleUser, setSingleUser] = useState({})
   useEffect(() => {
-    getAllUsers()
+    getAllUsers(user)
   }, [singleUser])
 
   const [loading, setLoading] = useState(false)

@@ -31,14 +31,8 @@ const initialState = {
 
 export default function profileReducer(state = initialState, action) {
   switch (action.type) {
-    // case actionTypes.GET_CURRENT_PROFILE:
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     profile: action.payload,
-    //     error: null,
-    //   };
     case actionTypes.GET_BANK_PAYMENT_METHOD:
+      // const { user } = useSelector((state) => state.user)
       return {
         ...state,
         loading: false,
@@ -187,9 +181,11 @@ export default function profileReducer(state = initialState, action) {
       };
 
     case actionTypes.GET_ALL_USERS:
-      const allUsersNew = action.payload.filter((act) => {
-        return act.isAdmin !== true && act.isManager !== true;
-      });
+      const allUsersNew = action.payload[1].isAdmin
+        ? action.payload[0]
+        : action.payload[0].filter((act) => {
+            return act.isAdmin !== true && act.isManager !== true;
+          });
       return {
         ...state,
         loading: false,
@@ -296,7 +292,7 @@ export default function profileReducer(state = initialState, action) {
     case actionTypes.ADD_USER_AUTO_COPY_TRADE:
       const newUser = state.singleUser;
       newUser.currentBalance = action.payload.currentBalance;
-      const autoState = state.singleUser;
+      // const autoState = state.singleUser;
 
       // balanceState.amount = action.payload.amount
       // balanceState.deposit = action.payload.deposit

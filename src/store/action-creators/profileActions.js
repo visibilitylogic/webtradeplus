@@ -978,13 +978,13 @@ export const getAllOrders = () => async (dispatch) => {
   }
 }
 
-export const getAllUsers = () => async (dispatch) => {
+export const getAllUsers = (user) => async (dispatch) => {
   try {
     const { data } = await axios.get(`${BASE_URL}/api/users/allUser`)
-
+    console.log(user)
     dispatch({
       type: actionTypes.GET_ALL_USERS,
-      payload: data,
+      payload: [data, user],
     })
   } catch (error) {
     dispatch({
