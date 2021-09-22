@@ -13,7 +13,7 @@ export const orderReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       }
-      break
+      
     case GET_ORDERS:
       return {
         ...state,
@@ -21,13 +21,13 @@ export const orderReducer = (state = initialState, action) => {
         trade_orders: action.payload,
         openData: action.payload.filter((data) => data.isOpen == true),
       }
-      break
+      
     case GET_ORDER_ERROR:
       return {
         ...state,
         error: action.payload,
       }
-      break
+      
     default:
       return state
   }

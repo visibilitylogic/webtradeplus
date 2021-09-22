@@ -76,7 +76,7 @@ const Orders = (props) => {
           trade.margin +
           calculatePandL(
             trade,
-            closeRate.price,
+            closeRate,
             webData ? webData.leverageAmount : 1
           ) -
           trade.margin,
@@ -159,170 +159,171 @@ const Orders = (props) => {
                     <th>PROFIT/LOSS</th>
                     <th>STATUS</th>
                   </tr>
-                  {limitTradeList.length > 0
-                    ? limitTradeList.map((item, i) => (
-                        <tr key={item._id}>
-                          <td>{item.time.slice(0, 10)}</td>
-                          <td>00{i + 1}</td>
-                          <td>{item.nameOfAsset}</td>
-
-                          <td>
-                            $
-                            {new Intl.NumberFormat("en-US").format(item.margin)}
-                          </td>
-                          <td>{item.stockAmount}</td>
-                          <td
-                            className="rise"
-                            style={
-                              item.tag === "buy"
-                                ? { color: "#54ac40" }
-                                : { color: "red" }
+                  {limitTradeList.length > 0 ? (
+                    limitTradeList.map((item, i) => {
+                      return (
+                        allStockAssets.length > 0 &&
+                        allStockAssets
+                          .filter((stock) => {
+                            if (item.nameOfAsset === stock.symbol) {
+                              return true;
+                            } else {
+                              return false;
                             }
-                          >
-                            {item.tag}
-                          </td>
-                          <td>{item.openRateOfAsset.toString().slice(0, 8)}</td>
-                          {allStockAssets.length > 0 &&
-                            allStockAssets
-                              .filter((stock) => {
-                                if (stock.symbol === item.nameOfAsset) {
-                                  return true;
-                                } else {
-                                  return false;
+                          })
+                          .map((asset) => (
+                            <tr key={item._id}>
+                              <td>{item.time.slice(0, 10)}</td>
+                              <td>00{i + 1}</td>
+                              <td>{item.nameOfAsset}</td>
+                              <td>
+                                {user && user.currency === "USD"
+                                  ? "$"
+                                  : user && user.currency}
+                                {new Intl.NumberFormat("en-US").format(
+                                  item.margin
+                                )}
+                              </td>
+                              <td>{item.stockAmount}</td>
+                              <td
+                                className="rise"
+                                style={
+                                  item.tag === "buy"
+                                    ? { color: "#54ac40" }
+                                    : { color: "red" }
                                 }
-                              })
-                              .map((asset, index) => (
-                                <Fragment>
-                                  <td key={index}>
-                                    {item.isOpen
-                                      ? asset.price.toString().slice(0, 8)
-                                      : "---"}
-                                  </td>
-                                  <td
-                                    style={{
-                                      color:
-                                        item.isOpen &&
+                              >
+                                {item.tag}
+                              </td>
+                              <td>
+                                {item.openRateOfAsset.toString().slice(0, 8)}
+                              </td>
+                              <td>
+                                {item.isOpen
+                                  ? asset.price.toString().slice(0, 8)
+                                  : "---"}
+                              </td>
+                              <td
+                                style={{
+                                  color:
+                                    item.isOpen &&
+                                    calculatePandL(
+                                      item,
+                                      asset,
+                                      webData ? webData.leverageAmount : 1
+                                    ) < 0
+                                      ? "red"
+                                      : item.isOpen &&
                                         calculatePandL(
                                           item,
-                                          asset.price,
+                                          asset,
                                           webData ? webData.leverageAmount : 1
-                                        ) < 0
-                                          ? "red"
-                                          : item.isOpen &&
-                                            calculatePandL(
-                                              item,
-                                              asset.price,
-                                              webData
-                                                ? webData.leverageAmount
-                                                : 1
-                                            ) > 0
-                                          ? "#54ac40"
-                                          : "#fff",
+                                        ) > 0
+                                      ? "#54ac40"
+                                      : "#fff",
+                                }}
+                              >
+                                {item.isOpen &&
+                                  calculatePandL(
+                                    item,
+                                    asset,
+                                    webData ? webData.leverageAmount : 1
+                                  ) > 0 &&
+                                  "+"}
+
+                                {item.isOpen
+                                  ? new Intl.NumberFormat("en-US")
+                                      .format(
+                                        calculatePandL(
+                                          item,
+                                          asset,
+                                          webData ? webData.leverageAmount : 1
+                                        )
+                                      )
+                                      .slice(0, 8)
+                                  : "---"}
+                              </td>
+                              <td
+                                style={{
+                                  color:
+                                    item.profit > 0
+                                      ? "#54ac40"
+                                      : item.loss > 0
+                                      ? "red"
+                                      : "#fff",
+                                }}
+                              >
+                                {new Intl.NumberFormat("en-US").format(
+                                  item.profit.toString().slice(0, 6)
+                                )}
+                                /
+                                {new Intl.NumberFormat("en-US").format(
+                                  item.loss.toString().slice(0, 6)
+                                )}
+                              </td>
+                              <td
+                                style={{
+                                  display: "flex",
+                                  height: "100%",
+                                  alignItems: "center",
+                                  width: "75%",
+                                }}
+                              >
+                                <button
+                                  className="orderBtn btn-green"
+                                  style={{ marginRight: 20 }}
+                                >
+                                  {item.isOpen ? "Open" : "closed"}
+                                </button>
+
+                                {item.isOpen && (
+                                  <button
+                                    className="orderBtn btn-red"
+                                    onClick={() => {
+                                      handleCloseUserTrade(item, asset);
                                     }}
                                   >
-                                    {item.isOpen &&
-                                      calculatePandL(
-                                        item,
-                                        asset.price,
-                                        webData ? webData.leverageAmount : 1
-                                      ) > 0 &&
-                                      "+"}
+                                    CLOSE
+                                  </button>
+                                )}
 
-                                    {item.isOpen
-                                      ? new Intl.NumberFormat("en-US")
-                                          .format(
-                                            calculatePandL(
-                                              item,
-                                              asset.price,
-                                              webData
-                                                ? webData.leverageAmount
-                                                : 1
-                                            )
-                                          )
-                                          .slice(0, 8)
-                                      : "---"}
-                                  </td>
-                                  <td
-                                    style={{
-                                      color:
-                                        item.profit > 0
-                                          ? "#54ac40"
-                                          : item.loss > 0
-                                          ? "red"
-                                          : "#fff",
-                                    }}
-                                  >
-                                    {new Intl.NumberFormat("en-US").format(
-                                      item.profit.toString().slice(0, 6)
-                                    )}
-                                    /
-                                    {new Intl.NumberFormat("en-US").format(
-                                      item.loss.toString().slice(0, 6)
-                                    )}
-                                  </td>
-                                  <td
-                                    style={{
-                                      display: "flex",
-                                      height: "100%",
-                                      alignItems: "center",
-                                      width: "75%",
-                                    }}
-                                  >
-                                    <button
-                                      className="orderBtn btn-green"
-                                      style={{ marginRight: 20 }}
-                                    >
-                                      {item.isOpen ? "Open" : "closed"}
-                                    </button>
+                                <i
+                                  className="fas fa-trash trashS"
+                                  onClick={() => {
+                                    if (item.isOpen) {
+                                      closeUserTrade(item._id, {
+                                        closeRateOfAsset: asset.price,
+                                      });
+                                    }
 
-                                    {item.isOpen && (
-                                      <button
-                                        className="orderBtn btn-red"
-                                        onClick={() => {
-                                          handleCloseUserTrade(item, asset);
-                                        }}
-                                      >
-                                        CLOSE
-                                      </button>
-                                    )}
-
-                                    <i
-                                      className="fas fa-trash trashS"
-                                      onClick={() => {
-                                        if (item.isOpen) {
-                                          closeUserTrade(item._id, {
-                                            closeRateOfAsset: asset.price,
-                                          });
-                                        }
-
-                                        handleDeleteUserTrade(item._id);
-                                      }}
-                                    >
-                                      {" "}
-                                    </i>
-                                  </td>
-                                </Fragment>
-                              ))}
-                        </tr>
-                      ))
-                    : limitTradeList.length === 0 && (
-                        <tr>
-                          <td
-                            colSpan="10"
-                            rowSpan="10"
-                            align="center"
-                            style={{
-                              minWidth: "100%",
-                              fontWeight: "bold",
-                              margin: "0 auto",
-                              textAlign: "center",
-                              padding: 10,
-                            }}
-                          >
-                            There are no open trades
-                          </td>
-                        </tr>
-                      )}
+                                    handleDeleteUserTrade(item._id);
+                                  }}
+                                >
+                                  {" "}
+                                </i>
+                              </td>
+                            </tr>
+                          ))
+                      );
+                    })
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan="10"
+                        rowSpan="10"
+                        align="center"
+                        style={{
+                          minWidth: "100%",
+                          fontWeight: "bold",
+                          margin: "0 auto",
+                          textAlign: "center",
+                          padding: 10,
+                        }}
+                      >
+                        There are no open trades
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
