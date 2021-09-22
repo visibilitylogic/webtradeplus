@@ -91,6 +91,7 @@ const BuyStockModal = (props) => {
           : { ...defaultSelectedStock, margin: userMargin, tag: "buy" }
       );
       setBuysell(true);
+      setTimeout(() => setBuysell(false), 10000);
     }
     setBuyStock(false);
     setUserMargin(1);
